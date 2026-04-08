@@ -860,6 +860,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .spec-bar-track { height:3px; background:var(--gray-1); border-radius:3px; overflow:hidden; }
 .spec-bar-fill  { height:100%; background:var(--black); border-radius:3px; width:0%; transition:width .9s cubic-bezier(.22,1,.36,1); }
 
+/* 스펙 항목별 바 색상 */
+.spec-item:nth-child(1) .spec-bar-fill { background: #7C3AED; } /* UV — 보라 */
+.spec-item:nth-child(2) .spec-bar-fill { background: #EA580C; } /* TSER — 오렌지 */
+.spec-item:nth-child(3) .spec-bar-fill { background: #2563EB; } /* VLT — 블루 */
+.spec-item:nth-child(4) .spec-bar-fill { background: var(--black); } /* 보증 — 블랙 */
+
 .product-detail-btn {
   display: inline-block; margin-top: 1.75rem;
   font-size: 13px; font-weight: 500; letter-spacing: .06em;

@@ -370,7 +370,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
    HOW — Film Layer 500vh sticky (restructured style)
 ============================ */
 #how {
-  height: 500vh; background: var(--gray-1); position: relative;
+  height: 500vh; background: var(--black); position: relative;
   isolation: isolate;
 }
 .how-pin {
@@ -380,16 +380,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   z-index: 10; position: sticky;
 }
 
-/* 배경 슬라이드 */
+/* 배경 슬라이드 — 다크 모드 */
 .how-bg {
   position: absolute; inset: 0; will-change: transform;
   transition: transform .48s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.how-bg-0 { background: var(--gray-1); z-index:1; transform:translateY(0); }
-.how-bg-1 { background: var(--white); z-index:2; transform:translateY(100%); }
-.how-bg-2 { background: var(--gray-1); z-index:3; transform:translateY(100%); }
-.how-bg-3 { background: var(--white); z-index:4; transform:translateY(100%); }
-.how-bg-4 { background: var(--gray-1); z-index:5; transform:translateY(100%); }
+.how-bg-0 { background: #0a0a0a; z-index:1; transform:translateY(0); }
+.how-bg-1 { background: #111113; z-index:2; transform:translateY(100%); }
+.how-bg-2 { background: #0a0a0a; z-index:3; transform:translateY(100%); }
+.how-bg-3 { background: #111113; z-index:4; transform:translateY(100%); }
+.how-bg-4 { background: #0a0a0a; z-index:5; transform:translateY(100%); }
 .how-bg.up { transform: translateY(0); }
 
 /* 왼쪽 카피 */
@@ -415,22 +415,15 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .hs-spectrum   { font-size:clamp(2.8rem,9vw,6.5rem); font-weight:200; letter-spacing:.08em; line-height:1; margin-bottom:.3rem; }
 .hs-spectrum-label { font-size:9px; letter-spacing:.24em; text-transform:uppercase; margin-bottom:1.6rem; display:block; }
 
-/* 그레이 배경(짝수) step */
-#hs0 .hs-num,   #hs2 .hs-num,   #hs4 .hs-num   { color:rgba(0,0,0,.3); }
-#hs0 .hs-title, #hs2 .hs-title, #hs4 .hs-title { color:rgba(0,0,0,.7); }
-#hs0 .hs-title strong, #hs2 .hs-title strong, #hs4 .hs-title strong { color:rgba(0,0,0,.88); }
-#hs0 .hs-body,  #hs2 .hs-body,  #hs4 .hs-body  { color:rgba(0,0,0,.42); }
-#hs0 .hs-big-num, #hs2 .hs-big-num, #hs4 .hs-big-num { color:rgba(0,0,0,.85); }
-#hs0 .hs-big-label, #hs2 .hs-big-label, #hs4 .hs-big-label { color:rgba(0,0,0,.22); }
-#hs0 .hs-spectrum, #hs2 .hs-spectrum, #hs4 .hs-spectrum { color:rgba(0,0,0,.82); }
-#hs0 .hs-spectrum-label, #hs2 .hs-spectrum-label, #hs4 .hs-spectrum-label { color:rgba(0,0,0,.2); }
-/* 라이트 배경(홀수) step */
-#hs1 .hs-num,   #hs3 .hs-num   { color:rgba(0,0,0,.3); }
-#hs1 .hs-title, #hs3 .hs-title { color:rgba(0,0,0,.7); }
-#hs1 .hs-title strong, #hs3 .hs-title strong { color:rgba(0,0,0,.92); }
-#hs1 .hs-body,  #hs3 .hs-body  { color:rgba(0,0,0,.45); }
-#hs1 .hs-big-num, #hs3 .hs-big-num { color:rgba(0,0,0,.9); }
-#hs1 .hs-big-label, #hs3 .hs-big-label { color:rgba(0,0,0,.25); }
+/* HOW 섹션 — 다크 배경 기준 텍스트 (전 스텝 통일) */
+.how-step .hs-num          { color:rgba(255,255,255,.28); }
+.how-step .hs-title        { color:rgba(255,255,255,.78); }
+.how-step .hs-title strong { color:rgba(255,255,255,.95); }
+.how-step .hs-body         { color:rgba(255,255,255,.42); }
+.how-step .hs-big-num      { color:rgba(255,255,255,.92); }
+.how-step .hs-big-label    { color:rgba(255,255,255,.22); }
+.how-step .hs-spectrum     { color:rgba(255,255,255,.88); }
+.how-step .hs-spectrum-label { color:rgba(255,255,255,.22); }
 
 /* 오른쪽 카드 시각화 */
 .how-visual {
@@ -482,8 +475,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   width:4px; height:4px; border-radius:50%;
   background:rgba(0,0,0,.15); transition:background .4s, transform .4s;
 }
-.hv-dot { background:rgba(0,0,0,.15); }
-.hv-dot.on { background:var(--black); transform:scale(1.5); }
+.hv-dot { background:rgba(255,255,255,.18); }
+.hv-dot.on { background:rgba(255,255,255,.85); transform:scale(1.5); }
 
 /* ============================
    COMPARE TABLE (restructured)

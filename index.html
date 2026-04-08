@@ -712,9 +712,9 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ============================
-   VLT — 투과율 5단계 (스크롤 스테이지)
+   VLT — 5단계 패널 (스크롤 순차 공개)
 ============================ */
-#vlt { height: 550vh; background: var(--black); }
+#vlt { height: 650vh; background: var(--white); }
 
 .vlt-wrap {
   position: sticky; top: 0;
@@ -726,72 +726,85 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   display: block;
 }
 
-/* 농도 오버레이 */
-.vlt-overlay {
-  position: absolute; inset: 0;
-  background: #000;
-  opacity: 0.82;
+/* 각 농도 패널 */
+.vlt-band {
+  position: absolute; top: 0; height: 100%;
+  opacity: 0;
   pointer-events: none;
-  transition: opacity 0s;
+  transition: opacity .5s ease;
+  border-right: .5px solid rgba(255,255,255,.18);
+}
+.vlt-band:last-child { border-right: none; }
+.vlt-band.on { opacity: 1; }
+
+/* 패널 하단 라벨 */
+.vlt-band-label {
+  position: absolute; bottom: 1.8rem; left: 1.1rem;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.vlt-band-label .lbl-name {
+  font-size: 11px; font-weight: 400; color: rgba(255,255,255,.75);
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.vlt-band-label .lbl-pct {
+  font-size: 10px; font-weight: 300; color: rgba(255,255,255,.42);
+  letter-spacing: .1em;
 }
 
-/* 단계 전환 스윕 스트립 */
+/* 스윕 스트립 */
 .vlt-wipe {
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,.96);
-  transform: translateX(-102%);
+  position: absolute; top: 0; height: 100%; width: 22%;
+  background: rgba(0,0,0,.88);
+  transform: translateX(-110%);
   pointer-events: none;
   will-change: transform;
 }
 .vlt-wipe.wipe-run {
-  animation: vltWipe .85s cubic-bezier(.76,0,.24,1) forwards;
+  animation: vltWipe .7s cubic-bezier(.76,0,.24,1) forwards;
 }
 @keyframes vltWipe {
-  0%   { transform: translateX(-102%); }
-  100% { transform: translateX(102%); }
+  0%   { transform: translateX(-110%); }
+  100% { transform: translateX(560%); }
 }
 
-/* 정보 패널 */
-.vlt-info {
-  position: absolute; left: 3rem; bottom: 3.5rem;
-  pointer-events: none;
-  transition: opacity .35s;
+/* 우상단 단계 정보 */
+.vlt-counter {
+  position: absolute; top: 2.5rem; right: 2.8rem;
+  text-align: right; pointer-events: none;
 }
-.vlt-info-step {
-  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255,255,255,.38); font-weight: 400; margin-bottom: .6rem;
+.vlt-counter-num {
+  font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 300;
+  color: #fff; letter-spacing: -.04em; line-height: 1;
+  text-shadow: 0 2px 20px rgba(0,0,0,.35);
 }
-.vlt-info-name {
-  font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 300;
-  color: #fff; letter-spacing: -.03em; line-height: 1;
-}
-.vlt-info-sub {
-  margin-top: .7rem;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.42); font-weight: 400;
+.vlt-counter-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); margin-top: .4rem;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
 
-/* 우측 진행 바 */
+/* 하단 진행 바 */
 .vlt-pips {
-  position: absolute; right: 2.8rem; top: 50%;
-  transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 10px;
-  pointer-events: none;
+  position: absolute; bottom: 2.5rem; right: 2.8rem;
+  display: flex; gap: 8px; pointer-events: none;
 }
 .vlt-pip {
-  width: 2px; height: 28px;
-  background: rgba(255,255,255,.14);
-  transition: background .4s, height .4s;
+  width: 20px; height: 2px;
+  background: rgba(255,255,255,.2);
+  transition: background .4s, width .4s;
 }
-.vlt-pip.active {
-  background: rgba(255,255,255,.75);
-  height: 40px;
-}
+.vlt-pip.on { background: rgba(255,255,255,.8); width: 32px; }
 
 @media (max-width: 768px) {
-  .vlt-info { left: 1.5rem; bottom: 2rem; }
-  .vlt-info-name { font-size: 2rem; }
-  .vlt-pips { right: 1.5rem; }
+  .vlt-wipe { width: 30%; }
+  @keyframes vltWipe {
+    0%   { transform: translateX(-110%); }
+    100% { transform: translateX(400%); }
+  }
+  .vlt-counter { top: 1.5rem; right: 1.5rem; }
+  .vlt-pips { right: 1.5rem; bottom: 1.8rem; }
+  .vlt-band-label .lbl-name { font-size: 9px; }
+  .vlt-band-label .lbl-pct { display: none; }
 }
 
 /* ============================
@@ -1913,19 +1926,40 @@ body.pd-open { overflow: hidden; }
 <section id="vlt">
   <div class="vlt-wrap" id="vltWrap">
     <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
-    <div class="vlt-overlay" id="vltOverlay"></div>
-    <div class="vlt-wipe"    id="vltWipe"></div>
-    <div class="vlt-info">
-      <div class="vlt-info-step" id="vltStep">01 / 05</div>
-      <div class="vlt-info-name" id="vltName">LX 15</div>
-      <div class="vlt-info-sub"  id="vltSub">Visible Light Transmittance · 15%</div>
+
+    <!-- 5개 농도 패널 (LX 15→70, 각 20% 너비) -->
+    <div class="vlt-band" id="vb0" style="left:0%;width:20%;background:rgba(0,0,0,.50);">
+      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 15%</span></div>
     </div>
-    <div class="vlt-pips" id="vltPips">
-      <div class="vlt-pip active"></div>
-      <div class="vlt-pip"></div>
-      <div class="vlt-pip"></div>
-      <div class="vlt-pip"></div>
-      <div class="vlt-pip"></div>
+    <div class="vlt-band" id="vb1" style="left:20%;width:20%;background:rgba(0,0,0,.38);">
+      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 25%</span></div>
+    </div>
+    <div class="vlt-band" id="vb2" style="left:40%;width:20%;background:rgba(0,0,0,.26);">
+      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 40%</span></div>
+    </div>
+    <div class="vlt-band" id="vb3" style="left:60%;width:20%;background:rgba(0,0,0,.16);">
+      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 55%</span></div>
+    </div>
+    <div class="vlt-band" id="vb4" style="left:80%;width:20%;background:rgba(0,0,0,.07);">
+      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 70%</span></div>
+    </div>
+
+    <!-- 스윕 스트립 -->
+    <div class="vlt-wipe" id="vltWipe"></div>
+
+    <!-- 우상단 단계 정보 -->
+    <div class="vlt-counter">
+      <div class="vlt-counter-num"  id="vltNum">—</div>
+      <div class="vlt-counter-label" id="vltLbl">스크롤하세요</div>
+    </div>
+
+    <!-- 하단 진행 바 -->
+    <div class="vlt-pips">
+      <div class="vlt-pip" id="vp0"></div>
+      <div class="vlt-pip" id="vp1"></div>
+      <div class="vlt-pip" id="vp2"></div>
+      <div class="vlt-pip" id="vp3"></div>
+      <div class="vlt-pip" id="vp4"></div>
     </div>
   </div>
 </section>
@@ -2825,51 +2859,44 @@ const prodIO = new IntersectionObserver(entries => {
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
 
-/* ── VLT 5단계 스크롤 스테이지 ── */
+/* ── VLT 5패널 순차 공개 ── */
 (function() {
   const section = document.getElementById('vlt');
-  const overlay = document.getElementById('vltOverlay');
   const wipe    = document.getElementById('vltWipe');
-  const stepEl  = document.getElementById('vltStep');
-  const nameEl  = document.getElementById('vltName');
-  const subEl   = document.getElementById('vltSub');
-  const pips    = document.querySelectorAll('.vlt-pip');
-  if (!section || !overlay) return;
+  const numEl   = document.getElementById('vltNum');
+  const lblEl   = document.getElementById('vltLbl');
+  if (!section) return;
 
-  // LX 15 → 가장 어둡, LX 70 → 가장 밝음
   const STAGES = [
-    { name: 'LX 15', vlt: '15%', opacity: 0.82 },
-    { name: 'LX 25', vlt: '25%', opacity: 0.68 },
-    { name: 'LX 40', vlt: '40%', opacity: 0.52 },
-    { name: 'LX 55', vlt: '55%', opacity: 0.35 },
-    { name: 'LX 70', vlt: '70%', opacity: 0.18 },
+    { id:'vb0', pip:'vp0', name:'LX 15', sub:'Visible Light Transmittance 15%' },
+    { id:'vb1', pip:'vp1', name:'LX 25', sub:'Visible Light Transmittance 25%' },
+    { id:'vb2', pip:'vp2', name:'LX 40', sub:'Visible Light Transmittance 40%' },
+    { id:'vb3', pip:'vp3', name:'LX 55', sub:'Visible Light Transmittance 55%' },
+    { id:'vb4', pip:'vp4', name:'LX 70', sub:'Visible Light Transmittance 70%' },
   ];
   const N = STAGES.length;
-  let current = -1;
-  let wiping  = false;
+  let revealed = -1; // 마지막으로 공개된 패널 인덱스
+  let wiping   = false;
 
-  function applyStage(idx) {
-    const s = STAGES[idx];
-    // 스윕 애니메이션
+  function revealBand(idx) {
     wiping = true;
+    const s = STAGES[idx];
+
+    // 스윕 실행
     wipe.classList.remove('wipe-run');
     void wipe.offsetWidth;
     wipe.classList.add('wipe-run');
 
-    // 스윕 중간쯤(0.35s)에 정보 + 오버레이 교체
+    // 스윕 중간(0.3s)에 패널 + 정보 표시
     setTimeout(() => {
-      overlay.style.opacity = s.opacity;
-      stepEl.textContent = `0${idx + 1} / 0${N}`;
-      nameEl.textContent = s.name;
-      subEl.textContent  = `Visible Light Transmittance · ${s.vlt}`;
-      pips.forEach((p, i) => p.classList.toggle('active', i === idx));
-    }, 350);
+      document.getElementById(s.id).classList.add('on');
+      document.getElementById(s.pip).classList.add('on');
+      numEl.textContent = s.name;
+      lblEl.textContent = s.sub;
+    }, 300);
 
-    setTimeout(() => { wiping = false; }, 900);
+    setTimeout(() => { wiping = false; }, 800);
   }
-
-  // 초기 상태 설정
-  overlay.style.opacity = STAGES[0].opacity;
 
   function onScroll() {
     const rect     = section.getBoundingClientRect();
@@ -2878,11 +2905,39 @@ if (prodSec) prodIO.observe(prodSec);
     const scrolled = -rect.top;
     const total    = secH - winH;
     const p        = Math.max(0, Math.min(0.9999, scrolled / total));
-    const idx      = Math.min(Math.floor(p * N), N - 1);
+    // 0.1 이후부터 단계 시작 (첫 진입 여유)
+    const adj      = Math.max(0, (p - 0.05) / 0.95);
+    const idx      = Math.min(Math.floor(adj * N), N - 1);
 
-    if (idx !== current && !wiping) {
-      current = idx;
-      applyStage(idx);
+    // 스크롤 역방향 지원: revealed보다 낮은 idx면 해당까지 숨김
+    if (idx < revealed && !wiping) {
+      for (let i = revealed; i > idx; i--) {
+        document.getElementById(STAGES[i].id).classList.remove('on');
+        document.getElementById(STAGES[i].pip).classList.remove('on');
+      }
+      revealed = idx;
+      const s = STAGES[idx];
+      numEl.textContent = s.name;
+      lblEl.textContent = s.sub;
+    }
+
+    if (p < 0.05) {
+      // 섹션 상단 — 초기화
+      if (revealed >= 0) {
+        STAGES.forEach(s => {
+          document.getElementById(s.id).classList.remove('on');
+          document.getElementById(s.pip).classList.remove('on');
+        });
+        revealed = -1;
+        numEl.textContent = '—';
+        lblEl.textContent = '스크롤하세요';
+      }
+      return;
+    }
+
+    if (idx > revealed && !wiping) {
+      revealed = idx;
+      revealBand(idx);
     }
   }
 

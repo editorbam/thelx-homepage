@@ -712,12 +712,10 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ============================
-   VLT — 투과율 시각화 (스크롤 연동)
+   VLT — 투과율 5단계 (스크롤 스테이지)
 ============================ */
-#vlt {
-  height: 250vh;
-  background: var(--black);
-}
+#vlt { height: 550vh; background: var(--black); }
+
 .vlt-wrap {
   position: sticky; top: 0;
   height: 100vh; overflow: hidden;
@@ -727,18 +725,73 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   object-fit: cover; object-position: center;
   display: block;
 }
-.vlt-sweep {
+
+/* 농도 오버레이 */
+.vlt-overlay {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,.52);
+  background: #000;
+  opacity: 0.82;
+  pointer-events: none;
+  transition: opacity 0s;
+}
+
+/* 단계 전환 스윕 스트립 */
+.vlt-wipe {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.96);
   transform: translateX(-102%);
   pointer-events: none;
   will-change: transform;
 }
-.vlt-sweep-edge {
-  position: absolute; top: 0; right: 0;
-  width: 80px; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,.52));
+.vlt-wipe.wipe-run {
+  animation: vltWipe .85s cubic-bezier(.76,0,.24,1) forwards;
+}
+@keyframes vltWipe {
+  0%   { transform: translateX(-102%); }
+  100% { transform: translateX(102%); }
+}
+
+/* 정보 패널 */
+.vlt-info {
+  position: absolute; left: 3rem; bottom: 3.5rem;
   pointer-events: none;
+  transition: opacity .35s;
+}
+.vlt-info-step {
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.38); font-weight: 400; margin-bottom: .6rem;
+}
+.vlt-info-name {
+  font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 300;
+  color: #fff; letter-spacing: -.03em; line-height: 1;
+}
+.vlt-info-sub {
+  margin-top: .7rem;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.42); font-weight: 400;
+}
+
+/* 우측 진행 바 */
+.vlt-pips {
+  position: absolute; right: 2.8rem; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 10px;
+  pointer-events: none;
+}
+.vlt-pip {
+  width: 2px; height: 28px;
+  background: rgba(255,255,255,.14);
+  transition: background .4s, height .4s;
+}
+.vlt-pip.active {
+  background: rgba(255,255,255,.75);
+  height: 40px;
+}
+
+@media (max-width: 768px) {
+  .vlt-info { left: 1.5rem; bottom: 2rem; }
+  .vlt-info-name { font-size: 2rem; }
+  .vlt-pips { right: 1.5rem; }
 }
 
 /* ============================
@@ -1860,8 +1913,19 @@ body.pd-open { overflow: hidden; }
 <section id="vlt">
   <div class="vlt-wrap" id="vltWrap">
     <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
-    <div class="vlt-sweep" id="vltSweep">
-      <div class="vlt-sweep-edge"></div>
+    <div class="vlt-overlay" id="vltOverlay"></div>
+    <div class="vlt-wipe"    id="vltWipe"></div>
+    <div class="vlt-info">
+      <div class="vlt-info-step" id="vltStep">01 / 05</div>
+      <div class="vlt-info-name" id="vltName">LX 15</div>
+      <div class="vlt-info-sub"  id="vltSub">Visible Light Transmittance · 15%</div>
+    </div>
+    <div class="vlt-pips" id="vltPips">
+      <div class="vlt-pip active"></div>
+      <div class="vlt-pip"></div>
+      <div class="vlt-pip"></div>
+      <div class="vlt-pip"></div>
+      <div class="vlt-pip"></div>
     </div>
   </div>
 </section>
@@ -2761,33 +2825,69 @@ const prodIO = new IntersectionObserver(entries => {
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
 
-/* ── VLT SWEEP (스크롤 연동) ── */
+/* ── VLT 5단계 스크롤 스테이지 ── */
 (function() {
   const section = document.getElementById('vlt');
-  const sweep   = document.getElementById('vltSweep');
-  if (!section || !sweep) return;
+  const overlay = document.getElementById('vltOverlay');
+  const wipe    = document.getElementById('vltWipe');
+  const stepEl  = document.getElementById('vltStep');
+  const nameEl  = document.getElementById('vltName');
+  const subEl   = document.getElementById('vltSub');
+  const pips    = document.querySelectorAll('.vlt-pip');
+  if (!section || !overlay) return;
 
-  function updateVlt() {
+  // LX 15 → 가장 어둡, LX 70 → 가장 밝음
+  const STAGES = [
+    { name: 'LX 15', vlt: '15%', opacity: 0.82 },
+    { name: 'LX 25', vlt: '25%', opacity: 0.68 },
+    { name: 'LX 40', vlt: '40%', opacity: 0.52 },
+    { name: 'LX 55', vlt: '55%', opacity: 0.35 },
+    { name: 'LX 70', vlt: '70%', opacity: 0.18 },
+  ];
+  const N = STAGES.length;
+  let current = -1;
+  let wiping  = false;
+
+  function applyStage(idx) {
+    const s = STAGES[idx];
+    // 스윕 애니메이션
+    wiping = true;
+    wipe.classList.remove('wipe-run');
+    void wipe.offsetWidth;
+    wipe.classList.add('wipe-run');
+
+    // 스윕 중간쯤(0.35s)에 정보 + 오버레이 교체
+    setTimeout(() => {
+      overlay.style.opacity = s.opacity;
+      stepEl.textContent = `0${idx + 1} / 0${N}`;
+      nameEl.textContent = s.name;
+      subEl.textContent  = `Visible Light Transmittance · ${s.vlt}`;
+      pips.forEach((p, i) => p.classList.toggle('active', i === idx));
+    }, 350);
+
+    setTimeout(() => { wiping = false; }, 900);
+  }
+
+  // 초기 상태 설정
+  overlay.style.opacity = STAGES[0].opacity;
+
+  function onScroll() {
     const rect     = section.getBoundingClientRect();
     const secH     = section.offsetHeight;
     const winH     = window.innerHeight;
-    const scrolled = -rect.top;                    // 섹션 상단이 뷰포트 위로 올라간 양
-    const total    = secH - winH;                  // 전체 스크롤 가능 거리
-    const p        = Math.max(0, Math.min(1, scrolled / total));  // 0→1
+    const scrolled = -rect.top;
+    const total    = secH - winH;
+    const p        = Math.max(0, Math.min(0.9999, scrolled / total));
+    const idx      = Math.min(Math.floor(p * N), N - 1);
 
-    // 0~0.5: 오버레이 왼쪽→가운데 (필름 덮임)
-    // 0.5~1: 오버레이 가운데→오른쪽 (필름 벗겨짐)
-    let tx;
-    if (p < 0.5) {
-      tx = -102 + (p / 0.5) * 102;   // -102 → 0
-    } else {
-      tx = ((p - 0.5) / 0.5) * 102;  // 0 → 102
+    if (idx !== current && !wiping) {
+      current = idx;
+      applyStage(idx);
     }
-    sweep.style.transform = `translateX(${tx}%)`;
   }
 
-  window.addEventListener('scroll', updateVlt, { passive: true });
-  updateVlt();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }());
 
 /* ── AI QUIZ ── */

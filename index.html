@@ -712,6 +712,56 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ============================
+   VLT — 투과율 시각화
+============================ */
+#vlt { background:var(--black); padding:var(--section-v) 0 0; overflow:hidden; }
+#vlt .section-inner { padding:0 2rem; }
+#vlt .section-title { color:var(--white); }
+#vlt .section-eyebrow { color:var(--accent); }
+.vlt-wrap {
+  position:relative; margin-top:3.5rem;
+  width:100%; overflow:hidden;
+}
+.vlt-img {
+  display:block; width:100%; height:auto;
+  object-fit:cover; max-height:600px;
+  filter:brightness(.88);
+}
+.vlt-zones {
+  position:absolute; inset:0;
+  display:grid; grid-template-columns:repeat(5,1fr);
+}
+.vlt-zone {
+  position:relative;
+  display:flex; flex-direction:column;
+  justify-content:flex-end; align-items:flex-start;
+  padding:2rem 1.5rem;
+  border-right:.5px solid rgba(255,255,255,.06);
+  background:linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 45%);
+  transition:background .3s;
+}
+.vlt-zone:last-child { border-right:none; }
+.vlt-pct {
+  display:block;
+  font-size:clamp(1.6rem,3vw,2.8rem);
+  font-weight:300; color:var(--white);
+  letter-spacing:-0.03em; line-height:1;
+}
+.vlt-label {
+  display:block; margin-top:.45rem;
+  font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:rgba(255,255,255,.45);
+  font-weight:400;
+}
+
+@media (max-width:768px) {
+  .vlt-img { max-height:260px; object-position:40% center; }
+  .vlt-zone { padding:1rem .6rem; }
+  .vlt-pct { font-size:1rem; }
+  .vlt-label { font-size:8px; letter-spacing:.1em; }
+}
+
+/* ============================
    PRODUCTS — 탭 (index.html)
 ============================ */
 #products { background:var(--white); padding:var(--section-v) 2rem; }
@@ -1820,6 +1870,41 @@ body.pd-open { overflow: hidden; }
       <br>
       <button class="quiz-back quiz-back-result" id="quizBackResult">← 다시 선택하기</button>
       <button class="quiz-retry" onclick="resetQuiz()">처음부터 다시 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     VLT — 투과율 시각화
+======================================== -->
+<section id="vlt">
+  <div class="section-inner">
+    <span class="section-eyebrow fi">Visible Light Transmittance</span>
+    <h2 class="section-title fi">농도를 <em>고릅니다</em></h2>
+  </div>
+  <div class="vlt-wrap fi-big">
+    <img src="lx-vlt.jpg" alt="THE LX 투과율 비교 — LX 15부터 LX 70" class="vlt-img">
+    <div class="vlt-zones">
+      <div class="vlt-zone">
+        <span class="vlt-pct">15%</span>
+        <span class="vlt-label">LX 15</span>
+      </div>
+      <div class="vlt-zone">
+        <span class="vlt-pct">25%</span>
+        <span class="vlt-label">LX 25</span>
+      </div>
+      <div class="vlt-zone">
+        <span class="vlt-pct">40%</span>
+        <span class="vlt-label">LX 40</span>
+      </div>
+      <div class="vlt-zone">
+        <span class="vlt-pct">55%</span>
+        <span class="vlt-label">LX 55</span>
+      </div>
+      <div class="vlt-zone">
+        <span class="vlt-pct">70%</span>
+        <span class="vlt-label">LX 70</span>
+      </div>
     </div>
   </div>
 </section>

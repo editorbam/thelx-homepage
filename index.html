@@ -712,9 +712,9 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ============================
-   VLT — 5단계 패널 (스크롤 순차 공개)
+   VLT — 5단계 패널 (클립패스 커튼 공개)
 ============================ */
-#vlt { height: 650vh; background: var(--white); }
+#vlt { height: 650vh; background: var(--black); }
 
 .vlt-wrap {
   position: sticky; top: 0;
@@ -726,45 +726,31 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   display: block;
 }
 
-/* 각 농도 패널 */
+/* 농도 패널 — clip-path로 왼→오 커튼 등장 */
 .vlt-band {
   position: absolute; top: 0; height: 100%;
-  opacity: 0;
+  clip-path: inset(0 100% 0 0);          /* 처음엔 완전히 숨김 */
+  transition: clip-path .85s cubic-bezier(.76,0,.24,1);
+  border-right: .5px solid rgba(255,255,255,.15);
   pointer-events: none;
-  transition: opacity .5s ease;
-  border-right: .5px solid rgba(255,255,255,.18);
 }
 .vlt-band:last-child { border-right: none; }
-.vlt-band.on { opacity: 1; }
+.vlt-band.on { clip-path: inset(0 0% 0 0); }  /* 완전 공개 */
 
 /* 패널 하단 라벨 */
 .vlt-band-label {
-  position: absolute; bottom: 1.8rem; left: 1.1rem;
-  display: flex; flex-direction: column; gap: .3rem;
+  position: absolute; bottom: 2rem; left: 1.2rem;
+  display: flex; flex-direction: column; gap: .35rem;
+  opacity: 0; transition: opacity .4s .6s;  /* 패널 열린 후 나타남 */
 }
+.vlt-band.on .vlt-band-label { opacity: 1; }
 .vlt-band-label .lbl-name {
-  font-size: 11px; font-weight: 400; color: rgba(255,255,255,.75);
-  letter-spacing: .12em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,.88);
+  letter-spacing: .14em; text-transform: uppercase;
 }
 .vlt-band-label .lbl-pct {
-  font-size: 10px; font-weight: 300; color: rgba(255,255,255,.42);
-  letter-spacing: .1em;
-}
-
-/* 스윕 스트립 */
-.vlt-wipe {
-  position: absolute; top: 0; height: 100%; width: 22%;
-  background: rgba(0,0,0,.88);
-  transform: translateX(-110%);
-  pointer-events: none;
-  will-change: transform;
-}
-.vlt-wipe.wipe-run {
-  animation: vltWipe .7s cubic-bezier(.76,0,.24,1) forwards;
-}
-@keyframes vltWipe {
-  0%   { transform: translateX(-110%); }
-  100% { transform: translateX(560%); }
+  font-size: 10px; font-weight: 300; color: rgba(255,255,255,.45);
+  letter-spacing: .12em;
 }
 
 /* 우상단 단계 정보 */
@@ -773,14 +759,14 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   text-align: right; pointer-events: none;
 }
 .vlt-counter-num {
-  font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 4.5rem); font-weight: 300;
   color: #fff; letter-spacing: -.04em; line-height: 1;
-  text-shadow: 0 2px 20px rgba(0,0,0,.35);
+  text-shadow: 0 2px 24px rgba(0,0,0,.5);
+  transition: opacity .3s;
 }
 .vlt-counter-label {
   font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.45); margin-top: .4rem;
-  text-shadow: 0 1px 8px rgba(0,0,0,.4);
+  color: rgba(255,255,255,.4); margin-top: .45rem;
 }
 
 /* 하단 진행 바 */
@@ -790,20 +776,15 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .vlt-pip {
   width: 20px; height: 2px;
-  background: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.18);
   transition: background .4s, width .4s;
 }
-.vlt-pip.on { background: rgba(255,255,255,.8); width: 32px; }
+.vlt-pip.on { background: rgba(255,255,255,.82); width: 32px; }
 
 @media (max-width: 768px) {
-  .vlt-wipe { width: 30%; }
-  @keyframes vltWipe {
-    0%   { transform: translateX(-110%); }
-    100% { transform: translateX(400%); }
-  }
   .vlt-counter { top: 1.5rem; right: 1.5rem; }
   .vlt-pips { right: 1.5rem; bottom: 1.8rem; }
-  .vlt-band-label .lbl-name { font-size: 9px; }
+  .vlt-band-label .lbl-name { font-size: 10px; }
   .vlt-band-label .lbl-pct { display: none; }
 }
 
@@ -1927,25 +1908,27 @@ body.pd-open { overflow: hidden; }
   <div class="vlt-wrap" id="vltWrap">
     <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
 
-    <!-- 5개 농도 패널 (LX 15→70, 각 20% 너비) -->
-    <div class="vlt-band" id="vb0" style="left:0%;width:20%;background:rgba(0,0,0,.50);">
+    <!--
+      농도: 실제 자동차 필름 색조 (약간 쿨톤 + 어둡게)
+      LX 15 = 투과율 15% = 85% 차단 → 가장 진함
+      LX 70 = 투과율 70% = 30% 차단 → 가장 연함
+      레퍼런스 기준으로 LX 55·70도 확실히 보이게 조정
+    -->
+    <div class="vlt-band" id="vb0" style="left:0%;width:20%;background:rgba(6,10,22,.72);">
       <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 15%</span></div>
     </div>
-    <div class="vlt-band" id="vb1" style="left:20%;width:20%;background:rgba(0,0,0,.38);">
+    <div class="vlt-band" id="vb1" style="left:20%;width:20%;background:rgba(6,10,22,.56);">
       <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 25%</span></div>
     </div>
-    <div class="vlt-band" id="vb2" style="left:40%;width:20%;background:rgba(0,0,0,.26);">
+    <div class="vlt-band" id="vb2" style="left:40%;width:20%;background:rgba(6,10,22,.40);">
       <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 40%</span></div>
     </div>
-    <div class="vlt-band" id="vb3" style="left:60%;width:20%;background:rgba(0,0,0,.16);">
+    <div class="vlt-band" id="vb3" style="left:60%;width:20%;background:rgba(6,10,22,.24);">
       <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 55%</span></div>
     </div>
-    <div class="vlt-band" id="vb4" style="left:80%;width:20%;background:rgba(0,0,0,.07);">
+    <div class="vlt-band" id="vb4" style="left:80%;width:20%;background:rgba(6,10,22,.11);">
       <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 70%</span></div>
     </div>
-
-    <!-- 스윕 스트립 -->
-    <div class="vlt-wipe" id="vltWipe"></div>
 
     <!-- 우상단 단계 정보 -->
     <div class="vlt-counter">
@@ -2859,43 +2842,27 @@ const prodIO = new IntersectionObserver(entries => {
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
 
-/* ── VLT 5패널 순차 공개 ── */
+/* ── VLT 5패널 클립패스 순차 공개 ── */
 (function() {
   const section = document.getElementById('vlt');
-  const wipe    = document.getElementById('vltWipe');
   const numEl   = document.getElementById('vltNum');
   const lblEl   = document.getElementById('vltLbl');
   if (!section) return;
 
   const STAGES = [
-    { id:'vb0', pip:'vp0', name:'LX 15', sub:'Visible Light Transmittance 15%' },
-    { id:'vb1', pip:'vp1', name:'LX 25', sub:'Visible Light Transmittance 25%' },
-    { id:'vb2', pip:'vp2', name:'LX 40', sub:'Visible Light Transmittance 40%' },
-    { id:'vb3', pip:'vp3', name:'LX 55', sub:'Visible Light Transmittance 55%' },
-    { id:'vb4', pip:'vp4', name:'LX 70', sub:'Visible Light Transmittance 70%' },
+    { id:'vb0', pip:'vp0', name:'LX 15', sub:'Visible Light Transmittance · 15%' },
+    { id:'vb1', pip:'vp1', name:'LX 25', sub:'Visible Light Transmittance · 25%' },
+    { id:'vb2', pip:'vp2', name:'LX 40', sub:'Visible Light Transmittance · 40%' },
+    { id:'vb3', pip:'vp3', name:'LX 55', sub:'Visible Light Transmittance · 55%' },
+    { id:'vb4', pip:'vp4', name:'LX 70', sub:'Visible Light Transmittance · 70%' },
   ];
   const N = STAGES.length;
-  let revealed = -1; // 마지막으로 공개된 패널 인덱스
-  let wiping   = false;
+  let revealed = -1;
 
-  function revealBand(idx) {
-    wiping = true;
-    const s = STAGES[idx];
-
-    // 스윕 실행
-    wipe.classList.remove('wipe-run');
-    void wipe.offsetWidth;
-    wipe.classList.add('wipe-run');
-
-    // 스윕 중간(0.3s)에 패널 + 정보 표시
-    setTimeout(() => {
-      document.getElementById(s.id).classList.add('on');
-      document.getElementById(s.pip).classList.add('on');
-      numEl.textContent = s.name;
-      lblEl.textContent = s.sub;
-    }, 300);
-
-    setTimeout(() => { wiping = false; }, 800);
+  function setInfo(idx) {
+    if (idx < 0) { numEl.textContent = '—'; lblEl.textContent = '스크롤하세요'; return; }
+    numEl.textContent = STAGES[idx].name;
+    lblEl.textContent = STAGES[idx].sub;
   }
 
   function onScroll() {
@@ -2905,39 +2872,38 @@ if (prodSec) prodIO.observe(prodSec);
     const scrolled = -rect.top;
     const total    = secH - winH;
     const p        = Math.max(0, Math.min(0.9999, scrolled / total));
-    // 0.1 이후부터 단계 시작 (첫 진입 여유)
-    const adj      = Math.max(0, (p - 0.05) / 0.95);
-    const idx      = Math.min(Math.floor(adj * N), N - 1);
 
-    // 스크롤 역방향 지원: revealed보다 낮은 idx면 해당까지 숨김
-    if (idx < revealed && !wiping) {
-      for (let i = revealed; i > idx; i--) {
-        document.getElementById(STAGES[i].id).classList.remove('on');
-        document.getElementById(STAGES[i].pip).classList.remove('on');
-      }
-      revealed = idx;
-      const s = STAGES[idx];
-      numEl.textContent = s.name;
-      lblEl.textContent = s.sub;
-    }
-
-    if (p < 0.05) {
-      // 섹션 상단 — 초기화
-      if (revealed >= 0) {
+    if (p < 0.04) {
+      if (revealed !== -1) {
         STAGES.forEach(s => {
           document.getElementById(s.id).classList.remove('on');
           document.getElementById(s.pip).classList.remove('on');
         });
-        revealed = -1;
-        numEl.textContent = '—';
-        lblEl.textContent = '스크롤하세요';
+        revealed = -1; setInfo(-1);
       }
       return;
     }
 
-    if (idx > revealed && !wiping) {
-      revealed = idx;
-      revealBand(idx);
+    // 0.04 ~ 1.0 구간을 5단계로 나눔
+    const adj = (p - 0.04) / 0.96;
+    const idx = Math.min(Math.floor(adj * N), N - 1);
+
+    // 앞으로 스크롤: 새 패널 공개
+    if (idx > revealed) {
+      for (let i = revealed + 1; i <= idx; i++) {
+        document.getElementById(STAGES[i].id).classList.add('on');
+        document.getElementById(STAGES[i].pip).classList.add('on');
+      }
+      revealed = idx; setInfo(idx);
+    }
+
+    // 뒤로 스크롤: 패널 숨김
+    if (idx < revealed) {
+      for (let i = revealed; i > idx; i--) {
+        document.getElementById(STAGES[i].id).classList.remove('on');
+        document.getElementById(STAGES[i].pip).classList.remove('on');
+      }
+      revealed = idx; setInfo(idx);
     }
   }
 

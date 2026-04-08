@@ -265,6 +265,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .marquee-wrap.dark  { background: var(--gray-1); border-top:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2); }
 .marquee-wrap.light { background: var(--white); border-top:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2); }
+.marquee-wrap.black { background: var(--black); border-top:.5px solid rgba(255,255,255,.06); border-bottom:.5px solid rgba(255,255,255,.06); }
 
 .marquee-track { display: flex; width: max-content; animation: marquee 20s linear infinite; }
 .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
@@ -276,9 +277,11 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .marquee-wrap.dark  .marquee-item { color: rgba(0,0,0,.78); }
 .marquee-wrap.light .marquee-item { color: rgba(0,0,0,.88); }
+.marquee-wrap.black .marquee-item { color: rgba(255,255,255,.55); }
 .marquee-item .sep { margin: 0 1.4rem; font-weight: 300; }
 .marquee-wrap.dark  .marquee-item .sep { color: rgba(0,0,0,.18); }
 .marquee-wrap.light .marquee-item .sep { color: rgba(0,0,0,.18); }
+.marquee-wrap.black .marquee-item .sep { color: rgba(255,255,255,.14); }
 
 /* ============================
    WHY STORY — 300vh sticky (index.html 내러티브)
@@ -1895,6 +1898,14 @@ body.pd-open { overflow: hidden; }
     </div>
   </div>
 </section>
+
+<!-- 전환 마크 (Quiz 흰색 → VLT 블랙) -->
+<div class="marquee-wrap black">
+  <div class="marquee-track">
+    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
+    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
+  </div>
+</div>
 
 <!-- ========================================
      VLT — 투과율 시각화

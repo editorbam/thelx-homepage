@@ -894,62 +894,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .trust-num   { font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.04em; color:var(--black); line-height:1; display:block; }
 .trust-label { font-size:13px; color:var(--gray-3); margin-top:.5rem; font-weight:300; line-height:1.5; }
 
-/* ============================
-   AI QUIZ (index.html)
-============================ */
-#quiz { background:var(--white); padding:var(--section-v) 2rem; }
-.quiz-inner  { max-width:680px; margin:0 auto; }
-.quiz-header { text-align:center; margin-bottom:3rem; }
-.quiz-progress { height:2px; background:rgba(0,0,0,.08); border-radius:2px; margin-bottom:2.5rem; overflow:hidden; }
-.quiz-progress-fill { height:100%; background:var(--black); border-radius:2px; width:0%; transition:width .4s ease; }
-.quiz-step { display:none; }
-.quiz-step.active { display:block; animation:panelFade .3s ease; }
-.quiz-question {
-  font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--black);
-  letter-spacing:-0.02em; line-height:1.3; margin-bottom:2rem; text-align:center;
-}
-.quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
-.quiz-option {
-  padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.1); border-radius:12px;
-  background:var(--gray-1); font-size:.95rem; color:var(--black);
-  cursor:none; transition:border-color .2s, background .2s, transform .2s;
-  text-align:left; font-family:var(--font); font-weight:300; line-height:1.4;
-}
-.quiz-option:hover { border-color:var(--black); transform:translateY(-2px); }
-.quiz-option.selected { border-color:var(--black); background:var(--black); color:white; }
-.quiz-result { display:none; text-align:center; animation:panelFade .4s ease; }
-.quiz-result.active { display:block; }
-.quiz-result-label   { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gray-3); margin-bottom:1rem; }
-.quiz-result-product { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:700; letter-spacing:-0.04em; color:var(--black); margin-bottom:1rem; }
-.quiz-result-reason  { font-size:1rem; color:var(--gray-3); line-height:1.7; max-width:480px; margin:0 auto 2.5rem; font-weight:300; }
-.quiz-next {
-  display: block; margin: 1.75rem auto 0;
-  font-size: 14px; font-weight: 500; letter-spacing: .08em;
-  background: var(--black); color: var(--white);
-  padding: .85rem 2.4rem; border-radius: 980px;
-  cursor: none; font-family: var(--font);
-  transition: opacity .2s;
-}
-.quiz-next:disabled { background: var(--gray-2); color: var(--gray-3); cursor: not-allowed; }
-.quiz-next:not(:disabled):hover { opacity: .75; }
-
-.quiz-nav {
-  display:flex; align-items:center; justify-content:space-between; margin-top:1.75rem;
-}
-.quiz-nav-end  { justify-content:flex-end; }
-.quiz-nav-start { justify-content:flex-start; }
-.quiz-nav .quiz-next { display:inline-flex; align-items:center; margin:0; }
-.quiz-back {
-  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
-  font-family:var(--font); transition:color .2s; padding:0;
-}
-.quiz-back:hover { color:var(--black); }
-.quiz-back-result { display:block; margin:1rem auto 0; }
-.quiz-retry {
-  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
-  font-family:var(--font); margin-top:.5rem; display:inline-block; transition:color .2s;
-}
-.quiz-retry:hover { color:var(--black); }
 
 /* ============================
    AWARDS & RECOGNITION
@@ -1219,7 +1163,6 @@ footer {
   .ba-container { height: clamp(260px, 42vw, 400px); }
   .product-panel.active { grid-template-columns:1fr; gap:2rem; }
   .trust-grid { grid-template-columns:repeat(2,1fr); }
-  .quiz-options { grid-template-columns:1fr; }
   .awards-grid { grid-template-columns:1fr; }
   .award-card.featured { flex-direction:column; gap:1.5rem; padding:2.4rem 2rem; }
   .award-year { font-size:4rem; }
@@ -1240,7 +1183,7 @@ footer {
 /* 터치 기기 — cursor: none 전면 해제 */
 @media (pointer: coarse) {
   *, *::before, *::after { cursor: auto !important; }
-  a, button, [role="button"], .quiz-option, .tab-btn, .faq-question,
+  a, button, [role="button"], .tab-btn, .faq-question,
   .nav-hamburger, .ba-container { cursor: pointer !important; }
   #cursor { display: none; }
 }
@@ -1499,7 +1442,6 @@ body.pd-open { overflow: hidden; }
 <div class="mobile-menu" id="mobileMenu">
   <a href="#why-story" onclick="closeMobileMenu()">브랜드</a>
   <a href="#how"       onclick="closeMobileMenu()">기술</a>
-  <a href="#quiz"      onclick="closeMobileMenu()">AI 매칭</a>
   <a href="#products"  onclick="closeMobileMenu()">제품</a>
   <a href="#booking"   onclick="closeMobileMenu()">예약하기</a>
 </div>
@@ -1514,7 +1456,6 @@ body.pd-open { overflow: hidden; }
   <ul class="nav-links">
     <li><a href="#why-story">브랜드</a></li>
     <li><a href="#how">기술</a></li>
-    <li><a href="#quiz">AI 매칭</a></li>
     <li><a href="#products">제품</a></li>
   </ul>
   <a href="#booking" class="nav-cta">예약</a>
@@ -1850,66 +1791,6 @@ body.pd-open { overflow: hidden; }
   </div>
 </section>
 
-<!-- ========================================
-     AI QUIZ (index.html)
-======================================== -->
-<section id="quiz">
-  <div class="quiz-inner">
-    <div class="quiz-header">
-      <h2 class="section-title fi" style="text-align:center;">
-        나에게 맞는<br><em>필름 찾기</em>
-      </h2>
-    </div>
-    <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
-
-    <div class="quiz-step active" id="quizStep1">
-      <p class="quiz-question">주로 누구와<br>함께 탑승하시나요?</p>
-      <div class="quiz-options">
-        <button class="quiz-option quiz-multi" data-q="1" data-v="solo">혼자</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="partner">배우자 · 연인</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="family">자녀와 함께</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="varies">상황마다 달라요</button>
-      </div>
-      <div class="quiz-nav quiz-nav-end">
-        <button class="quiz-next" id="quizNext1" disabled>다음 →</button>
-      </div>
-    </div>
-    <div class="quiz-step" id="quizStep2">
-      <p class="quiz-question">차 안에서 불편한 점을<br>모두 선택해주세요</p>
-      <div class="quiz-options">
-        <button class="quiz-option quiz-multi" data-q="2" data-v="heat">뜨거운 열기</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="glare">눈부신 빛</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="privacy">사생활 노출</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="uv">자외선 · 피부 손상</button>
-      </div>
-      <div class="quiz-nav">
-        <button class="quiz-back" id="quizBack2">← 이전</button>
-        <button class="quiz-next" id="quizNext2" disabled>다음 →</button>
-      </div>
-    </div>
-    <div class="quiz-step" id="quizStep3">
-      <p class="quiz-question">시공 예산은<br>어느 정도인가요?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-q="3" data-v="low">30만 이하</button>
-        <button class="quiz-option" data-q="3" data-v="mid">30 ~ 70만</button>
-        <button class="quiz-option" data-q="3" data-v="high">70만 이상</button>
-        <button class="quiz-option" data-q="3" data-v="best">최고라면 상관없어</button>
-      </div>
-      <div class="quiz-nav quiz-nav-start">
-        <button class="quiz-back" id="quizBack3">← 이전</button>
-      </div>
-    </div>
-    <div class="quiz-result" id="quizResult">
-      <p class="quiz-result-label">당신에게 맞는 THE LX</p>
-      <p class="quiz-result-product" id="quizResultProduct">S-LINE</p>
-      <p class="quiz-result-reason"  id="quizResultReason">비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.</p>
-      <a href="#products" class="btn-dark" style="display:inline-flex;">제품 확인하기</a>
-      <br>
-      <button class="quiz-back quiz-back-result" id="quizBackResult">← 다시 선택하기</button>
-      <button class="quiz-retry" onclick="resetQuiz()">처음부터 다시 →</button>
-    </div>
-  </div>
-</section>
 
 <!-- 전환 마크 (Quiz 흰색 → VLT 블랙) -->
 <div class="marquee-wrap black">
@@ -2939,87 +2820,6 @@ if (prodSec) prodIO.observe(prodSec);
   onScroll();
 }());
 
-/* ── AI QUIZ ── */
-let quizAnswers = { q1: [], q2: [], q3: null };
-
-function quizGoTo(stepId, pct) {
-  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('quizResult').classList.remove('active');
-  if (stepId) document.getElementById(stepId).classList.add('active');
-  document.getElementById('quizProgressFill').style.width = pct + '%';
-}
-
-function getQuizResult() {
-  const { q1, q2, q3 } = quizAnswers;
-  const hasHeat    = q2.includes('heat');
-  const hasPrivacy = q2.includes('privacy');
-  const isFamily   = q1.includes('family');
-
-  if (q3 === 'best' || (q3 === 'high' && (isFamily || q2.length >= 3))) {
-    return { product: 'LX', reason: '가족의 공간, 최고의 필름. 열 차단 81% · 10년 보증 · 세계특허 기술로 모든 불편을 설계로 해결합니다.' };
-  } else if (hasHeat && hasPrivacy && q3 === 'high') {
-    return { product: 'Xenith IR', reason: '세라믹 기술의 최정상. 열 차단 68%와 선명한 시야를 전파 방해 없이 제공합니다.' };
-  } else if (isFamily || (hasHeat && hasPrivacy)) {
-    return { product: 'S-LINE', reason: '가족과 함께하는 모든 주행을 위해. 비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.' };
-  } else if (q3 === 'low') {
-    return { product: 'Galaxie', reason: '핵심에 집중한 합리적인 선택. UV 99% 차단으로 개인 공간의 기본을 완벽하게.' };
-  } else {
-    return { product: 'G-LINE', reason: '열 차단과 개성을 동시에. 라미네이티드 블루 컬러로 일상의 모든 주행을 쾌적하게 만듭니다.' };
-  }
-}
-
-function showQuizResult() {
-  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-  const r = getQuizResult();
-  document.getElementById('quizResultProduct').textContent = r.product;
-  document.getElementById('quizResultReason').textContent  = r.reason;
-  document.getElementById('quizResult').classList.add('active');
-  document.getElementById('quizProgressFill').style.width  = '100%';
-}
-
-function resetQuiz() {
-  quizAnswers = { q1: [], q2: [], q3: null };
-  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
-  document.getElementById('quizNext1').disabled = true;
-  document.getElementById('quizNext2').disabled = true;
-  quizGoTo('quizStep1', '0');
-}
-
-// Q1 & Q2 — 복수 선택 토글
-document.querySelectorAll('.quiz-multi').forEach(opt => {
-  opt.addEventListener('click', () => {
-    opt.classList.toggle('selected');
-    const q = opt.dataset.q;
-    const selected = [...document.querySelectorAll(`.quiz-multi[data-q="${q}"].selected`)].map(o => o.dataset.v);
-    quizAnswers[`q${q}`] = selected;
-    if (q == 1) document.getElementById('quizNext1').disabled = selected.length === 0;
-    if (q == 2) document.getElementById('quizNext2').disabled = selected.length === 0;
-  });
-});
-
-// Q3 — 단일 선택 즉시 진행
-document.querySelectorAll('.quiz-option[data-q="3"]').forEach(opt => {
-  opt.addEventListener('click', () => {
-    document.querySelectorAll('.quiz-option[data-q="3"]').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    quizAnswers.q3 = opt.dataset.v;
-    setTimeout(showQuizResult, 300);
-  });
-});
-
-// 다음 버튼
-document.getElementById('quizNext1').addEventListener('click', () => quizGoTo('quizStep2', 33));
-document.getElementById('quizNext2').addEventListener('click', () => quizGoTo('quizStep3', 66));
-
-// 뒤로 버튼
-document.getElementById('quizBack2').addEventListener('click', () => quizGoTo('quizStep1', 0));
-document.getElementById('quizBack3').addEventListener('click', () => quizGoTo('quizStep2', 33));
-document.getElementById('quizBackResult').addEventListener('click', () => {
-  // Q3 선택 초기화 후 Q3로 돌아감
-  document.querySelectorAll('.quiz-option[data-q="3"]').forEach(o => o.classList.remove('selected'));
-  quizAnswers.q3 = null;
-  quizGoTo('quizStep3', 66);
-});
 
 /* ── REVIEWS CAROUSEL ── */
 (function () {
@@ -3169,17 +2969,7 @@ hamburger.addEventListener('click', () => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMobileMenu();
 
-  // 퀴즈 뒤로가기 — Mac: Cmd+[  /  Windows: Ctrl+[
-  if (e.key === '[' && (e.metaKey || e.ctrlKey)) {
-    const activeStep = document.querySelector('.quiz-step.active');
-    if (activeStep) {
-      const backBtn = activeStep.querySelector('.quiz-back');
-      if (backBtn) { e.preventDefault(); backBtn.click(); }
-    } else if (document.getElementById('quizResult').classList.contains('active')) {
-      e.preventDefault();
-      document.getElementById('quizBackResult').click();
-    }
-  }
+
 });
 
 /* ── NAV on-dark 스크롤 감지 ── */

@@ -712,33 +712,33 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ============================
-   VLT — 투과율 시각화
+   VLT — 투과율 시각화 (스크롤 연동)
 ============================ */
-#vlt { background:var(--black); padding:0; overflow:hidden; line-height:0; }
+#vlt {
+  height: 250vh;
+  background: var(--black);
+}
 .vlt-wrap {
-  position:relative; width:100%; overflow:hidden;
+  position: sticky; top: 0;
+  height: 100vh; overflow: hidden;
 }
 .vlt-img {
-  display:block; width:100%; height:auto;
-  object-fit:cover; max-height:580px;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
 }
 .vlt-sweep {
-  position:absolute; inset:0;
-  background:rgba(0,0,0,.42);
-  transform:translateX(-105%);
-  pointer-events:none;
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.52);
+  transform: translateX(-102%);
+  pointer-events: none;
+  will-change: transform;
 }
-.vlt-wrap.vlt-fired .vlt-sweep {
-  animation:vltSweep 1.6s cubic-bezier(.76,0,.24,1) forwards;
-}
-@keyframes vltSweep {
-  0%   { transform:translateX(-105%); }
-  45%  { transform:translateX(0%); }
-  100% { transform:translateX(105%); }
-}
-
-@media (max-width:768px) {
-  .vlt-img { max-height:260px; object-position:40% center; }
+.vlt-sweep-edge {
+  position: absolute; top: 0; right: 0;
+  width: 80px; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,.52));
+  pointer-events: none;
 }
 
 /* ============================
@@ -1859,8 +1859,10 @@ body.pd-open { overflow: hidden; }
 ======================================== -->
 <section id="vlt">
   <div class="vlt-wrap" id="vltWrap">
-    <img src="lx-vlt.jpg" alt="THE LX 투과율 비교 — LX 15부터 LX 70" class="vlt-img">
-    <div class="vlt-sweep" id="vltSweep"></div>
+    <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
+    <div class="vlt-sweep" id="vltSweep">
+      <div class="vlt-sweep-edge"></div>
+    </div>
   </div>
 </section>
 
@@ -2759,19 +2761,34 @@ const prodIO = new IntersectionObserver(entries => {
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
 
-/* ── VLT SWEEP ── */
-const vltWrap = document.getElementById('vltWrap');
-if (vltWrap) {
-  const vltIO = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        setTimeout(() => vltWrap.classList.add('vlt-fired'), 120);
-        vltIO.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.25 });
-  vltIO.observe(vltWrap);
-}
+/* ── VLT SWEEP (스크롤 연동) ── */
+(function() {
+  const section = document.getElementById('vlt');
+  const sweep   = document.getElementById('vltSweep');
+  if (!section || !sweep) return;
+
+  function updateVlt() {
+    const rect     = section.getBoundingClientRect();
+    const secH     = section.offsetHeight;
+    const winH     = window.innerHeight;
+    const scrolled = -rect.top;                    // 섹션 상단이 뷰포트 위로 올라간 양
+    const total    = secH - winH;                  // 전체 스크롤 가능 거리
+    const p        = Math.max(0, Math.min(1, scrolled / total));  // 0→1
+
+    // 0~0.5: 오버레이 왼쪽→가운데 (필름 덮임)
+    // 0.5~1: 오버레이 가운데→오른쪽 (필름 벗겨짐)
+    let tx;
+    if (p < 0.5) {
+      tx = -102 + (p / 0.5) * 102;   // -102 → 0
+    } else {
+      tx = ((p - 0.5) / 0.5) * 102;  // 0 → 102
+    }
+    sweep.style.transform = `translateX(${tx}%)`;
+  }
+
+  window.addEventListener('scroll', updateVlt, { passive: true });
+  updateVlt();
+}());
 
 /* ── AI QUIZ ── */
 let quizAnswers = { q1: [], q2: [], q3: null };

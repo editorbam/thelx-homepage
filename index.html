@@ -714,51 +714,31 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 /* ============================
    VLT — 투과율 시각화
 ============================ */
-#vlt { background:var(--black); padding:var(--section-v) 0 0; overflow:hidden; }
-#vlt .section-inner { padding:0 2rem; }
-#vlt .section-title { color:var(--white); }
-#vlt .section-eyebrow { color:var(--accent); }
+#vlt { background:var(--black); padding:0; overflow:hidden; line-height:0; }
 .vlt-wrap {
-  position:relative; margin-top:3.5rem;
-  width:100%; overflow:hidden;
+  position:relative; width:100%; overflow:hidden;
 }
 .vlt-img {
   display:block; width:100%; height:auto;
-  object-fit:cover; max-height:600px;
-  filter:brightness(.88);
+  object-fit:cover; max-height:580px;
 }
-.vlt-zones {
+.vlt-sweep {
   position:absolute; inset:0;
-  display:grid; grid-template-columns:repeat(5,1fr);
+  background:rgba(0,0,0,.42);
+  transform:translateX(-105%);
+  pointer-events:none;
 }
-.vlt-zone {
-  position:relative;
-  display:flex; flex-direction:column;
-  justify-content:flex-end; align-items:flex-start;
-  padding:2rem 1.5rem;
-  border-right:.5px solid rgba(255,255,255,.06);
-  background:linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 45%);
-  transition:background .3s;
+.vlt-wrap.vlt-fired .vlt-sweep {
+  animation:vltSweep 1.6s cubic-bezier(.76,0,.24,1) forwards;
 }
-.vlt-zone:last-child { border-right:none; }
-.vlt-pct {
-  display:block;
-  font-size:clamp(1.6rem,3vw,2.8rem);
-  font-weight:300; color:var(--white);
-  letter-spacing:-0.03em; line-height:1;
-}
-.vlt-label {
-  display:block; margin-top:.45rem;
-  font-size:10px; letter-spacing:.18em;
-  text-transform:uppercase; color:rgba(255,255,255,.45);
-  font-weight:400;
+@keyframes vltSweep {
+  0%   { transform:translateX(-105%); }
+  45%  { transform:translateX(0%); }
+  100% { transform:translateX(105%); }
 }
 
 @media (max-width:768px) {
   .vlt-img { max-height:260px; object-position:40% center; }
-  .vlt-zone { padding:1rem .6rem; }
-  .vlt-pct { font-size:1rem; }
-  .vlt-label { font-size:8px; letter-spacing:.1em; }
 }
 
 /* ============================
@@ -1878,34 +1858,9 @@ body.pd-open { overflow: hidden; }
      VLT — 투과율 시각화
 ======================================== -->
 <section id="vlt">
-  <div class="section-inner">
-    <span class="section-eyebrow fi">Visible Light Transmittance</span>
-    <h2 class="section-title fi">농도를 <em>고릅니다</em></h2>
-  </div>
-  <div class="vlt-wrap fi-big">
+  <div class="vlt-wrap" id="vltWrap">
     <img src="lx-vlt.jpg" alt="THE LX 투과율 비교 — LX 15부터 LX 70" class="vlt-img">
-    <div class="vlt-zones">
-      <div class="vlt-zone">
-        <span class="vlt-pct">15%</span>
-        <span class="vlt-label">LX 15</span>
-      </div>
-      <div class="vlt-zone">
-        <span class="vlt-pct">25%</span>
-        <span class="vlt-label">LX 25</span>
-      </div>
-      <div class="vlt-zone">
-        <span class="vlt-pct">40%</span>
-        <span class="vlt-label">LX 40</span>
-      </div>
-      <div class="vlt-zone">
-        <span class="vlt-pct">55%</span>
-        <span class="vlt-label">LX 55</span>
-      </div>
-      <div class="vlt-zone">
-        <span class="vlt-pct">70%</span>
-        <span class="vlt-label">LX 70</span>
-      </div>
-    </div>
+    <div class="vlt-sweep" id="vltSweep"></div>
   </div>
 </section>
 
@@ -2803,6 +2758,20 @@ const prodIO = new IntersectionObserver(entries => {
 }, { threshold:0.3 });
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
+
+/* ── VLT SWEEP ── */
+const vltWrap = document.getElementById('vltWrap');
+if (vltWrap) {
+  const vltIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => vltWrap.classList.add('vlt-fired'), 120);
+        vltIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  vltIO.observe(vltWrap);
+}
 
 /* ── AI QUIZ ── */
 let quizAnswers = { q1: [], q2: [], q3: null };

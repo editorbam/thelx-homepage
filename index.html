@@ -1611,6 +1611,61 @@ body.pd-open { overflow: hidden; }
   </div>
 </section>
 
+<!-- 전환 마크 (Film Layers → VLT) -->
+<div class="marquee-wrap black">
+  <div class="marquee-track">
+    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
+    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
+  </div>
+</div>
+
+<!-- ========================================
+     VLT — 투과율 시각화
+======================================== -->
+<section id="vlt">
+  <div class="vlt-wrap" id="vltWrap">
+    <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
+
+    <div class="vlt-band" id="vb0" style="left:0%;">
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.80);"></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 15%</span></div>
+    </div>
+    <div class="vlt-band" id="vb1" style="left:20%;">
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.48);"></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 25%</span></div>
+    </div>
+    <div class="vlt-band" id="vb2" style="left:40%;">
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.40);"></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 40%</span></div>
+    </div>
+    <div class="vlt-band" id="vb3" style="left:60%;">
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.24);"></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 55%</span></div>
+    </div>
+    <div class="vlt-band" id="vb4" style="left:80%;">
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.05);"></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 70%</span></div>
+    </div>
+    <div class="vlt-divider" style="left:20%;"></div>
+    <div class="vlt-divider" style="left:40%;"></div>
+    <div class="vlt-divider" style="left:60%;"></div>
+    <div class="vlt-divider" style="left:80%;"></div>
+
+    <div class="vlt-counter">
+      <div class="vlt-counter-num"  id="vltNum">—</div>
+      <div class="vlt-counter-label" id="vltLbl">스크롤하세요</div>
+    </div>
+
+    <div class="vlt-pips">
+      <div class="vlt-pip" id="vp0"></div>
+      <div class="vlt-pip" id="vp1"></div>
+      <div class="vlt-pip" id="vp2"></div>
+      <div class="vlt-pip" id="vp3"></div>
+      <div class="vlt-pip" id="vp4"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ========================================
      COMPARE TABLE (restructured)
 ======================================== -->
@@ -1640,70 +1695,6 @@ body.pd-open { overflow: hidden; }
       <div class="compare-row-cell cell-lx">    <span class="compare-row-label">보증 기간</span><span class="compare-row-value accent">최대 10년</span></div>
       <div class="compare-row-cell cell-normal"><span class="compare-row-label">브랜드 모기업</span><span class="compare-row-value">—</span></div>
       <div class="compare-row-cell cell-lx">    <span class="compare-row-label">브랜드 모기업</span><span class="compare-row-value accent">Saint-Gobain 360년</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 전환 마크 (Compare → VLT) -->
-<div class="marquee-wrap black">
-  <div class="marquee-track">
-    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
-    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
-  </div>
-</div>
-
-<!-- ========================================
-     VLT — 투과율 시각화
-======================================== -->
-<section id="vlt">
-  <div class="vlt-wrap" id="vltWrap">
-    <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
-
-    <!--
-      농도: 실제 자동차 필름 색조 (약간 쿨톤 + 어둡게)
-      LX 15 = 투과율 15% = 85% 차단 → 가장 진함
-      LX 70 = 투과율 70% = 30% 차단 → 가장 연함
-      레퍼런스 기준으로 LX 55·70도 확실히 보이게 조정
-    -->
-    <div class="vlt-band" id="vb0" style="left:0%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.80);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 15%</span></div>
-    </div>
-    <div class="vlt-band" id="vb1" style="left:20%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.48);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 25%</span></div>
-    </div>
-    <div class="vlt-band" id="vb2" style="left:40%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.40);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 40%</span></div>
-    </div>
-    <div class="vlt-band" id="vb3" style="left:60%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.24);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 55%</span></div>
-    </div>
-    <div class="vlt-band" id="vb4" style="left:80%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.05);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 70%</span></div>
-    </div>
-    <!-- 구분선 (밴드와 독립) -->
-    <div class="vlt-divider" style="left:20%;"></div>
-    <div class="vlt-divider" style="left:40%;"></div>
-    <div class="vlt-divider" style="left:60%;"></div>
-    <div class="vlt-divider" style="left:80%;"></div>
-
-    <!-- 우상단 단계 정보 -->
-    <div class="vlt-counter">
-      <div class="vlt-counter-num"  id="vltNum">—</div>
-      <div class="vlt-counter-label" id="vltLbl">스크롤하세요</div>
-    </div>
-
-    <!-- 하단 진행 바 -->
-    <div class="vlt-pips">
-      <div class="vlt-pip" id="vp0"></div>
-      <div class="vlt-pip" id="vp1"></div>
-      <div class="vlt-pip" id="vp2"></div>
-      <div class="vlt-pip" id="vp3"></div>
-      <div class="vlt-pip" id="vp4"></div>
     </div>
   </div>
 </section>

@@ -1432,6 +1432,451 @@ body.pd-open { overflow: hidden; }
   .pd-nav { padding:0 1.5rem; }
   .pd-nav-cta { display:none; }
 }
+
+/* ============================
+   AI QUIZ
+============================ */
+#quiz { background:var(--white); padding:var(--section-v) 2rem; }
+.quiz-inner  { max-width:680px; margin:0 auto; }
+.quiz-header { text-align:center; margin-bottom:3rem; }
+.quiz-progress { height:2px; background:rgba(0,0,0,.08); border-radius:2px; margin-bottom:2.5rem; overflow:hidden; }
+.quiz-progress-fill { height:100%; background:var(--black); border-radius:2px; width:0%; transition:width .4s ease; }
+.quiz-step { display:none; }
+.quiz-step.active { display:block; animation:panelFade .3s ease; }
+.quiz-question {
+  font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--black);
+  letter-spacing:-0.02em; line-height:1.3; margin-bottom:2rem; text-align:center;
+}
+.quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+.quiz-option {
+  padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.1); border-radius:12px;
+  background:var(--gray-1); font-size:.95rem; color:var(--black);
+  cursor:none; transition:border-color .2s, background .2s, transform .2s;
+  text-align:left; font-family:var(--font); font-weight:300; line-height:1.4;
+}
+.quiz-option:hover { border-color:var(--black); transform:translateY(-2px); }
+.quiz-option.selected { border-color:var(--black); background:var(--black); color:white; }
+.quiz-result { display:none; text-align:center; animation:panelFade .4s ease; }
+.quiz-result.active { display:block; }
+.quiz-result-label   { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gray-3); margin-bottom:1rem; }
+.quiz-result-product { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:700; letter-spacing:-0.04em; color:var(--black); margin-bottom:1rem; }
+.quiz-result-reason  { font-size:1rem; color:var(--gray-3); line-height:1.7; max-width:480px; margin:0 auto 2.5rem; font-weight:300; }
+.quiz-next {
+  display:block; margin:1.75rem auto 0;
+  font-size:14px; font-weight:500; letter-spacing:.08em;
+  background:var(--black); color:var(--white);
+  padding:.85rem 2.4rem; border-radius:980px;
+  cursor:none; font-family:var(--font); transition:opacity .2s;
+}
+.quiz-next:disabled { background:var(--gray-2); color:var(--gray-3); cursor:not-allowed; }
+.quiz-next:not(:disabled):hover { opacity:.75; }
+.quiz-nav { display:flex; align-items:center; justify-content:space-between; margin-top:1.75rem; }
+.quiz-nav-end  { justify-content:flex-end; }
+.quiz-nav-start { justify-content:flex-start; }
+.quiz-nav .quiz-next { display:inline-flex; align-items:center; margin:0; }
+.quiz-back {
+  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
+  font-family:var(--font); transition:color .2s; padding:0;
+}
+.quiz-back:hover { color:var(--black); }
+.quiz-back-result { display:block; margin:1rem auto 0; }
+.quiz-retry {
+  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
+  font-family:var(--font); margin-top:.5rem; display:inline-block; transition:color .2s;
+}
+.quiz-retry:hover { color:var(--black); }
+
+/* ============================
+   FILM LAYERS — Apple M5 style scroll-driven
+============================ */
+#film-layers {
+  position: relative;
+  height: 300vh;
+}
+.fl-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: clip;
+  background: transparent;
+  transition: background 0.4s ease;
+}
+.fl-pin.fl-active {
+  background: #070707;
+}
+/* 배경 글로우 */
+#fl-bg-flash {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: 1;
+  background: radial-gradient(ellipse at 50% 50%, rgba(200,169,110,0.12) 0%, transparent 60%);
+}
+#fl-bg-flash.fl-flash { animation: flBgFlash 2s ease forwards; }
+@keyframes flBgFlash {
+  0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; }
+}
+/* 헤더 */
+.fl-header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  width: 100%;
+  padding: 0 2rem;
+}
+.fl-eyebrow {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.22em;
+  color: rgba(200,169,110,0.55); text-transform: uppercase; margin-bottom: 18px;
+}
+.fl-title {
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 200;
+  color: rgba(255,255,255,0.92); letter-spacing: -0.025em;
+  line-height: 1.15; margin-bottom: 14px;
+}
+.fl-sub {
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.3); line-height: 1.8;
+}
+/* 브랜드 로고 피날레 */
+#fl-logo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0;
+  transition: none;
+}
+#fl-logo img {
+  width: clamp(240px, 32vw, 420px);
+  mix-blend-mode: screen;
+  display: block;
+}
+/* 스테이지 */
+#fl-stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  z-index: 5;
+}
+#fl-wrap {
+  position: absolute;
+  left: 50%; top: 50%;
+  will-change: transform;
+}
+/* 레이어 */
+.fl-layer {
+  position: absolute;
+  left: 50%;
+  cursor: pointer;
+  will-change: transform;
+}
+.fl-body { position: relative; border-radius: 1px; }
+.fl-tint { position: absolute; inset: 0; border-radius: 1px; }
+.fl-gloss {
+  position: absolute; inset: 0; border-radius: 1px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.35) 0%,
+    rgba(255,255,255,0.10) 28%,
+    rgba(255,255,255,0.02) 52%,
+    rgba(0,0,0,0.10) 100%
+  );
+  pointer-events: none;
+}
+/* Spectral 레이어 — 간섭 무지개 효과 */
+.fl-iridescent {
+  position: absolute; inset: 0; border-radius: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(255,60,100,0.18) 0%,
+    rgba(255,190,0,0.15)  16%,
+    rgba(60,255,160,0.15) 33%,
+    rgba(0,190,255,0.20)  50%,
+    rgba(160,60,255,0.18) 66%,
+    rgba(255,60,100,0.15) 83%,
+    rgba(255,190,0,0.18)  100%
+  );
+  background-size: 200% 100%;
+  animation: flIrid 5.5s linear infinite;
+  mix-blend-mode: screen;
+}
+@keyframes flIrid {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+/* 중앙 스페큘러 라인 */
+.fl-specline {
+  position: absolute; left: 4%; right: 4%;
+  height: 1px; border-radius: 1px;
+  top: 50%; transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.28;
+}
+/* 스위프 하이라이트 */
+.fl-sweep {
+  position: absolute; inset: 0; border-radius: 1px;
+  pointer-events: none; overflow: hidden;
+}
+.fl-sweep::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0;
+  width: 40%; border-radius: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.13) 40%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0.13) 60%,
+    transparent 100%
+  );
+  animation: flSweep 4.8s ease-in-out infinite;
+}
+@keyframes flSweep {
+  0%   { left: -42%; }
+  100% { left: 102%; }
+}
+.fl-sweep.delay-1::after { animation-delay: -0.9s; }
+.fl-sweep.delay-2::after { animation-delay: -1.8s; }
+.fl-sweep.delay-3::after { animation-delay: -2.7s; }
+.fl-sweep.delay-4::after { animation-delay: -3.6s; }
+/* 레이어 그림자 (아래 방향 깊이감) */
+.fl-layer-shadow {
+  position: absolute; left: 2%; right: 2%;
+  bottom: -1px; height: 8px;
+  pointer-events: none;
+  border-radius: 0 0 4px 4px;
+  filter: blur(4px);
+  opacity: 0.45;
+}
+/* 표면 그레인 */
+.fl-grain {
+  position: absolute; inset: 0; border-radius: 1px;
+  pointer-events: none; opacity: 0.045;
+  filter: url(#fl-noise);
+  background: #fff;
+}
+.fl-edge-top {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; border-radius: 2px; pointer-events: none;
+}
+.fl-edge-bot {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; border-radius: 1px; pointer-events: none;
+  opacity: 0.35;
+}
+.fl-edge-left, .fl-edge-right {
+  position: absolute; top: 0; bottom: 0;
+  width: 1px; pointer-events: none;
+}
+.fl-edge-left  { left: 0; }
+.fl-edge-right { right: 0; }
+.fl-lbl {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  pointer-events: none; white-space: nowrap;
+}
+.fl-lbl-name { font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
+.fl-lbl-sub  { font-size: 8px; font-weight: 300; color: rgba(255,255,255,0.42); margin-top: 4px; letter-spacing: 0.04em; }
+/* 글로우 링 */
+#fl-glow-ring {
+  position: absolute; left: 50%; border-radius: 2px;
+  pointer-events: none; opacity: 0;
+}
+#fl-glow-ring.fl-pulse { animation: flGlowPulse 2s cubic-bezier(0.22,1,0.36,1) forwards; }
+@keyframes flGlowPulse {
+  0%   { opacity: 0; box-shadow: 0 0 0px 0px rgba(200,169,110,0); }
+  25%  { opacity: 1; box-shadow: 0 0 24px 8px rgba(200,169,110,0.65), 0 0 70px 20px rgba(200,169,110,0.2); }
+  70%  { opacity: 0.5; box-shadow: 0 0 30px 10px rgba(200,169,110,0.3); }
+  100% { opacity: 0; box-shadow: 0 0 0px 0px rgba(200,169,110,0); }
+}
+/* 인포 텍스트 */
+#fl-infotext {
+  position: absolute; bottom: 9vh; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: rgba(255,255,255,0.38);
+  letter-spacing: 0.1em; text-align: center;
+  opacity: 0; transition: opacity 0.5s;
+  white-space: nowrap; z-index: 10;
+}
+/* 스크롤 힌트 */
+.fl-scroll-hint {
+  position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%);
+  font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.18);
+  text-transform: uppercase; z-index: 10; pointer-events: none;
+}
+.fl-scroll-hint::after {
+  content: ''; display: block; width: 1px; height: 22px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+  margin: 8px auto 0;
+  animation: flScrollLine 1.8s ease infinite;
+}
+@keyframes flScrollLine {
+  0%,100% { opacity: 0.3; transform: scaleY(1); transform-origin: top; }
+  50%      { opacity: 0.8; transform: scaleY(0.5); transform-origin: top; }
+}
+
+/* ── APPLY SECTION (film adhesion) ── */
+#apply {
+  position: relative;
+  height: 250vh;
+  background: #000;
+}
+.apply-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: clip;
+}
+.apply-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apply-car-wrap {
+  position: relative;
+  height: 88vh;
+  max-height: 880px;
+  aspect-ratio: 2/3;
+}
+.apply-car-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  border-radius: 12px;
+  display: block;
+}
+/* windshield overlay clip container */
+.apply-ws-clip {
+  position: absolute;
+  /* approximate windshield region in G90 portrait image */
+  top: 26%;
+  left: 14%;
+  width: 72%;
+  height: 22%;
+  overflow: hidden;
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  pointer-events: none;
+}
+/* the film itself — slides down from above */
+.apply-film {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  right: -5%;
+  height: 100%;
+  background: linear-gradient(
+    170deg,
+    rgba(180, 210, 255, 0.08) 0%,
+    rgba(30, 60, 130, 0.52) 25%,
+    rgba(20, 40, 100, 0.60) 55%,
+    rgba(10, 20, 60, 0.65)  80%,
+    rgba(5, 15, 45, 0.60)   100%
+  );
+  transform: translateY(-120%);
+  will-change: transform;
+}
+/* iridescent shimmer layer inside the film */
+.apply-film::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(120, 200, 255, 0.12) 30%,
+    rgba(200, 170, 255, 0.10) 50%,
+    rgba(255, 200, 100, 0.08) 70%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+}
+/* top edge — the film leading edge (bright line) */
+.apply-film::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(180, 220, 255, 0.9) 20%,
+    rgba(255, 255, 255, 1.0) 50%,
+    rgba(180, 220, 255, 0.9) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 16px 4px rgba(140, 200, 255, 0.7),
+              0 0 40px 8px rgba(100, 160, 255, 0.3);
+}
+/* sweep shine that plays after adhesion */
+.apply-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(255,255,255,0.28) 45%,
+    rgba(255,255,255,0.10) 52%,
+    transparent 65%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+/* text overlay */
+.apply-text {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.apply-eyebrow {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(180,210,255,0.7);
+  margin-bottom: 12px;
+}
+.apply-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+  color: #fff;
+}
+.apply-sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+  font-weight: 300;
+}
+/* scroll hint */
+.apply-scroll-hint {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -1712,6 +2157,55 @@ body.pd-open { overflow: hidden; }
 </section>
 
 <!-- ========================================
+     FILM LAYERS — Apple M5 style scroll-driven
+======================================== -->
+<section id="film-layers">
+  <div class="fl-pin">
+    <svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="fl-noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise"/></filter></defs></svg>
+    <div id="fl-bg-flash"></div>
+    <div class="fl-header" id="fl-header">
+      <p class="fl-eyebrow">5-Layer Technology · World Patent WO2015102923</p>
+      <h2 class="fl-title">하나의 필름,<br>다섯 겹의 설계</h2>
+      <p class="fl-sub">Saint-Gobain 나노세라믹 기술이 층층이 쌓여 단 하나의 필름이 됩니다.</p>
+    </div>
+    <div id="fl-stage">
+      <div id="fl-wrap">
+        <div id="fl-glow-ring"></div>
+      </div>
+    </div>
+    <div id="fl-logo">
+      <img src="thelx-logo-ghost2.png" alt="THE LX">
+    </div>
+    <div id="fl-infotext"></div>
+    <div class="fl-scroll-hint" id="fl-scroll-hint">scroll</div>
+  </div>
+</section>
+
+<!-- ========================================
+     FILM APPLICATION (G90 adhesion scroll)
+======================================== -->
+<section id="apply">
+  <div class="apply-sticky">
+    <div class="apply-scene">
+      <div class="apply-car-wrap" id="applyCarWrap">
+        <img src="g90.jpg" alt="Genesis G90 with THE LX film" class="apply-car-img">
+        <!-- windshield clip region -->
+        <div class="apply-ws-clip" id="applyWsClip">
+          <div class="apply-film" id="applyFilm"></div>
+          <div class="apply-sweep" id="applySweep"></div>
+        </div>
+      </div>
+      <div class="apply-text" id="applyText">
+        <span class="apply-eyebrow">THE LX · Application</span>
+        <h2 class="apply-title">필름이 유리에 닿는 순간</h2>
+        <p class="apply-sub">0.01mm의 정밀함으로 설계된 접착.</p>
+      </div>
+      <div class="apply-scroll-hint" id="applyScrollHint">scroll</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
      COMPARE TABLE (restructured)
 ======================================== -->
 <section id="compare">
@@ -1852,6 +2346,67 @@ body.pd-open { overflow: hidden; }
       <div class="vlt-pip" id="vp2"></div>
       <div class="vlt-pip" id="vp3"></div>
       <div class="vlt-pip" id="vp4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     AI QUIZ — 나에게 맞는 필름 찾기
+======================================== -->
+<section id="quiz">
+  <div class="quiz-inner">
+    <div class="quiz-header">
+      <h2 class="section-title fi" style="text-align:center;">
+        나에게 맞는<br><em>필름 찾기</em>
+      </h2>
+    </div>
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+
+    <div class="quiz-step active" id="quizStep1">
+      <p class="quiz-question">주로 누구와<br>함께 탑승하시나요?</p>
+      <div class="quiz-options">
+        <button class="quiz-option quiz-multi" data-q="1" data-v="solo">혼자</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="partner">배우자 · 연인</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="family">자녀와 함께</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="varies">상황마다 달라요</button>
+      </div>
+      <div class="quiz-nav quiz-nav-end">
+        <button class="quiz-next" id="quizNext1" disabled>다음 →</button>
+      </div>
+    </div>
+    <div class="quiz-step" id="quizStep2">
+      <p class="quiz-question">차 안에서 불편한 점을<br>모두 선택해주세요</p>
+      <div class="quiz-options">
+        <button class="quiz-option quiz-multi" data-q="2" data-v="heat">뜨거운 열기</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="glare">눈부신 빛</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="privacy">사생활 노출</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="uv">자외선 · 피부 손상</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="quiz-back" id="quizBack2">← 이전</button>
+        <button class="quiz-next" id="quizNext2" disabled>다음 →</button>
+      </div>
+    </div>
+    <div class="quiz-step" id="quizStep3">
+      <p class="quiz-question">시공 예산은<br>어느 정도인가요?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-q="3" data-v="low">30만 이하</button>
+        <button class="quiz-option" data-q="3" data-v="mid">30 ~ 70만</button>
+        <button class="quiz-option" data-q="3" data-v="high">70만 이상</button>
+        <button class="quiz-option" data-q="3" data-v="best">최고라면 상관없어</button>
+      </div>
+      <div class="quiz-nav quiz-nav-start">
+        <button class="quiz-back" id="quizBack3">← 이전</button>
+      </div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <p class="quiz-result-label">당신에게 맞는 THE LX</p>
+      <p class="quiz-result-product" id="quizResultProduct">S-LINE</p>
+      <p class="quiz-result-reason"  id="quizResultReason">비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.</p>
+      <a href="#products" class="btn-dark" style="display:inline-flex;">제품 확인하기</a>
+      <br>
+      <button class="quiz-back quiz-back-result" id="quizBackResult">← 다시 선택하기</button>
+      <button class="quiz-retry" onclick="resetQuiz()">처음부터 다시 →</button>
     </div>
   </div>
 </section>
@@ -3424,6 +3979,414 @@ document.getElementById('slSearch').addEventListener('input', e => {
 });
 
 slRender();
+
+/* ── AI QUIZ ── */
+let quizAnswers = { q1: [], q2: [], q3: null };
+
+function quizGoTo(stepId, pct) {
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('quizResult').classList.remove('active');
+  if (stepId) document.getElementById(stepId).classList.add('active');
+  document.getElementById('quizProgressFill').style.width = pct + '%';
+}
+
+function getQuizResult() {
+  const { q1, q2, q3 } = quizAnswers;
+  const hasHeat    = q2.includes('heat');
+  const hasPrivacy = q2.includes('privacy');
+  const isFamily   = q1.includes('family');
+  if (q3 === 'best' || (q3 === 'high' && (isFamily || q2.length >= 3))) {
+    return { product: 'LX', reason: '가족의 공간, 최고의 필름. 열 차단 81% · 10년 보증 · 세계특허 기술로 모든 불편을 설계로 해결합니다.' };
+  } else if (hasHeat && hasPrivacy && q3 === 'high') {
+    return { product: 'Xenith IR', reason: '세라믹 기술의 최정상. 열 차단 68%와 선명한 시야를 전파 방해 없이 제공합니다.' };
+  } else if (isFamily || (hasHeat && hasPrivacy)) {
+    return { product: 'S-LINE', reason: '가족과 함께하는 모든 주행을 위해. 비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.' };
+  } else if (q3 === 'low') {
+    return { product: 'Galaxie', reason: '핵심에 집중한 합리적인 선택. UV 99% 차단으로 개인 공간의 기본을 완벽하게.' };
+  } else {
+    return { product: 'G-LINE', reason: '열 차단과 개성을 동시에. 라미네이티드 블루 컬러로 일상의 모든 주행을 쾌적하게 만듭니다.' };
+  }
+}
+
+function showQuizResult() {
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  const r = getQuizResult();
+  document.getElementById('quizResultProduct').textContent = r.product;
+  document.getElementById('quizResultReason').textContent  = r.reason;
+  document.getElementById('quizResult').classList.add('active');
+  document.getElementById('quizProgressFill').style.width  = '100%';
+}
+
+function resetQuiz() {
+  quizAnswers = { q1: [], q2: [], q3: null };
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('quizNext1').disabled = true;
+  document.getElementById('quizNext2').disabled = true;
+  quizGoTo('quizStep1', '0');
+}
+
+document.querySelectorAll('.quiz-multi').forEach(opt => {
+  opt.addEventListener('click', () => {
+    opt.classList.toggle('selected');
+    const q = opt.dataset.q;
+    const selected = [...document.querySelectorAll(`.quiz-multi[data-q="${q}"].selected`)].map(o => o.dataset.v);
+    quizAnswers[`q${q}`] = selected;
+    if (q == 1) document.getElementById('quizNext1').disabled = selected.length === 0;
+    if (q == 2) document.getElementById('quizNext2').disabled = selected.length === 0;
+  });
+});
+
+document.querySelectorAll('.quiz-option[data-q="3"]').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.quiz-option[data-q="3"]').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    quizAnswers.q3 = opt.dataset.v;
+    setTimeout(showQuizResult, 300);
+  });
+});
+
+document.getElementById('quizNext1').addEventListener('click', () => quizGoTo('quizStep2', 33));
+document.getElementById('quizNext2').addEventListener('click', () => quizGoTo('quizStep3', 66));
+document.getElementById('quizBack2').addEventListener('click', () => quizGoTo('quizStep1', 0));
+document.getElementById('quizBack3').addEventListener('click', () => quizGoTo('quizStep2', 33));
+document.getElementById('quizBackResult').addEventListener('click', () => {
+  document.querySelectorAll('.quiz-option[data-q="3"]').forEach(o => o.classList.remove('selected'));
+  quizAnswers.q3 = null;
+  quizGoTo('quizStep3', 66);
+});
+
+/* ── FILM LAYERS — Apple M5 style scroll-driven ── */
+(function () {
+  var LAYERS = [
+    { name: 'UV Block',  sub: '자외선 99% 차단',     tint: 'rgba(190,100,40,0.16)', edge: 'rgba(230,140,80,0.95)',  glow: 'rgba(220,130,80,0.6)'   },
+    { name: 'Spectral',  sub: '세계특허 분광선택층',  tint: 'rgba(20,60,120,0.12)', edge: 'rgba(100,170,240,0.95)', glow: 'rgba(90,160,230,0.65)',  irid: true },
+    { name: 'Sputter',   sub: '나노 금속 증착',       tint: 'rgba(160,135,30,0.18)', edge: 'rgba(220,190,80,0.98)',  glow: 'rgba(210,180,80,0.6)'   },
+    { name: 'IR Block',  sub: '적외선 차단',          tint: 'rgba(90,30,150,0.15)', edge: 'rgba(155,90,220,0.95)',  glow: 'rgba(145,85,215,0.6)'   },
+    { name: 'Base',      sub: '비산방지 · 10년 보증', tint: 'rgba(30,120,60,0.14)', edge: 'rgba(80,195,110,0.90)',  glow: 'rgba(75,185,105,0.6)'   },
+  ];
+
+  var N      = LAYERS.length;
+  var FH     = 2;     // 레이어 두께(px)
+  var SPREAD = 64;    // 최대 레이어 간격(px)
+
+  var section    = document.getElementById('film-layers');
+  var pin        = section.querySelector('.fl-pin');
+  var wrap       = document.getElementById('fl-wrap');
+  var logoEl     = document.getElementById('fl-logo');
+  var glowRing   = document.getElementById('fl-glow-ring');
+  var bgFlash    = document.getElementById('fl-bg-flash');
+  var infoText   = document.getElementById('fl-infotext');
+  var header     = document.getElementById('fl-header');
+  var scrollHint = document.getElementById('fl-scroll-hint');
+
+  if (!section || !wrap) return;
+
+  var els       = [];
+  var glowFired = false;
+
+  /* 반응형 필름 폭 */
+  function filmW() { return Math.min(600, window.innerWidth * 0.78); }
+
+  /* ── 레이어 생성 ── */
+  LAYERS.forEach(function (l, i) {
+    var el = document.createElement('div');
+    el.className = 'fl-layer';
+    el.style.top = '50%';
+    el.style.marginTop = (-FH / 2) + 'px';
+    el.style.zIndex = N - i;
+    el._i = i;
+
+    var body = document.createElement('div');
+    body.className = 'fl-body';
+    body.style.height = FH + 'px';
+
+    var tint = document.createElement('div');
+    tint.className = 'fl-tint';
+    tint.style.background = l.tint;
+    body.appendChild(tint);
+
+    var gloss = document.createElement('div');
+    gloss.className = 'fl-gloss';
+    body.appendChild(gloss);
+
+    var edge = document.createElement('div');
+    edge.className = 'fl-edge-top';
+    edge.style.background = l.edge;
+    edge.style.boxShadow = '0 0 20px 4px ' + l.glow + ', 0 0 60px 12px ' + l.glow.replace('0.6', '0.15') + ', 0 0 120px 20px ' + l.glow.replace('0.6', '0.06');
+    body.appendChild(edge);
+
+    var edgeBot = document.createElement('div');
+    edgeBot.className = 'fl-edge-bot';
+    edgeBot.style.background = l.edge;
+    body.appendChild(edgeBot);
+
+    /* 중앙 스페큘러 라인 */
+    var specLine = document.createElement('div');
+    specLine.className = 'fl-specline';
+    specLine.style.background = l.edge;
+    body.appendChild(specLine);
+
+    /* Spectral 레이어 전용 — 간섭 무지개 */
+    if (l.irid) {
+      var irid = document.createElement('div');
+      irid.className = 'fl-iridescent';
+      body.appendChild(irid);
+    }
+
+    /* 스위프 하이라이트 (레이어별 딜레이) */
+    var sweep = document.createElement('div');
+    sweep.className = 'fl-sweep' + (i > 0 ? ' delay-' + i : '');
+    body.appendChild(sweep);
+
+    /* 레이어 하단 그림자 */
+    var shadow = document.createElement('div');
+    shadow.className = 'fl-layer-shadow';
+    shadow.style.background = l.tint;
+    body.appendChild(shadow);
+
+    var edgeL = document.createElement('div');
+    edgeL.className = 'fl-edge-left';
+    edgeL.style.background = 'linear-gradient(to bottom, transparent 0%, ' + l.edge + ' 50%, transparent 100%)';
+    edgeL.style.boxShadow = '-2px 0 4px rgba(255,60,60,0.35), 2px 0 4px rgba(60,120,255,0.35), 0 0 6px 1px ' + l.glow;
+    body.appendChild(edgeL);
+
+    var edgeR = document.createElement('div');
+    edgeR.className = 'fl-edge-right';
+    edgeR.style.background = 'linear-gradient(to bottom, transparent 0%, ' + l.edge + ' 50%, transparent 100%)';
+    edgeR.style.boxShadow = '2px 0 4px rgba(255,60,60,0.35), -2px 0 4px rgba(60,120,255,0.35), 0 0 6px 1px ' + l.glow;
+    body.appendChild(edgeR);
+
+    /* 표면 그레인 */
+    var grain = document.createElement('div');
+    grain.className = 'fl-grain';
+    body.appendChild(grain);
+
+    var lbl = document.createElement('div');
+    lbl.className = 'fl-lbl';
+    lbl.innerHTML = '<div class="fl-lbl-name" style="color:' + l.edge + '">' + l.name + '</div><div class="fl-lbl-sub">' + l.sub + '</div>';
+
+    el.appendChild(body);
+    el.appendChild(lbl);
+    el._lbl  = lbl;
+    el._body = body;
+
+    el.addEventListener('click', function () {
+      var idx = this._i;
+      infoText.style.opacity = '0';
+      setTimeout(function () {
+        infoText.textContent = LAYERS[idx].name + '  ·  ' + LAYERS[idx].sub;
+        infoText.style.opacity = '1';
+      }, 180);
+      els.forEach(function (e, j) {
+        e._body.style.transition = 'opacity 0.4s';
+        e._body.style.opacity = j === idx ? '1' : '0.06';
+      });
+      setTimeout(function () {
+        els.forEach(function (e) { e._body.style.opacity = ''; });
+        infoText.style.opacity = '0';
+      }, 2600);
+    });
+
+    wrap.appendChild(el);
+    els.push(el);
+  });
+
+  /* ── 폭 적용 ── */
+  function applyWidth() {
+    var fw    = filmW();
+    var halfW = fw / 2;
+    els.forEach(function (el) {
+      el._body.style.width = fw + 'px';
+      el.style.left        = '50%';
+      el.style.marginLeft  = (-halfW) + 'px';
+      el._lbl.style.left   = (halfW + 22) + 'px';
+    });
+    glowRing.style.width      = fw + 'px';
+    glowRing.style.left       = '50%';
+    glowRing.style.marginLeft = (-filmW() / 2) + 'px';
+  }
+
+  /* ── 글로우 ── */
+  function triggerGlow() {
+    glowRing.classList.remove('fl-pulse');
+    bgFlash.classList.remove('fl-flash');
+    void glowRing.offsetWidth;
+    void bgFlash.offsetWidth;
+    glowRing.classList.add('fl-pulse');
+    bgFlash.classList.add('fl-flash');
+    setTimeout(function () {
+      glowRing.classList.remove('fl-pulse');
+      bgFlash.classList.remove('fl-flash');
+    }, 2200);
+  }
+
+  /* ── 유틸 ── */
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp01(t)  { return Math.max(0, Math.min(1, t)); }
+
+  /* ── 스크롤 핸들러 ── */
+  var lastProgress = -1;
+
+  function onScroll() {
+    var scrollable = section.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    var sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    var progress   = clamp01((window.scrollY - sectionTop) / scrollable);
+
+    if (Math.abs(progress - lastProgress) < 0.0005) return;
+    lastProgress = progress;
+
+    var ep = easeInOut(progress);
+
+    /* ── 스케일: 2.2 → 0.04 (풀스크린에서 극소로) ── */
+    var scale = lerp(2.2, 0.04, ep);
+
+    /* ── 스프레드: SPREAD → 0 (55% 지점에서 완전히 겹침) ── */
+    var spreadP = clamp01(progress / 0.55);
+    var spread  = lerp(SPREAD, 0, easeInOut(spreadP));
+
+    /* wrap 변환 — rotateX 10deg 고정으로 3D 기울기 */
+    wrap.style.transform = 'translate(-50%, -50%) rotateX(10deg) scale(' + scale + ')';
+
+    /* 레이어 위치 */
+    els.forEach(function (el, i) {
+      el.style.transform = 'translateY(' + ((i - (N - 1) / 2) * spread) + 'px)';
+    });
+
+    /* 라벨: 5%~45% 구간에서만 보임 (레이어가 분리된 구간) */
+    var lblOp = clamp01((progress - 0.05) * 16) * clamp01(1 - (progress - 0.35) * 8);
+    els.forEach(function (el) { el._lbl.style.opacity = lblOp; });
+
+    /* wrap 전체 opacity: 진입 시 페이드인(0→5%) + 퇴장 시 페이드아웃(72%→85%) */
+    var entryOp = clamp01(progress * 20);
+    var exitOp  = clamp01(1 - (progress - 0.72) * 7);
+    var wrapOp  = entryOp * exitOp;
+    wrap.style.opacity    = wrapOp;
+    wrap.style.visibility = wrapOp > 0.01 ? 'visible' : 'hidden';
+    els.forEach(function (el) { el._body.style.opacity = ''; });
+
+    /* 헤더: 78% 등장 → 88%에서 사라짐 (로고에게 자리 양보) */
+    var headerOp = clamp01((progress - 0.78) * 12) * clamp01(1 - (progress - 0.88) * 18);
+    if (header) header.style.opacity = headerOp;
+
+    /* 로고: 87% 등장 → 95%에서 페이드아웃 (dark bg 제거 전에 완전히 사라짐) */
+    var logoOp = clamp01((progress - 0.87) * 15) * clamp01(1 - (progress - 0.95) * 25);
+    if (logoEl) {
+      logoEl.style.opacity   = logoOp;
+      var logoScale = 0.94 + clamp01((progress - 0.87) * 15) * 0.06;
+      logoEl.style.transform = 'translate(-50%, -50%) scale(' + logoScale + ')';
+    }
+
+    /* 섹션 배경: 필름 진입 후 끝까지 어둡게 유지 */
+    if (progress > 0.01 && progress < 0.99) { pin.classList.add('fl-active'); }
+    else                                     { pin.classList.remove('fl-active'); }
+
+    /* 글로우 링 크기 동기화 */
+    var totalH  = (N - 1) * spread + FH;
+    var ringTop = -((N - 1) / 2 * spread) - FH / 2;
+    glowRing.style.height = totalH + 'px';
+    glowRing.style.top    = ringTop + 'px';
+
+    if (scrollHint) scrollHint.style.opacity = clamp01(1 - progress * 10);
+
+    /* 레이어 간 간섭 — 겹칠수록 밝아짐 (visible 상태에서만) */
+    var proximity = 1 - clamp01(spread / SPREAD);
+    if (wrapOp > 0.01) {
+      wrap.style.filter = 'brightness(' + (1 + proximity * 0.75) + ')';
+    }
+
+    /* 55% 지점 (겹침 완료) 글로우 */
+    if (progress >= 0.54 && !glowFired) { glowFired = true; triggerGlow(); }
+    if (progress < 0.50) glowFired = false;
+  }
+
+  /* ── 초기화 ── */
+  applyWidth();
+  if (header) header.style.opacity = '0';
+  if (logoEl) logoEl.style.opacity = '0';
+  wrap.style.opacity    = '0';
+  wrap.style.visibility = 'hidden';
+  wrap.style.filter     = 'brightness(1)';
+  wrap.style.transform  = 'translate(-50%, -50%) rotateX(10deg) scale(2.2)';
+  els.forEach(function (el) {
+    el.style.transform = 'translateY(' + ((el._i - (N - 1) / 2) * SPREAD) + 'px)';
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { applyWidth(); onScroll(); });
+  onScroll();
+})();
+
+/* ── APPLY SECTION — film adhesion scroll-driven ── */
+(function () {
+  var sec    = document.getElementById('apply');
+  var film   = document.getElementById('applyFilm');
+  var sweep  = document.getElementById('applySweep');
+  var text   = document.getElementById('applyText');
+  var hint   = document.getElementById('applyScrollHint');
+  if (!sec || !film) return;
+
+  var sweepPlayed = false;
+
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  function onApplyScroll() {
+    var rect     = sec.getBoundingClientRect();
+    var secH     = sec.offsetHeight;
+    var vh       = window.innerHeight;
+    var scrolled = -(rect.top);          // px scrolled into section
+    var progress = scrolled / (secH - vh); // 0 → 1
+
+    if (progress < 0 || progress > 1) return;
+
+    /* scroll hint — fades out quickly */
+    if (hint) hint.style.opacity = clamp01(1 - progress * 8);
+
+    /* phase 1 (0–40%): film descends from above windshield */
+    var descP = clamp01((progress - 0.05) / 0.38);
+    /* easeOutCubic for natural deceleration */
+    var eased = 1 - Math.pow(1 - descP, 3);
+    film.style.transform = 'translateY(' + (-120 + eased * 120) + '%)';
+
+    /* leading edge glow — dims as film fully lands */
+    var edgeGlow = clamp01(1 - descP * 1.2);
+    film.style.setProperty('--edge-glow', edgeGlow);
+
+    /* phase 2 (40–55%): film "clicks" — slight scale pulse */
+    var clickP = clamp01((progress - 0.40) / 0.15);
+    var clickScale = 1 + Math.sin(clickP * Math.PI) * 0.012;
+    film.style.transform = 'translateY(' + (-120 + eased * 120) + '%) scaleY(' + clickScale + ')';
+
+    /* film opacity — appears as it enters, fully opaque when landed */
+    film.style.opacity = clamp01(descP * 2.5);
+
+    /* phase 2.5 (50–65%): sweep shine plays once after adhesion */
+    var sweepP = clamp01((progress - 0.50) / 0.18);
+    if (sweepP > 0 && !sweepPlayed) { sweepPlayed = true; }
+    if (sweepPlayed) {
+      sweep.style.opacity   = clamp01(sweepP * 3) * clamp01(1 - (sweepP - 0.5) * 5);
+      sweep.style.transform = 'translateX(' + (-120 + sweepP * 260) + '%)';
+    }
+    if (progress < 0.48) { sweepPlayed = false; }
+
+    /* phase 3 (60–80%): text fades in */
+    var textP = clamp01((progress - 0.60) / 0.20);
+    if (text) {
+      text.style.opacity   = textP;
+      text.style.transform = 'translateY(' + (20 - textP * 20) + 'px)';
+    }
+
+    /* phase 4 (88–98%): everything fades out as section exits */
+    var exitP = clamp01((progress - 0.88) / 0.10);
+    var exitOp = clamp01(1 - exitP * 1.2);
+    if (text)  text.style.opacity   = text.style.opacity * exitOp;
+    film.style.opacity = parseFloat(film.style.opacity) * exitOp;
+  }
+
+  window.addEventListener('scroll', onApplyScroll, { passive: true });
+  onApplyScroll();
+})();
 
 </script>
 </body>

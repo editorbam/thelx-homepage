@@ -373,63 +373,49 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
    COMPARE TABLE (restructured)
 ============================ */
 #compare {
-  background: var(--white); padding: var(--section-v) 2rem;
+  background: var(--black); padding: var(--section-v) 2rem;
 }
 .compare-inner { max-width:980px; margin:0 auto; }
 .compare-header { text-align:center; margin-bottom:3rem; }
+.compare-header .section-title { color:var(--white); }
+.compare-header .section-title em { color:var(--accent); }
 .compare-grid {
   display:grid; grid-template-columns:1fr 1fr; gap:0;
-  border:.5px solid var(--gray-2); border-radius:20px; overflow:hidden;
+  border:.5px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden;
 }
 .compare-col-header { padding:2rem 2.4rem; display:flex; flex-direction:column; gap:.5rem; }
-.compare-col-header.col-normal { background:var(--gray-1); border-right:.5px solid var(--gray-2); }
-.compare-col-header.col-lx    { background:var(--black); }
+.compare-col-header.col-normal { background:#1c1c1e; border-right:.5px solid rgba(255,255,255,.08); }
+.compare-col-header.col-lx    { background:#080808; }
 .compare-col-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; font-weight:400; }
-.col-normal .compare-col-label { color:var(--gray-3); }
+.col-normal .compare-col-label { color:rgba(255,255,255,.35); }
 .col-lx .compare-col-label    { color:rgba(255,255,255,.35); }
 .compare-col-name { font-size:1.4rem; font-weight:300; letter-spacing:-0.02em; }
-.col-normal .compare-col-name { color:var(--gray-4); }
+.col-normal .compare-col-name { color:rgba(255,255,255,.55); }
 .col-lx .compare-col-name     { color:var(--white); }
 
-.compare-row-cell { padding:1.5rem 2.4rem; border-top:.5px solid var(--gray-2); display:flex; flex-direction:column; gap:.3rem; }
-.compare-row-cell.cell-normal { background:var(--white); border-right:.5px solid var(--gray-2); }
-.compare-row-cell.cell-lx    { background:#0e0e0e; border-top-color:rgba(255,255,255,.07); }
+.compare-row-cell { padding:1.5rem 2.4rem; border-top:.5px solid rgba(255,255,255,.07); display:flex; flex-direction:column; gap:.3rem; }
+.compare-row-cell.cell-normal { background:#161618; border-right:.5px solid rgba(255,255,255,.07); }
+.compare-row-cell.cell-lx    { background:#0a0a0a; }
 .compare-row-label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:400; margin-bottom:.2rem; }
-.cell-normal .compare-row-label { color:var(--gray-3); }
+.cell-normal .compare-row-label { color:rgba(255,255,255,.28); }
 .cell-lx .compare-row-label    { color:rgba(255,255,255,.28); }
 .compare-row-value { font-size:clamp(1rem,1.6vw,1.3rem); font-weight:300; letter-spacing:-0.01em; line-height:1.3; }
-.cell-normal .compare-row-value { color:var(--gray-4); }
+.cell-normal .compare-row-value { color:rgba(255,255,255,.5); }
 .cell-lx .compare-row-value    { color:rgba(255,255,255,.88); }
 .cell-lx .compare-row-value.accent { color:var(--white); font-weight:400; }
 
 /* ── COMPARE 호버 ── */
 .compare-col-header,
 .compare-row-cell {
-  transition: background .28s ease, border-color .28s ease;
-}
-.compare-col-header span,
-.compare-row-cell span {
-  transition: color .28s ease;
+  transition: background .28s ease;
 }
 .compare-col-header.col-normal:hover,
 .compare-row-cell.cell-normal:hover {
-  background: #e5e5ea;
+  background: #242428;
 }
 .compare-col-header.col-lx:hover,
 .compare-row-cell.cell-lx:hover {
-  background: var(--white);
-}
-.compare-col-header.col-lx:hover .compare-col-label {
-  color: var(--gray-3);
-}
-.compare-col-header.col-lx:hover .compare-col-name {
-  color: var(--gray-4);
-}
-.compare-row-cell.cell-lx:hover .compare-row-label {
-  color: var(--gray-3);
-}
-.compare-row-cell.cell-lx:hover .compare-row-value {
-  color: var(--gray-4);
+  background: #111;
 }
 
 
@@ -1161,7 +1147,7 @@ body.pd-open { overflow: hidden; }
 /* ============================
    AI QUIZ
 ============================ */
-#quiz { background:var(--white); padding:var(--section-v) 2rem; }
+#quiz { background:var(--gray-1); padding:var(--section-v) 2rem; }
 .quiz-inner  { max-width:680px; margin:0 auto; }
 .quiz-header { text-align:center; margin-bottom:3rem; }
 .quiz-progress { height:2px; background:rgba(0,0,0,.08); border-radius:2px; margin-bottom:2.5rem; overflow:hidden; }

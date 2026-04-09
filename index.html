@@ -544,168 +544,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   color: var(--gray-4);
 }
 
-/* ============================
-   BEFORE/AFTER SLIDER (index.html)
-============================ */
-#ba {
-  background: var(--gray-1); padding: var(--section-v) 0 0;
-}
-.ba-header { max-width:800px; margin:0 auto 3rem; text-align:center; padding: 0 2rem; }
-.ba-container {
-  width: 100%; height: clamp(480px, 56vh, 700px);
-  border-radius: 0; overflow:hidden; position:relative;
-  cursor:ew-resize; user-select:none; touch-action:none;
-  transform: translateZ(0);   /* GPU 레이어 승격 — 스크롤 중 repaint 차단 */
-  isolation: isolate;
-}
-/* ── BA BEFORE ── */
-.ba-before {
-  position: absolute; inset: 0;
-  background: linear-gradient(150deg, #fdfaf4 0%, #f5e9cc 40%, #e2c87e 75%, #c8a96e 100%);
-  overflow: hidden;
-}
-
-/* 빛줄기 */
-.ba-rays {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(118deg, transparent 30%, rgba(255,255,255,.28) 31%, rgba(255,255,255,.28) 33%, transparent 34%),
-    linear-gradient(118deg, transparent 40%, rgba(255,255,255,.16) 41%, rgba(255,255,255,.16) 44%, transparent 45%),
-    linear-gradient(118deg, transparent 52%, rgba(255,255,255,.20) 53%, rgba(255,255,255,.20) 55%, transparent 56%),
-    linear-gradient(118deg, transparent 63%, rgba(255,255,255,.12) 64%, rgba(255,255,255,.12) 67%, transparent 68%);
-  animation: rayShift 4s ease-in-out infinite alternate;
-  transform-origin: top right;
-  will-change: transform;
-}
-@keyframes rayShift {
-  from { transform: scaleX(1) translateX(0); opacity: .85; }
-  to   { transform: scaleX(1.05) translateX(10px); opacity: 1; }
-}
-
-/* 광원 글로우 */
-.ba-sun {
-  position: absolute; top: -80px; right: -80px;
-  width: 320px; height: 320px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,.9) 0%, rgba(230,195,120,.5) 35%, rgba(200,169,110,.2) 65%, transparent 78%);
-  animation: sunPulse 4s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-@keyframes sunPulse {
-  0%,100% { transform: scale(1);    opacity: .85; }
-  50%      { transform: scale(1.06); opacity: 1;   }
-}
-
-/* 하단 열기 페이드 */
-.ba-heat-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
-  background: linear-gradient(to top, rgba(180,130,40,.22) 0%, transparent 100%);
-}
-
-/* ── BA AFTER ── */
-.ba-after {
-  position: absolute; inset: 0;
-  background: #0a0a0a;
-  clip-path: inset(0 50% 0 0);
-  overflow: hidden;
-  will-change: clip-path;
-}
-
-/* 나노세라믹 반사 쉰 — 골드 계열 */
-.ba-film-sheen {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(118deg, transparent 18%, rgba(200,169,110,.05) 19%, rgba(200,169,110,.05) 22%, transparent 23%),
-    linear-gradient(118deg, transparent 40%, rgba(200,169,110,.03) 41%, rgba(200,169,110,.03) 45%, transparent 46%),
-    linear-gradient(118deg, transparent 60%, rgba(200,169,110,.04) 61%, rgba(200,169,110,.04) 64%, transparent 65%);
-  animation: sheenShift 7s ease-in-out infinite alternate;
-}
-@keyframes sheenShift {
-  from { transform: translateX(-6px); opacity: .6; }
-  to   { transform: translateX(6px);  opacity: 1;  }
-}
-
-/* 앰비언트 — 브랜드 블랙 안의 미묘한 따뜻함 */
-.ba-cool-overlay {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 45% at 25% 20%, rgba(200,169,110,.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 75% 80%, rgba(200,169,110,.04) 0%, transparent 70%);
-  animation: coolBreath 5s ease-in-out infinite alternate;
-}
-@keyframes coolBreath {
-  from { opacity: .6; }
-  to   { opacity: 1;  }
-}
-
-/* 파티클 — 골드 포인트 */
-.ba-particles {
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle 1px at 20% 28%, rgba(200,169,110,.4) 0%, transparent 100%),
-    radial-gradient(circle 1px at 52% 14%, rgba(200,169,110,.3) 0%, transparent 100%),
-    radial-gradient(circle 1px at 74% 42%, rgba(200,169,110,.35) 0%, transparent 100%),
-    radial-gradient(circle 1px at 33% 62%, rgba(200,169,110,.25) 0%, transparent 100%),
-    radial-gradient(circle 1px at 82% 72%, rgba(200,169,110,.3) 0%, transparent 100%),
-    radial-gradient(circle 2px at 14% 78%, rgba(200,169,110,.2) 0%, transparent 100%),
-    radial-gradient(circle 1px at 62% 84%, rgba(200,169,110,.3) 0%, transparent 100%);
-  animation: particleDrift 9s ease-in-out infinite alternate;
-}
-@keyframes particleDrift {
-  from { transform: translateY(0); opacity: .4; }
-  to   { transform: translateY(-5px); opacity: .9; }
-}
-
-/* ── BA 공통 콘텐츠 ── */
-.ba-scene {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1.25rem;
-}
-.ba-temp {
-  font-size: clamp(4rem, 10vw, 7rem); font-weight: 700;
-  letter-spacing: -0.05em; line-height: 1;
-  color: rgba(140, 100, 30, 0.65);
-}
-.ba-temp.cool {
-  color: rgba(255, 255, 255, 0.88);
-}
-.ba-scene-stats {
-  display: flex; flex-direction: column; align-items: center; gap: .5rem;
-}
-.ba-stat {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  font-weight: 400; padding: 3px 12px; border-radius: 20px;
-}
-.ba-stat.warn {
-  background: rgba(140,100,30,.12); color: rgba(100,70,10,.6);
-  border: .5px solid rgba(140,100,30,.18);
-}
-.ba-stat.good {
-  background: rgba(255,255,255,.08); color: rgba(255,255,255,.55);
-  border: .5px solid rgba(255,255,255,.12);
-}
-
-.ba-after-label  { position:absolute; bottom:1.5rem; right:1.5rem; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); }
-.ba-before-label { position:absolute; bottom:1.5rem; left:1.5rem;  font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:rgba(0,0,0,.4); }
-.ba-handle {
-  position:absolute; top:0; bottom:0; left:0; width:2px;
-  background:white; will-change:transform;
-  display:flex; align-items:center; justify-content:center; pointer-events:none;
-}
-.ba-handle-circle {
-  width:42px; height:42px; background:white; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 2px 16px rgba(0,0,0,.2); font-size:15px; color:var(--black);
-  flex-shrink:0; pointer-events:none; letter-spacing:-.05em;
-  transition: transform .15s ease;
-}
-.ba-hint-pulse .ba-handle-circle {
-  animation: baCirclePulse 1s ease-in-out infinite;
-}
-@keyframes baCirclePulse {
-  0%,100% { transform: scale(1); box-shadow: 0 2px 16px rgba(0,0,0,.2); }
-  50%      { transform: scale(1.18); box-shadow: 0 4px 28px rgba(0,0,0,.28); }
-}
 
 /* ============================
    VLT — 5단계 패널 (클립패스 커튼 공개)
@@ -1160,7 +998,6 @@ footer {
   .how-visual { display:none; }
 .compare-row-cell { padding:1.2rem 1rem; }
   .compare-col-header { padding:1.4rem 1rem; }
-  .ba-container { height: clamp(260px, 42vw, 400px); }
   .product-panel.active { grid-template-columns:1fr; gap:2rem; }
   .trust-grid { grid-template-columns:repeat(2,1fr); }
   .awards-grid { grid-template-columns:1fr; }
@@ -1184,7 +1021,7 @@ footer {
 @media (pointer: coarse) {
   *, *::before, *::after { cursor: auto !important; }
   a, button, [role="button"], .tab-btn, .faq-question,
-  .nav-hamburger, .ba-container { cursor: pointer !important; }
+  .nav-hamburger { cursor: pointer !important; }
   #cursor { display: none; }
 }
 
@@ -2051,55 +1888,7 @@ body.pd-open { overflow: hidden; }
   </div>
 </section>
 
-<!-- ========================================
-     BEFORE/AFTER SLIDER (index.html)
-======================================== -->
-<section id="ba">
-  <div class="ba-header">
-    <h2 class="section-title fi" style="text-align:center;">눈으로 확인하세요</h2>
-  </div>
-  <div class="ba-container fi-big" id="baContainer">
-
-      <!-- BEFORE -->
-      <div class="ba-before">
-        <div class="ba-rays"></div>
-        <div class="ba-sun"></div>
-        <div class="ba-heat-overlay"></div>
-        <div class="ba-scene">
-          <div class="ba-temp">38°</div>
-          <div class="ba-scene-stats">
-            <span class="ba-stat warn">UV 무차단</span>
-            <span class="ba-stat warn">열 차단 0%</span>
-            <span class="ba-stat warn">눈부심 심함</span>
-          </div>
-        </div>
-        <span class="ba-before-label">시공 전</span>
-      </div>
-
-      <!-- AFTER -->
-      <div class="ba-after" id="baAfter">
-        <div class="ba-film-sheen"></div>
-        <div class="ba-cool-overlay"></div>
-        <div class="ba-particles"></div>
-        <div class="ba-scene">
-          <div class="ba-temp cool">22°</div>
-          <div class="ba-scene-stats">
-            <span class="ba-stat good">UV 99% 차단</span>
-            <span class="ba-stat good">열 차단 81%</span>
-            <span class="ba-stat good">눈부심 제거</span>
-          </div>
-        </div>
-        <span class="ba-after-label">THE LX 시공 후</span>
-      </div>
-
-      <div class="ba-handle" id="baHandle">
-        <div class="ba-handle-circle">⇔</div>
-      </div>
-  </div>
-</section>
-
-
-<!-- 전환 마크 (Quiz 흰색 → VLT 블랙) -->
+<!-- 전환 마크 (Compare → VLT) -->
 <div class="marquee-wrap black">
   <div class="marquee-track">
     <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
@@ -3007,82 +2796,6 @@ const cntIO = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 document.querySelectorAll('[data-target]').forEach(el => cntIO.observe(el));
 
-/* ── BEFORE/AFTER SLIDER ── */
-const baContainer  = document.getElementById('baContainer');
-const baAfter      = document.getElementById('baAfter');
-const baHandle     = document.getElementById('baHandle');
-let isDragging     = false;
-let baAutoRaf      = null;
-let baPhase        = 0;
-let baLastTs       = null;
-let baW            = baContainer.offsetWidth;
-let baIsVisible    = false;
-let baIsScrolling  = false;
-let baScrollTimer  = null;
-
-function applyBA(pct) {
-  baAfter.style.clipPath   = `inset(0 ${(100 - pct).toFixed(2)}% 0 0)`;
-  baHandle.style.transform = `translateX(${(baW * pct / 100 - 1).toFixed(1)}px)`;
-}
-
-function updateBA(clientX) {
-  const rect = baContainer.getBoundingClientRect();
-  const x    = Math.max(0, Math.min(clientX - rect.left, rect.width));
-  applyBA((x / rect.width) * 100);
-}
-
-function runBALoop(ts) {
-  if (baLastTs !== null) baPhase += (ts - baLastTs) / 1000;
-  baLastTs  = ts;
-  applyBA(50 + 28 * Math.sin(baPhase * 0.85));
-  baAutoRaf = requestAnimationFrame(runBALoop);
-}
-
-function startBALoop() {
-  if (baAutoRaf || isDragging || !baIsVisible || baIsScrolling) return;
-  baLastTs  = null;
-  baAutoRaf = requestAnimationFrame(runBALoop);
-}
-
-function stopBALoop() {
-  if (baAutoRaf) { cancelAnimationFrame(baAutoRaf); baAutoRaf = null; }
-  baLastTs = null;
-}
-
-// 스크롤 시작 → RAF 완전 정지 / 스크롤 끝 → 200ms 뒤 재개
-window.addEventListener('scroll', () => {
-  if (!baIsScrolling) {
-    baIsScrolling = true;
-    stopBALoop();            // RAF 완전 캔슬
-  }
-  clearTimeout(baScrollTimer);
-  baScrollTimer = setTimeout(() => {
-    baIsScrolling = false;
-    startBALoop();           // 스크롤 완전히 멈춘 뒤 재개
-  }, 200);
-}, { passive: true });
-
-// 섹션 진입/이탈
-const baIO = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    baIsVisible = e.isIntersecting;
-    if (baIsVisible && !baIsScrolling) startBALoop();
-    else stopBALoop();
-  });
-}, { threshold: 0.2 });
-baIO.observe(baContainer);
-
-// 마우스 호버 시 정지, 벗어나면 재개
-baContainer.addEventListener('mouseenter', stopBALoop);
-baContainer.addEventListener('mouseleave', () => { if (!isDragging) startBALoop(); });
-
-// 드래그
-baContainer.addEventListener('mousedown', e => { isDragging = true; stopBALoop(); updateBA(e.clientX); });
-document.addEventListener('mousemove', e  => { if (isDragging) updateBA(e.clientX); });
-document.addEventListener('mouseup', ()   => { isDragging = false; startBALoop(); });
-baContainer.addEventListener('touchstart', e => { isDragging = true; stopBALoop(); updateBA(e.touches[0].clientX); }, { passive:true });
-baContainer.addEventListener('touchmove',  e => { if (isDragging) { e.preventDefault(); updateBA(e.touches[0].clientX); } }, { passive:false });
-baContainer.addEventListener('touchend',  () => { isDragging = false; startBALoop(); });
 
 /* ── PRODUCT TABS ── */
 const tabBtns       = document.querySelectorAll('.tab-btn');

@@ -1754,66 +1754,62 @@ body.pd-open { overflow: hidden; }
 /* windshield overlay clip container */
 .apply-ws-clip {
   position: absolute;
-  /* approximate windshield region in G90 portrait image */
   top: 26%;
   left: 14%;
   width: 72%;
   height: 22%;
   overflow: hidden;
-  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  /* gentle trapezoid — suggests windshield shape without hard box feel */
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
 }
-/* the film itself — slides down from above */
+/* the film itself — grows downward via clip-path (rolling-on effect) */
 .apply-film {
   position: absolute;
-  bottom: 0;
-  left: -5%;
-  right: -5%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    170deg,
-    rgba(180, 210, 255, 0.08) 0%,
-    rgba(30, 60, 130, 0.52) 25%,
-    rgba(20, 40, 100, 0.60) 55%,
-    rgba(10, 20, 60, 0.65)  80%,
-    rgba(5, 15, 45, 0.60)   100%
+    180deg,
+    rgba(10, 20, 60, 0.62) 0%,
+    rgba(15, 35, 90, 0.58) 40%,
+    rgba(20, 45, 100, 0.55) 70%,
+    rgba(15, 30, 75, 0.52) 100%
   );
-  transform: translateY(-120%);
-  will-change: transform;
+  clip-path: inset(0 0 100% 0); /* starts invisible, grows down */
+  will-change: clip-path;
 }
-/* iridescent shimmer layer inside the film */
+/* iridescent shimmer inside the film */
 .apply-film::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    105deg,
+    110deg,
     transparent 0%,
-    rgba(120, 200, 255, 0.12) 30%,
-    rgba(200, 170, 255, 0.10) 50%,
-    rgba(255, 200, 100, 0.08) 70%,
+    rgba(100, 180, 255, 0.10) 28%,
+    rgba(180, 150, 255, 0.08) 50%,
+    rgba(255, 200, 120, 0.06) 72%,
     transparent 100%
   );
   mix-blend-mode: screen;
 }
-/* top edge — the film leading edge (bright line) */
-.apply-film::after {
-  content: '';
+/* leading edge — bright line at bottom of growing film */
+.apply-film-edge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
+  left: -8%;
+  right: -8%;
+  height: 4px;
+  bottom: 100%; /* JS will move this with the clip boundary */
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(180, 220, 255, 0.9) 20%,
-    rgba(255, 255, 255, 1.0) 50%,
-    rgba(180, 220, 255, 0.9) 80%,
+    rgba(160, 210, 255, 0.85) 18%,
+    rgba(255, 255, 255, 0.98) 50%,
+    rgba(160, 210, 255, 0.85) 82%,
     transparent 100%
   );
-  box-shadow: 0 0 16px 4px rgba(140, 200, 255, 0.7),
-              0 0 40px 8px rgba(100, 160, 255, 0.3);
+  box-shadow: 0 0 14px 3px rgba(130, 195, 255, 0.65),
+              0 0 36px 8px rgba(100, 160, 255, 0.25);
+  pointer-events: none;
 }
 /* sweep shine that plays after adhesion */
 .apply-sweep {
@@ -1822,14 +1818,14 @@ body.pd-open { overflow: hidden; }
   background: linear-gradient(
     108deg,
     transparent 0%,
-    transparent 30%,
-    rgba(255,255,255,0.28) 45%,
-    rgba(255,255,255,0.10) 52%,
-    transparent 65%,
+    transparent 28%,
+    rgba(255,255,255,0.22) 42%,
+    rgba(255,255,255,0.08) 50%,
+    transparent 62%,
     transparent 100%
   );
   opacity: 0;
-  transform: translateX(-120%);
+  transform: translateX(-130%);
   pointer-events: none;
 }
 /* text overlay */
@@ -2192,6 +2188,7 @@ body.pd-open { overflow: hidden; }
         <!-- windshield clip region -->
         <div class="apply-ws-clip" id="applyWsClip">
           <div class="apply-film" id="applyFilm"></div>
+          <div class="apply-film-edge" id="applyFilmEdge"></div>
           <div class="apply-sweep" id="applySweep"></div>
         </div>
       </div>
@@ -4320,68 +4317,65 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
 
 /* ── APPLY SECTION — film adhesion scroll-driven ── */
 (function () {
-  var sec    = document.getElementById('apply');
-  var film   = document.getElementById('applyFilm');
-  var sweep  = document.getElementById('applySweep');
-  var text   = document.getElementById('applyText');
-  var hint   = document.getElementById('applyScrollHint');
+  var sec      = document.getElementById('apply');
+  var film     = document.getElementById('applyFilm');
+  var filmEdge = document.getElementById('applyFilmEdge');
+  var sweep    = document.getElementById('applySweep');
+  var text     = document.getElementById('applyText');
+  var hint     = document.getElementById('applyScrollHint');
   if (!sec || !film) return;
 
   var sweepPlayed = false;
 
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeInOutQuad(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
 
   function onApplyScroll() {
     var rect     = sec.getBoundingClientRect();
     var secH     = sec.offsetHeight;
     var vh       = window.innerHeight;
-    var scrolled = -(rect.top);          // px scrolled into section
+    var scrolled = -(rect.top);
     var progress = scrolled / (secH - vh); // 0 → 1
 
     if (progress < 0 || progress > 1) return;
 
-    /* scroll hint — fades out quickly */
-    if (hint) hint.style.opacity = clamp01(1 - progress * 8);
+    /* scroll hint */
+    if (hint) hint.style.opacity = clamp01(1 - progress * 10);
 
-    /* phase 1 (0–40%): film descends from above windshield */
-    var descP = clamp01((progress - 0.05) / 0.38);
-    /* easeOutCubic for natural deceleration */
-    var eased = 1 - Math.pow(1 - descP, 3);
-    film.style.transform = 'translateY(' + (-120 + eased * 120) + '%)';
+    /* ── Phase 1 (5%–48%): film rolls down onto windshield ── */
+    /* clip-path grows from top: inset(0 0 100%) → inset(0 0 0%)  */
+    var rollRaw  = clamp01((progress - 0.05) / 0.43);
+    var rollEase = easeOutCubic(rollRaw);           // deceleration = "landing" feel
+    var bottomPct = (1 - rollEase) * 100;          // 100% → 0% as film covers glass
+    film.style.clipPath = 'inset(0 0 ' + bottomPct.toFixed(2) + '% 0)';
 
-    /* leading edge glow — dims as film fully lands */
-    var edgeGlow = clamp01(1 - descP * 1.2);
-    film.style.setProperty('--edge-glow', edgeGlow);
+    /* leading edge follows the film's bottom boundary */
+    if (filmEdge) {
+      filmEdge.style.bottom = bottomPct.toFixed(2) + '%';
+      /* edge glow fades once film is fully applied */
+      var edgeOp = rollRaw < 0.97 ? 1 : clamp01(1 - (rollRaw - 0.97) * 33);
+      filmEdge.style.opacity = edgeOp;
+    }
 
-    /* phase 2 (40–55%): film "clicks" — slight scale pulse */
-    var clickP = clamp01((progress - 0.40) / 0.15);
-    var clickScale = 1 + Math.sin(clickP * Math.PI) * 0.012;
-    film.style.transform = 'translateY(' + (-120 + eased * 120) + '%) scaleY(' + clickScale + ')';
-
-    /* film opacity — appears as it enters, fully opaque when landed */
-    film.style.opacity = clamp01(descP * 2.5);
-
-    /* phase 2.5 (50–65%): sweep shine plays once after adhesion */
-    var sweepP = clamp01((progress - 0.50) / 0.18);
-    if (sweepP > 0 && !sweepPlayed) { sweepPlayed = true; }
+    /* ── Phase 2 (50%–65%): sweep shine plays once after adhesion ── */
+    var sweepRaw = clamp01((progress - 0.50) / 0.16);
+    if (sweepRaw > 0.02 && !sweepPlayed) sweepPlayed = true;
     if (sweepPlayed) {
-      sweep.style.opacity   = clamp01(sweepP * 3) * clamp01(1 - (sweepP - 0.5) * 5);
-      sweep.style.transform = 'translateX(' + (-120 + sweepP * 260) + '%)';
+      var sweepEase = easeInOutQuad(sweepRaw);
+      sweep.style.opacity   = clamp01(sweepRaw * 4) * clamp01(1 - (sweepRaw - 0.6) * 4);
+      sweep.style.transform = 'translateX(' + (-130 + sweepEase * 280) + '%)';
     }
     if (progress < 0.48) { sweepPlayed = false; }
 
-    /* phase 3 (60–80%): text fades in */
-    var textP = clamp01((progress - 0.60) / 0.20);
+    /* ── Phase 3 (62%–80%): text fades in ── */
+    var textP = easeOutCubic(clamp01((progress - 0.62) / 0.18));
     if (text) {
       text.style.opacity   = textP;
-      text.style.transform = 'translateY(' + (20 - textP * 20) + 'px)';
+      text.style.transform = 'translateY(' + (18 * (1 - textP)) + 'px)';
     }
 
-    /* phase 4 (88–98%): everything fades out as section exits */
-    var exitP = clamp01((progress - 0.88) / 0.10);
-    var exitOp = clamp01(1 - exitP * 1.2);
-    if (text)  text.style.opacity   = text.style.opacity * exitOp;
-    film.style.opacity = parseFloat(film.style.opacity) * exitOp;
+    /* ── No forced exit fade — section just scrolls away naturally ── */
   }
 
   window.addEventListener('scroll', onApplyScroll, { passive: true });

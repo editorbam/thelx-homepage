@@ -370,118 +370,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .why-card-body  { font-size: 13.5px; font-weight: 300; line-height: 1.85; color: var(--gray-3); }
 
 /* ============================
-   HOW — Film Layer 500vh sticky (restructured style)
-============================ */
-#how {
-  height: 500vh; background: var(--black); position: relative;
-  isolation: isolate;
-}
-.how-pin {
-  position: sticky; top: 0; height: 100vh; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 4rem; gap: 4rem;
-  z-index: 10; position: sticky;
-}
-
-/* 배경 슬라이드 — 다크 모드 */
-.how-bg {
-  position: absolute; inset: 0; will-change: transform;
-  transition: transform .48s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.how-bg-0 { background: #0a0a0a; z-index:1; transform:translateY(0); }
-.how-bg-1 { background: #111113; z-index:2; transform:translateY(100%); }
-.how-bg-2 { background: #0a0a0a; z-index:3; transform:translateY(100%); }
-.how-bg-3 { background: #111113; z-index:4; transform:translateY(100%); }
-.how-bg-4 { background: #0a0a0a; z-index:5; transform:translateY(100%); }
-.how-bg.up { transform: translateY(0); }
-
-/* 왼쪽 카피 */
-.how-copy {
-  position: relative; z-index: 20; flex: 1; max-width: 500px;
-  height: 100vh;
-}
-.how-step {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -56%);
-  width: 100%; opacity: 0; transition: opacity .3s ease-out;
-  pointer-events: none;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-}
-.how-step.active { opacity: 1; pointer-events: auto; }
-
-.hs-num        { font-size:10px; letter-spacing:.26em; text-transform:uppercase; font-weight:400; margin-bottom:1.2rem; display:block; }
-.hs-title      { font-size:clamp(1.4rem,2.4vw,2rem); font-weight:300; line-height:1.25; letter-spacing:-0.02em; margin-bottom:.8rem; }
-.hs-title strong { font-weight:500; }
-.hs-body       { font-size:.88rem; font-weight:300; line-height:1.9; max-width:420px; }
-.hs-big-num    { font-size:clamp(5rem,18vw,13rem); font-weight:200; letter-spacing:-0.045em; line-height:.95; margin-bottom:.2rem; display:block; }
-.hs-big-label  { font-size:9px; letter-spacing:.24em; text-transform:uppercase; margin-bottom:1.6rem; display:block; }
-.hs-spectrum   { font-size:clamp(2.8rem,9vw,6.5rem); font-weight:200; letter-spacing:.08em; line-height:1; margin-bottom:.3rem; }
-.hs-spectrum-label { font-size:9px; letter-spacing:.24em; text-transform:uppercase; margin-bottom:1.6rem; display:block; }
-
-/* HOW 섹션 — 다크 배경 기준 텍스트 (전 스텝 통일) */
-.how-step .hs-num          { color:rgba(255,255,255,.28); }
-.how-step .hs-title        { color:rgba(255,255,255,.78); }
-.how-step .hs-title strong { color:rgba(255,255,255,.95); }
-.how-step .hs-body         { color:rgba(255,255,255,.42); }
-.how-step .hs-big-num      { color:rgba(255,255,255,.92); }
-.how-step .hs-big-label    { color:rgba(255,255,255,.22); }
-.how-step .hs-spectrum     { color:rgba(255,255,255,.88); }
-.how-step .hs-spectrum-label { color:rgba(255,255,255,.22); }
-
-/* 오른쪽 카드 시각화 */
-.how-visual {
-  position: relative; z-index: 20; flex: 1; max-width: 400px;
-  height: 100vh; display: flex; align-items: center; justify-content: center;
-}
-.hv-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-.hv-card-stack { position: relative; width: clamp(280px, 26vw, 380px); aspect-ratio: 1.586/1; }
-.hv-card {
-  position: absolute; inset: 0; border-radius: 18px; overflow: hidden;
-  opacity: 0; transform: translateX(56px) scale(0.96);
-  transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1);
-  will-change: transform, opacity;
-  box-shadow: 0 24px 64px rgba(0,0,0,.22), 0 6px 20px rgba(0,0,0,.12);
-}
-.hv-card.active { opacity:1; transform:translateX(0) scale(1); }
-.hv-card.prev   { opacity:0; transform:translateX(-56px) scale(0.96); }
-
-.hvc-bg, .hvc-glow { position:absolute; inset:0; pointer-events:none; }
-.hvc-shine {
-  position:absolute; inset:0; z-index:5; pointer-events:none;
-  background: linear-gradient(140deg, rgba(255,255,255,.07) 0%, transparent 50%);
-}
-.hvc-content {
-  position:absolute; inset:0; padding:1.6rem 1.8rem;
-  display:flex; flex-direction:column; justify-content:space-between; z-index:6;
-}
-.hvc-top { display:flex; justify-content:space-between; align-items:flex-start; }
-.hvc-bottom { display:flex; flex-direction:column; gap:.3rem; }
-.hvc-step  { font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); font-weight:400; }
-.hvc-num   { font-size:clamp(2.8rem,5vw,3.8rem); font-weight:200; letter-spacing:-0.05em; line-height:1; color:rgba(255,255,255,.95); }
-.hvc-title { font-size:.95rem; font-weight:300; letter-spacing:-0.01em; color:rgba(255,255,255,.88); line-height:1.35; }
-.hvc-label { font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-top:.1rem; }
-.hvc-num--cyan { color:rgba(100,225,242,.95); }
-
-#hvc0 .hvc-bg { background: linear-gradient(145deg,#141418 0%,#0c0c10 100%); }
-#hvc0 .hvc-glow { background: radial-gradient(ellipse at 60% 20%, rgba(255,255,255,.04) 0%, transparent 60%); }
-#hvc1 .hvc-bg { background: linear-gradient(145deg,#1d0b32 0%,#0e0a16 100%); }
-#hvc1 .hvc-glow { background: radial-gradient(ellipse at 75% 15%, rgba(168,85,247,.3) 0%, transparent 55%); }
-#hvc2 .hvc-bg { background: linear-gradient(145deg,#2c1100 0%,#130900 100%); }
-#hvc2 .hvc-glow { background: radial-gradient(ellipse at 75% 15%, rgba(249,115,22,.28) 0%, transparent 55%); }
-#hvc3 .hvc-bg { background: linear-gradient(145deg,#001d26 0%,#060e12 100%); }
-#hvc3 .hvc-glow { background: radial-gradient(ellipse at 75% 15%, rgba(34,211,238,.22) 0%, transparent 55%); }
-#hvc4 .hvc-bg { background: linear-gradient(145deg,#1c1508 0%,#0c0a06 100%); }
-#hvc4 .hvc-glow { background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.06) 0%, transparent 55%); }
-
-.hv-dots { display:flex; gap:.5rem; }
-.hv-dot {
-  width:4px; height:4px; border-radius:50%;
-  background:rgba(0,0,0,.15); transition:background .4s, transform .4s;
-}
-.hv-dot { background:rgba(255,255,255,.18); }
-.hv-dot.on { background:rgba(255,255,255,.85); transform:scale(1.5); }
-
-/* ============================
    COMPARE TABLE (restructured)
 ============================ */
 #compare {
@@ -1699,138 +1587,6 @@ body.pd-open { overflow: hidden; }
 </div>
 
 <!-- ========================================
-     HOW — Film Layer 500vh sticky (restructured)
-======================================== -->
-<section id="how">
-  <div class="how-bg how-bg-0" id="hbg0"></div>
-  <div class="how-bg how-bg-1" id="hbg1"></div>
-  <div class="how-bg how-bg-2" id="hbg2"></div>
-  <div class="how-bg how-bg-3" id="hbg3"></div>
-  <div class="how-bg how-bg-4" id="hbg4"></div>
-  <div class="how-pin">
-    <!-- 카피 -->
-    <div class="how-copy">
-      <div class="how-step active" id="hs0">
-        <span class="hs-num">01 / 05</span>
-        <div class="hs-spectrum">UV · IR · Vis</div>
-        <span class="hs-spectrum-label">태양광선 구성 · Solar Spectrum</span>
-        <h3 class="hs-title">모든 빛이<br>여기서 시작됩니다</h3>
-        <p class="hs-body">자외선, 가시광선, 적외선(열)이 혼재된 복합 에너지.<br>일반 유리는 이것을 그대로 통과시킵니다.<br>THE LX는 여기서부터 선택을 시작합니다.</p>
-      </div>
-      <div class="how-step" id="hs1">
-        <span class="hs-num">02 / 05</span>
-        <span class="hs-big-num">99%</span>
-        <span class="hs-big-label">UV Blocked · 380nm↓</span>
-        <h3 class="hs-title">자외선을<br><strong>99% 차단합니다</strong></h3>
-        <p class="hs-body">피부 손상과 내장재 변색의 주범인 자외선.<br>UV 차단층이 파장 380nm 이하를 선택적으로 흡수합니다.</p>
-      </div>
-      <div class="how-step" id="hs2">
-        <span class="hs-num">03 / 05</span>
-        <span class="hs-big-num">55%</span>
-        <span class="hs-big-label">Heat Rejected · Infrared</span>
-        <h3 class="hs-title">열만<br><strong>골라서 반사합니다</strong></h3>
-        <p class="hs-body">적외선(열에너지)이 유리를 통과해 실내 온도를 높입니다.<br>IR 반사층이 열만 선택해 반사—빛은 그대로, 온도만 제어합니다.</p>
-      </div>
-      <div class="how-step" id="hs3">
-        <span class="hs-num">04 / 05</span>
-        <span class="hs-big-num">72%</span>
-        <span class="hs-big-label">Light Passed · Selective</span>
-        <h3 class="hs-title">빛은<br><strong>72% 열립니다</strong></h3>
-        <p class="hs-body">세계특허 분광 선택 기술의 핵심.<br>열을 막고 빛을 통과시키는 역설—이것이 THE LX가 다른 이유입니다.</p>
-      </div>
-      <div class="how-step" id="hs4">
-        <span class="hs-num">05 / 05</span>
-        <span class="hs-big-num">5</span>
-        <span class="hs-big-label">Layers · One Space</span>
-        <h3 class="hs-title">5개 레이어,<br><strong>하나의 공간</strong></h3>
-        <p class="hs-body">자외선 차단 · 열 반사 · 가시광 투과 · 세계특허 분광선택.<br>모든 레이어가 동시에 작동해 차 안을 다르게 설계합니다.</p>
-        <p style="margin-top:1.8rem;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.15);text-transform:uppercase;">WO2015102923 · US7709095</p>
-      </div>
-    </div>
-
-    <!-- 카드 시각화 -->
-    <div class="how-visual">
-      <div class="hv-wrap">
-        <div class="hv-card-stack">
-          <div class="hv-card active" id="hvc0">
-            <div class="hvc-bg"></div>
-            <div class="hvc-glow"></div>
-            <div class="hvc-shine"></div>
-            <div class="hvc-content">
-              <div class="hvc-top"><span class="hvc-step">Solar Spectrum</span></div>
-              <div class="hvc-bottom">
-                <div class="hvc-num">UV · IR</div>
-                <div class="hvc-title">모든 빛의 스펙트라</div>
-                <div class="hvc-label">Unfiltered · 380nm – 2500nm</div>
-              </div>
-            </div>
-          </div>
-          <div class="hv-card" id="hvc1">
-            <div class="hvc-bg"></div>
-            <div class="hvc-glow"></div>
-            <div class="hvc-shine"></div>
-            <div class="hvc-content">
-              <div class="hvc-top"><span class="hvc-step">Layer 01 · UV Block</span></div>
-              <div class="hvc-bottom">
-                <div class="hvc-num">99%</div>
-                <div class="hvc-title">자외선 차단</div>
-                <div class="hvc-label">UV Blocked · 380nm↓</div>
-              </div>
-            </div>
-          </div>
-          <div class="hv-card" id="hvc2">
-            <div class="hvc-bg"></div>
-            <div class="hvc-glow"></div>
-            <div class="hvc-shine"></div>
-            <div class="hvc-content">
-              <div class="hvc-top"><span class="hvc-step">Layer 02 · IR Reject</span></div>
-              <div class="hvc-bottom">
-                <div class="hvc-num">55%</div>
-                <div class="hvc-title">열만 골라 반사</div>
-                <div class="hvc-label">Heat Rejected · Infrared</div>
-              </div>
-            </div>
-          </div>
-          <div class="hv-card" id="hvc3">
-            <div class="hvc-bg"></div>
-            <div class="hvc-glow"></div>
-            <div class="hvc-shine"></div>
-            <div class="hvc-content">
-              <div class="hvc-top"><span class="hvc-step">Layer 03 · Selective</span></div>
-              <div class="hvc-bottom">
-                <div class="hvc-num hvc-num--cyan">72%</div>
-                <div class="hvc-title">빛은 열립니다</div>
-                <div class="hvc-label">Light Passed · Visible</div>
-              </div>
-            </div>
-          </div>
-          <div class="hv-card" id="hvc4">
-            <div class="hvc-bg"></div>
-            <div class="hvc-glow"></div>
-            <div class="hvc-shine"></div>
-            <div class="hvc-content">
-              <div class="hvc-top"><span class="hvc-step">All Layers · Complete</span></div>
-              <div class="hvc-bottom">
-                <div class="hvc-num">5</div>
-                <div class="hvc-title">하나의 공간</div>
-                <div class="hvc-label">Layers · One Space · WO2015102923</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="hv-dots" id="hvDots">
-          <div class="hv-dot on"></div>
-          <div class="hv-dot"></div>
-          <div class="hv-dot"></div>
-          <div class="hv-dot"></div>
-          <div class="hv-dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========================================
      FILM LAYERS — Apple M5 style scroll-driven
 ======================================== -->
 <section id="film-layers">
@@ -2595,13 +2351,11 @@ const heroLabel  = document.getElementById('heroLabel');
 const mainNav    = document.getElementById('mainNav');
 
 // ── 레이아웃 캐시 (resize 시에만 재계산 — RAF에서 reflow 제거) ──
-let _heroH, _whyTop, _whyH, _howTop, _howH, _winH;
+let _heroH, _whyTop, _whyH, _winH;
 function cacheLayout() {
   _heroH  = heroSec.offsetHeight;
   _whyTop = whyStory.offsetTop;
   _whyH   = whyStory.offsetHeight;
-  _howTop = howSec.offsetTop;
-  _howH   = howSec.offsetHeight;
   _winH   = window.innerHeight;
 }
 
@@ -2685,52 +2439,14 @@ function updateWhyStory() {
   whyDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
 }
 
-/* ── HOW Film Layer 500vh sticky ── */
-const howSec    = document.getElementById('how');
-const howSteps  = howSec.querySelectorAll('.how-step');
-const howCards  = howSec.querySelectorAll('.hv-card');
-const hvDots    = howSec.querySelectorAll('.hv-dot');
-const HOW_N     = 5;
-let lastHowIdx  = -1;
-
-function setHowStep(idx) {
-  howSteps.forEach((s, i) => s.classList.toggle('active', i === idx));
-  for (let i = 0; i < HOW_N; i++) {
-    const bg = document.getElementById('hbg' + i);
-    if (bg) bg.classList.toggle('up', i <= idx);
-  }
-  howCards.forEach((c, i) => {
-    c.classList.remove('active', 'prev');
-    if (i === idx)    c.classList.add('active');
-    else if (i < idx) c.classList.add('prev');
-  });
-  hvDots.forEach((d, i) => d.classList.toggle('on', i === idx));
-}
-
-function updateHow() {
-  const sy = window.scrollY;
-  if (sy < _howTop - _winH || sy > _howTop + _howH) return; // 범위 밖 스킵
-  const total = _howH - _winH;
-  if (total <= 0) return;
-  const p   = Math.max(0, Math.min(1, (sy - _howTop) / total));
-  const idx = Math.min(Math.floor(p * HOW_N), HOW_N - 1);
-  if (idx === lastHowIdx) return;
-  lastHowIdx = idx;
-  setHowStep(idx);
-}
-
 /* ── RAF LOOP ── */
 (function init() {
   cacheLayout();
-  window.addEventListener('resize', () => {
-    cacheLayout();
-    baW = baContainer.offsetWidth;
-  }, { passive: true });
+  window.addEventListener('resize', cacheLayout, { passive: true });
 
   (function loop() {
     updateHero();
     updateWhyStory();
-    updateHow();
     requestAnimationFrame(loop);
   })();
 })();

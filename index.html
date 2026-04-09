@@ -1754,13 +1754,14 @@ body.pd-open { overflow: hidden; }
 /* windshield overlay clip container */
 .apply-ws-clip {
   position: absolute;
-  top: 26%;
-  left: 14%;
-  width: 72%;
-  height: 22%;
+  /* G90 windshield: top 32%, bottom 44%, A-pillar 17-83% left-right */
+  top: 31.5%;
+  left: 16%;
+  width: 68%;
+  height: 13%;
   overflow: hidden;
-  /* gentle trapezoid — suggests windshield shape without hard box feel */
-  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+  /* trapezoid: top narrower (A-pillar angle ~6% on each side) */
+  clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
 }
 /* the film itself — grows downward via clip-path (rolling-on effect) */

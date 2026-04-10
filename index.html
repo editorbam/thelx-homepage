@@ -327,11 +327,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .why-dot.active { background: var(--black); transform: scale(1.4); }
 
 /* ============================
-   WHY CARDS — 3D tilt (restructured)
+   SHARED SECTION UTILITIES
 ============================ */
-#why {
-  background: var(--white); padding: var(--section-v) 2rem;
-}
 .section-inner  { max-width: 980px; margin: 0 auto; }
 .section-eyebrow {
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
@@ -347,27 +344,24 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   font-size: 1.05rem; color: var(--gray-3); line-height: 1.7;
   max-width: 520px; margin-bottom: 3.5rem; font-weight: 300;
 }
-.why-cards {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem;
+
+/* ============================
+   WHY STATEMENT
+============================ */
+#why-statement {
+  background: var(--black);
+  padding: 11rem 2rem;
+  text-align: center;
 }
-.why-card {
-  padding: 2.5rem 2rem 2.25rem;
-  background: var(--gray-1);
-  border: .5px solid var(--gray-2);
-  border-radius: 18px;
-  transition: box-shadow .4s, background .2s;
-  transform-style: preserve-3d;
-  position: relative; overflow: hidden; cursor: default;
+.why-stmt-inner { max-width: 820px; margin: 0 auto; }
+.why-stmt-text {
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 300; letter-spacing: -0.03em; line-height: 1.25;
+  color: rgba(255,255,255,.6);
 }
-.why-card-shine {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(circle at 50% 0%, rgba(255,255,255,.55) 0%, transparent 65%);
-  opacity: 0; transition: opacity .3s; border-radius: inherit; z-index: 1;
+.why-stmt-text em {
+  font-style: normal; font-weight: 400; color: var(--white);
 }
-.why-card > *:not(.why-card-shine) { position: relative; z-index: 2; }
-.why-card-num { font-size: 11px; letter-spacing: .15em; color: var(--gray-3); font-weight: 400; margin-bottom: 1.5rem; }
-.why-card-title { font-size: 1.25rem; font-weight: 500; line-height: 1.4; color: var(--black); margin-bottom: .7rem; }
-.why-card-body  { font-size: 13.5px; font-weight: 300; line-height: 1.85; color: var(--gray-3); }
 
 /* ============================
    COMPARE TABLE (restructured)
@@ -882,8 +876,7 @@ footer {
   .mobile-menu { display:flex; }
   body.menu-open { overflow:hidden; }
   .hero-label { display:none; }
-  .why-cards { grid-template-columns:1fr; }
-  .how-pin { gap:2rem; padding:0 1.5rem; }
+.how-pin { gap:2rem; padding:0 1.5rem; }
   .how-visual { display:none; }
 .compare-row-cell { padding:1.2rem 1rem; }
   .compare-col-header { padding:1.4rem 1rem; }
@@ -1541,41 +1534,12 @@ body.pd-open { overflow: hidden; }
   </div>
 </section>
 
-<!-- MARQUEE LIGHT -->
-<div class="marquee-wrap light">
-  <div class="marquee-track">
-    <div class="marquee-item">THE LX <span class="sep">·</span> Solar Gard Premium <span class="sep">·</span> Saint-Gobain <span class="sep">·</span> 차 안의 공간으로 설계한 최초의 필름 <span class="sep">·</span> WO2015102923 <span class="sep">·</span></div>
-    <div class="marquee-item" aria-hidden="true">THE LX <span class="sep">·</span> Solar Gard Premium <span class="sep">·</span> Saint-Gobain <span class="sep">·</span> 차 안의 공간으로 설계한 최초의 필름 <span class="sep">·</span> WO2015102923 <span class="sep">·</span></div>
-  </div>
-</div>
-
 <!-- ========================================
-     WHY CARDS — 3D tilt (restructured)
+     WHY STATEMENT
 ======================================== -->
-<section id="why">
-  <div class="section-inner">
-    <p class="section-eyebrow fi">Why THE LX</p>
-    <h2 class="section-title fi" style="margin-top:.75rem;margin-bottom:2.5rem;">단순한 틴팅이<br><em>아닙니다</em></h2>
-    <div class="why-cards">
-      <div class="why-card fi-card">
-        <div class="why-card-shine"></div>
-        <div class="why-card-num">01</div>
-        <h3 class="why-card-title">세계특허 독점</h3>
-        <p class="why-card-body">WO2015102923. 다른 어떤 브랜드도 복제할 수 없는 5레이어 분광선택 기술.</p>
-      </div>
-      <div class="why-card fi-card">
-        <div class="why-card-shine"></div>
-        <div class="why-card-num">02</div>
-        <h3 class="why-card-title">360년의 소재</h3>
-        <p class="why-card-body">Saint-Gobain 나노세라믹. V-KOOL, LLumar와 같은 회사를 쓰지 않는 이유.</p>
-      </div>
-      <div class="why-card fi-card">
-        <div class="why-card-shine"></div>
-        <div class="why-card-num">03</div>
-        <h3 class="why-card-title">10년 보증</h3>
-        <p class="why-card-body">경쟁사 1~3년. THE LX는 10년을 책임집니다.</p>
-      </div>
-    </div>
+<section id="why-statement">
+  <div class="why-stmt-inner">
+    <p class="why-stmt-text fi-big">이 필름 안에<br><em>무엇이 있는지,</em><br>본 사람은 없습니다.</p>
   </div>
 </section>
 
@@ -2730,32 +2694,6 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
   }
 });
 
-/* ── WHY CARD 3D TILT ── */
-document.querySelectorAll('.why-card').forEach(card => {
-  const shine = card.querySelector('.why-card-shine');
-  let raf=null, tRX=0, tRY=0, cRX=0, cRY=0, hovered=false;
-  const lrp = (a, b, t) => a + (b - a) * t;
-  function anim() {
-    cRX = lrp(cRX, tRX, 0.12);
-    cRY = lrp(cRY, tRY, 0.12);
-    if (!hovered && Math.abs(cRX) < 0.01 && Math.abs(cRY) < 0.01) {
-      card.style.transform = ''; card.style.boxShadow = '';
-      cancelAnimationFrame(raf); raf = null; return;
-    }
-    const lift = hovered ? 1 : 0;
-    card.style.transform  = `perspective(700px) rotateX(${cRX}deg) rotateY(${cRY}deg) translateZ(${lift * 10}px) scale(${1 + lift * 0.015})`;
-    card.style.boxShadow  = `${-cRY * 2.2}px ${cRX * 1.8 + (hovered ? 14 : 0)}px ${hovered ? 52 : 24}px rgba(0,0,0,${hovered ? .18 : .08})`;
-    raf = requestAnimationFrame(anim);
-  }
-  card.addEventListener('mouseenter', () => { hovered = true; if (shine) shine.style.opacity = '1'; if (!raf) raf = requestAnimationFrame(anim); });
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    tRX = ((e.clientY - r.top - r.height / 2) / (r.height / 2)) * -9;
-    tRY = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) *  9;
-    if (shine) shine.style.background = `radial-gradient(circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(255,255,255,.52) 0%, transparent 62%)`;
-  });
-  card.addEventListener('mouseleave', () => { hovered = false; tRX = 0; tRY = 0; if (shine) shine.style.opacity = '0'; if (!raf) raf = requestAnimationFrame(anim); });
-});
 
 /* ── MOBILE MENU ── */
 const hamburger  = document.getElementById('navHamburger');

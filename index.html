@@ -3429,8 +3429,8 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
     wrap.style.visibility = wrapOp > 0.01 ? 'visible' : 'hidden';
     els.forEach(function (el) { el._body.style.opacity = ''; });
 
-    /* 헤더: 78% 등장 → 88%에서 사라짐 (로고에게 자리 양보) */
-    var headerOp = clamp01((progress - 0.78) * 12) * clamp01(1 - (progress - 0.88) * 18);
+    /* 헤더: 진입 즉시 표시 → 레이어 등장하면서 페이드아웃 (0→15%) */
+    var headerOp = clamp01(1 - (progress - 0.03) * 8);
     if (header) header.style.opacity = headerOp;
 
     /* 로고: 87% 등장 → 95%에서 페이드아웃 (dark bg 제거 전에 완전히 사라짐) */
@@ -3466,7 +3466,7 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
 
   /* ── 초기화 ── */
   applyWidth();
-  if (header) header.style.opacity = '0';
+  if (header) header.style.opacity = '1';
   if (logoEl) logoEl.style.opacity = '0';
   wrap.style.opacity    = '0';
   wrap.style.visibility = 'hidden';

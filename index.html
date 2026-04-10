@@ -404,18 +404,29 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cell-lx .compare-row-value    { color:rgba(255,255,255,.88); }
 .cell-lx .compare-row-value.accent { color:var(--white); font-weight:400; }
 
-/* ── COMPARE 호버 ── */
+/* ── COMPARE 행 호버 ── */
 .compare-col-header,
 .compare-row-cell {
-  transition: background .28s ease;
+  transition: background .22s ease, box-shadow .22s ease;
 }
-.compare-col-header.col-normal:hover,
-.compare-row-cell.cell-normal:hover {
-  background: #242428;
+.compare-row-cell.row-hover.cell-normal {
+  background: rgba(255,255,255,.09);
 }
-.compare-col-header.col-lx:hover,
-.compare-row-cell.cell-lx:hover {
-  background: #111;
+.compare-row-cell.row-hover.cell-lx {
+  background: rgba(200,169,110,.1);
+  box-shadow: inset 2px 0 0 rgba(200,169,110,.55);
+}
+.compare-row-cell.row-hover .compare-row-value {
+  color: rgba(255,255,255,.75);
+}
+.compare-row-cell.row-hover.cell-lx .compare-row-value {
+  color: var(--white);
+}
+.compare-col-header.row-hover.col-normal {
+  background: rgba(255,255,255,.07);
+}
+.compare-col-header.row-hover.col-lx {
+  background: rgba(200,169,110,.08);
 }
 
 
@@ -2292,6 +2303,25 @@ body.pd-open { overflow: hidden; }
      JAVASCRIPT
 ======================================== -->
 <script>
+/* ── COMPARE ROW HOVER ── */
+(function(){
+  const grid = document.querySelector('.compare-grid');
+  if (!grid) return;
+  const cells = [...grid.children];
+  cells.forEach((cell, i) => {
+    cell.addEventListener('mouseenter', () => {
+      const j = i % 2 === 0 ? i + 1 : i - 1;
+      cell.classList.add('row-hover');
+      if (cells[j]) cells[j].classList.add('row-hover');
+    });
+    cell.addEventListener('mouseleave', () => {
+      const j = i % 2 === 0 ? i + 1 : i - 1;
+      cell.classList.remove('row-hover');
+      if (cells[j]) cells[j].classList.remove('row-hover');
+    });
+  });
+})();
+
 /* ── CURSOR ── */
 const cur = document.getElementById('cursor');
 // Windows에서는 커스텀 커서 비활성화 (mix-blend-mode 렌더링 차이)

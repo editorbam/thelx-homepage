@@ -1543,7 +1543,7 @@ footer {
   /* ── HERO ── */
   #hero { height:180vh; }
   .hero-label { display:none; }
-  .hero-lx { filter:none !important; will-change:opacity; }
+  .hero-lx { filter:none !important; will-change:opacity, transform; color:#fff; opacity:0.08; font-size:clamp(4rem, 18vw, 8rem); }
   .hero-copy { will-change:opacity; }
   .hero-title { font-size:clamp(2rem, 8vw, 3.2rem); }
   .hero-bridge { font-size:1rem; margin-top:1.2rem; }
@@ -3559,7 +3559,9 @@ function updateHero() {
 
   if (_isMobile) {
     heroLx.style.filter = 'none';
-    heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
+    heroLx.style.color = '#fff';
+    heroLx.style.opacity = (0.08 + 0.92 * p).toFixed(2);
+    heroLx.style.transform = `translate(-50%,-50%) scale(${(1.15 - 0.15 * p).toFixed(3)})`;
     const cp = Math.min(1, p / 0.55);
     heroCopy.style.opacity = (1 - cp).toFixed(2);
   } else {

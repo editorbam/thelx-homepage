@@ -3,8 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE LX — 차 안을 공간으로 설계한 최초의 필름</title>
-<meta name="description" content="세계특허 5레이어 기술과 Saint-Gobain 나노세라믹 소재. THE LX는 자동차 틴팅을 처음으로 공간 설계의 관점으로 접근합니다.">
+<title>THE LX — 하루 90분의 거실</title>
+<meta name="description" content="하루 90분, 매일 들어가는 차 안을 처음으로 설계한 필름. THE LX는 Saint-Gobain 나노세라믹 소재와 세계특허 5레이어 기술로 자외선 99% 차단, 최대 10년 보증을 제공합니다. 전국 200여 개 공식 시공점.">
+<link rel="canonical" href="https://isolargard.com">
+<meta property="og:type" content="website">
+<meta property="og:title" content="THE LX — 하루 90분의 거실">
+<meta property="og:description" content="매일 들어가는 차 안을 처음으로 설계한 필름. Saint-Gobain 세계특허 5레이어, 자외선 99% 차단, 최대 10년 보증.">
+<meta property="og:url" content="https://isolargard.com">
+<meta property="og:image" content="https://isolargard.com/og-image.jpg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="THE LX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="THE LX — 하루 90분의 거실">
+<meta name="twitter:description" content="매일 들어가는 차 안을 처음으로 설계한 필름. Saint-Gobain 세계특허 5레이어, 최대 10년 보증.">
+<meta name="twitter:image" content="https://isolargard.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +34,7 @@ html { scroll-behavior: auto; -webkit-text-size-adjust:100%; text-size-adjust:10
   --gray-2: #e8e8ed;
   --gray-3: #6e6e73;
   --gray-4: #1d1d1f;
-  --accent: #c8a96e;
+  --accent: #ffffff;
   --font: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   --section-v: 8rem;
   --section-v-sm: 5rem;
@@ -35,7 +47,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  cursor: none;
   word-break: keep-all;
 }
 
@@ -46,23 +57,8 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.32); }
 
 a { text-decoration: none; color: inherit; }
-button { cursor: none; font-family: var(--font); border: none; background: none; }
+button { font-family: var(--font); border: none; background: none; }
 
-/* ============================
-   CUSTOM CURSOR
-============================ */
-#cursor {
-  position: fixed;
-  width: 8px; height: 8px;
-  background: #c8a96e;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: width .25s, height .25s, opacity .25s;
-  will-change: left, top;
-}
-#cursor.expand { width: 44px; height: 44px; opacity: .22; }
 
 /* ============================
    SCROLL ANIMATION CLASSES
@@ -129,7 +125,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 
 .nav-hamburger {
   display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: none;
+  background: none; border: none;
   padding: 6px; z-index: 600; position: relative;
 }
 .nav-hamburger span {
@@ -208,12 +204,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   opacity: 0; animation: fadeUp 1s .4s ease forwards;
 }
 .hero-title {
-  font-size: clamp(2.2rem, 4.8vw, 4.4rem);
-  font-weight: 300; line-height: 1.12; letter-spacing: -0.03em; color: #fff;
-  text-shadow: 0 2px 28px rgba(0,0,0,.5), 0 0 1px rgba(0,0,0,.35);
+  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+  font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; color: #fff;
+  text-shadow: 0 2px 32px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.4);
   opacity: 0; animation: fadeUp 1s .7s ease forwards;
 }
-.hero-title em { font-style: normal; font-weight: 500; }
+.hero-title em { font-style: normal; font-weight: 600; }
 .hero-sub {
   font-size: .98rem; font-weight: 400; color: rgba(255,255,255,.95);
   text-shadow:
@@ -222,6 +218,32 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
     0 0 1px rgba(0,0,0,.6);
   margin-top: 1.8rem; line-height: 1.8;
   opacity: 0; animation: fadeUp 1s 1s ease forwards;
+}
+/* 거실 버전 — 인지 다리 (hook 해소) */
+.hero-bridge {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.92);
+  margin-top: 1.6rem;
+  letter-spacing: -0.005em;
+  text-shadow:
+    0 0 16px rgba(0,0,0,.65),
+    0 1px 6px rgba(0,0,0,.85);
+  opacity: 0;
+  animation: fadeUp 1s 1.05s ease forwards;
+}
+/* 거실 버전 — 카테고리 선언 (가장 작게) */
+.hero-tagline {
+  font-size: .82rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.62);
+  margin-top: 0.85rem;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 12px rgba(0,0,0,.6),
+    0 1px 5px rgba(0,0,0,.75);
+  opacity: 0;
+  animation: fadeUp 1s 1.25s ease forwards;
 }
 .hero-btns {
   display: flex; gap: 1rem; margin-top: 2.8rem; flex-wrap: wrap;
@@ -308,47 +330,117 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .marquee-wrap.black .marquee-item .sep { color: rgba(255,255,255,.14); }
 
 /* ============================
-   WHY STORY — 300vh sticky (index.html 내러티브)
+   WHY STORY — Apple style (A/B/C/D blocks)
 ============================ */
-#why-story {
-  height: 250vh; background: var(--gray-1); position: relative;
+.why-hero-block {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: flex-end;
+  padding: clamp(4rem,8vh,8rem) clamp(1.5rem,4vw,4rem);
+  overflow: hidden;
 }
-.why-story-pin {
-  position: sticky; top: 0; height: 100vh;
+.why-hero-block img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+}
+.why-hero-block::after {
+  content:''; position:absolute; inset:0; z-index:1;
+  background: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.3) 100%);
+}
+.why-hero-content { position: relative; z-index: 2; max-width: 780px; }
+.why-hero-eyebrow {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 1.5rem;
+}
+.why-hero-title {
+  font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.03em; color: #fff;
+  margin-bottom: 1.5rem;
+}
+.why-hero-body {
+  font-size: clamp(.95rem,1.1vw,1.15rem); font-weight: 300;
+  line-height: 1.8; color: rgba(255,255,255,.65); max-width: 560px;
+}
+
+/* B — 3-col feature grid */
+.why-features {
+  background: #0a0a0a; padding: clamp(5rem,10vh,9rem) clamp(1.5rem,4vw,4rem);
+}
+.why-features-title {
+  font-size: clamp(1.6rem,3.2vw,2.6rem); font-weight: 600;
+  color: #fff; letter-spacing: -0.02em; margin-bottom: 3rem;
+  max-width: 780px;
+}
+.why-features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  max-width: 1100px;
+}
+.why-feature-card {
+  background: #161616; border-radius: 20px; padding: 2.5rem 2rem;
+  border: .5px solid rgba(255,255,255,.06);
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.why-fc-icon {
+  font-size: 2.4rem; line-height: 1;
+}
+.why-fc-title {
+  font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.3;
+}
+.why-fc-desc {
+  font-size: .9rem; font-weight: 300; color: rgba(255,255,255,.5); line-height: 1.7;
+}
+
+/* D — auto-scroll marquee carousel */
+.why-carousel-wrap {
+  background: #0a0a0a;
+  padding: clamp(3rem,6vh,6rem) 0 clamp(5rem,8vh,8rem);
+  overflow: hidden;
+}
+.why-carousel-head {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 clamp(1.5rem,4vw,4rem); margin-bottom: 2.5rem;
+}
+.why-carousel-title {
+  font-size: clamp(1.4rem,2.8vw,2.2rem); font-weight: 600;
+  color: #fff; letter-spacing: -0.02em;
+}
+.why-carousel-track {
+  display: flex; gap: 1.5rem;
+  width: fit-content;
+  animation: whyMarquee 40s linear infinite;
+}
+.why-carousel-wrap:hover .why-carousel-track {
+  animation-play-state: paused;
+}
+@keyframes whyMarquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.why-carousel-card {
+  flex: 0 0 clamp(280px, 32vw, 380px);
+  border-radius: 20px; overflow: hidden;
+  background: #161616; border: .5px solid rgba(255,255,255,.06);
   display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  overflow: hidden; position: sticky;
 }
-.why-step {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 0 2rem; text-align: center;
-  opacity: 0; transform: translateY(48px);
-  pointer-events: none;
+.why-cc-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
 }
-.why-step.vis-step { pointer-events: auto; }
-.why-step-num {
-  font-size: 10px; letter-spacing: .3em; color: var(--gray-3);
-  margin-bottom: 1.25rem; display: block; font-weight: 400;
-  text-transform: uppercase;
+.why-cc-body { padding: 1.8rem 1.6rem; }
+.why-cc-title {
+  font-size: 1.05rem; font-weight: 600; color: #fff;
+  margin-bottom: .6rem; line-height: 1.3;
 }
-.why-step-text {
-  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
-  font-weight: 300; line-height: 1.35; color: var(--black);
-  letter-spacing: -0.025em; max-width: 720px;
+.why-cc-desc {
+  font-size: .85rem; font-weight: 300; color: rgba(255,255,255,.5);
+  line-height: 1.7;
 }
-.why-step-text strong { font-weight: 600; }
-.why-step-text em { font-style: normal; font-weight: 300; }
-.why-progress {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px;
+@media (max-width: 768px) {
+  .why-hero-block { min-height: 80vh; align-items: center; text-align: center; }
+  .why-hero-content { max-width: 100%; }
+  .why-hero-body { margin: 0 auto; }
+  .why-features-grid { grid-template-columns: 1fr; }
+  .why-carousel-card { flex: 0 0 80vw; }
+  .why-carousel-track { animation-duration: 20s; }
 }
-.why-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--gray-2); transition: background .3s, transform .3s;
-}
-.why-dot.active { background: var(--black); transform: scale(1.4); }
 
 /* ============================
    SHARED SECTION UTILITIES
@@ -436,10 +528,10 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 /* ============================
    VLT — 5단계 패널 (클립패스 커튼 공개)
 ============================ */
-#vlt { height: 650vh; background: var(--black); }
+#vlt { height: 100vh; background: var(--black); }
 
 .vlt-wrap {
-  position: sticky; top: 0;
+  position: relative;
   height: 100vh; overflow: hidden;
 }
 .vlt-img {
@@ -535,7 +627,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .product-tabs-nav::-webkit-scrollbar { display:none; }
 .tab-btn {
   padding:.9rem 1.4rem; font-size:14px; font-weight:400;
-  color:var(--gray-3); cursor:none; position:relative;
+  color:var(--gray-3); position:relative;
   white-space:nowrap; transition:color .2s;
   font-family:var(--font); letter-spacing:.04em;
   display:flex; align-items:center; gap:.5rem; border:none; background:none;
@@ -590,8 +682,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   display: inline-block; margin-top: 1.75rem;
   font-size: 13px; font-weight: 500; letter-spacing: .06em;
   color: var(--black); border-bottom: 1px solid var(--black);
-  padding-bottom: 2px; background: none; border-top: none; border-left: none; border-right: none;
-  cursor: none; font-family: var(--font);
+  padding-bottom: 2px; background: none; border-top: none; border-left: none; border-right: none; font-family: var(--font);
   transition: opacity .2s;
 }
 .product-detail-btn:hover { opacity: .55; }
@@ -651,8 +742,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-seg {
   padding:.65rem 1.6rem; border-radius:980px; border:none;
   background:transparent; color:var(--gray-3);
-  font-size:13px; font-weight:400; letter-spacing:.04em;
-  cursor:none; font-family:var(--font);
+  font-size:13px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
 }
 .cf-seg:hover { color:var(--black); }
@@ -668,7 +758,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   border:.5px solid rgba(0,0,0,.08);
   border-radius:14px;
   background:#fafafa;
-  cursor:none;
   transition:all .25s ease;
   user-select:none;
 }
@@ -735,7 +824,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   border:.5px solid rgba(0,0,0,.08);
   border-radius:12px;
   background:#fafafa;
-  cursor:none;
   display:flex; flex-direction:column; gap:.3rem;
   align-items:flex-start; text-align:left;
   transition:all .25s ease;
@@ -777,8 +865,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-mode-btn {
   padding:.6rem 1.4rem; border-radius:980px; border:none;
   background:transparent; color:var(--gray-3);
-  font-size:12px; font-weight:400; letter-spacing:.04em;
-  cursor:none; font-family:var(--font);
+  font-size:12px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
   display:flex; align-items:center; gap:.4rem;
 }
@@ -824,7 +911,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   border:.5px solid rgba(0,0,0,.08);
   border-radius:10px;
   background:#fafafa;
-  cursor:none;
   font-family:var(--font);
   font-size:.78rem; font-weight:400;
   color:var(--gray-3);
@@ -912,8 +998,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .pf-seg {
   padding:.65rem 1.6rem; border-radius:980px; border:none;
   background:transparent; color:var(--gray-3);
-  font-size:13px; font-weight:400; letter-spacing:.04em;
-  cursor:none; font-family:var(--font);
+  font-size:13px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
 }
 .pf-seg:hover { color:var(--black); }
@@ -933,7 +1018,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   border:.5px solid rgba(0,0,0,.08);
   border-radius:16px;
   background:var(--white);
-  cursor:none;
   font-family:var(--font);
   text-align:left;
   transition:all .25s ease;
@@ -1236,7 +1320,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .rv-dot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: rgba(255,255,255,.15); border: none; cursor: none;
+  background: rgba(255,255,255,.15); border: none;
   transition: background .3s, transform .3s;
   padding: 0;
 }
@@ -1292,7 +1376,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .faq-item   { border-bottom:.5px solid var(--gray-2); }
 .faq-item:first-child { border-top:.5px solid var(--gray-2); }
 .faq-question {
-  width:100%; background:none; border:none; cursor:none;
+  width:100%; background:none; border:none;
   display:flex; align-items:center; justify-content:space-between;
   padding:1.6rem 0; text-align:left; gap:1rem;
 }
@@ -1326,8 +1410,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 select.field-underline option { background:var(--black); color:var(--white); }
 .booking-submit {
   background:var(--white); color:var(--black); border:none;
-  padding:14px 32px; border-radius:980px; font-size:15px; font-weight:500;
-  cursor:none; transition:opacity .2s, transform .15s;
+  padding:14px 32px; border-radius:980px; font-size:15px; font-weight:500; transition:opacity .2s, transform .15s;
   font-family:var(--font); letter-spacing:-0.01em; margin-top:2rem;
 }
 .booking-submit:hover { opacity:.8; transform:translateY(-1px); }
@@ -1373,6 +1456,31 @@ footer {
 .footer-links a { font-size:12px; font-weight:300; color:rgba(255,255,255,.28); transition:color .2s; }
 .footer-links a:hover { color:rgba(255,255,255,.65); }
 .footer-copy { font-size:11px; color:rgba(255,255,255,.18); font-weight:300; width:100%; }
+
+/* ============================
+   KAKAO FLOAT
+============================ */
+.kakao-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 900;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  transition: opacity .4s, transform .4s;
+  opacity: 0; transform: translateY(12px);
+  pointer-events: none;
+  text-decoration: none;
+}
+.kakao-float.show {
+  opacity: 1; transform: none; pointer-events: auto;
+}
+.kakao-float:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,.28);
+  transform: scale(1.06);
+}
+@media (max-width:768px) {
+  .kakao-float { bottom: 20px; right: 16px; width: 48px; height: 48px; }
+}
 
 /* ============================
    KEYFRAMES
@@ -1422,13 +1530,6 @@ footer {
   .compare-row-cell.cell-normal { border-right:none; }
 }
 
-/* 터치 기기 — cursor: none 전면 해제 */
-@media (pointer: coarse) {
-  *, *::before, *::after { cursor: auto !important; }
-  a, button, [role="button"], .tab-btn, .faq-question,
-  .nav-hamburger { cursor: pointer !important; }
-  #cursor { display: none; }
-}
 
 /* ============================
    PRODUCT DETAIL OVERLAY
@@ -1456,7 +1557,7 @@ body.pd-open { overflow: hidden; }
 .pd-nav-back {
   font-size: 13px; font-weight: 400; color: var(--gray-3);
   letter-spacing: .04em; display: flex; align-items: center; gap: .4rem;
-  transition: color .2s; cursor: none;
+  transition: color .2s;
 }
 .pd-nav-back:hover { color: var(--black); }
 .pd-nav-logo {
@@ -1470,7 +1571,7 @@ body.pd-open { overflow: hidden; }
   font-size: 12px; font-weight: 400; letter-spacing: .12em;
   text-transform: uppercase; color: var(--black);
   border: .5px solid rgba(0,0,0,.25); padding: .5rem 1.2rem; border-radius: 980px;
-  transition: background .2s, color .2s; cursor: none;
+  transition: background .2s, color .2s;
 }
 .pd-nav-cta:hover { background: var(--black); color: var(--white); }
 
@@ -1552,13 +1653,13 @@ body.pd-open { overflow: hidden; }
 .pd-btn-primary {
   font-size: 14px; font-weight: 500; letter-spacing: .08em;
   background: var(--white); color: var(--black);
-  padding: .9rem 2.4rem; border-radius: 980px; cursor: none;
+  padding: .9rem 2.4rem; border-radius: 980px;
   transition: opacity .2s;
 }
 .pd-btn-primary:hover { opacity: .85; }
 .pd-btn-ghost {
   font-size: 14px; font-weight: 400; letter-spacing: .08em; color: rgba(255,255,255,.55);
-  padding: .9rem 2.4rem; border-radius: 980px; cursor: none;
+  padding: .9rem 2.4rem; border-radius: 980px;
   border: .5px solid rgba(255,255,255,.2); transition: color .2s, border-color .2s;
 }
 .pd-btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,.5); }
@@ -1566,41 +1667,65 @@ body.pd-open { overflow: hidden; }
 /* ============================
    STORE LOCATOR
 ============================ */
-#store-locator { background:var(--gray-1); padding:var(--section-v) 2rem; }
-.sl-inner { max-width:980px; margin:0 auto; }
+#store-locator {
+  padding:0; background:var(--black);
+}
 
-.sl-controls { margin-bottom:1.5rem; }
+.sl-banner {
+  position:relative; width:100%; aspect-ratio:16/9; overflow:hidden;
+}
+.sl-banner img {
+  width:100%; height:100%; object-fit:cover; object-position:center top; display:block;
+}
+.sl-banner::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to top, var(--black) 0%, rgba(0,0,0,.3) 40%, transparent 100%);
+}
+.sl-hero-text {
+  position:absolute; bottom:2.5rem; left:3rem; z-index:1;
+}
+.sl-hero-text .section-eyebrow {
+  color:rgba(255,255,255,.45); display:block; margin-bottom:.5rem;
+}
+.sl-hero-text .section-title { color:var(--white); }
+.sl-hero-text .section-title em { color:var(--white); }
+
+.sl-body {
+  max-width:980px; margin:0 auto;
+  padding:2.5rem 2rem var(--section-v);
+}
+
+.sl-toolbar {
+  display:flex; gap:1rem; align-items:center; margin-bottom:2rem;
+}
+.sl-select {
+  appearance:none; -webkit-appearance:none;
+  background:rgba(255,255,255,.06) url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 1.2rem center;
+  border:.5px solid rgba(255,255,255,.1); border-radius:12px;
+  padding:.85rem 3rem .85rem 1.2rem;
+  font-family:var(--font); font-size:.95rem; font-weight:400;
+  color:var(--white); cursor:pointer; transition:border-color .2s;
+  min-width:160px;
+}
+.sl-select option { background:#1d1d1f; color:var(--white); }
+.sl-select:hover { border-color:rgba(255,255,255,.25); }
+.sl-select:focus { outline:none; border-color:rgba(255,255,255,.25); }
+
 .sl-search-wrap {
-  display:flex; align-items:center; gap:.75rem;
-  background:var(--white); border:.5px solid var(--gray-2);
+  display:flex; align-items:center; gap:.75rem; flex:1;
+  background:rgba(255,255,255,.06); border:.5px solid rgba(255,255,255,.1);
   border-radius:12px; padding:.85rem 1.2rem;
-  max-width:420px; color:var(--gray-3);
+  color:rgba(255,255,255,.35);
 }
 .sl-search-wrap input {
   border:none; outline:none; background:none; width:100%;
   font-family:var(--font); font-size:.95rem; font-weight:300;
-  color:var(--black); cursor:none;
+  color:var(--white);
 }
-.sl-search-wrap input::placeholder { color:var(--gray-3); }
-
-.sl-region-wrap {
-  display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
-}
-.sl-rtab {
-  display:flex; align-items:center; gap:.35rem;
-  padding:.45rem 1rem; border-radius:980px;
-  border:.5px solid var(--gray-2); background:var(--white);
-  font-size:13px; font-weight:400; color:var(--gray-3);
-  cursor:none; transition:all .2s; font-family:var(--font);
-  white-space:nowrap;
-}
-.sl-rtab:hover { border-color:var(--black); color:var(--black); }
-.sl-rtab.active { background:var(--black); color:var(--white); border-color:var(--black); }
-.sl-rtab.active .sl-cnt { color:rgba(255,255,255,.5); }
-.sl-cnt { font-size:11px; color:var(--gray-3); }
+.sl-search-wrap input::placeholder { color:rgba(255,255,255,.3); }
 
 .sl-result-count {
-  font-size:12px; color:var(--gray-3); letter-spacing:.06em;
+  font-size:12px; color:rgba(255,255,255,.35); letter-spacing:.06em;
   margin-bottom:1.5rem; font-weight:300;
 }
 
@@ -1608,69 +1733,69 @@ body.pd-open { overflow: hidden; }
   display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
 }
 .sl-card {
-  background:var(--white); border:.5px solid var(--gray-2);
+  background:#1d1d1f; border:.5px solid rgba(255,255,255,.07);
   border-radius:16px; padding:1.5rem;
   display:flex; flex-direction:column; gap:.6rem;
-  cursor:none;
   transition: transform .35s cubic-bezier(.22,1,.36,1),
               box-shadow .35s cubic-bezier(.22,1,.36,1),
               border-color .35s;
-  will-change: transform;
 }
 .sl-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(0,0,0,.1);
-  box-shadow: 0 24px 48px rgba(0,0,0,.1), 0 8px 16px rgba(0,0,0,.06);
+  transform: translateY(-6px);
+  border-color:rgba(255,255,255,.15);
+  box-shadow: 0 16px 32px rgba(0,0,0,.4);
 }
 .sl-card-name {
-  font-size:.95rem; font-weight:500; color:var(--black);
+  font-size:.95rem; font-weight:500; color:var(--white);
   line-height:1.4;
 }
 .sl-card-addr {
-  font-size:.82rem; color:var(--gray-3); font-weight:300;
+  font-size:.82rem; color:rgba(255,255,255,.45); font-weight:300;
   line-height:1.5; flex:1;
 }
 .sl-card-phone {
-  font-size:.82rem; color:var(--gray-3); font-weight:300;
+  font-size:.82rem; color:rgba(255,255,255,.45); font-weight:300;
 }
 .sl-card-btns {
   display:flex; gap:.5rem; margin-top:.5rem;
 }
 .sl-btn-map {
   flex:1; text-align:center; padding:.5rem;
-  background:var(--black); color:var(--white);
+  background:var(--white); color:var(--black);
   border-radius:8px; font-size:12px; font-weight:400;
   letter-spacing:.04em; text-decoration:none;
-  cursor:none;
   transition:opacity .2s; font-family:var(--font);
 }
-.sl-btn-map:hover { opacity:.75; }
+.sl-btn-map:hover { opacity:.8; }
 .sl-btn-tel {
   padding:.5rem .85rem;
-  border:.5px solid var(--gray-2); border-radius:8px;
-  font-size:12px; color:var(--gray-3); text-decoration:none;
-  cursor:none;
+  border:.5px solid rgba(255,255,255,.12); border-radius:8px;
+  font-size:12px; color:rgba(255,255,255,.4); text-decoration:none;
   transition:border-color .2s, color .2s; font-family:var(--font);
 }
-.sl-btn-tel:hover { border-color:var(--black); color:var(--black); }
+.sl-btn-tel:hover { border-color:rgba(255,255,255,.3); color:var(--white); }
 
 .sl-empty {
   grid-column:1/-1; text-align:center;
-  padding:4rem 0; color:var(--gray-3); font-size:.9rem; font-weight:300;
+  padding:4rem 0; color:rgba(255,255,255,.35); font-size:.9rem; font-weight:300;
 }
 .sl-more-wrap {
   grid-column:1/-1; text-align:center; padding:2rem 0 0;
 }
 .sl-more-btn {
   padding:.75rem 2.4rem; border-radius:980px;
-  border:.5px solid var(--gray-2); background:var(--white);
-  font-size:.85rem; font-weight:400; color:var(--gray-3);
+  border:.5px solid rgba(255,255,255,.12); background:transparent;
+  font-size:.85rem; font-weight:400; color:rgba(255,255,255,.4);
   cursor:pointer; transition:border-color .2s, color .2s;
   font-family:inherit; letter-spacing:.02em;
 }
-.sl-more-btn:hover { border-color:var(--black); color:var(--black); }
+.sl-more-btn:hover { border-color:rgba(255,255,255,.3); color:var(--white); }
 
 @media(max-width:768px) {
+  .sl-banner { aspect-ratio:4/3; }
+  .sl-hero-text { bottom:1.5rem; left:1.5rem; }
+  .sl-body { padding:2rem 1.25rem 4rem; }
+  .sl-toolbar { flex-direction:column; align-items:stretch; }
   .sl-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:480px) {
@@ -1711,8 +1836,7 @@ body.pd-open { overflow: hidden; }
 .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
 .quiz-option {
   padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.08); border-radius:14px;
-  background:var(--white); font-size:.95rem; color:var(--black);
-  cursor:none; transition:all .25s cubic-bezier(.22,1,.36,1);
+  background:var(--white); font-size:.95rem; color:var(--black); transition:all .25s cubic-bezier(.22,1,.36,1);
   text-align:left; font-family:var(--font); font-weight:300; line-height:1.4;
   box-shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.02);
   position:relative;
@@ -1735,8 +1859,7 @@ body.pd-open { overflow: hidden; }
   display:block; margin:1.75rem auto 0;
   font-size:14px; font-weight:500; letter-spacing:.08em;
   background:var(--black); color:var(--white);
-  padding:.85rem 2.4rem; border-radius:980px;
-  cursor:none; font-family:var(--font); transition:opacity .2s;
+  padding:.85rem 2.4rem; border-radius:980px; font-family:var(--font); transition:opacity .2s;
 }
 .quiz-next:disabled { background:var(--gray-2); color:var(--gray-3); cursor:not-allowed; }
 .quiz-next:not(:disabled):hover { opacity:.75; }
@@ -1745,13 +1868,13 @@ body.pd-open { overflow: hidden; }
 .quiz-nav-start { justify-content:flex-start; }
 .quiz-nav .quiz-next { display:inline-flex; align-items:center; margin:0; }
 .quiz-back {
-  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
+  font-size:14px; color:var(--gray-3); background:none; border:none;
   font-family:var(--font); transition:color .2s; padding:0;
 }
 .quiz-back:hover { color:var(--black); }
 .quiz-back-result { display:block; margin:1rem auto 0; }
 .quiz-retry {
-  font-size:14px; color:var(--gray-3); cursor:none; background:none; border:none;
+  font-size:14px; color:var(--gray-3); background:none; border:none;
   font-family:var(--font); margin-top:.5rem; display:inline-block; transition:color .2s;
 }
 .quiz-retry:hover { color:var(--black); }
@@ -1968,10 +2091,80 @@ body.pd-open { overflow: hidden; }
 }
 
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "자동차 필름을 하면 실제로 뭐가 달라지나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "많은 분이 색이 진하면 다 비슷하다고 생각하시지만, 색이 진해도 열을 전혀 못 막는 필름이 있고 투명에 가까워도 열의 81%를 차단하는 필름이 있습니다. 차이는 소재입니다. THE LX 플래그십 기준 여름 직사광선에서 실내온도가 최대 10~15℃ 낮아지고, 자외선 99% 이상 차단으로 피부와 가죽 시트, 대시보드의 노화를 막습니다. 야간 시야 저하가 걱정되시는 분이 많은데, 투과율 40% 이상 제품은 밤에도 시야에 거의 영향이 없습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "자동차 필름 시공 가격은 어느 정도인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "승용차 전체 시공 기준 약 100만 원대부터 330만 원대까지, 차종과 제품에 따라 달라집니다. THE LX는 플래그십부터 실용 라인까지 7개 제품이 있어 예산에 맞는 선택이 가능합니다. 가격 차이는 시공 직후보다 2~3년 후에 나타납니다. 저가 필름은 시간이 지나면 변색, 기포, 열차단 성능 저하가 생기지만, 프리미엄 필름은 최대 10년까지 보증됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "THE LX 필름은 다른 브랜드와 뭐가 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "체감 차이는 세 가지에서 나옵니다. 첫째, 색왜곡 없는 투명도 — THE LX는 자연광에 가까운 시야를 유지합니다. 둘째, 소재 — 프랑스 360년 기업 Saint-Gobain의 나노세라믹을 사용하며, 세계특허(WO2015102923) 5레이어 분광선택 기술이 적용됩니다. 셋째, 보증 — 경쟁사 대부분이 1~3년인 반면 THE LX는 최대 10년. 대한민국 퍼스트브랜드 대상 2026 수상, Lexus Club Korea 공식 파트너입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "전국 어디서든 시공받을 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "전국 200여 개 공식 인증 시공점에서 가능합니다. 서울, 경기, 부산, 대구, 대전, 광주 등 주요 도시는 물론 강원, 제주까지 분포되어 있습니다. 예약 없이 당일 방문도 가능한 시공점이 있지만, 사전 예약을 권장합니다. 차종에 따라 시공 시간은 약 3~5시간입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "시공 후 관리는 어떻게 하면 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "시공 후 48~72시간 동안은 창문을 내리지 마세요. 시공 직후 필름 안쪽에 작은 물방울이나 자국이 보일 수 있는데, 이는 불량이 아니라 경화 과정에서 생기는 자연 현상이며 1~2주 내에 사라집니다. 열선은 1주일 후 사용을 권장합니다. 프리미엄 필름 기준 수명은 7~10년이며, 보증 기간 내 제품 하자 발생 시 무료 재시공을 보장합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "필름 농도에 법적 제한이 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "운전석과 조수석, 앞유리는 가시광선 투과율(VLT) 70% 이상을 유지해야 합니다. 측면 뒷유리와 후면 유리는 별도 규정이 없어 원하는 농도로 시공 가능합니다. 다만 지나치게 어두운 농도는 야간 후방 시야에 영향을 줄 수 있으므로, 시공 전 전문가 상담을 통해 법규와 운전 환경에 맞는 농도를 선택하시는 것을 권장합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "GPS, 하이패스, 전파에 영향이 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "금속 성분이 포함된 필름은 GPS, 하이패스, 무선 충전 등 전파 수신에 영향을 줄 수 있습니다. THE LX의 세라믹 라인(LX, Xenith IR, S-LINE 등)은 비금속 나노세라믹 소재를 사용하여 전파 간섭이 없습니다. 금속 반사 타입(Vogue, Quantum 등)을 선택하시는 경우, 전면 유리 상단 하이패스 부위는 투명 처리하여 수신 문제를 방지합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "전면만 먼저 시공하고 나중에 나머지를 해도 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "가능합니다. 다만 시기를 나눠서 시공하면 같은 제품이라도 미세한 색감 차이가 생길 수 있습니다. 같은 제품·같은 시공점에서 한 번에 시공하는 것이 색감과 반사감이 가장 균일합니다. 예산 때문에 나눠서 진행하시려면 시공 전 전문가와 상의하여 동일 롯트의 필름을 확보해두는 방법도 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
-
-<div id="cursor"></div>
 
 <!-- 모바일 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
@@ -2012,11 +2205,10 @@ body.pd-open { overflow: hidden; }
     <div class="hero-copy" id="heroCopy">
       <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain</p>
       <h1 class="hero-title">
-        차 안을 공간으로<br>설계한 <em>최초의 필름</em>
+        하루 90분의 <em>거실</em>.
       </h1>
-      <p class="hero-sub">
-        매일 들어가는 공간.<br>아무도 설계하지 않았다. THE LX가 처음이다.
-      </p>
+      <p class="hero-bridge">매일 들어가는 공간.</p>
+      <p class="hero-tagline">차 안을 공간으로 설계한 최초의 필름</p>
       <div class="hero-btns">
         <a href="#why-story" class="btn-dark">우리의 이야기</a>
         <a href="#products"  class="btn-outline-dark">제품 보기</a>
@@ -2039,38 +2231,131 @@ body.pd-open { overflow: hidden; }
 </div>
 
 <!-- ========================================
-     WHY STORY — 3단계 300vh 내러티브 (index.html)
+     WHY STORY A — 풀스크린 선언 (불친절한 시장)
 ======================================== -->
-<section id="why-story">
-  <div class="why-story-pin">
-    <div class="why-step" id="whyStep0">
-      <span class="why-step-num">01 / 03</span>
-      <p class="why-step-text">
-        하루 <strong>1시간 30분</strong>.<br>
-        대한민국 운전자 평균,<br>차 안에 머무르는 시간.
-      </p>
-    </div>
-    <div class="why-step" id="whyStep1">
-      <span class="why-step-num">02 / 03</span>
-      <p class="why-step-text">
-        집도, 사무실도 아닌.<br>
-        <strong>아무도 설계하지 않은</strong> 공간.
-      </p>
-    </div>
-    <div class="why-step" id="whyStep2">
-      <span class="why-step-num">03 / 03</span>
-      <p class="why-step-text">
-        THE LX는<br>
-        <em>그 공간을 처음으로 설계했습니다.</em>
-      </p>
-    </div>
-    <div class="why-progress">
-      <div class="why-dot active" id="whyDot0"></div>
-      <div class="why-dot"        id="whyDot1"></div>
-      <div class="why-dot"        id="whyDot2"></div>
+<div class="why-hero-block" id="why-story">
+  <img src="why-car-top.jpg" alt="THE LX 필름이 시공된 차량" loading="lazy">
+  <div class="why-hero-content fi">
+    <span class="why-hero-eyebrow">WHY THE LX</span>
+    <h2 class="why-hero-title">
+      당신이 알아야 할 것을,<br>아무도 쉽게 말해주지 않았습니다.
+    </h2>
+    <p class="why-hero-body">
+      UV 99%? TSER? VLT? 이 시장은 어려운 숫자로만 말합니다.<br>
+      왜 중요한지, 당신의 차 안에서 무엇이 바뀌는지는 아무도 설명하지 않았습니다.
+    </p>
+  </div>
+</div>
+
+<!-- ========================================
+     WHY STORY B — 3컬럼 피처 그리드 (경험 언어)
+======================================== -->
+<div class="why-features">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="why-hero-eyebrow fi" style="margin-bottom:1rem;">Experience, Not Spec</p>
+    <h3 class="why-features-title fi">숫자가 아니라, 경험으로.</h3>
+    <div class="why-features-grid fi">
+      <div class="why-feature-card">
+        <h4 class="why-fc-title">한여름에도<br>시원한 차</h4>
+        <p class="why-fc-desc">총 태양에너지의 최대 81%를 차단합니다. 에어컨 부담이 줄고, 전기차 배터리 효율이 올라갑니다.</p>
+      </div>
+      <div class="why-feature-card">
+        <h4 class="why-fc-title">눈부심 없이<br>달리는 도로</h4>
+        <p class="why-fc-desc">투과율 15%부터 70%까지. 당신이 원하는 만큼만 빛을 들이고, 나머지는 조용히 막습니다.</p>
+      </div>
+      <div class="why-feature-card">
+        <h4 class="why-fc-title">10년간<br>변하지 않는 보호</h4>
+        <p class="why-fc-desc">자외선 99% 이상 차단. 피부도, 가죽 시트도, 대시보드도. 최대 10년 보증으로 품질을 책임집니다.</p>
+      </div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- ========================================
+     WHY STORY C — 풀스크린 브랜드 선언
+======================================== -->
+<div class="why-hero-block">
+  <img src="why-car-side.jpg" alt="THE LX 차량 사이드뷰" loading="lazy">
+  <div class="why-hero-content fi">
+    <span class="why-hero-eyebrow">THE LX</span>
+    <h2 class="why-hero-title">
+      처음으로<br>쉽고 솔직하게 말합니다.
+    </h2>
+    <p class="why-hero-body">
+      스펙이 아니라 경험으로. "5레이어 나노세라믹"이 아니라 "한여름에도 시원한 차"로.<br>
+      THE LX는 당신이 알아야 할 것을, 당신의 언어로 말하는 최초의 필름 브랜드입니다.
+    </p>
+  </div>
+</div>
+
+<!-- ========================================
+     WHY STORY D — 라이프스타일 캐러셀
+======================================== -->
+<div class="why-carousel-wrap">
+  <div class="why-carousel-head">
+    <p class="why-hero-eyebrow fi" style="margin-bottom:1rem;">Life with THE LX</p>
+    <h3 class="why-carousel-title fi">매일이 달라지는 순간.</h3>
+  </div>
+  <div class="why-carousel-track" id="whyCarouselTrack">
+    <div class="why-carousel-card">
+      <img src="why-carousel-1.jpg" alt="가을 드라이브" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">빛과 함께 달리는 도로</h4>
+        <p class="why-cc-desc">역광에도 시야가 선명합니다. 눈부심 없이, 풍경은 그대로.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card">
+      <img src="why-carousel-2.jpg" alt="차와 함께하는 일상" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">차 안이 편안한 이유</h4>
+        <p class="why-cc-desc">UV 99% 차단. 피부도 시트도 보호받는 공간.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card">
+      <img src="why-carousel-3.jpg" alt="석양 드라이브" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">에어컨을 한 단 낮추다</h4>
+        <p class="why-cc-desc">태양에너지 81% 차단. 한여름에도, 에어컨이 조용해집니다.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card">
+      <img src="why-carousel-4.jpg" alt="일상 주행" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">10년의 약속</h4>
+        <p class="why-cc-desc">세계특허 5레이어. 변색도, 기포도, 박리도 없는 10년.</p>
+      </div>
+    </div>
+    <!-- 무한 루프용 복제 -->
+    <div class="why-carousel-card" aria-hidden="true">
+      <img src="why-carousel-1.jpg" alt="" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">빛과 함께 달리는 도로</h4>
+        <p class="why-cc-desc">역광에도 시야가 선명합니다. 눈부심 없이, 풍경은 그대로.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card" aria-hidden="true">
+      <img src="why-carousel-2.jpg" alt="" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">차 안이 편안한 이유</h4>
+        <p class="why-cc-desc">UV 99% 차단. 피부도 시트도 보호받는 공간.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card" aria-hidden="true">
+      <img src="why-carousel-3.jpg" alt="" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">에어컨을 한 단 낮추다</h4>
+        <p class="why-cc-desc">태양에너지 81% 차단. 한여름에도, 에어컨이 조용해집니다.</p>
+      </div>
+    </div>
+    <div class="why-carousel-card" aria-hidden="true">
+      <img src="why-carousel-4.jpg" alt="" class="why-cc-img" loading="lazy">
+      <div class="why-cc-body">
+        <h4 class="why-cc-title">10년의 약속</h4>
+        <p class="why-cc-desc">세계특허 5레이어. 변색도, 기포도, 박리도 없는 10년.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ========================================
      FILM LAYERS — Apple M5 style scroll-driven
@@ -2080,7 +2365,7 @@ body.pd-open { overflow: hidden; }
     <svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="fl-noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise"/></filter></defs></svg>
     <div id="fl-bg-flash"></div>
     <div class="fl-header" id="fl-header">
-      <h2 class="fl-title">다섯 개의 층. 하나의 필름.</h2>
+      <h2 class="fl-title">5겹의 기술. 한 장의 필름.</h2>
     </div>
     <div id="fl-stage">
       <div id="fl-wrap">
@@ -2133,112 +2418,12 @@ body.pd-open { overflow: hidden; }
     <div class="vlt-divider" style="left:60%;"></div>
     <div class="vlt-divider" style="left:80%;"></div>
 
-    <div class="vlt-counter">
-      <div class="vlt-counter-num"  id="vltNum">—</div>
-      <div class="vlt-counter-label" id="vltLbl">스크롤하세요</div>
-    </div>
-
     <div class="vlt-pips">
       <div class="vlt-pip" id="vp0"></div>
       <div class="vlt-pip" id="vp1"></div>
       <div class="vlt-pip" id="vp2"></div>
       <div class="vlt-pip" id="vp3"></div>
       <div class="vlt-pip" id="vp4"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========================================
-     COMPARE TABLE (restructured)
-======================================== -->
-<section id="compare">
-  <div class="compare-inner">
-    <div class="compare-header fi-big">
-      <h2 class="section-title" style="text-align:center;">일반 필름과 <em>THE LX의 차이</em></h2>
-    </div>
-    <div class="compare-grid fi-big" style="transition-delay:.1s">
-      <div class="compare-col-header col-normal">
-        <span class="compare-col-label">일반 필름</span>
-        <span class="compare-col-name">Standard Film</span>
-      </div>
-      <div class="compare-col-header col-lx">
-        <span class="compare-col-label">THE LX</span>
-        <span class="compare-col-name">Solar Gard Premium</span>
-      </div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">UV 차단율</span><span class="compare-row-value">60 – 75%</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">UV 차단율</span><span class="compare-row-value accent">99%</span></div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">IR 차단율</span><span class="compare-row-value">30 – 45%</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">IR 차단율</span><span class="compare-row-value accent">55%</span></div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">가시광선 투과</span><span class="compare-row-value">제한 (어두워짐)</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">가시광선 투과</span><span class="compare-row-value accent">72% (빛 유지)</span></div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">세계 특허</span><span class="compare-row-value">없음</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">세계 특허</span><span class="compare-row-value accent">WO2015102923</span></div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">보증 기간</span><span class="compare-row-value">1 – 3년</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">보증 기간</span><span class="compare-row-value accent">최대 10년</span></div>
-      <div class="compare-row-cell cell-normal"><span class="compare-row-label">브랜드 모기업</span><span class="compare-row-value">—</span></div>
-      <div class="compare-row-cell cell-lx">    <span class="compare-row-label">브랜드 모기업</span><span class="compare-row-value accent">Saint-Gobain 360년</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========================================
-     AI QUIZ — 나에게 맞는 필름 찾기
-======================================== -->
-<section id="quiz">
-  <div class="quiz-inner">
-    <div class="quiz-header">
-      <h2 class="section-title fi" style="text-align:center;">
-        나에게 맞는<br><em>필름 찾기</em>
-      </h2>
-    </div>
-    <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
-    <p class="quiz-step-indicator" id="quizStepIndicator">1 / 3</p>
-
-    <div class="quiz-step active" id="quizStep1">
-      <p class="quiz-question">주로 누구와<br>함께 탑승하시나요?</p>
-      <div class="quiz-options">
-        <button class="quiz-option quiz-multi" data-q="1" data-v="solo">혼자</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="partner">배우자 · 연인</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="family">자녀와 함께</button>
-        <button class="quiz-option quiz-multi" data-q="1" data-v="varies">상황마다 달라요</button>
-      </div>
-      <div class="quiz-nav quiz-nav-end">
-        <button class="quiz-next" id="quizNext1" disabled>다음 →</button>
-      </div>
-    </div>
-    <div class="quiz-step" id="quizStep2">
-      <p class="quiz-question">차 안에서 불편한 점을<br>모두 선택해주세요</p>
-      <div class="quiz-options">
-        <button class="quiz-option quiz-multi" data-q="2" data-v="heat">뜨거운 열기</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="glare">눈부신 빛</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="privacy">사생활 노출</button>
-        <button class="quiz-option quiz-multi" data-q="2" data-v="uv">자외선 · 피부 손상</button>
-      </div>
-      <div class="quiz-nav">
-        <button class="quiz-back" id="quizBack2">← 이전</button>
-        <button class="quiz-next" id="quizNext2" disabled>다음 →</button>
-      </div>
-    </div>
-    <div class="quiz-step" id="quizStep3">
-      <p class="quiz-question">시공 예산은<br>어느 정도인가요?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-q="3" data-v="low">30만 이하</button>
-        <button class="quiz-option" data-q="3" data-v="mid">30 ~ 70만</button>
-        <button class="quiz-option" data-q="3" data-v="high">70만 이상</button>
-        <button class="quiz-option" data-q="3" data-v="best">최고라면 상관없어</button>
-      </div>
-      <div class="quiz-nav quiz-nav-start">
-        <button class="quiz-back" id="quizBack3">← 이전</button>
-      </div>
-    </div>
-    <div class="quiz-result" id="quizResult">
-      <p class="quiz-result-label">당신에게 맞는 THE LX</p>
-      <p class="quiz-result-product" id="quizResultProduct">S-LINE</p>
-      <p class="quiz-result-reason"  id="quizResultReason">비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.</p>
-      <a href="#products" class="btn-dark" style="display:inline-flex;">제품 확인하기</a>
-      <br>
-      <button class="quiz-back quiz-back-result" id="quizBackResult">← 다시 선택하기</button>
-      <button class="quiz-retry" onclick="resetQuiz()">처음부터 다시 →</button>
     </div>
   </div>
 </section>
@@ -2434,6 +2619,75 @@ body.pd-open { overflow: hidden; }
         </div>
       </div>
 
+    </div>
+
+    <div class="products-cta fi" style="text-align:center; margin-top:3.5rem;">
+      <a href="#pricing" class="btn-dark" style="display:inline-flex;">시공 가격 확인 →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     AI QUIZ — 나에게 맞는 필름 찾기
+======================================== -->
+<section id="quiz">
+  <div class="quiz-inner">
+    <div class="quiz-header">
+      <h2 class="section-title fi" style="text-align:center;">
+        나에게 맞는<br><em>필름 찾기</em>
+      </h2>
+    </div>
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+    <p class="quiz-step-indicator" id="quizStepIndicator">1 / 3</p>
+
+    <div class="quiz-step active" id="quizStep1">
+      <p class="quiz-question">주로 누구와<br>함께 탑승하시나요?</p>
+      <div class="quiz-options">
+        <button class="quiz-option quiz-multi" data-q="1" data-v="solo">혼자</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="partner">배우자 · 연인</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="family">자녀와 함께</button>
+        <button class="quiz-option quiz-multi" data-q="1" data-v="varies">상황마다 달라요</button>
+      </div>
+      <div class="quiz-nav quiz-nav-end">
+        <button class="quiz-next" id="quizNext1" disabled>다음 →</button>
+      </div>
+    </div>
+    <div class="quiz-step" id="quizStep2">
+      <p class="quiz-question">차 안에서 불편한 점을<br>모두 선택해주세요</p>
+      <div class="quiz-options">
+        <button class="quiz-option quiz-multi" data-q="2" data-v="heat">뜨거운 열기</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="glare">눈부신 빛</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="privacy">사생활 노출</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="uv">자외선 · 피부 손상</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="ev">전기차 배터리 효율</button>
+        <button class="quiz-option quiz-multi" data-q="2" data-v="interior">실내 온도 · 인테리어 변색</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="quiz-back" id="quizBack2">← 이전</button>
+        <button class="quiz-next" id="quizNext2" disabled>다음 →</button>
+      </div>
+    </div>
+    <div class="quiz-step" id="quizStep3">
+      <p class="quiz-question">가장 중요한 기준은<br>무엇인가요?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-q="3" data-v="performance">최고의 성능과 보증</button>
+        <button class="quiz-option" data-q="3" data-v="balance">균형 잡힌 프리미엄</button>
+        <button class="quiz-option" data-q="3" data-v="design">개성 있는 외관 · 디자인</button>
+        <button class="quiz-option" data-q="3" data-v="value">실용적인 가성비</button>
+      </div>
+      <div class="quiz-nav quiz-nav-start">
+        <button class="quiz-back" id="quizBack3">← 이전</button>
+      </div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <p class="quiz-result-label">당신에게 맞는 THE LX</p>
+      <p class="quiz-result-product" id="quizResultProduct">S-LINE</p>
+      <p class="quiz-result-reason"  id="quizResultReason">비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.</p>
+      <a href="#pricing" class="btn-dark" style="display:inline-flex;">가격 확인하기</a>
+      <br>
+      <button class="quiz-back quiz-back-result" id="quizBackResult">← 다시 선택하기</button>
+      <button class="quiz-retry" onclick="resetQuiz()">처음부터 다시 →</button>
     </div>
   </div>
 </section>
@@ -2633,30 +2887,15 @@ body.pd-open { overflow: hidden; }
 </section>
 
 <!-- ========================================
-     TRUST NUMBERS (index.html)
+     PROOF — 숫자 + 수상·파트너 (TRUST + AWARDS 통합)
 ======================================== -->
 <section id="trust">
   <div class="section-inner" style="text-align:center;margin-bottom:3rem;">
-    <h2 class="section-title fi" style="text-align:center;">숫자가 말합니다</h2>
+    <span class="section-eyebrow fi">Proof</span>
+    <h2 class="section-title fi" style="text-align:center;">THE LX를 증명하는 것</h2>
   </div>
-  <div class="trust-grid fi-big">
-    <div class="trust-item"><span class="trust-num" data-target="10"  data-suffix="+">0</span><p class="trust-label">년 보증</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="200" data-suffix="+">0</span><p class="trust-label">공식 시공점</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="99"  data-suffix="%">0</span><p class="trust-label">자외선 차단</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="5"   data-suffix="">0</span><p class="trust-label">레이어 특허</p></div>
-  </div>
-</section>
-
-<!-- ========================================
-     AWARDS & RECOGNITION
-======================================== -->
-<section id="awards">
-  <div class="awards-inner">
-    <span class="section-eyebrow fi">Recognition</span>
-    <h2 class="section-title fi">
-      <em>LX</em>와 함께.
-    </h2>
-    <div class="awards-grid">
+  <div class="awards-inner" style="background:#0a0a0a; padding:clamp(2.5rem,5vw,5rem) clamp(1.5rem,3vw,3rem); border-radius:28px; border:.5px solid rgba(255,255,255,.06);">
+    <div class="awards-grid" style="margin-top:0;">
 
       <!-- Lexus — featured (가장 강력한 신뢰 자산) -->
       <div class="award-card featured fi">
@@ -2688,6 +2927,13 @@ body.pd-open { overflow: hidden; }
       </div>
 
     </div>
+  </div>
+
+  <div class="trust-grid fi-big" style="margin-top:5rem;">
+    <div class="trust-item"><span class="trust-num" data-target="10"  data-suffix="+">0</span><p class="trust-label">년 보증</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="200" data-suffix="+">0</span><p class="trust-label">공식 시공점</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="99"  data-suffix="%">0</span><p class="trust-label">자외선 차단</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="5"   data-suffix="">0</span><p class="trust-label">레이어 특허</p></div>
   </div>
 </section>
 
@@ -2738,63 +2984,90 @@ body.pd-open { overflow: hidden; }
     <h2 class="faq-title fi">자주 묻는 질문</h2>
     <div class="faq-list fi" style="transition-delay:.15s;">
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">법적으로 허용되는 가시광선 투과율은?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>국내 도로교통법상 이전·조수석·측면 앞 유리는 가시광선 투과율 70% 이상을 유지해야 합니다. THE LX 제품은 법적 기준을 준수하며, 시공 전 전문가가 차량별 최적 사양을 안내드립니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">자동차 필름을 하면 실제로 뭐가 달라지나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>많은 분이 "어두우면 다 비슷한 거 아닌가?"라고 생각하시는데, 색이 진해도 열을 전혀 못 막는 필름이 있고, 투명에 가까워도 열의 81%를 차단하는 필름이 있습니다. 차이는 소재입니다. THE LX 플래그십 기준 여름 직사광선에서 실내온도가 최대 10~15℃ 낮아지고, 자외선 99% 이상 차단으로 피부와 가죽 시트, 대시보드의 노화를 막습니다. 장거리 운전 시 눈부심도 줄어듭니다. 야간 시야가 걱정되시는 분이 많은데, 투과율 40% 이상 제품은 밤에도 시야 저하가 거의 없습니다. 시공 전 전문가가 주·야간 운전 환경에 맞는 농도를 안내드립니다.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">기존 필름을 제거해야 시공이 가능한가요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>기존 필름이 있는 경우 반드시 제거 후 시공해야 합니다. 중첩 시공은 투과율 저하, 기포 발생, 보증 무효 원인이 됩니다. 기존 필름 제거 서비스는 공식 시공점에서 함께 진행 가능합니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">자동차 필름 시공 가격은 어느 정도인가요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>승용차 전체 시공 기준 약 100만 원대부터 330만 원대까지, 차종과 제품에 따라 달라집니다. THE LX는 플래그십부터 실용 라인까지 7개 제품이 있어 예산에 맞는 선택이 가능합니다. 한 가지 알아두실 점은, 자외선 차단율은 저가 필름도 99%로 거의 같습니다. 가격 차이를 만드는 건 열차단 성능입니다. 저가 필름은 시간이 지나면 변색, 기포, 열차단 저하가 생기지만, 프리미엄 필름은 소재 자체가 다르기 때문에 최대 10년까지 보증됩니다. 홈페이지의 가격 계산기에서 차종·부위·제품별 예상 금액을 바로 확인할 수 있습니다.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">시공 후 주의사항이 있나요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>시공 후 48~72시간 이내 창문을 내리지 않는 것이 좋습니다. 경화 완료 전 창문 조작 시 필름이 벗겨질 수 있습니다. 맑은 날씨, 겨울에는 경화 시간이 다소 길어질 수 있으며, 이 기간 중 내부에 작은 물방울이 보일 수 있으나 자연스럽게 사라집니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">THE LX 필름은 다른 브랜드와 뭐가 다른가요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>스펙 숫자만 보면 브랜드 간 차이가 안 보일 수 있습니다. 체감 차이는 세 가지에서 나옵니다. 첫째, 색왜곡 없는 투명도 — THE LX는 자연광에 가까운 시야를 유지합니다. 둘째, 소재 — 프랑스 360년 기업 Saint-Gobain의 나노세라믹을 사용하며, 세계특허(WO2015102923) 5레이어 분광선택 기술이 적용됩니다. 셋째, 보증 — 경쟁사 대부분이 1~3년인 반면 THE LX는 최대 10년. 대한민국 퍼스트브랜드 대상 2026 수상, Lexus Club Korea 공식 파트너이기도 합니다.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">전국 어디서도 시공받을 수 있나요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>전국 200여 개 공식 인증 시공점이 이용 중입니다. 수도권뿐 아니라 지방 주요 도시에도 시공점이 있어 가까운 곳에서 받으실 수 있습니다. 시공점 위치는 홈페이지 또는 상담 전화를 통해 확인 가능합니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">전국 어디서든 시공받을 수 있나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>전국 200여 개 공식 인증 시공점에서 가능합니다. 서울, 경기, 부산, 대구, 대전, 광주 등 주요 도시는 물론 강원, 제주까지 분포되어 있습니다. 예약 없이 당일 방문도 가능한 시공점이 있지만, 사전 예약을 권장합니다. 차종에 따라 시공 시간은 약 3~5시간이며, 대기 공간이 마련된 시공점도 있습니다. 홈페이지 하단의 시공점 찾기에서 지역별 검색과 예약 상담이 가능합니다.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">보증 기간 내 문제 발생 시 처리는?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>보증 기간 내 들뜸, 기포, 변색 등 제품 하자 발생 시 시공점 방문 또는 고객센터 접수를 통해 무료 재시공을 보장합니다. 외부 충격에 의한 손상은 보증 범위에서 제외됩니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">시공 후 관리는 어떻게 하면 되나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>시공 후 48~72시간 동안은 창문을 내리지 마세요. 시공 직후 필름 안쪽에 작은 물방울이나 자국이 보일 수 있는데, 이는 불량이 아니라 경화 과정에서 생기는 자연 현상이며 1~2주 내에 사라집니다. 열선은 1주일 후 사용을 권장합니다. 경화가 완료되면 별도 관리 없이 일반 세차만으로 충분합니다. 프리미엄 필름 기준 수명은 7~10년이며, 보증 기간 내 기포·변색·박리 등 제품 하자 발생 시 무료 재시공을 보장합니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-question-text">필름 농도에 법적 제한이 있나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>운전석과 조수석, 앞유리는 가시광선 투과율(VLT) 70% 이상을 유지해야 합니다. 측면 뒷유리와 후면 유리는 별도 규정이 없어 원하는 농도로 시공 가능합니다. 다만 지나치게 어두운 농도는 야간 후방 시야에 영향을 줄 수 있으므로, 시공 전 전문가 상담을 통해 법규와 운전 환경에 맞는 농도를 선택하시는 것을 권장합니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-question-text">GPS, 하이패스, 전파에 영향이 있나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>금속 성분이 포함된 필름은 GPS, 하이패스, 무선 충전 등 전파 수신에 영향을 줄 수 있습니다. THE LX의 세라믹 라인(LX, Xenith IR, S-LINE 등)은 비금속 나노세라믹 소재를 사용하여 전파 간섭이 없습니다. 금속 반사 타입(Vogue, Quantum 등)을 선택하시는 경우, 전면 유리 상단 하이패스 부위는 투명 처리하여 수신 문제를 방지합니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-question-text">전면만 먼저 시공하고 나중에 나머지를 해도 되나요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>가능합니다. 다만 시기를 나눠서 시공하면 같은 제품이라도 미세한 색감 차이가 생길 수 있습니다. 같은 제품·같은 시공점에서 한 번에 시공하는 것이 색감과 반사감이 가장 균일합니다. 예산 때문에 나눠서 진행하시려면 시공 전 전문가와 상의하여 동일 롯트(생산 배치)의 필름을 확보해두는 방법도 있습니다.</p></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ========================================
-     PROCESS — 시공 4단계
+     STORE LOCATOR
 ======================================== -->
-<section id="process">
-  <div class="section-inner">
-    <span class="section-eyebrow fi">How it works</span>
-    <h2 class="section-title fi">시공, <em>이렇게 진행됩니다</em></h2>
-    <div class="process-steps fi-big">
-      <div class="process-step">
-        <span class="process-num">01</span>
-        <h3 class="process-title">상담</h3>
-        <p class="process-body">차량 모델과 원하는 환경을 말씀해 주세요. 전문가가 최적의 제품을 안내드립니다.</p>
-      </div>
-      <div class="process-divider"></div>
-      <div class="process-step">
-        <span class="process-num">02</span>
-        <h3 class="process-title">예약</h3>
-        <p class="process-body">가까운 공식 인증 시공점을 선택하고 원하는 날짜로 예약하세요.</p>
-      </div>
-      <div class="process-divider"></div>
-      <div class="process-step">
-        <span class="process-num">03</span>
-        <h3 class="process-title">시공</h3>
-        <p class="process-body">Saint-Gobain 인증 기술자가 정밀 시공합니다. 평균 소요 시간 2~4시간.</p>
-      </div>
-      <div class="process-divider"></div>
-      <div class="process-step">
-        <span class="process-num">04</span>
-        <h3 class="process-title">보증</h3>
-        <p class="process-body">시공 완료 즉시 보증서 발급. 최대 10년간 품질을 책임집니다.</p>
-      </div>
+<section id="store-locator">
+  <div class="sl-banner fi">
+    <img src="store-hero.jpg" alt="THE LX & Solar Gard Premium Flagship Store" loading="lazy">
+    <div class="sl-hero-text">
+      <span class="section-eyebrow">Find a Store</span>
+      <h2 class="section-title">내 근처<br><em>시공점 찾기</em></h2>
     </div>
   </div>
+
+  <div class="sl-body">
+    <div class="sl-toolbar fi">
+      <select class="sl-select" id="slRegion">
+        <option value="all">전체 지역</option>
+        <option value="서울특별시">서울</option>
+        <option value="경기도">경기</option>
+        <option value="인천광역시">인천</option>
+        <option value="부산광역시">부산</option>
+        <option value="대구광역시">대구</option>
+        <option value="대전광역시">대전</option>
+        <option value="광주광역시">광주</option>
+        <option value="울산광역시">울산</option>
+        <option value="경상남도">경남</option>
+        <option value="경상북도">경북</option>
+        <option value="전라남도">전남</option>
+        <option value="전라북도">전북</option>
+        <option value="충청남도">충남</option>
+        <option value="충청북도">충북</option>
+        <option value="강원도">강원</option>
+        <option value="제주도">제주</option>
+        <option value="세종특별자치시">세종</option>
+      </select>
+      <div class="sl-search-wrap">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <input type="text" id="slSearch" placeholder="시공점명 또는 주소 검색" autocomplete="off">
+      </div>
+    </div>
+
+    <p class="sl-result-count" id="slCount">437개의 시공점</p>
+
+    <div class="sl-grid" id="slGrid"></div>
+  </div>
 </section>
+
 
 <!-- ========================================
      BOOKING FORM (index.html)
@@ -2806,6 +3079,28 @@ body.pd-open { overflow: hidden; }
       오늘부터,<br><em>다른 공간</em>
     </h2>
     <p class="booking-sub fi"></p>
+
+    <div class="booking-steps fi" style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:3rem; padding:1.4rem 0; border-top:.5px solid rgba(255,255,255,.1); border-bottom:.5px solid rgba(255,255,255,.1);">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">01</span>
+        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">상담</span>
+      </div>
+      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">02</span>
+        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">예약</span>
+      </div>
+      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">03</span>
+        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">시공</span>
+      </div>
+      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">04</span>
+        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">보증</span>
+      </div>
+    </div>
 
     <form class="booking-form" id="bookingForm">
       <div class="form-group">
@@ -2846,53 +3141,23 @@ body.pd-open { overflow: hidden; }
       <div class="booking-success-check">✓</div>
       <p>예약이 잘 접수되었습니다.<br>빠른 시일 내 연락드리겠습니다.</p>
     </div>
+
+    <div class="booking-kakao fi" style="margin-top:3rem; padding-top:2rem; border-top:.5px solid rgba(255,255,255,.1); text-align:center;">
+      <p style="font-size:.85rem; color:rgba(255,255,255,.45); margin-bottom:1rem;">빠른 상담을 원하시나요?</p>
+      <a href="http://pf.kakao.com/_rxlIxeK/chat" target="_blank" rel="noopener" class="btn-kakao" style="display:inline-flex; align-items:center; gap:.5rem; background:#FEE500; color:#191919; font-size:13px; font-weight:600; padding:.75rem 1.6rem; border-radius:980px; text-decoration:none; transition:opacity .3s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#191919"><path d="M12 3C6.48 3 2 6.54 2 10.84c0 2.76 1.84 5.18 4.6 6.58-.14.52-.92 3.36-.95 3.58 0 0-.02.16.08.22.1.06.22.02.22.02.3-.04 3.44-2.26 3.98-2.64.66.1 1.36.14 2.07.14 5.52 0 10-3.54 10-7.9S17.52 3 12 3z"/></svg>
+        카카오톡 1:1 상담
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- ========================================
-     STORE LOCATOR
-======================================== -->
-<section id="store-locator">
-  <div class="sl-inner">
-    <span class="section-eyebrow fi">Find a Store</span>
-    <h2 class="section-title fi">내 근처<br><em>시공점 찾기</em></h2>
 
-    <div class="sl-controls fi">
-      <div class="sl-search-wrap">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.3"/>
-          <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-        </svg>
-        <input type="text" id="slSearch" placeholder="시공점명 또는 주소 검색" autocomplete="off">
-      </div>
-    </div>
 
-    <div class="sl-region-wrap fi">
-      <button class="sl-rtab active" data-r="all">전체 <span class="sl-cnt">437</span></button>
-      <button class="sl-rtab" data-r="서울특별시">서울 <span class="sl-cnt">66</span></button>
-      <button class="sl-rtab" data-r="경기도">경기 <span class="sl-cnt">124</span></button>
-      <button class="sl-rtab" data-r="인천광역시">인천 <span class="sl-cnt">27</span></button>
-      <button class="sl-rtab" data-r="부산광역시">부산 <span class="sl-cnt">24</span></button>
-      <button class="sl-rtab" data-r="대구광역시">대구 <span class="sl-cnt">30</span></button>
-      <button class="sl-rtab" data-r="대전광역시">대전 <span class="sl-cnt">19</span></button>
-      <button class="sl-rtab" data-r="광주광역시">광주 <span class="sl-cnt">17</span></button>
-      <button class="sl-rtab" data-r="울산광역시">울산 <span class="sl-cnt">14</span></button>
-      <button class="sl-rtab" data-r="경상남도">경남 <span class="sl-cnt">19</span></button>
-      <button class="sl-rtab" data-r="경상북도">경북 <span class="sl-cnt">24</span></button>
-      <button class="sl-rtab" data-r="전라남도">전남 <span class="sl-cnt">16</span></button>
-      <button class="sl-rtab" data-r="전라북도">전북 <span class="sl-cnt">17</span></button>
-      <button class="sl-rtab" data-r="충청남도">충남 <span class="sl-cnt">13</span></button>
-      <button class="sl-rtab" data-r="충청북도">충북 <span class="sl-cnt">11</span></button>
-      <button class="sl-rtab" data-r="강원도">강원 <span class="sl-cnt">11</span></button>
-      <button class="sl-rtab" data-r="제주도">제주 <span class="sl-cnt">4</span></button>
-      <button class="sl-rtab" data-r="세종특별자치시">세종 <span class="sl-cnt">1</span></button>
-    </div>
-
-    <p class="sl-result-count" id="slCount">437개의 시공점</p>
-
-    <div class="sl-grid" id="slGrid"></div>
-  </div>
-</section>
+<!-- 카카오톡 플로팅 버튼 -->
+<a href="http://pf.kakao.com/_rxlIxeK/chat" target="_blank" rel="noopener" id="kakaoFloat" class="kakao-float" aria-label="카카오톡 상담">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3C6.48 3 2 6.54 2 10.84c0 2.76 1.84 5.18 4.6 6.58-.14.52-.92 3.36-.95 3.58 0 0-.02.16.08.22.1.06.22.02.22.02.3-.04 3.44-2.26 3.98-2.64.66.1 1.36.14 2.07.14 5.52 0 10-3.54 10-7.9S17.52 3 12 3z"/></svg>
+</a>
 
 <!-- FOOTER -->
 <footer>
@@ -3088,35 +3353,6 @@ body.pd-open { overflow: hidden; }
   observer.observe(grid);
 })();
 
-/* ── CURSOR ── */
-const cur = document.getElementById('cursor');
-// Windows에서는 커스텀 커서 비활성화 (mix-blend-mode 렌더링 차이)
-const isWindows = /Win/.test(navigator.platform || navigator.userAgent);
-if (isWindows) {
-  cur.style.display = 'none';
-  document.body.style.cursor = '';
-  document.querySelectorAll('button, a, [style*="cursor:none"]').forEach(el => el.style.cursor = '');
-} else {
-  document.addEventListener('mousemove', e => {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top  = e.clientY + 'px';
-  });
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cur.classList.add('expand'));
-    el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
-  });
-
-  // 시공점 그리드 — slRender()로 동적 생성되는 a/button에 이벤트 위임
-  const slGridEl = document.getElementById('slGrid');
-  if (slGridEl) {
-    slGridEl.addEventListener('mouseover', e => {
-      if (e.target.closest('a, button')) cur.classList.add('expand');
-    });
-    slGridEl.addEventListener('mouseout', e => {
-      if (e.target.closest('a, button')) cur.classList.remove('expand');
-    });
-  }
-}
 
 /* ── HERO blur→reveal + bg transition ── */
 const heroSec    = document.getElementById('hero');
@@ -3127,11 +3363,12 @@ const heroLabel  = document.getElementById('heroLabel');
 const mainNav    = document.getElementById('mainNav');
 
 // ── 레이아웃 캐시 (resize 시에만 재계산 — RAF에서 reflow 제거) ──
+const whyStory = document.getElementById('why-story');
 let _heroH, _whyTop, _whyH, _winH;
 function cacheLayout() {
   _heroH  = heroSec.offsetHeight;
-  _whyTop = whyStory.offsetTop;
-  _whyH   = whyStory.offsetHeight;
+  _whyTop = whyStory ? whyStory.offsetTop : 0;
+  _whyH   = whyStory ? whyStory.offsetHeight : 0;
   _winH   = window.innerHeight;
 }
 
@@ -3153,9 +3390,7 @@ function updateHero() {
   heroSticky.style.backgroundColor = `rgb(${g},${g},${g})`;
   heroLx.style.color = `rgb(${Math.round(255 * bgP)},${Math.round(255 * bgP)},${Math.round(255 * bgP)})`;
 
-  // Hero에 영상 배경 → 항상 어두운 톤. nav/cursor는 진입 즉시 light 모드
   mainNav.classList.add('on-dark');
-  cur.classList.add('light');
   if (bgP > 0.4) {
     heroSticky.classList.add('going-dark');
   } else {
@@ -3166,63 +3401,6 @@ function updateHero() {
   heroLabel.textContent = pct > 0 ? `Blur ${pct}%` : 'Clear';
 }
 
-/* ── WHY STORY 3-step sticky ── */
-const whyStory    = document.getElementById('why-story');
-const whyStoryPin = whyStory.querySelector('.why-story-pin');
-const whySteps    = whyStory.querySelectorAll('.why-step');
-const whyDots     = whyStory.querySelectorAll('.why-dot');
-
-function updateWhyStory() {
-  const sy = window.scrollY;
-  if (sy < _whyTop - _winH || sy > _whyTop + _whyH) return; // 범위 밖 스킵
-  const scrolled = sy - _whyTop;
-  const total    = _whyH - _winH;
-  const progress = Math.max(0, Math.min(1, scrolled / total));
-  const stepSize = 1 / whySteps.length;
-  let activeIdx  = 0;
-
-  whySteps.forEach((step, i) => {
-    const sp = (progress - i * stepSize) / stepSize;
-    if (sp <= 0) {
-      step.style.opacity   = 0;
-      step.style.transform = 'translateY(48px)';
-    } else if (sp < 0.25) {
-      const t = sp / 0.25;
-      step.style.opacity   = t;
-      step.style.transform = `translateY(${(1 - t) * 48}px)`;
-      activeIdx = i;
-    } else if (sp < 0.75) {
-      step.style.opacity   = 1;
-      step.style.transform = 'translateY(0)';
-      activeIdx = i;
-    } else if (sp < 1 && i < whySteps.length - 1) {
-      const t = (sp - 0.75) / 0.25;
-      step.style.opacity   = 1 - t;
-      step.style.transform = `translateY(${-t * 32}px)`;
-      activeIdx = i;
-    } else {
-      if (i === whySteps.length - 1) {
-        step.style.opacity   = 1;
-        step.style.transform = 'translateY(0)';
-        activeIdx = i;
-      } else {
-        step.style.opacity   = 0;
-        step.style.transform = 'translateY(-32px)';
-      }
-    }
-  });
-
-  whyDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
-
-  // 배경 보간: 75% 이후 #f5f5f7 → #070707
-  const bgP = Math.max(0, Math.min(1, (progress - 0.75) / 0.25));
-  const ch  = (a, b) => Math.round(a + (b - a) * bgP);
-  whyStory.style.background = `rgb(${ch(245,7)},${ch(245,7)},${ch(247,7)})`;
-
-  // Dead zone fade-out: FILM LAYERS와 동시에 시작되므로 빠르게 사라짐 (첫 30vh)
-  const deadZone = Math.max(0, Math.min(1, (scrolled - total) / (_winH * 0.3)));
-  whyStoryPin.style.opacity = 1 - deadZone;
-}
 
 /* ── RAF LOOP ── */
 (function init() {
@@ -3231,7 +3409,6 @@ function updateWhyStory() {
 
   (function loop() {
     updateHero();
-    updateWhyStory();
     requestAnimationFrame(loop);
   })();
 })();
@@ -3559,9 +3736,41 @@ if (prodSec) prodIO.observe(prodSec);
     prods.forEach(x => x.classList.remove('active'));
     b.classList.add('active');
     state.product = b.dataset.product;
+    POS_LIST.forEach(pos => state.positionProducts[pos] = state.product);
+    // 사용자가 직접 선택하면 추천 배지 제거
+    document.querySelectorAll('.cf-prod-badge').forEach(el => el.remove());
     updateCheckPrices();
     render();
   }));
+
+  // QUIZ → PRICING 연결: 추천 제품 자동 선택 + 배지
+  function applyQuizProduct(product) {
+    if (!product || !PROD_LIST.includes(product)) return;
+    state.product = product;
+    POS_LIST.forEach(pos => state.positionProducts[pos] = product);
+    prods.forEach(b => {
+      b.classList.toggle('active', b.dataset.product === product);
+      b.querySelectorAll('.cf-prod-badge').forEach(el => el.remove());
+      if (b.dataset.product === product) {
+        const badge = document.createElement('span');
+        badge.className = 'cf-prod-badge';
+        badge.textContent = '당신의 추천';
+        badge.style.cssText = 'position:absolute; top:-9px; right:-6px; background:#fff; color:#0a0a0a; font-size:9px; font-weight:600; padding:3px 8px; border-radius:980px; letter-spacing:.04em; white-space:nowrap; box-shadow:0 4px 14px rgba(0,0,0,.25); z-index:2;';
+        b.style.position = 'relative';
+        b.appendChild(badge);
+      }
+    });
+    if (state.mode === 'custom') buildCustomBlocks();
+    updateCheckPrices();
+    render();
+  }
+  window.applyQuizToPricing = applyQuizProduct;
+
+  // 초기 로드 시 sessionStorage 확인 (페이지 새로고침 대응)
+  try {
+    const saved = sessionStorage.getItem('quizProduct');
+    if (saved) applyQuizProduct(saved);
+  } catch (e) {}
 
   updateCheckPrices();
   render();
@@ -3637,73 +3846,26 @@ if (prodSec) prodIO.observe(prodSec);
   pRender();
 })();
 
-/* ── VLT 5패널 클립패스 순차 공개 ── */
+/* ── VLT 5패널 동시 공개 (IntersectionObserver) ── */
 (function() {
   const section = document.getElementById('vlt');
-  const numEl   = document.getElementById('vltNum');
-  const lblEl   = document.getElementById('vltLbl');
   if (!section) return;
+  const bands = ['vb0', 'vb1', 'vb2', 'vb3', 'vb4'].map(id => document.getElementById(id)).filter(Boolean);
+  const pips  = ['vp0', 'vp1', 'vp2', 'vp3', 'vp4'].map(id => document.getElementById(id)).filter(Boolean);
 
-  const STAGES = [
-    { id:'vb0', pip:'vp0', name:'LX 15', sub:'Visible Light Transmittance · 15%' },
-    { id:'vb1', pip:'vp1', name:'LX 25', sub:'Visible Light Transmittance · 25%' },
-    { id:'vb2', pip:'vp2', name:'LX 40', sub:'Visible Light Transmittance · 40%' },
-    { id:'vb3', pip:'vp3', name:'LX 55', sub:'Visible Light Transmittance · 55%' },
-    { id:'vb4', pip:'vp4', name:'LX 70', sub:'Visible Light Transmittance · 70%' },
-  ];
-  const N = STAGES.length;
-  let revealed = -1;
-
-  function setInfo(idx) {
-    if (idx < 0) { numEl.textContent = '—'; lblEl.textContent = '스크롤하세요'; return; }
-    numEl.textContent = STAGES[idx].name;
-    lblEl.textContent = STAGES[idx].sub;
-  }
-
-  function onScroll() {
-    const rect     = section.getBoundingClientRect();
-    const secH     = section.offsetHeight;
-    const winH     = window.innerHeight;
-    const scrolled = -rect.top;
-    const total    = secH - winH;
-    const p        = Math.max(0, Math.min(0.9999, scrolled / total));
-
-    if (p < 0.04) {
-      if (revealed !== -1) {
-        STAGES.forEach(s => {
-          document.getElementById(s.id).classList.remove('on');
-          document.getElementById(s.pip).classList.remove('on');
-        });
-        revealed = -1; setInfo(-1);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        bands.forEach(b => b.classList.add('on'));
+        pips.forEach(p => p.classList.add('on'));
+      } else {
+        bands.forEach(b => b.classList.remove('on'));
+        pips.forEach(p => p.classList.remove('on'));
       }
-      return;
-    }
+    });
+  }, { threshold: 0.35 });
 
-    // 0.04 ~ 1.0 구간을 5단계로 나눔
-    const adj = (p - 0.04) / 0.96;
-    const idx = Math.min(Math.floor(adj * N), N - 1);
-
-    // 앞으로 스크롤: 새 패널 공개
-    if (idx > revealed) {
-      for (let i = revealed + 1; i <= idx; i++) {
-        document.getElementById(STAGES[i].id).classList.add('on');
-        document.getElementById(STAGES[i].pip).classList.add('on');
-      }
-      revealed = idx; setInfo(idx);
-    }
-
-    // 뒤로 스크롤: 패널 숨김
-    if (idx < revealed) {
-      for (let i = revealed; i > idx; i--) {
-        document.getElementById(STAGES[i].id).classList.remove('on');
-        document.getElementById(STAGES[i].pip).classList.remove('on');
-      }
-      revealed = idx; setInfo(idx);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  io.observe(section);
 }());
 
 
@@ -3749,11 +3911,6 @@ if (prodSec) prodIO.observe(prodSec);
   stage.addEventListener('mouseenter', () => clearInterval(timer));
   stage.addEventListener('mouseleave', () => resetTimer());
 
-  // 커서 확장
-  dotsWrap.querySelectorAll('.rv-dot').forEach(d => {
-    d.addEventListener('mouseenter', () => cur.classList.add('expand'));
-    d.addEventListener('mouseleave', () => cur.classList.remove('expand'));
-  });
 
   go(0);
   resetTimer();
@@ -3832,9 +3989,12 @@ document.addEventListener('keydown', e => {
 
 });
 
-/* ── NAV on-dark 스크롤 감지 ── */
+/* ── NAV on-dark 스크롤 감지 + 카카오 플로팅 ── */
+const kakaoFloat = document.getElementById('kakaoFloat');
 window.addEventListener('scroll', () => {
-  if (window.scrollY >= _heroH) mainNav.classList.remove('on-dark');
+  const sy = window.scrollY;
+  if (sy >= _heroH) mainNav.classList.remove('on-dark');
+  if (kakaoFloat) kakaoFloat.classList.toggle('show', sy > _winH * 0.8);
 }, { passive: true });
 
 /* ============================
@@ -4192,28 +4352,22 @@ function goBooking() {
 pdCtaBook.addEventListener('click', goBooking);
 pdBookBtn.addEventListener('click', goBooking);
 
-// 커서 확장 — 오버레이 버튼에도 적용
-pdOverlay.querySelectorAll('button').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
-});
 
 /* ── STORE LOCATOR ── */
 const STORE_DATA = [{"r":"서울특별시","n":"THE LX 강남점","a":"서울 강남구 언주로151길 18","p":"010-6469-2221"},{"r":"서울특별시","n":"THE LX 강동 굽은다리역점","a":"서울 강동구 길동 320-1","p":"02-2088-8150"},{"r":"서울특별시","n":"THE LX 강서점","a":"서울 강서구 화곡로66길 153","p":"010-4396-1135"},{"r":"서울특별시","n":"THE LX 광나루점","a":"서울 성동구 광나루로 294","p":"010-7757-7090"},{"r":"서울특별시","n":"THE LX 구로점","a":"서울 구로구 구로동 468","p":"010-3729-7686"},{"r":"서울특별시","n":"THE LX 길동점","a":"서울 강동구 양재대로124길 73","p":"010-4972-8887"},{"r":"서울특별시","n":"THE LX 대치점","a":"서울 강남구 대치동 984","p":"02-544-8228"},{"r":"서울특별시","n":"THE LX 동대문점","a":"서울 동대문구 한천로 139","p":"010-9872-9808"},{"r":"서울특별시","n":"THE LX 문정점","a":"서울 송파구 송파대로 111","p":"010-3263-1476"},{"r":"서울특별시","n":"THE LX 사당점","a":"서울 서초구 방배천로2길 53","p":"02-6348-1269 / 010-7166-1269"},{"r":"서울특별시","n":"THE LX 서울 마포점","a":"서울 마포구 토정로 265-7","p":"010-5910-7111"},{"r":"서울특별시","n":"THE LX 서초점","a":"서울 서초구 서초대로42길 23","p":"010-6288-8548"},{"r":"서울특별시","n":"THE LX 선릉점","a":"서울 강남구 봉은사로43길 21","p":"010-9521-0010"},{"r":"서울특별시","n":"THE LX 성수점","a":"서울 성동구 성수동2가 250-59","p":"010-5137-8678"},{"r":"서울특별시","n":"THE LX 송파점","a":"서울 송파구 오금동 52-22","p":"010-2114-2929"},{"r":"서울특별시","n":"THE LX 양재점","a":"서울 서초구 마방로4길 16-17","p":"010-9156-3500"},{"r":"서울특별시","n":"THE LX 양천점","a":"서울 양천구 국회대로 39","p":"02-2605-1335"},{"r":"서울특별시","n":"THE LX 언주로점","a":"서울 강남구 언주로69길 19","p":"010-4563-9275"},{"r":"서울특별시","n":"THE LX 영등포점","a":"서울 영등포구 디지털로81길 6","p":"010-8704-7077"},{"r":"서울특별시","n":"THE LX 용산 한강로점","a":"서울 용산구 한강로3가 40-202","p":"010-5635-5668"},{"r":"서울특별시","n":"THE LX 중랑점","a":"서울 중랑구 면목동 1546","p":"010-6618-3900"},{"r":"서울특별시","n":"솔라가드 프리미엄 가락 송파점","a":"서울 송파구 문정동 28-1","p":"010 4124-4865"},{"r":"서울특별시","n":"솔라가드 프리미엄 가락점","a":"서울 송파구 송이로32길 23","p":"010-2001-8885"},{"r":"서울특별시","n":"솔라가드 프리미엄 강서 등촌점","a":"서울 강서구 화곡로61길 108","p":"010-3004-0131"},{"r":"서울특별시","n":"솔라가드 프리미엄 고덕점","a":"서울 강동구 아리수로 244","p":"010-9875-1991"},{"r":"서울특별시","n":"솔라가드 프리미엄 구로디지털단지점","a":"서울 구로구 남부순환로 1279","p":"010-7762-9513"},{"r":"서울특별시","n":"솔라가드 프리미엄 금천점","a":"서울 금천구 남부순환로112길 51","p":"010-6501-5924"},{"r":"서울특별시","n":"솔라가드 프리미엄 김포공항점","a":"서울 강서구 방화대로6마길 32-7","p":"010-4055-9120"},{"r":"서울특별시","n":"솔라가드 프리미엄 논현점","a":"서울 강남구 학동로50길 23","p":"010-3309-4311"},{"r":"서울특별시","n":"솔라가드 프리미엄 도봉점","a":"서울 도봉구 마들로 690","p":"010-4517-0843"},{"r":"서울특별시","n":"솔라가드 프리미엄 독산점","a":"서울 금천구 시흥대로 314","p":"010-3854-5479"},{"r":"서울특별시","n":"솔라가드 프리미엄 동작점","a":"서울 동작구 동작동 66-1","p":"010-4913-7136"},{"r":"서울특별시","n":"솔라가드 프리미엄 망우점","a":"서울 중랑구 망우로 448","p":"02-434-3111"},{"r":"서울특별시","n":"솔라가드 프리미엄 면목점","a":"서울 중랑구 동일로109길 116","p":"010-7620-4963"},{"r":"서울특별시","n":"솔라가드 프리미엄 목동점","a":"서울 양천구 목동 516-2","p":"010-3726-9826"},{"r":"서울특별시","n":"솔라가드 프리미엄 문정점","a":"서울 송파구 동남로8길 10","p":"010-4124-4865"},{"r":"서울특별시","n":"솔라가드 프리미엄 미아점","a":"서울 강북구 미아동 318-24","p":"010-9939-8426"},{"r":"서울특별시","n":"솔라가드 프리미엄 방배점","a":"서울 서초구 방배동 980-43","p":"010-7666-5207"},{"r":"서울특별시","n":"솔라가드 프리미엄 방이점","a":"서울 송파구 오금로 144","p":"02-421-5244"},{"r":"서울특별시","n":"솔라가드 프리미엄 상계점","a":"서울 노원구 상계로7길 25","p":"010-4517-0843"},{"r":"서울특별시","n":"솔라가드 프리미엄 서대문 은평점","a":"서울 은평구 증산로 257","p":"010-9911-4163"},{"r":"서울특별시","n":"솔라가드 프리미엄 서초 남부순환로점","a":"서울 서초구 서초동 1420-18","p":"010-7683-3735"},{"r":"서울특별시","n":"솔라가드 프리미엄 서초 반포점","a":"서울 서초구 신반포로 315","p":"010-2207-0720"},{"r":"서울특별시","n":"솔라가드 프리미엄 성북점","a":"서울 성북구 안암로 61-1","p":"02-986-1190"},{"r":"서울특별시","n":"솔라가드 프리미엄 성산점","a":"서울 마포구 성산동 591-5","p":"010-9162-1805"},{"r":"서울특별시","n":"솔라가드 프리미엄 수락점","a":"서울 노원구 동일로 1744","p":"010-9958-0457"},{"r":"서울특별시","n":"솔라가드 프리미엄 신림점","a":"서울 관악구 남부순환로 1496","p":"010-3154-0213"},{"r":"서울특별시","n":"솔라가드 프리미엄 신목로점","a":"서울 양천구 신목로 22","p":"010-6362-3423"},{"r":"서울특별시","n":"솔라가드 프리미엄 신사역점","a":"서울 강남구 도산대로16길 13-5","p":"010-5127-1844"},{"r":"서울특별시","n":"솔라가드 프리미엄 쌍문점","a":"서울 도봉구 쌍문동 684","p":"010-3652-9176"},{"r":"서울특별시","n":"솔라가드 프리미엄 안암점","a":"서울 성북구 안암로 61-1","p":"02-986-1190 / 010-4299-8789"},{"r":"서울특별시","n":"솔라가드 프리미엄 역삼점","a":"서울 강남구 논현로 552","p":"010-6495-1554"},{"r":"서울특별시","n":"솔라가드 프리미엄 영등포점","a":"서울 영등포구 선유로 170","p":"010-8947-1411"},{"r":"서울특별시","n":"솔라가드 프리미엄 용답점","a":"서울 성동구 천호대로 450","p":"010-3055-3566"},{"r":"서울특별시","n":"솔라가드 프리미엄 용산점","a":"서울 용산구 남영동 114","p":"010-3364-3491"},{"r":"서울특별시","n":"솔라가드 프리미엄 우이점","a":"서울 강북구 삼양로173길 83","p":"010-2120-1469"},{"r":"서울특별시","n":"솔라가드 프리미엄 이촌점","a":"서울 용산구 이촌로 30","p":"02-717-4970"},{"r":"서울특별시","n":"솔라가드 프리미엄 잠실점","a":"서울 송파구 삼전로 53","p":"010-8209-8783"},{"r":"서울특별시","n":"솔라가드 프리미엄 중곡점","a":"서울 광진구 긴고랑로 87","p":"010-9711-0114"},{"r":"서울특별시","n":"솔라가드 프리미엄 중랑상봉점","a":"서울 중랑구 봉우재로 79","p":"010-5258-8777"},{"r":"서울특별시","n":"솔라가드 프리미엄 중랑점","a":"서울 중랑구 동일로 715","p":"010-8851-9438"},{"r":"서울특별시","n":"솔라가드 프리미엄 천호점","a":"서울 강동구 천호동 133-1","p":"010-9908-4680"},{"r":"서울특별시","n":"솔라가드 프리미엄 청량리점","a":"서울 동대문구 서울시립대로 78","p":"010-4641-3950"},{"r":"서울특별시","n":"솔라가드 프리미엄 포이점","a":"서울 강남구 개포로28길 32","p":"0507-1408-0158"},{"r":"서울특별시","n":"솔라가드 프리미엄 하월곡점","a":"서울 성북구 하월곡동 82-211","p":"010-2703-3710"},{"r":"서울특별시","n":"솔라가드 프리미엄 한강대로점","a":"서울 용산구 한강대로39길 20","p":"02-797-3390"},{"r":"인천광역시","n":"THE LX 논현동 본점","a":"인천 남동구 논현동 767-11","p":"010-3897-4632"},{"r":"인천광역시","n":"THE LX 부평점","a":"인천광역시 부평구 부평동 756-302","p":"010-3889-3869"},{"r":"인천광역시","n":"THE LX 인천 동춘점","a":"인천 연수구 송도힐즈로1길 11","p":"010-3747-8284"},{"r":"인천광역시","n":"THE LX 인천 송도점","a":"인천 연수구 하모니로36번길 15","p":"032-831-1646,010-7432-1646"},{"r":"인천광역시","n":"THE LX 청라 원창점","a":"인천 서구 북항로32번길 66","p":"010-6868-3485"},{"r":"인천광역시","n":"THE LX 청라 중봉대로점","a":"인천 서구 중봉대로376번길 9","p":"010-9081-1728"},{"r":"인천광역시","n":"솔라가드 프리미엄 간석점","a":"인천 남동구 석정로497번길 83","p":"010-6203-6130"},{"r":"인천광역시","n":"솔라가드 프리미엄 송도 신도시점","a":"인천 연수구 송도동 23-3","p":"010-9154-9485"},{"r":"인천광역시","n":"솔라가드 프리미엄 송도 유원지점","a":"인천 연수구 솔밭로70번길 4","p":"010-8322-6381"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 경원대로점","a":"인천 남동구 경원대로 960","p":"032-424-5554"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 금곡점","a":"인천 서구 봉수대로 1601","p":"010-3917-8452"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 논현점","a":"인천 남동구 소래역동로 6-11","p":"010-7942-3137"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 도화점","a":"인천 미추홀구 도화동 989-9","p":"010-9390-3633"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 영종도점","a":"인천 중구 운중로 137-7","p":"010-4103-2239"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 주원고개점","a":"인천 남동구 경인로 548","p":"010-4200-4687"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 청라점","a":"인천 서구 청라에메랄드로41번길 23-1","p":"010-8290-8809"},{"r":"인천광역시","n":"솔라가드 프리미엄 인천 효성점","a":"인천 계양구 봉오대로531번길 23","p":"010-7100-8407"},{"r":"인천광역시","n":"솔라가드 프리미엄 청라 가정점","a":"인천 서구 염곡로498번길 8","p":"010-8405-8992"},{"r":"인천광역시","n":"솔라가드 프리밈엄 인천 북항점","a":"인천 서구 북항로193번길 17","p":"01054440706"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 강화점","a":"인천 강화군 선원면 중앙로 200","p":"010-7100-7296"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 구월점","a":"인천광역시 남동구 남동대로 748번길 18 트윈빌","p":"010-8555-7019"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 도림점","a":"인천광역시 남동구 논고개로 409(도림동)","p":"010-9025-2387"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 문학점","a":"인천 미추홀구 매소홀로 552-1","p":"010-5374-7978, 032-426-6464"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 부평청천점","a":"인천광역시 부평구 평천로 163-1 (청천동,1층)","p":"010-3365-5533"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 서운점","a":"인천광역시 계양구 아나지로 515, 1,2층(서운동)","p":"010-8630-1984"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 작전점","a":"인천 계양구 계산로108번길 27","p":"010-9277-0777"},{"r":"인천광역시","n":"솔라가드프리미엄 인천 청라국제도시점","a":"인천광역시 서구 청라커낼로319번길 8","p":"010-9173-0389, 032-568-0389"},{"r":"경기도","n":"THE LX  분당 운중점","a":"경기 성남시 분당구 운중동 1019-5","p":"010-9918-4065"},{"r":"경기도","n":"THE LX  용인 처인점","a":"경기 용인시 처인구 포곡읍 선장2로 34","p":"010-5353-1019"},{"r":"경기도","n":"THE LX 가평점","a":"경기 가평군 가평읍 보납로 38","p":"010-9077-9125"},{"r":"경기도","n":"THE LX 경기광주점","a":"경기 광주시 도척면 저수지길 17","p":"010-7162-4601"},{"r":"경기도","n":"THE LX 광명 KTX점","a":"경기 광명시 일직로99번안길 14-1","p":"010-2741-8942"},{"r":"경기도","n":"THE LX 광명 하안점","a":"경기 광명시 한내일로 35","p":"010-4709-9803"},{"r":"경기도","n":"THE LX 구리 갈매점","a":"경기도 구리시 갈매동 539-6 1층","p":"010-8694-4990"},{"r":"경기도","n":"THE LX 군포 부곡점","a":"경기 군포시 삼성로20번길 8-15","p":"010-2288-9732"},{"r":"경기도","n":"THE LX 기흥구점","a":"경기도 용인시 기흥구 영덕동 568-1","p":"010-4000-5432 , 010-9798-4885"},{"r":"경기도","n":"THE LX 김포 구래점","a":"경기 김포시 양촌읍 양곡1로2번길 16","p":"010-8852-9342"},{"r":"경기도","n":"THE LX 김포 장기점","a":"경기도 김포시 김포한강2로24번길 134-50","p":"010-3747-2888"},{"r":"경기도","n":"THE LX 김포 풍무점","a":"경기 김포시 풍무로238번길 75","p":"010-8428-2878"},{"r":"경기도","n":"THE LX 남양주 다산점","a":"경기 남양주시 다산중앙로20번길 10-98","p":"010-6449-2686"},{"r":"경기도","n":"THE LX 남양주 별내점","a":"경기 남양주시 식송1로 55","p":"010-3294-3837"},{"r":"경기도","n":"THE LX 동백점","a":"경기도 용인시 기흥구 동백동612-1 1층","p":"010-2372-4558"},{"r":"경기도","n":"THE LX 동탄2신도시점","a":"경기 화성시 동탄기흥로520번가길 10-10","p":"010-5917-9911"},{"r":"경기도","n":"THE LX 부천 약대점","a":"경기 부천시 원미구 신흥로 320","p":"010-8681-4868"},{"r":"경기도","n":"THE LX 분당점","a":"경기 성남시 분당구 백현동 591-8","p":"010-8797-3376"},{"r":"경기도","n":"THE LX 서하남점","a":"경기 하남시 신우실로 140","p":"010-9140-5887"},{"r":"경기도","n":"THE LX 성남점","a":"경기도 성남시 중원구 둔촌대로 52번길 8","p":"010-2460-1032"},{"r":"경기도","n":"THE LX 수원 광교점","a":"경기도 수원시 영통구 동수원로 542-37 1층","p":"010-8845-5423"},{"r":"경기도","n":"THE LX 수원 권선점","a":"경기 수원시 권선구 정조로 241","p":"010-2194-1474"},{"r":"경기도","n":"THE LX 시흥 능곡점","a":"경기 시흥시 승지로69번길 22","p":"010-2225-5622"},{"r":"경기도","n":"THE LX 시흥 대야점","a":"경기 시흥시 은계로338번길 27","p":"010-7234-8755"},{"r":"경기도","n":"THE LX 시흥점","a":"경기 시흥시 수인로2421번길 98","p":"010-5794-3656"},{"r":"경기도","n":"THE LX 안산 월피점","a":"경기도 안산시 상록구 월피로93","p":"010-9994-2700"},{"r":"경기도","n":"THE LX 안성점","a":"경기도 안성시 안성맞춤대로 1299","p":"010-8255-0228"},{"r":"경기도","n":"THE LX 양주 광사점","a":"경기 양주시 고읍남로39번길 129-25","p":"010-8728-3121"},{"r":"경기도","n":"THE LX 여주점","a":"경기 여주시 현암로 57","p":"010-4135-4311"},{"r":"경기도","n":"THE LX 오산 운암점","a":"경기 오산시 부산동길 6","p":"010-8906-4776"},{"r":"경기도","n":"THE LX 의정부 금오동점","a":"경기 의정부시 호국로 1447","p":"010-9359-4239"},{"r":"경기도","n":"THE LX 의정부점","a":"경기 의정부시 송현로82번길 40-8","p":"010-8686-0386"},{"r":"경기도","n":"THE LX 이천점","a":"경기 이천시 이섭대천로 1310","p":"010-9957-4815"},{"r":"경기도","n":"THE LX 일산 덕양구점","a":"경기 고양시 덕양구 고양대로 1992","p":"010-7707-7410"},{"r":"경기도","n":"THE LX 일산 동구점","a":"경기도 고양시 일산동구 식사동 570-1","p":"010-8944-4823"},{"r":"경기도","n":"THE LX 일산 서구청점","a":"경기 고양시 일산서구 덕이동 1387-27","p":"010-6421-4850"},{"r":"경기도","n":"THE LX 하남미사점","a":"경기 하남시 망월동 843-7","p":"010-6616-0457"},{"r":"경기도","n":"THE LX 화성 동탄점","a":"경기도 화성시 능동 1096-13번지","p":"010-2009-2668"},{"r":"경기도","n":"THE LX신동백점","a":"경기 용인시 기흥구 언동로 45","p":"010-8353-5141"},{"r":"경기도","n":"솔라가드 프리미엄 경기광주 신현점","a":"경기 광주시 문형산안길 6-5","p":"010-6768-4756"},{"r":"경기도","n":"솔라가드 프리미엄 경기광주 직동점","a":"경기 광주시 직동 157-1","p":"010-9394-2652"},{"r":"경기도","n":"솔라가드 프리미엄 구리 토평점","a":"경기 구리시 벌말로70번길 36","p":"010-4019-4016"},{"r":"경기도","n":"솔라가드 프리미엄 남양주 사릉점","a":"경기 남양주시 진건읍 사릉로 132","p":"010-9066-1715"},{"r":"경기도","n":"솔라가드 프리미엄 대왕판교로점","a":"경기 성남시 분당구 대왕판교로 286","p":"010-9183-4991"},{"r":"경기도","n":"솔라가드 프리미엄 덕양 원흥점","a":"경기 고양시 덕양구 서삼릉1길 65-12","p":"010-9262-5345"},{"r":"경기도","n":"솔라가드 프리미엄 민락점","a":"경기 의정부시 오목로225번길 24-6","p":"010-9139-9075"},{"r":"경기도","n":"솔라가드 프리미엄 법곳점","a":"경기 고양시 일산서구 법곳길115번길 82-25","p":"010-5321-3411"},{"r":"경기도","n":"솔라가드 프리미엄 부천 괴안점","a":"경기 부천시 안곡로 190","p":"010-5015-5545"},{"r":"경기도","n":"솔라가드 프리미엄 부천 길주로점","a":"경기 부천시 길주로 369","p":"010-6202-5750"},{"r":"경기도","n":"솔라가드 프리미엄 부천 상동점","a":"경기 부천시 원미구 상이로21번길 8-8","p":"010-9285-7008"},{"r":"경기도","n":"솔라가드 프리미엄 부천 송내점","a":"경기 부천시 소사구 중동로22번길 29","p":"010-5957-7755"},{"r":"경기도","n":"솔라가드 프리미엄 부천 여월점","a":"경기 부천시 오정구 소사로 664","p":"010-8693-2055"},{"r":"경기도","n":"솔라가드 프리미엄 부천 춘의점","a":"경기 부천시 길주로 387","p":"010-4116-1283"},{"r":"경기도","n":"솔라가드 프리미엄 분당 궁내점","a":"경기도 성남시 분당구 궁내동 210-15","p":"010-3268-3437"},{"r":"경기도","n":"솔라가드 프리미엄 사송점","a":"경기 성남시 수정구 동판교로 310","p":"010-4004-1577"},{"r":"경기도","n":"솔라가드 프리미엄 성남 신촌점","a":"경기 성남시 수정구 신촌남로 31-4","p":"010-8561-5289"},{"r":"경기도","n":"솔라가드 프리미엄 성남 위례점","a":"경기 성남시 수정구 위례서일로1길 3-16","p":"010-5101-6290"},{"r":"경기도","n":"솔라가드 프리미엄 성남 정자점","a":"경기 성남시 분당구 정자동 228-5","p":"010-9114-5942"},{"r":"경기도","n":"솔라가드 프리미엄 성남시청점","a":"경기 성남시 중원구 여수동 360","p":"010-3234-6290"},{"r":"경기도","n":"솔라가드 프리미엄 수원 고색점","a":"경기 수원시 권선구 서부로 1610","p":"010-4599-1294"},{"r":"경기도","n":"솔라가드 프리미엄 수원 신동점","a":"경기 수원시 영통구 권선로882번길 108-28","p":"010-5693-6480"},{"r":"경기도","n":"솔라가드 프리미엄 수원 장안점","a":"경기 수원시 장안구 이목동 167-1","p":"010-4619-3544"},{"r":"경기도","n":"솔라가드 프리미엄 안산 와동점","a":"경기 안산시 단원구 선부로 286","p":"010-2168-8574"},{"r":"경기도","n":"솔라가드 프리미엄 오산점","a":"경기 오산시 청학로 124-6","p":"010-9059-7687"},{"r":"경기도","n":"솔라가드 프리미엄 용인 보정점","a":"경기 용인시 기흥구 용구대로2469번길 64","p":"010-6351-5222"},{"r":"경기도","n":"솔라가드 프리미엄 용인 신정로점","a":"경기 용인시 기흥구 신정로151번길 45","p":"010-6656-0183"},{"r":"경기도","n":"솔라가드 프리미엄 의정부 시청점","a":"경기 의정부시 범골로 70","p":"010-4578-2876"},{"r":"경기도","n":"솔라가드 프리미엄 의정부 장암점","a":"경기 의정부시 동일로 205-1","p":"010-4906-7754"},{"r":"경기도","n":"솔라가드 프리미엄 일산 경의로점","a":"경기 고양시 일산서구 경의로 873","p":"010-4076-7476"},{"r":"경기도","n":"솔라가드 프리미엄 일산 삼송점","a":"경기 고양시 덕양구 삼원로3길 71","p":"010-7515-8555"},{"r":"경기도","n":"솔라가드 프리미엄 일산 설문점","a":"경기 고양시 일산동구 은마길 227","p":"010-2677-8236"},{"r":"경기도","n":"솔라가드 프리미엄 파주 동패점","a":"경기 고양시 일산서구 덕이로292번길 63","p":"010-4128-2285"},{"r":"경기도","n":"솔라가드 프리미엄 파주 빙고재길점","a":"경기 파주시 천정구로 107","p":"010-5824-7472"},{"r":"경기도","n":"솔라가드 프리미엄 파주 상지석점","a":"경기 파주시 운정로 140","p":"010-5552-8921"},{"r":"경기도","n":"솔라가드 프리미엄 평동점","a":"경기도 수원시 권선구 평동 13-99, 13-26","p":"010-9193-7600"},{"r":"경기도","n":"솔라가드 프리미엄 평택 세교점","a":"경기 평택시 세교7길 83-4","p":"010-8950-3610"},{"r":"경기도","n":"솔라가드 프리미엄 포천 축석점","a":"경기 포천시 소흘읍 이동교로 8","p":"010-5811-9501"},{"r":"경기도","n":"솔라가드 프리미엄 하남 감일점","a":"경기 하남시 감일남로 33","p":"010-8927-4862"},{"r":"경기도","n":"솔라가드 프리미엄 하남 망월점","a":"경기 하남시 미사강변한강로346번길 24","p":"010-6576-1400"},{"r":"경기도","n":"솔라가드 프리미엄 향동점","a":"경기 고양시 덕양구 꽃내음2길 50-8","p":"010-9389-5485"},{"r":"경기도","n":"솔라가드 프리미엄 호계점","a":"경기 안양시 동안구 귀인로 76","p":"010-4006-6598"},{"r":"경기도","n":"솔라가드 프리미엄 화성 기야점","a":"경기 화성시 우정읍 남양만로 441-10","p":"031-351-4353"},{"r":"경기도","n":"솔라가드 프리미엄 화성 병점점","a":"경기 화성시 경기대로 1073","p":"010-5765-2568"},{"r":"경기도","n":"솔라가드 프리미엄 화성 봉담점","a":"경기 화성시 봉담읍 동화역말길 73-23","p":"010-9455-7889"},{"r":"경기도","n":"솔라가드 프리미엄 화성 영천점","a":"경기 화성시 지산1길 25-5","p":"010-2600-1000"},{"r":"경기도","n":"솔라가드 프리미엄 화성 율암점","a":"경기 화성시 팔탄면 율암길95번길 36","p":"010-2413-0322"},{"r":"경기도","n":"솔라가드 프리미엄 화성 테크노시티점","a":"경기 화성시 동탄순환대로 731","p":"010-5539-1474"},{"r":"경기도","n":"솔라가드 프리미엄 화성 향남점","a":"경기도 화성시 팔탄면 가재리 286","p":"010-6216-5345"},{"r":"경기도","n":"솔라가드 프리미엄 화성장지점","a":"경기 화성시 동탄장지천3길 7-26","p":"010-9783-2901"},{"r":"경기도","n":"솔라가드프리미엄 경기광주 율동공원점","a":"경기 광주시 신현동 740-7","p":"010-8816-1553"},{"r":"경기도","n":"솔라가드프리미엄 경기광주 태전점","a":"경기도 광주시 삼동 246-10","p":"010-8959-6638"},{"r":"경기도","n":"솔라가드프리미엄 광명 노온사점","a":"경기도 광명시 노온사동 760-1","p":"010-7746-7606"},{"r":"경기도","n":"솔라가드프리미엄 광명 소하점","a":"경기도 광명시 한내로 13번길6, 1층(소하동)","p":"010-2993-7819"},{"r":"경기도","n":"솔라가드프리미엄 구리 인창점","a":"경기도 구리시 동구릉로 22-1, 1층","p":"010-7131-8580"},{"r":"경기도","n":"솔라가드프리미엄 김포 마산점","a":"경기도 김포시 김포한강7로22번길 174-104, 1층(마산동)","p":"010-2132-0930"},{"r":"경기도","n":"솔라가드프리미엄 김포 한강신도시점","a":"경기 김포시 양촌읍 김포한강8로 20-2","p":"010-6432-2040"},{"r":"경기도","n":"솔라가드프리미엄 김포 한강점","a":"경기도 김포시 한강8로 20-2","p":"010-6432-2040"},{"r":"경기도","n":"솔라가드프리미엄 부천 심곡점","a":"경기도 부천시 심중로86 (신곡동)","p":"010-2914-8776"},{"r":"경기도","n":"솔라가드프리미엄 분당 서현점","a":"경기도 성남시 분당구 불정로420번길 44","p":"010-7344-9937"},{"r":"경기도","n":"솔라가드프리미엄 분당 야탑점","a":"경기도 성남시 분당구 판교로 610번길 12","p":"010-8415-2420"},{"r":"경기도","n":"솔라가드프리미엄 수원 권선점","a":"경기도 수원시 권선구 권선동 1326-2","p":"010-8955-2373"},{"r":"경기도","n":"솔라가드프리미엄 수원 서수원점","a":"경기도 수원시 권선구 구운동 931-4","p":"010-8564-3102"},{"r":"경기도","n":"솔라가드프리미엄 수원 세류점","a":"경기 수원시 권선구 덕영대로 1103","p":"031-238-7775"},{"r":"경기도","n":"솔라가드프리미엄 수원 오목천점","a":"경기 수원시 권선구 온정로 57","p":"1588-6512"},{"r":"경기도","n":"솔라가드프리미엄 수원 이의점","a":"경기도 수원시 영통구 이의동 1309-5","p":"010-2509-7093"},{"r":"경기도","n":"솔라가드프리미엄 수원 탑동점","a":"경기 수원시 권선구 서부로 1822-39","p":"031-351-4353"},{"r":"경기도","n":"솔라가드프리미엄 안산 상록구점","a":"경기도 안산시 상록구 항가울로 74 (사동)","p":"010-3011-0312"},{"r":"경기도","n":"솔라가드프리미엄 안산 초지점","a":"경기도 안산시 단원구 초지동 742번지 111호 (아트틴팅)","p":"010-2724-5677"},{"r":"경기도","n":"솔라가드프리미엄 안양 동안구 관양점","a":"경기 안양시 동안구 관양로 185","p":"010-5624-5125"},{"r":"경기도","n":"솔라가드프리미엄 안양 동안구점","a":"경기도 안양시 동안구 평촌대로127번길 64 (호계동 1069-2)","p":"010-4665-8637, 1670-8637"},{"r":"경기도","n":"솔라가드프리미엄 안양 만안구점","a":"경기 안양시 만안구 오리로34번길 7-31","p":"010-2050-0851, 010-8816-2848"},{"r":"경기도","n":"솔라가드프리미엄 안양 비산점","a":"경기도 안양시 동안구 관악대로 259(비산동)","p":"010-4741-3082, 031-388-7577"},{"r":"경기도","n":"솔라가드프리미엄 양주 옥정점","a":"경기도 양주시 어하고개로 56(삼숭동 488-3)","p":"010-9980-6015"},{"r":"경기도","n":"솔라가드프리미엄 용인 기흥점","a":"경기도 용인시 기흥구 서천로 172번길 15-8","p":"010-9107-4560 , 1800-7683"},{"r":"경기도","n":"솔라가드프리미엄 용인 신갈점","a":"경기도 용인시 기흥구 신갈로 101-1","p":"010-2039-3247"},{"r":"경기도","n":"솔라가드프리미엄 용인 처인점","a":"경기도 용인시 처인구 명지로 245","p":"010-3870-8711"},{"r":"경기도","n":"솔라가드프리미엄 용인 흥덕점","a":"경기도 용인시 기흥구 영덕동 1000-9","p":"010-8848-9115"},{"r":"경기도","n":"솔라가드프리미엄 의왕 월암 레일바이크점","a":"경기도 의왕시 왕소나무길 9, (월암동)","p":"010-2455-3270 , 010-8244-7962"},{"r":"경기도","n":"솔라가드프리미엄 의왕점","a":"경기도 의왕시 포일동 672-2","p":"010-2527-7127"},{"r":"경기도","n":"솔라가드프리미엄 일산 덕이점","a":"경기도 일산서구 덕이동 931-34호","p":"010-5211-8081"},{"r":"경기도","n":"솔라가드프리미엄 장현점","a":"경기 남양주시 진접읍 장현로 166","p":"010-2597-2133"},{"r":"경기도","n":"솔라가드프리미엄 파주 교하점","a":"경기도 파주시 지목로 113","p":"010-7707-7410"},{"r":"경기도","n":"솔라가드프리미엄 포천 대진대점","a":"경기 포천시 호국로 987","p":"010-8974-1665"},{"r":"경기도","n":"솔라가드프리미엄 하남 덕풍점","a":"경기 하남시 덕풍북로259번길 48","p":"010-7377-5122"},{"r":"강원도","n":"THE LX 동해대로점","a":"강원 동해시 동해대로 5064","p":"033-535-8008 / 010-2122-1236"},{"r":"강원도","n":"THE LX 원주점","a":"강원 원주시 로아노크로 28","p":"010-6475-0791"},{"r":"강원도","n":"THE LX 춘천점","a":"강원 춘천시 효자로24번길 4","p":"010-4111-3705"},{"r":"강원도","n":"솔라가드 프리미엄 강릉 유산점","a":"강원특별자치도 강릉시 남부로 265","p":"010-2255-0050"},{"r":"강원도","n":"솔라가드 프리미엄 강릉점","a":"강원 강릉시 성덕포남로182번길 10","p":"010-9064-1242"},{"r":"강원도","n":"솔라가드 프리미엄 남춘천역점","a":"강원 춘천시 역전옛길 6","p":"010-7171-7673"},{"r":"강원도","n":"솔라가드 프리미엄 만천점","a":"강원특별자치도 춘천시 동면 서부대성로 438","p":"010-8712-0857"},{"r":"강원도","n":"솔라가드프리미엄 동해점","a":"강원 동해시 천곡동 1001-6","p":"010-6372-9930"},{"r":"강원도","n":"솔라가드프리미엄 속초점","a":"강원 속초시 조양로64번길 17","p":"010-4344-0008"},{"r":"강원도","n":"솔라가드프리미엄 원주우산점","a":"강원 원주시 우무개로 7","p":"010-8642-3125"},{"r":"강원도","n":"솔라가드프리미엄 춘천퇴계점","a":"강원 춘천시 퇴계로 66","p":"010-8741-3649"},{"r":"대전광역시","n":"THE LX 대전 가장점","a":"대전광역시 서구 갈마로 301-1 (가장동)","p":"010-7777-7801"},{"r":"대전광역시","n":"THE LX 대전 관저점","a":"대전 서구 관저동 1962-4","p":"010-5756-1112"},{"r":"대전광역시","n":"THE LX 대전 덕암점","a":"대전 대덕구 덕암북로72번길 38","p":"010-9386-0990"},{"r":"대전광역시","n":"THE LX 용전점","a":"대전광역시 동구 용전동 128-12","p":"010-9410-2004"},{"r":"대전광역시","n":"THE LX 죽동점","a":"대전광역시 유성구 죽동로279번길52, 101호","p":"010-8648-9797"},{"r":"대전광역시","n":"THE LX 충청지사","a":"대전 유성구 복용동 573-8","p":"010-4670-8941"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 가수원점","a":"대전 서구 용소로39번길 14","p":"010-8816-4182 / 042-546-2440"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 계산점","a":"대전 유성구 학하남로47번길 16","p":"010-6406-1010"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 부사점","a":"대전 중구 보문로 88","p":"010-5423-8953"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 온천북로점","a":"대전 유성구 온천북로59번길 10","p":"010-4979-7845"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 용계점","a":"대전 유성구 용계동 666-4","p":"668-5368 / 010-9415-1263"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 용운점","a":"대전 동구 새울로 58-15","p":"010-6480-6400"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 장대점","a":"대전 유성구 장대로 109","p":"010-9551-0127"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 천동점","a":"대전 동구 대전로 576-1","p":"010-4456-6488"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 학하점","a":"대전 유성구 학하복용서로 41","p":"010-3626-9583"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전 현충원점","a":"대전 유성구 현충원로 514-1","p":"010-2225-6497"},{"r":"대전광역시","n":"솔라가드 프리미엄 대전봉명점","a":"대전 유성구 계룡로26번길 3","p":"010-9400-9566, 042-824-4157"},{"r":"대전광역시","n":"솔라가드프리미엄 대전 유성구 노은점","a":"대전광역시 유성구 노은동로 75번길 20","p":"010-2222-2887"},{"r":"대전광역시","n":"솔라가드프리미엄 대전 유천점","a":"대전광역시 중구 유천로77","p":"010-5812-2434"},{"r":"세종특별자치시","n":"솔라가드프리미엄 세종 장군점","a":"세종특별자치시 장군면 은용1길 28","p":"010-4466-4789"},{"r":"충청북도","n":"THE LX  충주점","a":"충북 충주시 갱고개로 247","p":"043-847-3077"},{"r":"충청북도","n":"THE LX 서충주 신도시점","a":"충북 충주시 중앙탑면 용전리 777","p":"010-2606-4045"},{"r":"충청북도","n":"THE LX 제천 시청점","a":"충북 제천시 내토로 372","p":"010-6490-4742"},{"r":"충청북도","n":"THE LX 청주 사직점","a":"충북 청주시 서원구 직지대로 762","p":"010-9278-0014"},{"r":"충청북도","n":"THE LX 청주 서원점","a":"충북 청주시 서원구 남이면 2순환로 1712-11","p":"010-8856-1039 , 043-285-1039"},{"r":"충청북도","n":"THE LX 청주 성화점","a":"충북 청주시 서원구 2순환로 1515","p":"010-8665-0012"},{"r":"충청북도","n":"솔라가드 프리미엄 신연수점","a":"충북 충주시 연수동 1554","p":"010-7281-4656"},{"r":"충청북도","n":"솔라가드 프리미엄 청주 내덕점","a":"충북 청주시 청원구 새터로 137","p":"010-2816-3426"},{"r":"충청북도","n":"솔라가드 프리미엄 충주 금릉점","a":"충북 충주시 국원대로 183","p":"043-855-5909"},{"r":"충청북도","n":"솔라가드프리미엄 미평점","a":"충청북도 청주시 서원구 청남로 1865-5,102호(미평동)","p":"010-9577-4697"},{"r":"충청북도","n":"솔라가드프리미엄 제천점","a":"충북 제천시 용두대로 211","p":"010-8556-7887"},{"r":"충청남도","n":"THE LX 당진점","a":"충청남도 당진시 무수동로 22(대덕동)","p":"010-6793-6699"},{"r":"충청남도","n":"THE LX 예산점","a":"충청남도 예산군 예산읍 벚꽃로433-6","p":"010-2486-5213"},{"r":"충청남도","n":"THE LX 천안 동남점","a":"충청남도 천안시 동남구 충무로475","p":"041-553-7676 / 010-2288-3657"},{"r":"충청남도","n":"THE LX 천안 풍세점","a":"충남 천안시 동남구 풍세면 풍서리 587","p":"010-7272-5115"},{"r":"충청남도","n":"THE LX 천안서북점","a":"충남 천안시 서북구 업성동 203-12","p":"010-9026-4322"},{"r":"충청남도","n":"솔라가드 프리미엄 계룡 금암점","a":"충남 계룡시 서금암1길 18","p":"010-2055-2304"},{"r":"충청남도","n":"솔라가드 프리미엄 천안 구성점","a":"충남 천안시 동남구 유량로 52","p":"041-551-5005"},{"r":"충청남도","n":"솔라가드 프리미엄 충남 공주점","a":"충남 공주시 무령로 493","p":"010-8423-6078"},{"r":"충청남도","n":"솔라가드 프리미엄 충남 서산 읍내점","a":"충남 서산시 안견로 380","p":"010-9004-8699"},{"r":"충청남도","n":"솔라가드 프리미엄 충남 서산점","a":"충청남도 서산시 서해로 3620번지 1층","p":"010-6745-6277"},{"r":"충청남도","n":"솔라가드프리미엄 천안 부대점","a":"충남 천안시 동남구 백석로 188-12","p":"010-8804-2442"},{"r":"충청남도","n":"솔라가드프리미엄 천안 성성점","a":"충청남도 천안시 서북구 번영로559(성성동)","p":"010-3019-7275 , 041-566-5794"},{"r":"충청남도","n":"솔라가드프리미엄 천안 청당점","a":"충청남도 천안시 동남구 광풍로1840-14","p":"010-2016-4458"},{"r":"광주광역시","n":"THE LX 광주 전남 지사","a":"광주 서구 죽봉대로 27-1","p":"010-7100-7722"},{"r":"광주광역시","n":"THE LX 상무점","a":"광주 서구 북촌길 32","p":"010-5383-1815"},{"r":"광주광역시","n":"THE LX 수완점","a":"광주 광산구 사암로390번길 17","p":"010-4569-5777"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 동림점","a":"광주 북구 하남대로 677","p":"062-262-6282"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 송정점","a":"광주 광산구 송도로85번길 51","p":"010-8625-4994"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 신안점","a":"광주 북구 용봉로 2","p":"010-6622-1273"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 용봉점","a":"광주 북구 서암대로 95","p":"010-4800-5274"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 유촌점","a":"광주 서구 유덕로27번길 18-1","p":"010-8806-4131"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 평동점","a":"광주 광산구 옥동 1235-3","p":"010-5451-0980"},{"r":"광주광역시","n":"솔라가드 프리미엄 광주 하남점","a":"광주 광산구 단전상길 19","p":"010-7266-7726"},{"r":"광주광역시","n":"솔라가드프리미엄 광산점","a":"광주 광산구 상완길 101","p":"010-5275-2231"},{"r":"광주광역시","n":"솔라가드프리미엄 광주 남구점","a":"광주 남구 대남대로 263","p":"010-4051-8610"},{"r":"광주광역시","n":"솔라가드프리미엄 광천점","a":"광주 서구 죽봉대로112번길 5","p":"010-6623-1279"},{"r":"광주광역시","n":"솔라가드프리미엄 신촌점","a":"광주 광산구 상무대로 413-6","p":"010-7590-6318"},{"r":"광주광역시","n":"솔라가드프리미엄 양산점","a":"광주 북구 연양로 113","p":"010-8510-4272"},{"r":"광주광역시","n":"솔라가드프리미엄 첨단점","a":"광주 광산구 첨단봉산길 6","p":"010-3666-5882"},{"r":"광주광역시","n":"솔라가드프리미엄 치평점","a":"광주 서구 천변좌하로 176","p":"010-2064-5559"},{"r":"전라북도","n":"THE LX 전주 덕진구점","a":"전북특별자치도 전주시 덕진구 정여립로 1104","p":"010-4814-4506"},{"r":"전라북도","n":"THE LX 정읍점","a":"전북 정읍시 서부산업도로 331","p":"010-6737-0210"},{"r":"전라북도","n":"솔라가드 프리미엄 군산 수송점","a":"전북특별자치도 군산시 남수송5길 20","p":"010-9889-2799"},{"r":"전라북도","n":"솔라가드 프리미엄 남원 충정점","a":"전북특별자치도 남원시 충정로 210","p":"010-5060-5550"},{"r":"전라북도","n":"솔라가드 프리미엄 인후점","a":"전북특별자치도 전주시 덕진구 전진로 26","p":"010-5892-6267"},{"r":"전라북도","n":"솔라가드 프리미엄 장동점","a":"전북 전주시 덕진구 혁신로 478","p":"010-6285-5723"},{"r":"전라북도","n":"솔라가드 프리미엄 전주 삼천점","a":"전북특별자치도 전주시 완산구 쑥고개로 215","p":"010-8655-0911"},{"r":"전라북도","n":"솔라가드 프리미엄 전주 우아점","a":"전북특별자치도 전주시 덕진구 동부대로 599","p":"010-6644-2507"},{"r":"전라북도","n":"솔라가드 프리미엄 전주 팔복점","a":"전북 전주시 덕진구 온고을로 234","p":"010-8842-3883"},{"r":"전라북도","n":"솔라가드 프리미엄 전주 효자점","a":"전북특별자치도 전주시 완산구 효자로 52","p":"010-9918-7302"},{"r":"전라북도","n":"솔라가드 프리미엄 정읍점","a":"전북 정읍시 수성동 286-10","p":"010-3658-4455"},{"r":"전라북도","n":"솔라가드 프리미엄 중화산점","a":"전북 전주시 완산구 중화산동2가 593-3","p":"010-4244-8578"},{"r":"전라북도","n":"솔라가드프리미엄 군산 조촌점","a":"전북 군산시 조촌로 166","p":"010-8937-4070"},{"r":"전라북도","n":"솔라가드프리미엄 군산점","a":"전북 군산시 번영로 78","p":"010-6449-1246 , 063-446-1246"},{"r":"전라북도","n":"솔라가드프리미엄 익산점","a":"전북 익산시 마한로 22","p":"010-9918-7302"},{"r":"전라북도","n":"솔라가드프리미엄 전북 완주점","a":"전북 완주군 봉동읍 둔산3로 12","p":"063-262-0126"},{"r":"전라북도","n":"솔라가드프리미엄 전주 삼천점","a":"전북 전주시 완산구 삼천동2가 395-1","p":"010-4401-5029"},{"r":"전라남도","n":"THE LX 목포 하당점","a":"전남 목포시 녹색로134번길 5","p":"010-7168-3804"},{"r":"전라남도","n":"THE LX 목포점","a":"전남 목포시 연산백련로21번길 10-8","p":"010-8616-1687"},{"r":"전라남도","n":"THE LX 순천점","a":"전남 순천시 해룡면 지봉로 145","p":"010-5008-8005"},{"r":"전라남도","n":"THE LX 전남 여수점","a":"전남 여수시 쌍봉로 161","p":"010-5293-2250"},{"r":"전라남도","n":"솔라가드 프리미엄  순천 조례호수점","a":"전남 순천시 백강로 336","p":"010-3622-0206"},{"r":"전라남도","n":"솔라가드 프리미엄 광양 중마점","a":"전남 광양시 동광1길 20-12","p":"010-7366-6456"},{"r":"전라남도","n":"솔라가드 프리미엄 광양점","a":"전남 광양시 발섬6길 8","p":"010-7600-0300"},{"r":"전라남도","n":"솔라가드 프리미엄 목포 산정점","a":"전남 목포시 영산로 224","p":"010-3648-2106"},{"r":"전라남도","n":"솔라가드 프리미엄 목포 상동점","a":"전남 목포시 원형동로 41","p":"010-5247-5605"},{"r":"전라남도","n":"솔라가드 프리미엄 순천 삼동점","a":"전남 순천시 해룡면 삼동길 34","p":"010-5967-3478"},{"r":"전라남도","n":"솔라가드 프리미엄 순천 서면전","a":"전남 순천시 서면 백강로 575-1","p":"010-9284-9710"},{"r":"전라남도","n":"솔라가드 프리미엄 순천 오천점","a":"전남 순천시 장평5길 69","p":"010-3625-6860"},{"r":"전라남도","n":"솔라가드 프리미엄 순천 해룡점","a":"전남 순천시 해룡면 지봉로 180","p":"010-5474-6990"},{"r":"전라남도","n":"솔라가드 프리미엄 신대점","a":"전남 순천시 해룡면 매안1길 34","p":"010-8505-3426"},{"r":"전라남도","n":"솔라가드프리미엄 목포 중앙점","a":"전남 목포시 원산로 122","p":"010-7543-3559"},{"r":"전라남도","n":"솔라가드프리미엄 순천 연향점","a":"전남 순천시 명말2길 10","p":"010-7665-9898"},{"r":"대구광역시","n":"THE LX  대구 고성점","a":"대구 북구 고성로28길 6-1","p":"010-8000-8726"},{"r":"대구광역시","n":"THE LX  대구 신월성점","a":"대구 달서구 조암로14안길 25","p":"010-4440-9562"},{"r":"대구광역시","n":"THE LX 대구 공항점","a":"대구 동구 공항로56길 5","p":"010-6666-3229"},{"r":"대구광역시","n":"THE LX 대구 동구 각산점","a":"대구 동구 과학로6길 5","p":"010-9011-0541"},{"r":"대구광역시","n":"THE LX 대구 두류점","a":"대구 남구 두류공원로 65","p":"010-2884-4587"},{"r":"대구광역시","n":"THE LX 대구 서대구역점","a":"대구 서구 서대구로 162","p":"010-9371-3003"},{"r":"대구광역시","n":"THE LX 대구 수성로점","a":"대구 수성구 수성로 157-1","p":"053-762-9429"},{"r":"대구광역시","n":"THE LX 대구 월배점","a":"대구 달서구 월암로 90","p":"010-4783-5699"},{"r":"대구광역시","n":"THE LX 대구 황금점","a":"대구 수성구 동대구로14길 23","p":"010-4361-4447"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 경대점","a":"대구 북구 대현로 7-1","p":"010-9871-5553"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 노원점","a":"대구 북구 노원로 187","p":"053-942-3116"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 달서구 월배점","a":"대구 달서구 상화로 131-1","p":"010-3513-4066"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 대명점","a":"대구 남구 현충로 173","p":"010-8235-7772"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 동구 용계점","a":"대구 동구 화랑로 580","p":"010-8599-2000"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 비산점","a":"대구 서구 서대구로63안길 9","p":"010-7526-8100"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 성당못점","a":"대구 달서구 장기로 43","p":"010-3825-2583"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 송현점","a":"대구 달서구 학산로 207","p":"010-4118-6969"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 수성구 두산점","a":"대구 수성구 들안로 98","p":"010-2887-5256"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 수성구 지산점","a":"대구 수성구 지범로 47-9","p":"010-3025-7115"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 유천점","a":"대구 달서구 달서대로 80","p":"053-639-4902"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 죽전점","a":"대구 달서구 와룡로57길 1","p":"010-9382-0989, 053-563-0981"},{"r":"대구광역시","n":"솔라가드 프리미엄 대구 현풍점","a":"대구 달성군 현풍읍 테크노상업로2길 8-9","p":"010-3805-0988"},{"r":"대구광역시","n":"솔라가드 프리미엄 신서점","a":"대구 동구 신서로21길 4-6","p":"053-965-8730"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 다사점","a":"대구 달성군 다사읍 세천로7길 17-5","p":"010-5293-9591"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 달서구 성서점","a":"대구 달서구 성서로 365","p":"010-4322-3433"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 동구 신암점","a":"대구 동구 송라로 147","p":"010-9219-0089"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 북구 읍내점","a":"대구 북구 관음동로32길 17-1","p":"010-2609-2040"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 수성구 수성점","a":"대구 수성구 지범로 67","p":"010-4707-0200"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 중구 남산점","a":"대구 중구 명덕로35길 34","p":"010-9993-9993"},{"r":"대구광역시","n":"솔라가드프리미엄 대구 중동점","a":"대구 수성구 들안로 194","p":"010-2526-3958"},{"r":"경상북도","n":"THE LX 경북 구미 광평점","a":"경북 구미시 구미대로16길 11-12","p":"010-9348-4141"},{"r":"경상북도","n":"THE LX 경북 구미 옥계산동점","a":"경북 구미시 산호대로 1206","p":"010-4551-4439"},{"r":"경상북도","n":"THE LX 경북 김천점","a":"경북 김천시 영남대로 1588","p":"010-3232-8118"},{"r":"경상북도","n":"THE LX 경북 문경점","a":"경북 문경시 운동장로 15","p":"010-9322-5162"},{"r":"경상북도","n":"THE LX 경북 북삼점","a":"경북 칠곡군 북삼읍 금오대로 169","p":"010-6356-0456"},{"r":"경상북도","n":"THE LX 경북 상주 복룡점","a":"경북 상주시 삼백로 250","p":"010-5315-5522"},{"r":"경상북도","n":"THE LX 경북 안동점","a":"경북 안동시 모래골1길 1","p":"010-9381-7120"},{"r":"경상북도","n":"THE LX 경북 영주점","a":"경북 영주시 영주로82번길 20","p":"010-3738-7123"},{"r":"경상북도","n":"THE LX 경북 포항 남구점","a":"경북 포항시 남구 포스코대로 384","p":"010-4000-0094"},{"r":"경상북도","n":"THE LX 경북 포항 북구점","a":"경북 포항시 북구 흥해읍 초곡지구로71번길 23","p":"010-9522-4313"},{"r":"경상북도","n":"THE LX 경산 압량점","a":"경북 경산시 압량읍 원효로 569","p":"010-7393-4601"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 경주 북문로점","a":"경북 경주시 북문로 125","p":"054-776-6203 / 010-7165-6203"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 경주점","a":"경북 경주시 원지길30번길 9","p":"010-5028-8008"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 구미 인동점","a":"경북 구미시 인동21길 20-1","p":"010-9353-6516"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 구미 형곡점","a":"경북 구미시 형곡로 36","p":"010-4464-4448"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 포항 북포항점","a":"경북 포항시 북구 천마로72번길 14","p":"010-5772-2002"},{"r":"경상북도","n":"솔라가드 프리미엄 경북 포항 양덕점","a":"경북 포항시 북구 양덕로 31","p":"010-4811-0613"},{"r":"경상북도","n":"솔라가드 프리미엄 경산 대학로점","a":"경북 경산시 압량읍 건흥길 43","p":"010-5834-8228"},{"r":"경상북도","n":"솔라가드 프리미엄 구미 원평점","a":"경북 구미시 송원동로 58-13","p":"010-7788-1223"},{"r":"경상북도","n":"솔라가드 프리미엄 안동 송현점","a":"경북 안동시 경동로 316","p":"054-854-9199"},{"r":"경상북도","n":"솔라가드 프리미엄 포항 형산강북로점","a":"경북 포항시 남구 형산강북로 101-2","p":"054-273-0755"},{"r":"경상북도","n":"솔라가드프리미엄 경북 김천점","a":"경북 김천시 영남대로 1740","p":"010-3818-0358"},{"r":"경상북도","n":"솔라가드프리미엄 경북 영천점","a":"경북 영천시 최무선로 325","p":"010-2747-0082"},{"r":"경상북도","n":"솔라가드프리미엄 경산 중산점","a":"경북 경산시 경산로 277","p":"010-7393-4601"},{"r":"경상남도","n":"THE LX  경남 서마산점","a":"경남 창원시 마산회원구 북성로 496","p":"010-2420-6558"},{"r":"경상남도","n":"THE LX 경남 고성점","a":"경남 고성군 고성읍 남산로 63","p":"010-7174-6663"},{"r":"경상남도","n":"THE LX 경남 진주점","a":"경남 진주시 모덕로 21-1","p":"055-759-1233 , 010-4446-5542"},{"r":"경상남도","n":"THE LX 김해점","a":"경남 김해시 김해대로2324번길 48-8","p":"010-4992-1204"},{"r":"경상남도","n":"THE LX 마산 해안대로점","a":"경남 창원시 마산합포구 해안대로 314","p":"010-7134-0458, 055-221-8089"},{"r":"경상남도","n":"THE LX 마산 회원구점","a":"경남 창원시 마산회원구 3.15대로 560","p":"010-5766-3088"},{"r":"경상남도","n":"THE LX 밀양 내이동점","a":"경남 밀양시 백민로 77","p":"055-351-2115"},{"r":"경상남도","n":"THE LX 양산 물금점","a":"경남 양산시 물금읍 가촌동3길 18","p":"010-5835-3550"},{"r":"경상남도","n":"THE LX 창원 성주점","a":"경남 창원시 성산구 해원로374번길 12","p":"010-4870-7919"},{"r":"경상남도","n":"THE LX 창원 의창구점","a":"경남 창원시 의창구 의창대로282번길 4-14","p":"055-253-5537"},{"r":"경상남도","n":"솔라가드 프리미엄 경화점","a":"경남 창원시 진해구 진해대로 616-2","p":"010-8585-6262"},{"r":"경상남도","n":"솔라가드 프리미엄 김해 삼계점","a":"경남 김해시 삼계동 1511-3","p":"010-3837-5767"},{"r":"경상남도","n":"솔라가드 프리미엄 김해 인제대로점","a":"경남 김해시 인제로 93","p":"010-8543-4885"},{"r":"경상남도","n":"솔라가드 프리미엄 김해 장유점","a":"경남 김해시 대청로26번안길 12","p":"010-6771-1155"},{"r":"경상남도","n":"솔라가드 프리미엄 마산 신포점","a":"경남 창원시 마산합포구 해안대로 322-1","p":"010-2964-3434"},{"r":"경상남도","n":"솔라가드 프리미엄 마산 현동점","a":"경남 창원시 마산합포구 현동로 20","p":"010-6286-5885"},{"r":"경상남도","n":"솔라가드 프리미엄 양산 대로점","a":"경남 양산시 동면 양산대로 378","p":"070-4227-3275"},{"r":"경상남도","n":"솔라가드 프리미엄 창원 서상점","a":"경남 창원시 의창구 천주로1번길 2","p":"010-7444-1346"},{"r":"경상남도","n":"솔라가드 프리미엄 하대점","a":"경남 진주시 상대로143번길 4","p":"010-2930-0132"},{"r":"부산광역시","n":"THE LX 부산 구서점","a":"부산 금정구 중앙대로1826번길 6","p":"010-6254-5158"},{"r":"부산광역시","n":"THE LX 부산 남구점","a":"부산 남구 유엔로 226","p":"010-7149-2990"},{"r":"부산광역시","n":"THE LX 부산 대저점","a":"부산 강서구 사덕신장로 16","p":"010-2477-4748"},{"r":"부산광역시","n":"THE LX 부산 동래구점","a":"부산 동래구 충렬대로107번길 9","p":"051-555-2922"},{"r":"부산광역시","n":"THE LX 부산 명지점","a":"부산 강서구 명지국제5로148번길 46","p":"051-206-0617, 010-6329-2288"},{"r":"부산광역시","n":"THE LX 부산 사상구점","a":"부산 사상구 감전천로 229","p":"010-8675-2713"},{"r":"부산광역시","n":"THE LX 부산 수영점","a":"부산 수영구 광안동 497-19","p":"010-5716-9206"},{"r":"부산광역시","n":"THE LX 부산 해운대 송정점","a":"부산 해운대구 송정중앙로5번길 41","p":"010-7704-9909"},{"r":"부산광역시","n":"THE LX 부산 해운대구 센텀점","a":"부산 해운대구 해운대로177번길 10-4","p":"010-5046-2260"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 감전점","a":"부산 사상구 장인로 20","p":"010-4813-7886"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 광안점","a":"부산 수영구 광남로 101","p":"010-5040-7922"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 구포점","a":"부산 북구 백양대로 1092","p":"010-8487-6066"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 금정구점","a":"부산 금정구 금정로 229","p":"010-3384-5554"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 망미점","a":"부산 수영구 과정로 25","p":"010-9552-9255"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 명지오션시티점","a":"부산 강서구 명지오션시티9로 32","p":"010-4549-5086"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 사상구청점","a":"부산 사상구 학감대로 241","p":"010-4150-0575"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 송정점","a":"부산 해운대구 해운대로 1248-9","p":"051-931-5626"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 수영구점","a":"부산 수영구 민락동 150-21","p":"051-753-1012"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 연제구점","a":"부산 연제구 거제천로 289","p":"051-867-7776"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 정관점","a":"부산 기장군 정관읍 정관로 578","p":"010-5587-8473"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 중동점","a":"부산 해운대구 중동1로 15-2","p":"051-747-8585"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 학감대로점","a":"부산 사상구 학감대로 178","p":"010-9299-2888"},{"r":"부산광역시","n":"솔라가드 프리미엄 부산 해운대점","a":"부산 해운대구 좌동순환로446번길 35","p":"051-911-2373"},{"r":"부산광역시","n":"솔라가드 프리미엄 수영로528점","a":"부산 수영구 광안동 165-5","p":"010-2976-3638"},{"r":"울산광역시","n":"THE LX 울산 남구점","a":"울산 남구 돋질로311번길 12-1","p":"052-975-0256"},{"r":"울산광역시","n":"THE LX 울산 돋질로점","a":"울산 남구 신정동 131-12","p":"010-4701-6171"},{"r":"울산광역시","n":"THE LX 울산 북구점","a":"울산 북구 염포로 181","p":"052-282-5042"},{"r":"울산광역시","n":"THE LX 울산 시청점","a":"울산 남구 삼산로67번길 11","p":"010-8033-8283"},{"r":"울산광역시","n":"THE LX 울산 신정점","a":"울산 남구 신정로 142","p":"010-4840-7053"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 남구 번영로점","a":"울산 남구 번영로 175","p":"010-9778-6434"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 남구 삼산점","a":"울산 남구 돋질로 418","p":"010-3061-0128"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 남구 삼신로점","a":"울산 남구 삼신로 46","p":"010-4530-8465"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 북구 매곡점","a":"울산 북구 당수골26길 12","p":"010-7777-5697"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 북구 번영로점","a":"울산 북구 번영로 660","p":"010-9911-9445"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 북구 송정점","a":"울산 북구 박상진10로 16","p":"010-9878-0703"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 삼산 본동점","a":"울산 남구 정동로 126","p":"010-4566-5698"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산 진장로점","a":"울산 북구 진장로 38","p":"010-8881-6299"},{"r":"울산광역시","n":"솔라가드 프리미엄 울산북구 진장명촌점","a":"울산 북구 진장로 59","p":"053-271-2331"},{"r":"제주도","n":"솔라가드프리미엄 제주 노형점","a":"제주특별자치도 제주시 오광로 121 (노형동)","p":"010-6435-3547, 064-722-3547"},{"r":"제주도","n":"솔라가드프리미엄 제주 서귀포점","a":"제주특별자치도 서귀포시 동홍로 166 (동홍동)","p":"010-3404-3099 , 064-723-4001"},{"r":"제주도","n":"솔라가드프리미엄 제주 용담이동점","a":"제주특별자치도 제주시 한천로 14","p":"010-3087-0619 , 064-723-4001"},{"r":"제주도","n":"솔라가드프리미엄 제주점","a":"제주시 도공로 154-1","p":"010-4477-0689"}];
 
 let slRegion = 'all';
 let slQuery  = '';
+const SL_PAGE = 12;
+let slVisible = SL_PAGE;
 
 function slPhone1(p) {
   const m = p.match(/[\d]{2,3}-[\d]{3,4}-[\d]{4}/);
   return m ? m[0] : p.replace(/[^0-9]/g,'').slice(0,11);
 }
 
-var SL_PAGE = 12;
-var slShown = SL_PAGE;
-
 function slRender() {
-  const q   = slQuery.toLowerCase();
+  const q = slQuery.toLowerCase();
   const filtered = STORE_DATA.filter(s => {
     const matchR = slRegion === 'all' || s.r === slRegion;
     const matchQ = !q || s.n.toLowerCase().includes(q) || s.a.toLowerCase().includes(q);
@@ -4229,13 +4383,11 @@ function slRender() {
     return;
   }
 
-  var visible = filtered.slice(0, slShown);
-  var remaining = filtered.length - slShown;
-
-  grid.innerHTML = visible.map(s => {
+  const show = filtered.slice(0, slVisible);
+  grid.innerHTML = show.map(s => {
     const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(s.a);
     const tel    = slPhone1(s.p);
-    return `<div class="sl-card">
+    return `<div class="sl-card fi">
       <p class="sl-card-name">${s.n}</p>
       <p class="sl-card-addr">${s.a}</p>
       <p class="sl-card-phone">${s.p}</p>
@@ -4246,28 +4398,29 @@ function slRender() {
     </div>`;
   }).join('');
 
-  if (remaining > 0) {
-    grid.innerHTML += `<div class="sl-more-wrap"><button class="sl-more-btn" id="slMoreBtn">+ ${remaining}개 더보기</button></div>`;
-    document.getElementById('slMoreBtn').addEventListener('click', function() {
-      slShown += SL_PAGE;
+  if (slVisible < filtered.length) {
+    grid.innerHTML += `<div class="sl-more-wrap"><button class="sl-more-btn" id="slMoreBtn">더보기 (${filtered.length - slVisible}개)</button></div>`;
+    document.getElementById('slMoreBtn').addEventListener('click', () => {
+      slVisible += SL_PAGE;
       slRender();
     });
   }
+
+  grid.querySelectorAll('.sl-card.fi').forEach((card, i) => {
+    card.style.transitionDelay = (i % 3) * 0.1 + 's';
+    io.observe(card);
+  });
 }
 
-document.querySelectorAll('.sl-rtab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sl-rtab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    slRegion = btn.dataset.r;
-    slShown = SL_PAGE;
-    slRender();
-  });
+document.getElementById('slRegion').addEventListener('change', e => {
+  slRegion = e.target.value;
+  slVisible = SL_PAGE;
+  slRender();
 });
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
-  slShown = SL_PAGE;
+  slVisible = SL_PAGE;
   slRender();
 });
 
@@ -4292,20 +4445,44 @@ function quizGoTo(stepId, pct) {
 
 function getQuizResult() {
   const { q1, q2, q3 } = quizAnswers;
-  const hasHeat    = q2.includes('heat');
-  const hasPrivacy = q2.includes('privacy');
-  const isFamily   = q1.includes('family');
-  if (q3 === 'best' || (q3 === 'high' && (isFamily || q2.length >= 3))) {
-    return { product: 'LX', reason: '가족의 공간, 최고의 필름. 열 차단 81% · 10년 보증 · 세계특허 기술로 모든 불편을 설계로 해결합니다.' };
-  } else if (hasHeat && hasPrivacy && q3 === 'high') {
-    return { product: 'Xenith IR', reason: '세라믹 기술의 최정상. 열 차단 68%와 선명한 시야를 전파 방해 없이 제공합니다.' };
-  } else if (isFamily || (hasHeat && hasPrivacy)) {
-    return { product: 'S-LINE', reason: '가족과 함께하는 모든 주행을 위해. 비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.' };
-  } else if (q3 === 'low') {
-    return { product: 'S-LINE', reason: '합리적인 선택. 비반사 필름으로 선명한 시야와 쾌적한 주행을 균형 있게 갖췄습니다.' };
-  } else {
-    return { product: 'G-LINE', reason: '열 차단과 개성을 동시에. 라미네이티드 블루 컬러로 일상의 모든 주행을 쾌적하게 만듭니다.' };
+  const scores = { 'LX': 0, 'Xenith IR': 0, 'Vogue': 0, 'Quantum': 0, 'Titanium': 0, 'G-LINE': 0, 'S-LINE': 0 };
+
+  // Q3 — 가장 중요한 기준 (최대 가중치)
+  if (q3 === 'performance') { scores['LX'] += 10; scores['Xenith IR'] += 3; }
+  if (q3 === 'balance')     { scores['Xenith IR'] += 8; scores['G-LINE'] += 6; scores['LX'] += 3; }
+  if (q3 === 'design')      { scores['Vogue'] += 8; scores['Titanium'] += 7; scores['Quantum'] += 6; }
+  if (q3 === 'value')       { scores['S-LINE'] += 10; scores['G-LINE'] += 4; }
+
+  // Q2 — 불편한 점 (중간 가중치)
+  if (q2.includes('heat'))     { scores['LX'] += 3; scores['Xenith IR'] += 3; scores['Vogue'] += 2; scores['Quantum'] += 2; }
+  if (q2.includes('glare'))    { scores['S-LINE'] += 3; scores['Xenith IR'] += 2; scores['LX'] += 2; }
+  if (q2.includes('privacy'))  { scores['Vogue'] += 3; scores['Quantum'] += 3; scores['Titanium'] += 2; scores['G-LINE'] += 2; }
+  if (q2.includes('uv'))       { scores['LX'] += 3; scores['Xenith IR'] += 2; scores['S-LINE'] += 1; scores['Vogue'] += 1; }
+  if (q2.includes('ev'))       { scores['LX'] += 4; scores['Xenith IR'] += 4; scores['Vogue'] += 2; }
+  if (q2.includes('interior')) { scores['LX'] += 3; scores['Xenith IR'] += 3; scores['Vogue'] += 2; scores['G-LINE'] += 1; }
+
+  // Q1 — 탑승자 (소폭 가중치)
+  if (q1.includes('family'))  { scores['LX'] += 3; scores['S-LINE'] += 2; scores['Xenith IR'] += 1; }
+  if (q1.includes('partner')) { scores['LX'] += 2; scores['Xenith IR'] += 2; scores['G-LINE'] += 1; }
+  if (q1.includes('solo'))    { scores['Vogue'] += 2; scores['Titanium'] += 2; scores['Quantum'] += 2; }
+  if (q1.includes('varies'))  { scores['G-LINE'] += 2; scores['S-LINE'] += 1; scores['LX'] += 1; }
+
+  let best = 'LX', bestScore = -1;
+  for (const p in scores) {
+    if (scores[p] > bestScore) { bestScore = scores[p]; best = p; }
   }
+
+  const reasons = {
+    'LX':        '가족의 공간, 최고의 필름. 세계특허 5레이어 · 10년 보증으로 모든 불편을 설계로 해결합니다.',
+    'Xenith IR': '차세대 세라믹 기술의 정점. 선명한 시야와 균형 잡힌 열 차단을 함께 누릴 수 있습니다.',
+    'Vogue':     '반사 타입 최고 등급. 강렬한 색상과 경이로운 열 차단, 광학적 시인성을 모두 갖췄습니다.',
+    'Quantum':   '최신 스퍼터링 기술의 글로벌 베스트셀러. 개성과 성능을 함께 누리는 선택입니다.',
+    'Titanium':  '세계 유일 티타늄 증착 딥 블랙. 깊이 있는 외관과 합리적 성능의 균형을 갖췄습니다.',
+    'G-LINE':    '라미네이티드 블루 하이브리드. 열 차단과 개성을 동시에, 일상 주행을 쾌적하게 만듭니다.',
+    'S-LINE':    '비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖춘 실용적 선택입니다.'
+  };
+
+  return { product: best, reason: reasons[best] };
 }
 
 function showQuizResult() {
@@ -4317,6 +4494,10 @@ function showQuizResult() {
   document.getElementById('quizProgressFill').style.width  = '100%';
   var indicator = document.getElementById('quizStepIndicator');
   if (indicator) indicator.style.display = 'none';
+
+  // PRICING configurator로 추천 제품 전달
+  try { sessionStorage.setItem('quizProduct', r.product); } catch (e) {}
+  if (window.applyQuizToPricing) window.applyQuizToPricing(r.product);
 }
 
 function resetQuiz() {

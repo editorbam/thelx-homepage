@@ -3497,8 +3497,9 @@ body.pd-open { overflow: hidden; }
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting && !active) { active = true; draw(); }
+      else if (!e.isIntersecting) { active = false; }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.1 });
   observer.observe(grid);
 })();
 
@@ -3521,18 +3522,25 @@ function cacheLayout() {
   _winH   = window.innerHeight;
 }
 
+let _lastHeroP = -1;
 function updateHero() {
   const sy = window.scrollY;
-  if (sy > _heroH * 1.5) return;              // hero 지나면 스킵
+  if (sy > _heroH * 1.2) return;
   const h  = _heroH;
   const p  = Math.min(1, sy / (h * 0.45));
 
-  heroLx.style.filter  = `blur(${(32 * (1 - p)).toFixed(1)}px)`;
-  heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(3);
+  const rounded = Math.round(p * 200) / 200;
+  if (rounded === _lastHeroP) return;
+  _lastHeroP = rounded;
+
+  const blur1 = (32 * (1 - p)).toFixed(0);
+  heroLx.style.filter  = blur1 === '0' ? 'none' : `blur(${blur1}px)`;
+  heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
 
   const cp = Math.min(1, p / 0.55);
-  heroCopy.style.filter  = `blur(${(cp * 14).toFixed(1)}px)`;
-  heroCopy.style.opacity = (1 - cp).toFixed(3);
+  const blur2 = (cp * 14).toFixed(0);
+  heroCopy.style.filter  = blur2 === '0' ? 'none' : `blur(${blur2}px)`;
+  heroCopy.style.opacity = (1 - cp).toFixed(2);
 
   const bgP = Math.max(0, Math.min(1, (p - 0.3) / 0.7));
   const g = Math.round(255 * (1 - bgP) + 10 * bgP);
@@ -3551,15 +3559,18 @@ function updateHero() {
 }
 
 
-/* ── RAF LOOP ── */
+/* ── HERO scroll handler (rAF throttled) ── */
 (function init() {
   cacheLayout();
   window.addEventListener('resize', cacheLayout, { passive: true });
 
-  (function loop() {
-    updateHero();
-    requestAnimationFrame(loop);
-  })();
+  let heroRaf = 0;
+  function onHeroScroll() {
+    if (heroRaf) return;
+    heroRaf = requestAnimationFrame(() => { heroRaf = 0; updateHero(); });
+  }
+  window.addEventListener('scroll', onHeroScroll, { passive: true });
+  updateHero();
 })();
 
 /* ── INTERSECTION OBSERVER ── */
@@ -4867,12 +4878,17 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
     rafId = requestAnimationFrame(function () { rafId = 0; onScroll(); });
   }
 
+  var _flScrollable = 0;
+  function cacheFlLayout() { _flScrollable = section.offsetHeight - window.innerHeight; }
+  cacheFlLayout();
+  window.addEventListener('resize', cacheFlLayout, { passive: true });
+
   function onScroll() {
-    var scrollable = section.offsetHeight - window.innerHeight;
-    if (scrollable <= 0) return;
+    if (_flScrollable <= 0) return;
     var rect        = section.getBoundingClientRect();
+    if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
     var inSection   = rect.top <= 0 && rect.bottom > window.innerHeight;
-    var rawProgress = -rect.top / scrollable;
+    var rawProgress = -rect.top / _flScrollable;
     var progress    = clamp01(rawProgress);
 
     if (Math.abs(rawProgress - lastProgress) < 0.0005) return;

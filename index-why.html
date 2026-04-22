@@ -60,10 +60,12 @@ a { text-decoration: none; color: inherit; }
 button { font-family: var(--font); border: none; background: none; }
 
 /* ── 오프스크린 렌더링 차단 — 모바일 스크롤 성능 핵심 ── */
-#compare, #products, #pricing, #quiz, #trust, #awards, #reviews,
-#process, #faq, #booking, #cta, #store-locator, footer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+@supports (content-visibility: auto) {
+  #compare, #products, #pricing, #quiz, #trust, #awards, #reviews,
+  #process, #faq, #booking, #cta, #store-locator, footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
 }
 
 /* ============================
@@ -1541,14 +1543,14 @@ footer {
   /* ── HERO ── */
   #hero { height:180vh; }
   .hero-label { display:none; }
+  .hero-lx { filter:none !important; will-change:opacity; }
+  .hero-copy { will-change:opacity; }
   .hero-title { font-size:clamp(2rem, 8vw, 3.2rem); }
   .hero-bridge { font-size:1rem; margin-top:1.2rem; }
   .hero-tagline { font-size:.78rem; margin-top:.65rem; }
   .hero-sub { font-size:.9rem; margin-top:1.4rem; }
   .hero-btns { margin-top:2rem; gap:.75rem; }
   .hero-scroll-hint { bottom:1.8rem; }
-  .hero-lx { will-change:opacity; }
-  .hero-copy { will-change:opacity; }
 
   /* ── MARQUEE ── */
   .marquee-item { font-size:clamp(1rem, 4vw, 1.4rem); padding:0 1.2rem; }
@@ -3556,6 +3558,7 @@ function updateHero() {
   _lastHeroP = rounded;
 
   if (_isMobile) {
+    heroLx.style.filter = 'none';
     heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
     const cp = Math.min(1, p / 0.55);
     heroCopy.style.opacity = (1 - cp).toFixed(2);

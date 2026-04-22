@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE LX — 차 안의 공간으로 설계한 최초의 필름</title>
+<title>THE LX — 차 안을 공간으로 설계한 최초의 필름</title>
 <meta name="description" content="세계특허 5레이어 기술과 Saint-Gobain 나노세라믹 소재. THE LX는 자동차 틴팅을 처음으로 공간 설계의 관점으로 접근합니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,6 +172,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   will-change: background-color;
 }
 
+/* HERO BG VIDEO — 클린 모드 (오버레이/비네트 없음) */
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .hero-lx {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
@@ -184,23 +194,32 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 .hero-copy {
-  position: relative; z-index: 2; text-align: center;
+  position: relative; z-index: 4; text-align: center;
   display: flex; flex-direction: column; align-items: center;
   will-change: filter, opacity;
 }
 .hero-eyebrow {
-  font-size: 10px; font-weight: 400; letter-spacing: .26em;
+  font-size: 10px; font-weight: 500; letter-spacing: .26em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 2rem;
+  text-shadow:
+    0 0 14px rgba(0,0,0,.75),
+    0 1px 6px rgba(0,0,0,.85),
+    0 0 1px rgba(0,0,0,.6);
   opacity: 0; animation: fadeUp 1s .4s ease forwards;
 }
 .hero-title {
   font-size: clamp(2.2rem, 4.8vw, 4.4rem);
-  font-weight: 300; line-height: 1.12; letter-spacing: -0.03em; color: #000;
+  font-weight: 300; line-height: 1.12; letter-spacing: -0.03em; color: #fff;
+  text-shadow: 0 2px 28px rgba(0,0,0,.5), 0 0 1px rgba(0,0,0,.35);
   opacity: 0; animation: fadeUp 1s .7s ease forwards;
 }
 .hero-title em { font-style: normal; font-weight: 500; }
 .hero-sub {
-  font-size: .95rem; font-weight: 300; color: rgba(0,0,0,.42);
+  font-size: .98rem; font-weight: 400; color: rgba(255,255,255,.95);
+  text-shadow:
+    0 0 18px rgba(0,0,0,.7),
+    0 2px 8px rgba(0,0,0,.85),
+    0 0 1px rgba(0,0,0,.6);
   margin-top: 1.8rem; line-height: 1.8;
   opacity: 0; animation: fadeUp 1s 1s ease forwards;
 }
@@ -217,12 +236,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .btn-dark:hover { opacity: .8; }
 .btn-outline-dark {
-  font-size: 12px; font-weight: 400; letter-spacing: .14em;
+  font-size: 12px; font-weight: 500; letter-spacing: .14em;
   text-transform: uppercase; text-decoration: none;
-  color: #000; border: 0.5px solid rgba(0,0,0,.28);
-  padding: .85rem 1.8rem; border-radius: 980px; transition: border-color .3s;
+  color: #fff; border: 1px solid rgba(255,255,255,.78);
+  background: rgba(0,0,0,.22);
+  padding: .85rem 1.8rem; border-radius: 980px;
+  transition: background .3s, border-color .3s;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 6px rgba(0,0,0,.55);
 }
-.btn-outline-dark:hover { border-color: rgba(0,0,0,.6); }
+.btn-outline-dark:hover { background: rgba(0,0,0,.36); border-color: #fff; }
 
 /* dark 전환 시 버튼 색 반전 */
 .hero-sticky.going-dark .btn-dark       { color:#000; background:#fff; }
@@ -238,12 +261,13 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .hero-scroll-hint span {
   font-size: 9px; letter-spacing: .26em; text-transform: uppercase;
-  color: rgba(0,0,0,.22); transition: color .4s;
+  color: rgba(255,255,255,.42); transition: color .4s;
+  text-shadow: 0 1px 6px rgba(0,0,0,.5);
 }
-.hero-sticky.going-dark .hero-scroll-hint span { color: rgba(255,255,255,.22); }
+.hero-sticky.going-dark .hero-scroll-hint span { color: rgba(255,255,255,.42); }
 .scroll-bar {
   width: .5px; height: 36px;
-  background: linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
+  background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
   animation: scrollPulse 2.2s 2s infinite;
   transition: background .4s;
 }
@@ -287,7 +311,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
    WHY STORY — 300vh sticky (index.html 내러티브)
 ============================ */
 #why-story {
-  height: 300vh; background: var(--gray-1); position: relative;
+  height: 250vh; background: var(--gray-1); position: relative;
 }
 .why-story-pin {
   position: sticky; top: 0; height: 100vh;
@@ -357,6 +381,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .compare-header .section-title { color:var(--white); }
 .compare-header .section-title em { color:var(--accent); }
 .compare-grid {
+  position: relative;
   display:grid; grid-template-columns:1fr 1fr; gap:0;
   border:.5px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden;
 }
@@ -574,10 +599,516 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   font-size:11px; color:var(--gray-3); opacity:.55; margin-top:.5rem;
   font-weight:300; letter-spacing:.02em;
 }
-.ppf-specs { display:flex; flex-direction:column; gap:1.25rem; }
-.ppf-spec-item { display:flex; flex-direction:column; gap:.35rem; }
-.ppf-spec-label { font-size:12px; color:var(--gray-3); font-weight:300; }
-.ppf-spec-value { font-size:13px; font-weight:600; color:var(--black); }
+
+/* ============================
+   PRICING SECTION — Configurator
+============================ */
+#pricing {
+  background:#0a0a0a;
+  padding:var(--section-v) 2rem;
+}
+.cf-inner { max-width:1180px; margin:0 auto; }
+
+.cf-head { text-align:center; margin-bottom:4rem; }
+.cf-head .section-eyebrow { color:rgba(255,255,255,.4); }
+.cf-head .section-title { color:var(--white); }
+.cf-sub {
+  font-size:1rem; color:rgba(255,255,255,.55); font-weight:300;
+  margin-top:1rem; line-height:1.6;
+}
+
+/* Floating white card */
+.cf-card {
+  display:grid;
+  grid-template-columns:1.55fr 1fr;
+  background:var(--white);
+  border:.5px solid rgba(0,0,0,.05);
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:0 50px 120px rgba(0,0,0,.1), 0 16px 40px rgba(0,0,0,.05);
+}
+
+/* Left panel — Configurator */
+.cf-config {
+  padding:4rem 4rem 4.5rem;
+  border-right:.5px solid rgba(0,0,0,.06);
+}
+.cf-step { margin-bottom:3rem; }
+.cf-step:last-child { margin-bottom:0; }
+.cf-step-label {
+  font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gray-3); font-weight:400;
+  margin-bottom:1.3rem;
+}
+
+/* Step 01 — Car type segments */
+.cf-segments {
+  display:inline-flex; gap:.25rem; padding:.3rem;
+  border:.5px solid rgba(0,0,0,.1);
+  border-radius:980px;
+  background:#fafafa;
+}
+.cf-seg {
+  padding:.65rem 1.6rem; border-radius:980px; border:none;
+  background:transparent; color:var(--gray-3);
+  font-size:13px; font-weight:400; letter-spacing:.04em;
+  cursor:none; font-family:var(--font);
+  transition:background .25s ease, color .25s ease;
+}
+.cf-seg:hover { color:var(--black); }
+.cf-seg.active { background:var(--black); color:var(--white); }
+
+/* Step 02 — Position checkboxes */
+.cf-checks {
+  display:grid; grid-template-columns:1fr 1fr; gap:.5rem;
+}
+.cf-check {
+  display:flex; align-items:center; gap:1rem;
+  padding:1.15rem 1.3rem;
+  border:.5px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  background:#fafafa;
+  cursor:none;
+  transition:all .25s ease;
+  user-select:none;
+}
+.cf-check:hover {
+  border-color:rgba(0,0,0,.2);
+  background:var(--white);
+}
+.cf-check.active {
+  border-color:var(--black);
+  background:rgba(0,0,0,.03);
+  box-shadow:0 0 0 1px rgba(0,0,0,.18) inset;
+}
+.cf-check.disabled {
+  opacity:.4; pointer-events:none;
+}
+.cf-check-box {
+  width:18px; height:18px;
+  border-radius:5px;
+  border:1.5px solid rgba(0,0,0,.22);
+  position:relative;
+  flex-shrink:0;
+  transition:background .25s ease, border-color .25s ease;
+}
+.cf-check.active .cf-check-box {
+  background:var(--black); border-color:var(--black);
+}
+.cf-check.active .cf-check-box::after {
+  content:''; position:absolute;
+  left:5px; top:1.5px;
+  width:5px; height:9px;
+  border:solid #ffffff;
+  border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+.cf-check.disabled .cf-check-box {
+  background:transparent !important;
+  border-color:rgba(0,0,0,.12) !important;
+}
+.cf-check.disabled .cf-check-box::after { display:none; }
+.cf-check-text {
+  display:flex; justify-content:space-between; align-items:center;
+  flex:1; gap:.5rem;
+}
+.cf-check-name {
+  font-size:.95rem; font-weight:400;
+  color:var(--gray-4);
+}
+.cf-check-price {
+  font-size:.92rem; font-weight:400;
+  color:var(--gray-3);
+  font-variant-numeric:tabular-nums;
+}
+.cf-check-price i {
+  font-style:normal; font-size:10px; margin-left:1px;
+  opacity:.7;
+}
+
+/* Step 03 — Product buttons */
+.cf-products {
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:.5rem;
+}
+.cf-prod {
+  padding:1rem .85rem;
+  border:.5px solid rgba(0,0,0,.08);
+  border-radius:12px;
+  background:#fafafa;
+  cursor:none;
+  display:flex; flex-direction:column; gap:.3rem;
+  align-items:flex-start; text-align:left;
+  transition:all .25s ease;
+  font-family:var(--font);
+}
+.cf-prod:hover {
+  border-color:rgba(0,0,0,.2);
+  background:var(--white);
+}
+.cf-prod.active {
+  border-color:rgba(0,0,0,.4);
+  background:var(--white);
+}
+.cf-prod.flagship.active {
+  border-color:var(--black);
+  background:rgba(0,0,0,.04);
+  box-shadow:0 0 0 1px rgba(0,0,0,.2) inset;
+}
+.cf-prod-name {
+  font-size:.88rem; font-weight:500;
+  color:var(--gray-4);
+  letter-spacing:.005em;
+}
+.cf-prod.flagship .cf-prod-name { color:var(--black); }
+.cf-prod-tag {
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gray-3); font-weight:400;
+}
+.cf-prod.flagship .cf-prod-tag { color:var(--black); }
+
+/* ── 모드 토글 (간편/조합) ── */
+.cf-mode-toggle {
+  display:inline-flex; gap:.25rem; padding:.3rem;
+  border:.5px solid rgba(0,0,0,.1);
+  border-radius:980px;
+  background:#fafafa;
+  margin-bottom:2.4rem;
+}
+.cf-mode-btn {
+  padding:.6rem 1.4rem; border-radius:980px; border:none;
+  background:transparent; color:var(--gray-3);
+  font-size:12px; font-weight:400; letter-spacing:.04em;
+  cursor:none; font-family:var(--font);
+  transition:background .25s ease, color .25s ease;
+  display:flex; align-items:center; gap:.4rem;
+}
+.cf-mode-btn:hover { color:var(--black); }
+.cf-mode-btn.active { background:var(--black); color:var(--white); }
+.cf-mode-btn .cf-mode-badge {
+  font-size:8px; letter-spacing:.12em; text-transform:uppercase;
+  padding:1px 6px; border-radius:980px;
+  background:rgba(255,255,255,.2);
+  display:none;
+}
+.cf-mode-btn.active .cf-mode-badge { display:inline-block; }
+
+/* ── 조합 모드: step 03 자리에 부위별 제품 선택기 ── */
+.cf-custom { display:none; }
+.cf-config.mode-custom .cf-step-product { display:none; }
+.cf-config.mode-custom .cf-custom { display:block; }
+
+.cf-pos-block {
+  margin-bottom:1.6rem;
+  padding-bottom:1.6rem;
+  border-bottom:.5px solid rgba(0,0,0,.06);
+}
+.cf-pos-block:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.cf-pos-block.disabled { display:none; }
+.cf-pos-block-head {
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:.85rem;
+}
+.cf-pos-block-name {
+  font-size:.95rem; font-weight:500; color:var(--gray-4);
+}
+.cf-pos-block-price {
+  font-size:.88rem; color:var(--gray-3);
+  font-variant-numeric:tabular-nums;
+}
+.cf-pos-block-price i { font-style:normal; font-size:10px; margin-left:1px; opacity:.7; }
+.cf-pos-prods {
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:.4rem;
+}
+.cf-pos-prod {
+  padding:.7rem .55rem;
+  border:.5px solid rgba(0,0,0,.08);
+  border-radius:10px;
+  background:#fafafa;
+  cursor:none;
+  font-family:var(--font);
+  font-size:.78rem; font-weight:400;
+  color:var(--gray-3);
+  transition:all .2s ease;
+  text-align:center;
+}
+.cf-pos-prod:hover { border-color:rgba(0,0,0,.2); background:var(--white); color:var(--gray-4); }
+.cf-pos-prod.active {
+  border-color:var(--black); background:var(--black); color:var(--white);
+  font-weight:500;
+}
+
+/* ── 우측 패널: 조합 모드 분해 표시 ── */
+.cf-total-breakdown { display:none; margin-top:1rem; }
+.cf-total.mode-custom .cf-total-product,
+.cf-total.mode-custom .cf-total-positions { display:none; }
+.cf-total.mode-custom .cf-total-breakdown { display:block; }
+.cf-bd-row {
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:.55rem 0;
+  border-bottom:.5px dashed rgba(0,0,0,.08);
+  font-size:.82rem;
+}
+.cf-bd-row:last-child { border-bottom:none; }
+.cf-bd-pos {
+  color:var(--gray-3);
+  font-weight:400;
+}
+.cf-bd-prod {
+  color:var(--gray-4);
+  font-weight:500;
+  margin-left:auto; margin-right:.6rem;
+}
+.cf-bd-price {
+  color:var(--gray-4);
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+}
+.cf-bd-price i { font-style:normal; font-size:9px; margin-left:1px; opacity:.7; }
+
+/* ============================
+   PPF Configurator Card (light gray)
+============================ */
+.pf-card {
+  margin-top:3rem;
+  display:grid;
+  grid-template-columns:1.55fr 1fr;
+  background:#f5f5f7;
+  border:.5px solid rgba(0,0,0,.05);
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.06), 0 10px 24px rgba(0,0,0,.03);
+}
+.pf-config {
+  padding:4rem 4rem 4.5rem;
+  border-right:.5px solid rgba(0,0,0,.06);
+}
+.pf-head { margin-bottom:3rem; }
+.pf-eyebrow {
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--black); font-weight:500; margin-bottom:.7rem;
+}
+.pf-title {
+  font-size:1.7rem; font-weight:500; color:var(--black);
+  letter-spacing:-0.018em; margin:0 0 .55rem;
+}
+.pf-sub {
+  font-size:.92rem; color:var(--gray-3); font-weight:300;
+  line-height:1.6;
+}
+.pf-step { margin-bottom:2.5rem; }
+.pf-step:last-child { margin-bottom:0; }
+.pf-step-label {
+  font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gray-3); font-weight:400; margin-bottom:1.2rem;
+}
+
+/* PPF — Car type segments */
+.pf-segments {
+  display:inline-flex; gap:.25rem; padding:.3rem;
+  border:.5px solid rgba(0,0,0,.1);
+  border-radius:980px;
+  background:var(--white);
+}
+.pf-seg {
+  padding:.65rem 1.6rem; border-radius:980px; border:none;
+  background:transparent; color:var(--gray-3);
+  font-size:13px; font-weight:400; letter-spacing:.04em;
+  cursor:none; font-family:var(--font);
+  transition:background .25s ease, color .25s ease;
+}
+.pf-seg:hover { color:var(--black); }
+.pf-seg.active { background:var(--black); color:var(--white); }
+
+/* PPF — Package options */
+.pf-options {
+  display:flex; flex-direction:column; gap:.6rem;
+}
+.pf-opt {
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto;
+  column-gap:1.2rem; row-gap:.25rem;
+  align-items:center;
+  padding:1.3rem 1.5rem;
+  border:.5px solid rgba(0,0,0,.08);
+  border-radius:16px;
+  background:var(--white);
+  cursor:none;
+  font-family:var(--font);
+  text-align:left;
+  transition:all .25s ease;
+}
+.pf-opt:hover {
+  border-color:rgba(0,0,0,.2);
+  transform:translateY(-1px);
+}
+.pf-opt.active {
+  border-color:var(--black);
+  background:rgba(0,0,0,.03);
+  box-shadow:0 0 0 1px rgba(0,0,0,.2) inset;
+}
+.pf-opt-name {
+  font-size:1rem; font-weight:500; color:var(--black);
+  letter-spacing:.005em;
+  grid-column:1; grid-row:1;
+}
+.pf-opt-desc {
+  font-size:.82rem; color:var(--gray-3); font-weight:300;
+  grid-column:1; grid-row:2;
+}
+.pf-opt-price {
+  font-size:1.15rem; font-weight:400; color:var(--gray-3);
+  font-variant-numeric:tabular-nums;
+  grid-column:2; grid-row:1 / span 2;
+  align-self:center;
+}
+.pf-opt.active .pf-opt-price { color:var(--black); font-weight:500; }
+.pf-opt-price i {
+  font-style:normal; font-size:10px; margin-left:2px;
+  opacity:.7;
+}
+
+/* PPF — Right total panel */
+.pf-total {
+  padding:4rem 3.5rem 4.5rem;
+  display:flex; flex-direction:column;
+}
+.pf-total-eyebrow {
+  font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gray-3); font-weight:400; margin-bottom:1.3rem;
+}
+.pf-total-pkg {
+  font-size:1.7rem; font-weight:500; color:var(--black);
+  letter-spacing:-0.02em; margin-bottom:.45rem;
+}
+.pf-total-desc {
+  font-size:.85rem; font-weight:300; color:var(--gray-3);
+  line-height:1.7; min-height:2.6rem;
+}
+.pf-total-divider {
+  height:.5px; background:rgba(0,0,0,.1);
+  margin:2.2rem 0 1.8rem;
+}
+.pf-total-price {
+  display:flex; align-items:baseline; gap:.55rem;
+  margin-bottom:.9rem;
+}
+.pf-total-num {
+  font-size:clamp(3.4rem, 5.6vw, 5rem);
+  font-weight:300; letter-spacing:-0.045em;
+  color:var(--black); line-height:1;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum";
+}
+.pf-total-unit {
+  font-size:1.2rem; font-weight:300; color:var(--gray-3);
+  letter-spacing:.02em;
+}
+.pf-total-note {
+  font-size:11px; color:var(--gray-3); opacity:.7;
+  font-weight:300; letter-spacing:.02em;
+}
+.pf-cta {
+  margin-top:auto; padding-top:2.5rem;
+}
+.pf-cta a {
+  display:flex; align-items:center; justify-content:center;
+  padding:1.15rem 2rem;
+  background:var(--black); color:var(--white);
+  border-radius:980px;
+  font-size:14px; font-weight:500; letter-spacing:.04em;
+  text-decoration:none;
+  font-family:var(--font);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.pf-cta a:hover {
+  transform:translateY(-2px);
+  box-shadow:0 14px 32px rgba(0,0,0,.32);
+}
+
+/* Right panel — Total */
+.cf-total {
+  padding:4rem 3.5rem 4.5rem;
+  display:flex; flex-direction:column;
+  background:#fafafa;
+}
+.cf-total-eyebrow {
+  font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gray-3); font-weight:400; margin-bottom:1.3rem;
+}
+.cf-total-product {
+  font-size:1.7rem; font-weight:500; color:var(--black);
+  letter-spacing:-0.02em; margin-bottom:.4rem;
+}
+.cf-total-positions {
+  font-size:.85rem; font-weight:300; color:var(--gray-3);
+  line-height:1.7; min-height:2.9rem;
+}
+.cf-total-divider {
+  height:.5px; background:rgba(0,0,0,.1);
+  margin:2.2rem 0 1.8rem;
+}
+.cf-total-price {
+  display:flex; align-items:baseline; gap:.55rem;
+  margin-bottom:.9rem;
+}
+.cf-total-num {
+  font-size:clamp(3.4rem, 5.6vw, 5rem);
+  font-weight:300; letter-spacing:-0.045em;
+  color:var(--black); line-height:1;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum";
+}
+.cf-total-unit {
+  font-size:1.2rem; font-weight:300; color:var(--gray-3);
+  letter-spacing:.02em;
+}
+.cf-total-note {
+  font-size:11px; color:var(--gray-3); opacity:.7;
+  font-weight:300; letter-spacing:.02em;
+}
+.cf-cta {
+  margin-top:auto; padding-top:2.5rem;
+}
+.cf-cta a {
+  display:flex; align-items:center; justify-content:center;
+  padding:1.15rem 2rem;
+  background:var(--black); color:var(--white);
+  border-radius:980px;
+  font-size:14px; font-weight:500; letter-spacing:.04em;
+  text-decoration:none;
+  font-family:var(--font);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.cf-cta a:hover {
+  transform:translateY(-2px);
+  box-shadow:0 14px 32px rgba(0,0,0,.32);
+}
+
+.cf-footer-note {
+  font-size:11px; color:var(--gray-3); opacity:.55;
+  margin-top:2.5rem; font-weight:300; line-height:1.8;
+  text-align:center;
+}
+
+@media (max-width:900px) {
+  .cf-card { grid-template-columns:1fr; border-radius:24px; }
+  .cf-config {
+    padding:2.8rem 2rem 3rem;
+    border-right:none;
+    border-bottom:.5px solid rgba(0,0,0,.06);
+  }
+  .cf-total { padding:2.8rem 2rem 3.2rem; }
+  .cf-checks { grid-template-columns:1fr; }
+  .cf-products { grid-template-columns:repeat(2, 1fr); }
+  .pf-card { grid-template-columns:1fr; border-radius:24px; margin-top:2rem; }
+  .pf-config {
+    padding:2.8rem 2rem 3rem;
+    border-right:none;
+    border-bottom:.5px solid rgba(0,0,0,.06);
+  }
+  .pf-total { padding:2.8rem 2rem 3.2rem; }
+}
 
 /* ============================
    TRUST NUMBERS (index.html)
@@ -608,39 +1139,47 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem;
 }
 .award-card {
-  border:.5px solid rgba(255,255,255,.08); border-radius:20px;
+  border:.5px solid rgba(0,0,0,.05); border-radius:24px;
   padding:2.8rem 3rem; display:flex; flex-direction:column; gap:1.4rem;
-  background:#141416;
-  transition: box-shadow .3s ease, transform .3s ease;
+  background:var(--white);
+  box-shadow:0 40px 100px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.28);
+  transition: box-shadow .35s ease, transform .35s ease;
 }
-.award-card:hover { box-shadow:0 12px 40px rgba(0,0,0,.4); transform:translateY(-2px); }
+.award-card:hover {
+  box-shadow:0 50px 120px rgba(0,0,0,.55), 0 18px 48px rgba(0,0,0,.35);
+  transform:translateY(-4px);
+}
 .award-card.featured {
-  background:#1a1410; border-color:rgba(200,169,110,.18);
+  background:var(--white);
+  border-color:rgba(0,0,0,.05);
   grid-column: 1 / -1;
   flex-direction:row; align-items:center; gap:3rem; padding:3rem 3.5rem;
+  box-shadow:0 50px 130px rgba(0,0,0,.5), 0 18px 50px rgba(0,0,0,.32);
+}
+.award-card.featured:hover {
+  box-shadow:0 60px 150px rgba(0,0,0,.58), 0 22px 60px rgba(0,0,0,.38);
 }
 .award-badge {
-  font-size:10px; letter-spacing:.22em; text-transform:uppercase; font-weight:400;
-  color:var(--accent); display:inline-block; margin-bottom:.2rem;
+  font-size:10px; letter-spacing:.22em; text-transform:uppercase; font-weight:500;
+  color:var(--gray-3); display:inline-block; margin-bottom:.2rem;
 }
-.award-card.featured .award-badge { color:rgba(200,169,110,.8); }
+.award-card.featured .award-badge { color:var(--gray-3); }
 .award-name {
   font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:300; letter-spacing:-0.03em;
-  line-height:1.2; color:rgba(255,255,255,.75);
+  line-height:1.2; color:var(--black);
 }
-.award-card.featured .award-name { color:var(--white); }
+.award-card.featured .award-name { color:var(--black); }
 .award-name strong { font-weight:600; }
 .award-desc {
-  font-size:13px; font-weight:300; color:rgba(255,255,255,.35); line-height:1.8;
+  font-size:13px; font-weight:300; color:var(--gray-3); line-height:1.8;
 }
-.award-card.featured .award-desc { color:rgba(255,255,255,.45); }
+.award-card.featured .award-desc { color:var(--gray-3); }
 .award-year {
   font-size:clamp(4rem,8vw,6.5rem); font-weight:200; letter-spacing:-0.05em;
-  line-height:1; color:rgba(255,255,255,.05); flex-shrink:0; align-self:center;
+  line-height:1; color:rgba(0,0,0,.06); flex-shrink:0; align-self:center;
 }
 .award-card.featured .award-year {
-  color: rgba(200,169,110,.2);
-  text-shadow: 0 0 80px rgba(200,169,110,.15);
+  color: rgba(0,0,0,.08);
   letter-spacing: -0.06em;
 }
 .award-meta {
@@ -828,7 +1367,8 @@ footer {
   display:flex; align-items:center; justify-content:space-between;
   flex-wrap:wrap; gap:1.5rem;
 }
-.footer-logo { font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.35); font-weight:300; }
+.footer-logo-img { height:52px; width:auto; filter:invert(1); opacity:.35; transition:opacity .3s; }
+.footer-logo-img:hover { opacity:.6; }
 .footer-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
 .footer-links a { font-size:12px; font-weight:300; color:rgba(255,255,255,.28); transition:color .2s; }
 .footer-links a:hover { color:rgba(255,255,255,.65); }
@@ -1118,6 +1658,17 @@ body.pd-open { overflow: hidden; }
   grid-column:1/-1; text-align:center;
   padding:4rem 0; color:var(--gray-3); font-size:.9rem; font-weight:300;
 }
+.sl-more-wrap {
+  grid-column:1/-1; text-align:center; padding:2rem 0 0;
+}
+.sl-more-btn {
+  padding:.75rem 2.4rem; border-radius:980px;
+  border:.5px solid var(--gray-2); background:var(--white);
+  font-size:.85rem; font-weight:400; color:var(--gray-3);
+  cursor:pointer; transition:border-color .2s, color .2s;
+  font-family:inherit; letter-spacing:.02em;
+}
+.sl-more-btn:hover { border-color:var(--black); color:var(--black); }
 
 @media(max-width:768px) {
   .sl-grid { grid-template-columns:repeat(2,1fr); }
@@ -1141,23 +1692,40 @@ body.pd-open { overflow: hidden; }
 #quiz { background:var(--gray-1); padding:var(--section-v) 2rem; }
 .quiz-inner  { max-width:680px; margin:0 auto; }
 .quiz-header { text-align:center; margin-bottom:3rem; }
-.quiz-progress { height:2px; background:rgba(0,0,0,.08); border-radius:2px; margin-bottom:2.5rem; overflow:hidden; }
-.quiz-progress-fill { height:100%; background:var(--black); border-radius:2px; width:0%; transition:width .4s ease; }
+.quiz-progress { height:2px; background:rgba(0,0,0,.06); border-radius:2px; margin-bottom:1rem; overflow:hidden; }
+.quiz-progress-fill { height:100%; background:var(--black); border-radius:2px; width:0%; transition:width .5s cubic-bezier(.22,1,.36,1); }
+.quiz-step-indicator {
+  text-align:center; margin-bottom:2.5rem;
+  font-size:12px; letter-spacing:.15em; color:rgba(0,0,0,.25); font-weight:400;
+}
 .quiz-step { display:none; }
-.quiz-step.active { display:block; animation:panelFade .3s ease; }
+.quiz-step.active { display:block; animation:quizSlideIn .45s cubic-bezier(.22,1,.36,1); }
+@keyframes quizSlideIn {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
 .quiz-question {
   font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--black);
   letter-spacing:-0.02em; line-height:1.3; margin-bottom:2rem; text-align:center;
 }
 .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
 .quiz-option {
-  padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.1); border-radius:12px;
-  background:var(--gray-1); font-size:.95rem; color:var(--black);
-  cursor:none; transition:border-color .2s, background .2s, transform .2s;
+  padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.08); border-radius:14px;
+  background:var(--white); font-size:.95rem; color:var(--black);
+  cursor:none; transition:all .25s cubic-bezier(.22,1,.36,1);
   text-align:left; font-family:var(--font); font-weight:300; line-height:1.4;
+  box-shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.02);
+  position:relative;
 }
-.quiz-option:hover { border-color:var(--black); transform:translateY(-2px); }
-.quiz-option.selected { border-color:var(--black); background:var(--black); color:white; }
+.quiz-option:hover {
+  border-color:rgba(0,0,0,.2); transform:translateY(-3px);
+  box-shadow:0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+}
+.quiz-option.selected {
+  border-color:var(--black); background:var(--black); color:white;
+  transform:scale(1.02);
+  box-shadow:0 6px 24px rgba(0,0,0,.15);
+}
 .quiz-result { display:none; text-align:center; animation:panelFade .4s ease; }
 .quiz-result.active { display:block; }
 .quiz-result-label   { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gray-3); margin-bottom:1rem; }
@@ -1193,7 +1761,7 @@ body.pd-open { overflow: hidden; }
 ============================ */
 #film-layers {
   position: relative;
-  height: 300vh;
+  height: 220vh;
   background: #070707;
 }
 .fl-pin {
@@ -1201,10 +1769,6 @@ body.pd-open { overflow: hidden; }
   top: 0;
   height: 100vh;
   overflow: clip;
-  background: transparent;
-  transition: background 0.4s ease;
-}
-.fl-pin.fl-active {
   background: #070707;
 }
 /* 배경 글로우 */
@@ -1233,29 +1797,15 @@ body.pd-open { overflow: hidden; }
   color: rgba(200,169,110,0.55); text-transform: uppercase; margin-bottom: 18px;
 }
 .fl-title {
-  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 200;
-  color: rgba(255,255,255,0.92); letter-spacing: -0.025em;
-  line-height: 1.15; margin-bottom: 14px;
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem); font-weight: 300;
+  color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
+  line-height: 1.6;
 }
 .fl-sub {
   font-size: 14px; font-weight: 300;
   color: rgba(255,255,255,0.3); line-height: 1.8;
 }
-/* 브랜드 로고 피날레 */
-#fl-logo {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  z-index: 11;
-  pointer-events: none;
-  opacity: 0;
-  transition: none;
-}
-#fl-logo img {
-  width: clamp(240px, 32vw, 420px);
-  mix-blend-mode: screen;
-  display: block;
-}
+/* fl-logo 제거됨 — 로고 반복 방지, 헤더 텍스트가 피날레 역할 */
 /* 스테이지 */
 #fl-stage {
   position: absolute;
@@ -1428,6 +1978,7 @@ body.pd-open { overflow: hidden; }
   <a href="#why-story" onclick="closeMobileMenu()">브랜드</a>
   <a href="#how"       onclick="closeMobileMenu()">기술</a>
   <a href="#products"  onclick="closeMobileMenu()">제품</a>
+  <a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener" onclick="closeMobileMenu()">보증서</a>
   <a href="#booking"   onclick="closeMobileMenu()">예약하기</a>
 </div>
 
@@ -1442,6 +1993,7 @@ body.pd-open { overflow: hidden; }
     <li><a href="#why-story">브랜드</a></li>
     <li><a href="#how">기술</a></li>
     <li><a href="#products">제품</a></li>
+    <li><a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener">보증서</a></li>
   </ul>
   <a href="#booking" class="nav-cta">예약</a>
   <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기">
@@ -1454,11 +2006,13 @@ body.pd-open { overflow: hidden; }
 ======================================== -->
 <section id="hero">
   <div class="hero-sticky" id="heroSticky">
+    <!-- HERO BG VIDEO — 제거하려면 이 한 줄만 주석 처리 -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto"><source src="hero-drive.mp4" type="video/mp4"></video>
     <div class="hero-lx" id="heroLx">THE LX</div>
     <div class="hero-copy" id="heroCopy">
       <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain</p>
       <h1 class="hero-title">
-        차 안의 공간으로<br>설계한 <em>최초의 필름</em>
+        차 안을 공간으로<br>설계한 <em>최초의 필름</em>
       </h1>
       <p class="hero-sub">
         매일 들어가는 공간.<br>아무도 설계하지 않았다. THE LX가 처음이다.
@@ -1526,18 +2080,14 @@ body.pd-open { overflow: hidden; }
     <svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="fl-noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise"/></filter></defs></svg>
     <div id="fl-bg-flash"></div>
     <div class="fl-header" id="fl-header">
-      <p class="fl-eyebrow">5-Layer Technology · World Patent WO2015102923</p>
-      <h2 class="fl-title">다섯 겹의 이유.</h2>
-      <p class="fl-sub">Saint-Gobain 나노세라믹 기술이 층층이 쌓여 단 하나의 필름이 됩니다.</p>
+      <h2 class="fl-title">다섯 개의 층. 하나의 필름.</h2>
     </div>
     <div id="fl-stage">
       <div id="fl-wrap">
         <div id="fl-glow-ring"></div>
       </div>
     </div>
-    <div id="fl-logo">
-      <img src="thelx-logo-ghost2.png" alt="THE LX">
-    </div>
+    <div id="fl-logo" style="display:none;"></div>
     <div id="fl-infotext"></div>
     <div class="fl-scroll-hint" id="fl-scroll-hint">scroll</div>
   </div>
@@ -1556,7 +2106,7 @@ body.pd-open { overflow: hidden; }
 ======================================== -->
 <section id="vlt">
   <div class="vlt-wrap" id="vltWrap">
-    <img src="lx-film.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img">
+    <img src="vlt-sky.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img" loading="eager" decoding="sync" fetchpriority="high">
 
     <div class="vlt-band" id="vb0" style="left:0%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.80);"></div>
@@ -1604,7 +2154,7 @@ body.pd-open { overflow: hidden; }
 <section id="compare">
   <div class="compare-inner">
     <div class="compare-header fi-big">
-      <h2 class="section-title" style="text-align:center;">일반 필름과 <em>THE LX는 다릅니다</em></h2>
+      <h2 class="section-title" style="text-align:center;">일반 필름과 <em>THE LX의 차이</em></h2>
     </div>
     <div class="compare-grid fi-big" style="transition-delay:.1s">
       <div class="compare-col-header col-normal">
@@ -1642,6 +2192,7 @@ body.pd-open { overflow: hidden; }
       </h2>
     </div>
     <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+    <p class="quiz-step-indicator" id="quizStepIndicator">1 / 3</p>
 
     <div class="quiz-step active" id="quizStep1">
       <p class="quiz-question">주로 누구와<br>함께 탑승하시나요?</p>
@@ -1709,7 +2260,6 @@ body.pd-open { overflow: hidden; }
       <button class="tab-btn" data-tab="titanium">Titanium</button>
       <button class="tab-btn" data-tab="gline">G-LINE</button>
       <button class="tab-btn" data-tab="sline">S-LINE</button>
-      <button class="tab-btn" data-tab="galaxie">Galaxie</button>
       <button class="tab-btn" data-tab="shield">LX SHIELD <span class="ppf-badge">PPF</span></button>
     </div>
 
@@ -1863,27 +2413,6 @@ body.pd-open { overflow: hidden; }
         </div>
       </div>
 
-      <!-- Galaxie -->
-      <div class="product-panel" id="panel-galaxie">
-        <div>
-          <span class="product-category">Essential</span>
-          <h3 class="product-name">Galaxie</h3>
-          <p class="product-tagline">핵심 기능에 집중한 합리적인 입문 라인.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            자외선 차단과 기본 열 차단을 원하는 분. 실용적이고 합리적인 가격을 원하는 분.
-          </div>
-          <button class="product-detail-btn" data-product="galaxie">상세 스펙 보기 →</button>
-        </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">13 ~ 54%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="54"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <p class="spec-note">* 농도 12 기준 최대 TSER · VLT 범위: 농도 12–50</p>
-        </div>
-      </div>
-
       <!-- LX SHIELD -->
       <div class="product-panel" id="panel-shield">
         <div>
@@ -1910,6 +2439,200 @@ body.pd-open { overflow: hidden; }
 </section>
 
 <!-- ========================================
+     PRICING — Configurator
+======================================== -->
+<section id="pricing">
+  <div class="cf-inner">
+    <div class="cf-head">
+      <p class="section-eyebrow fi">PRICING</p>
+      <h2 class="section-title fi">시공 가격</h2>
+      <p class="cf-sub fi">차종과 부위, 제품을 선택하면 패키지 금액이 즉시 계산됩니다.</p>
+    </div>
+
+    <div class="cf-card fi">
+      <!-- LEFT: Configurator -->
+      <div class="cf-config" id="cfConfig">
+
+        <!-- Mode Toggle -->
+        <div class="cf-mode-toggle">
+          <button class="cf-mode-btn active" data-mode="simple">간편 선택</button>
+          <button class="cf-mode-btn" data-mode="custom">나만의 조합</button>
+        </div>
+
+        <!-- Step 01 -->
+        <div class="cf-step">
+          <p class="cf-step-label">01 · 차종</p>
+          <div class="cf-segments">
+            <button class="cf-seg active" data-car="sedan">승용</button>
+            <button class="cf-seg" data-car="suv">SUV</button>
+            <button class="cf-seg" data-car="compact">경차</button>
+          </div>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="cf-step">
+          <p class="cf-step-label">02 · 시공 부위</p>
+          <div class="cf-checks">
+            <div class="cf-check active" data-pos="전면">
+              <span class="cf-check-box"></span>
+              <span class="cf-check-text">
+                <span class="cf-check-name">전면</span>
+                <span class="cf-check-price">90<i>만</i></span>
+              </span>
+            </div>
+            <div class="cf-check active" data-pos="측·후면">
+              <span class="cf-check-box"></span>
+              <span class="cf-check-text">
+                <span class="cf-check-name">측·후면</span>
+                <span class="cf-check-price">150<i>만</i></span>
+              </span>
+            </div>
+            <div class="cf-check active" data-pos="일반 썬루프">
+              <span class="cf-check-box"></span>
+              <span class="cf-check-text">
+                <span class="cf-check-name">일반 썬루프</span>
+                <span class="cf-check-price">30<i>만</i></span>
+              </span>
+            </div>
+            <div class="cf-check active" data-pos="파노라마 썬루프">
+              <span class="cf-check-box"></span>
+              <span class="cf-check-text">
+                <span class="cf-check-name">파노라마 썬루프</span>
+                <span class="cf-check-price">60<i>만</i></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 03 — 간편 모드 (단일 제품) -->
+        <div class="cf-step cf-step-product">
+          <p class="cf-step-label">03 · 제품</p>
+          <div class="cf-products">
+            <button class="cf-prod flagship active" data-product="LX">
+              <span class="cf-prod-name">THE LX</span>
+              <span class="cf-prod-tag">Flagship · 5 Layer</span>
+            </button>
+            <button class="cf-prod" data-product="Vogue">
+              <span class="cf-prod-name">Vogue</span>
+              <span class="cf-prod-tag">Reflective</span>
+            </button>
+            <button class="cf-prod" data-product="Xenith IR">
+              <span class="cf-prod-name">Xenith IR</span>
+              <span class="cf-prod-tag">Ceramic IR</span>
+            </button>
+            <button class="cf-prod" data-product="Quantum">
+              <span class="cf-prod-name">Quantum</span>
+              <span class="cf-prod-tag">Full Metal</span>
+            </button>
+            <button class="cf-prod" data-product="Titanium">
+              <span class="cf-prod-name">Titanium</span>
+              <span class="cf-prod-tag">Deep Black</span>
+            </button>
+            <button class="cf-prod" data-product="G-LINE">
+              <span class="cf-prod-name">G-LINE</span>
+              <span class="cf-prod-tag">Hybrid</span>
+            </button>
+            <button class="cf-prod" data-product="S-LINE">
+              <span class="cf-prod-name">S-LINE</span>
+              <span class="cf-prod-tag">Non-Reflective</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 03 — 조합 모드 (부위별 제품) -->
+        <div class="cf-step cf-custom" id="cfCustom">
+          <p class="cf-step-label">03 · 부위별 제품</p>
+          <div id="cfCustomBlocks"></div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Total -->
+      <div class="cf-total" id="cfTotal">
+        <p class="cf-total-eyebrow">선택한 패키지</p>
+        <p class="cf-total-product" id="cfTotalProduct">THE LX</p>
+        <p class="cf-total-positions" id="cfTotalPositions">전면 · 측·후면 · 일반 썬루프 · 파노라마 썬루프</p>
+        <div class="cf-total-breakdown" id="cfTotalBreakdown"></div>
+
+        <div class="cf-total-divider"></div>
+
+        <div class="cf-total-price">
+          <span class="cf-total-num" id="cfTotalNum">330</span>
+          <span class="cf-total-unit">만원</span>
+        </div>
+        <p class="cf-total-note">권장 소비자가 · 시공점에 따라 차이 있음</p>
+
+        <div class="cf-cta">
+          <a href="#booking">예약 상담 받기 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PPF Configurator Card (light gray) -->
+    <div class="pf-card fi">
+      <div class="pf-config">
+        <div class="pf-head">
+          <p class="pf-eyebrow">LX SHIELD · PPF</p>
+          <h3 class="pf-title">차량 외부 도장 보호</h3>
+          <p class="pf-sub">자가복원 셀프힐링 · 차량 외부 페인트를 보호하는 투명 보호필름</p>
+        </div>
+
+        <div class="pf-step">
+          <p class="pf-step-label">01 · 차종</p>
+          <div class="pf-segments">
+            <button class="pf-seg active" data-pcar="sedan">승용</button>
+            <button class="pf-seg" data-pcar="suv">SUV</button>
+          </div>
+        </div>
+
+        <div class="pf-step">
+          <p class="pf-step-label">02 · 패키지</p>
+          <div class="pf-options">
+            <button class="pf-opt active" data-ppkg="front">
+              <span class="pf-opt-name">FRONT SET</span>
+              <span class="pf-opt-desc">전면 후드 · 펜더 · 사이드미러</span>
+              <span class="pf-opt-price">300<i>만</i></span>
+            </button>
+            <button class="pf-opt" data-ppkg="half">
+              <span class="pf-opt-name">HALF 패키지</span>
+              <span class="pf-opt-desc">전면 + 도어 상부 · 트렁크</span>
+              <span class="pf-opt-price">220<i>만</i></span>
+            </button>
+            <button class="pf-opt" data-ppkg="full">
+              <span class="pf-opt-name">FULL 전체</span>
+              <span class="pf-opt-desc">차량 전체 외부 면 보호</span>
+              <span class="pf-opt-price">450<i>만</i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pf-total">
+        <p class="pf-total-eyebrow">PPF 견적</p>
+        <p class="pf-total-pkg" id="pfTotalPkg">FRONT SET</p>
+        <p class="pf-total-desc" id="pfTotalDesc">전면 후드 · 펜더 · 사이드미러</p>
+
+        <div class="pf-total-divider"></div>
+
+        <div class="pf-total-price">
+          <span class="pf-total-num" id="pfTotalNum">300</span>
+          <span class="pf-total-unit">만원</span>
+        </div>
+        <p class="pf-total-note">권장 소비자가 · 시공점에 따라 차이 있음</p>
+
+        <div class="pf-cta">
+          <a href="#booking">PPF 상담 받기 →</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="cf-footer-note fi">
+      * 상기 가격은 권장 소비자가이며 시공점에 따라 달라질 수 있습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ========================================
      TRUST NUMBERS (index.html)
 ======================================== -->
 <section id="trust">
@@ -1931,7 +2654,7 @@ body.pd-open { overflow: hidden; }
   <div class="awards-inner">
     <span class="section-eyebrow fi">Recognition</span>
     <h2 class="section-title fi">
-      선택받은 이유는<br><em>증명됩니다.</em>
+      <em>LX</em>와 함께.
     </h2>
     <div class="awards-grid">
 
@@ -2112,7 +2835,6 @@ body.pd-open { overflow: hidden; }
           <option value="Titanium">Titanium</option>
           <option value="G-LINE">G-LINE</option>
           <option value="S-LINE">S-LINE</option>
-          <option value="Galaxie">Galaxie</option>
           <option value="LX SHIELD (PPF)">LX SHIELD (PPF)</option>
         </select>
       </div>
@@ -2175,7 +2897,7 @@ body.pd-open { overflow: hidden; }
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <span class="footer-logo">THE LX · Solar Gard Premium</span>
+    <img src="thelx-logo-footer.png" alt="THE LX" class="footer-logo-img">
     <ul class="footer-links">
       <li><a href="#why-story">브랜드</a></li>
       <li><a href="#how">기술</a></li>
@@ -2254,6 +2976,118 @@ body.pd-open { overflow: hidden; }
   });
 })();
 
+/* ── COMPARE SHINE TRACE (Canvas) ── */
+(function(){
+  var grid = document.querySelector('.compare-grid');
+  if (!grid) return;
+
+  /* canvas 생성 — grid 위에 겹침 */
+  var canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;border-radius:20px;';
+  grid.style.position = 'relative';
+  grid.appendChild(canvas);
+
+  var ctx = canvas.getContext('2d');
+  var active = false;
+  var angle = 0;
+  var dpr = window.devicePixelRatio || 1;
+
+  function resize() {
+    var r = grid.getBoundingClientRect();
+    canvas.width = r.width * dpr;
+    canvas.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function getPointOnRoundedRect(t, w, h, r) {
+    /* t: 0~1, 둘레를 따라 이동. 좌상단 모서리부터 시작 */
+    var straight = (w - 2*r)*2 + (h - 2*r)*2;
+    var corners = 2 * Math.PI * r;
+    var perimeter = straight + corners;
+    var d = t * perimeter;
+    /* 상단 직선 */
+    var seg = w - 2*r;
+    if (d < seg) return { x: r + d, y: 0 };
+    d -= seg;
+    /* 우상단 코너 */
+    seg = Math.PI * r / 2;
+    if (d < seg) { var a = d / r - Math.PI/2; return { x: w - r + Math.cos(a)*r, y: r + Math.sin(a)*r }; }
+    d -= seg;
+    /* 우측 직선 */
+    seg = h - 2*r;
+    if (d < seg) return { x: w, y: r + d };
+    d -= seg;
+    /* 우하단 코너 */
+    seg = Math.PI * r / 2;
+    if (d < seg) { var a2 = d / r; return { x: w - r + Math.cos(a2)*r, y: h - r + Math.sin(a2)*r }; }
+    d -= seg;
+    /* 하단 직선 */
+    seg = w - 2*r;
+    if (d < seg) return { x: w - r - d, y: h };
+    d -= seg;
+    /* 좌하단 코너 */
+    seg = Math.PI * r / 2;
+    if (d < seg) { var a3 = d / r + Math.PI/2; return { x: r + Math.cos(a3)*r, y: h - r + Math.sin(a3)*r }; }
+    d -= seg;
+    /* 좌측 직선 */
+    seg = h - 2*r;
+    if (d < seg) return { x: 0, y: h - r - d };
+    d -= seg;
+    /* 좌상단 코너 */
+    seg = Math.PI * r / 2;
+    var a4 = d / r + Math.PI;
+    return { x: r + Math.cos(a4)*r, y: r + Math.sin(a4)*r };
+  }
+
+  function draw() {
+    if (!active) return;
+    requestAnimationFrame(draw);
+
+    var w = canvas.width / dpr;
+    var h = canvas.height / dpr;
+    var R = 20;
+    ctx.clearRect(0, 0, w, h);
+
+    angle += 0.002;
+    if (angle > 1) angle -= 1;
+
+    /* 빛 포인트 위치 */
+    var pt = getPointOnRoundedRect(angle, w, h, R);
+
+    /* 테두리 위에 글로우 그리기 — 순백 · 쿨 화이트 */
+    var radius = 320;
+    var grad = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, radius);
+    grad.addColorStop(0,    'rgba(255,255,255,0.9)');
+    grad.addColorStop(0.08, 'rgba(250,252,255,0.6)');
+    grad.addColorStop(0.2,  'rgba(230,240,255,0.25)');
+    grad.addColorStop(0.5,  'rgba(220,235,255,0.06)');
+    grad.addColorStop(1,    'transparent');
+
+    /* 테두리 경로만 클리핑 */
+    ctx.save();
+    ctx.beginPath();
+    /* 외곽 둥근사각형 */
+    ctx.roundRect(0, 0, w, h, R);
+    /* 내부 둥근사각형 (2px 안쪽) */
+    ctx.roundRect(2, 2, w - 4, h - 4, R - 2);
+    ctx.clip('evenodd');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(pt.x - radius, pt.y - radius, radius*2, radius*2);
+    ctx.restore();
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !active) { active = true; draw(); }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(grid);
+})();
+
 /* ── CURSOR ── */
 const cur = document.getElementById('cursor');
 // Windows에서는 커스텀 커서 비활성화 (mix-blend-mode 렌더링 차이)
@@ -2319,14 +3153,13 @@ function updateHero() {
   heroSticky.style.backgroundColor = `rgb(${g},${g},${g})`;
   heroLx.style.color = `rgb(${Math.round(255 * bgP)},${Math.round(255 * bgP)},${Math.round(255 * bgP)})`;
 
-  if (bgP > 0.5) {
+  // Hero에 영상 배경 → 항상 어두운 톤. nav/cursor는 진입 즉시 light 모드
+  mainNav.classList.add('on-dark');
+  cur.classList.add('light');
+  if (bgP > 0.4) {
     heroSticky.classList.add('going-dark');
-    cur.classList.add('light');
-    mainNav.classList.add('on-dark');
   } else {
     heroSticky.classList.remove('going-dark');
-    cur.classList.remove('light');
-    mainNav.classList.remove('on-dark');
   }
 
   const pct = Math.round((1 - p) * 100);
@@ -2334,9 +3167,10 @@ function updateHero() {
 }
 
 /* ── WHY STORY 3-step sticky ── */
-const whyStory = document.getElementById('why-story');
-const whySteps = whyStory.querySelectorAll('.why-step');
-const whyDots  = whyStory.querySelectorAll('.why-dot');
+const whyStory    = document.getElementById('why-story');
+const whyStoryPin = whyStory.querySelector('.why-story-pin');
+const whySteps    = whyStory.querySelectorAll('.why-step');
+const whyDots     = whyStory.querySelectorAll('.why-dot');
 
 function updateWhyStory() {
   const sy = window.scrollY;
@@ -2384,6 +3218,10 @@ function updateWhyStory() {
   const bgP = Math.max(0, Math.min(1, (progress - 0.75) / 0.25));
   const ch  = (a, b) => Math.round(a + (b - a) * bgP);
   whyStory.style.background = `rgb(${ch(245,7)},${ch(245,7)},${ch(247,7)})`;
+
+  // Dead zone fade-out: FILM LAYERS와 동시에 시작되므로 빠르게 사라짐 (첫 30vh)
+  const deadZone = Math.max(0, Math.min(1, (scrolled - total) / (_winH * 0.3)));
+  whyStoryPin.style.opacity = 1 - deadZone;
 }
 
 /* ── RAF LOOP ── */
@@ -2494,6 +3332,310 @@ const prodIO = new IntersectionObserver(entries => {
 }, { threshold:0.3 });
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
+
+/* ── PRICING CONFIGURATOR ── */
+(function() {
+  const PRICES = {
+    sedan:   { '전면': 90,  '측·후면': 150, '일반 썬루프': 30, '파노라마 썬루프': 60 },
+    suv:     { '전면': 100, '측·후면': 180, '일반 썬루프': 35, '파노라마 썬루프': 70 },
+    compact: { '전면': 70,  '측·후면': 110, '일반 썬루프': 25, '파노라마 썬루프': null }
+  };
+  const MUL = {
+    'LX':       1.00,
+    'Vogue':    0.72,
+    'Xenith IR':0.78,
+    'Quantum':  0.58,
+    'Titanium': 0.52,
+    'G-LINE':   0.42,
+    'S-LINE':   0.36
+  };
+  const NAMES = {
+    'LX':'THE LX','Vogue':'Vogue','Xenith IR':'Xenith IR',
+    'Quantum':'Quantum','Titanium':'Titanium','G-LINE':'G-LINE','S-LINE':'S-LINE'
+  };
+
+  const PROD_LIST = ['LX','Vogue','Xenith IR','Quantum','Titanium','G-LINE','S-LINE'];
+  const POS_LIST  = ['전면','측·후면','일반 썬루프','파노라마 썬루프'];
+
+  const state = {
+    car: 'sedan',
+    mode: 'simple', // 'simple' | 'custom'
+    positions: new Set(POS_LIST),
+    product: 'LX',
+    positionProducts: {
+      '전면': 'LX',
+      '측·후면': 'LX',
+      '일반 썬루프': 'LX',
+      '파노라마 썬루프': 'LX'
+    }
+  };
+
+  const checks  = document.querySelectorAll('.cf-check');
+  const segs    = document.querySelectorAll('.cf-seg');
+  const prods   = document.querySelectorAll('.cf-prod');
+  const modeBtns = document.querySelectorAll('.cf-mode-btn');
+  const cfConfig = document.getElementById('cfConfig');
+  const cfTotal  = document.getElementById('cfTotal');
+  const cfCustomBlocks = document.getElementById('cfCustomBlocks');
+  const totalNum      = document.getElementById('cfTotalNum');
+  const totalProduct  = document.getElementById('cfTotalProduct');
+  const totalPositions= document.getElementById('cfTotalPositions');
+  const totalBreakdown= document.getElementById('cfTotalBreakdown');
+  if (!totalNum) return;
+
+  function priceForPos(pos, product) {
+    const base = PRICES[state.car][pos];
+    if (base == null) return null;
+    return Math.round(base * MUL[product] / 5) * 5;
+  }
+
+  function priceForActivePos(pos) {
+    const product = state.mode === 'custom' ? state.positionProducts[pos] : state.product;
+    return priceForPos(pos, product);
+  }
+
+  function calcTotal() {
+    let sum = 0;
+    state.positions.forEach(pos => {
+      const p = priceForActivePos(pos);
+      if (p != null) sum += p;
+    });
+    return sum;
+  }
+
+  function animateNum(target) {
+    const start = parseInt(totalNum.textContent.replace(/,/g,''),10) || 0;
+    const diff = target - start;
+    if (diff === 0) { totalNum.textContent = target.toLocaleString(); return; }
+    const duration = 420;
+    const t0 = performance.now();
+    function step(t) {
+      const k = Math.min(1, (t - t0) / duration);
+      const eased = 1 - Math.pow(1 - k, 3);
+      totalNum.textContent = Math.round(start + diff * eased).toLocaleString();
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function updateCheckPrices() {
+    checks.forEach(c => {
+      const pos = c.dataset.pos;
+      const priceEl = c.querySelector('.cf-check-price');
+      const p = priceForActivePos(pos);
+      if (p == null) {
+        priceEl.innerHTML = 'N/A';
+        c.classList.add('disabled');
+        c.classList.remove('active');
+        state.positions.delete(pos);
+      } else {
+        priceEl.innerHTML = p + '<i>만</i>';
+        c.classList.remove('disabled');
+      }
+    });
+  }
+
+  function buildCustomBlocks() {
+    cfCustomBlocks.innerHTML = '';
+    POS_LIST.forEach(pos => {
+      const block = document.createElement('div');
+      block.className = 'cf-pos-block';
+      block.dataset.pos = pos;
+      const isAvail = PRICES[state.car][pos] != null;
+      const isActive = state.positions.has(pos);
+      if (!isAvail || !isActive) block.classList.add('disabled');
+
+      const head = document.createElement('div');
+      head.className = 'cf-pos-block-head';
+      const name = document.createElement('span');
+      name.className = 'cf-pos-block-name';
+      name.textContent = pos;
+      const price = document.createElement('span');
+      price.className = 'cf-pos-block-price';
+      const p = priceForActivePos(pos);
+      price.innerHTML = p != null ? (p + '<i>만</i>') : 'N/A';
+      head.appendChild(name);
+      head.appendChild(price);
+      block.appendChild(head);
+
+      const grid = document.createElement('div');
+      grid.className = 'cf-pos-prods';
+      PROD_LIST.forEach(prod => {
+        const btn = document.createElement('button');
+        btn.className = 'cf-pos-prod';
+        btn.dataset.pos = pos;
+        btn.dataset.product = prod;
+        btn.textContent = prod === 'LX' ? 'THE LX' : prod;
+        if (state.positionProducts[pos] === prod) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          state.positionProducts[pos] = prod;
+          buildCustomBlocks();
+          render();
+        });
+        grid.appendChild(btn);
+      });
+      block.appendChild(grid);
+      cfCustomBlocks.appendChild(block);
+    });
+  }
+
+  function renderBreakdown() {
+    totalBreakdown.innerHTML = '';
+    let any = false;
+    POS_LIST.forEach(pos => {
+      if (!state.positions.has(pos)) return;
+      const product = state.positionProducts[pos];
+      const p = priceForPos(pos, product);
+      if (p == null) return;
+      any = true;
+      const row = document.createElement('div');
+      row.className = 'cf-bd-row';
+      row.innerHTML = `<span class="cf-bd-pos">${pos}</span>` +
+                      `<span class="cf-bd-prod">${NAMES[product]}</span>` +
+                      `<span class="cf-bd-price">${p}<i>만</i></span>`;
+      totalBreakdown.appendChild(row);
+    });
+    if (!any) {
+      totalBreakdown.innerHTML = '<p style="font-size:.85rem;color:var(--gray-3);margin-top:.6rem;">시공 부위를 선택해주세요</p>';
+    }
+  }
+
+  function render() {
+    if (state.mode === 'simple') {
+      totalProduct.textContent = NAMES[state.product];
+      const list = Array.from(state.positions);
+      totalPositions.textContent = list.length ? list.join(' · ') : '시공 부위를 선택해주세요';
+    } else {
+      renderBreakdown();
+    }
+    animateNum(calcTotal());
+  }
+
+  function applyMode() {
+    if (state.mode === 'custom') {
+      cfConfig.classList.add('mode-custom');
+      cfTotal.classList.add('mode-custom');
+      buildCustomBlocks();
+    } else {
+      cfConfig.classList.remove('mode-custom');
+      cfTotal.classList.remove('mode-custom');
+    }
+    updateCheckPrices();
+    render();
+  }
+
+  modeBtns.forEach(b => b.addEventListener('click', () => {
+    if (b.classList.contains('active')) return;
+    modeBtns.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.mode = b.dataset.mode;
+    applyMode();
+  }));
+
+  segs.forEach(b => b.addEventListener('click', () => {
+    segs.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.car = b.dataset.car;
+    updateCheckPrices();
+    if (state.mode === 'custom') buildCustomBlocks();
+    render();
+  }));
+
+  checks.forEach(c => c.addEventListener('click', () => {
+    if (c.classList.contains('disabled')) return;
+    const pos = c.dataset.pos;
+    if (state.positions.has(pos)) {
+      state.positions.delete(pos);
+      c.classList.remove('active');
+    } else {
+      state.positions.add(pos);
+      c.classList.add('active');
+    }
+    if (state.mode === 'custom') buildCustomBlocks();
+    render();
+  }));
+
+  prods.forEach(b => b.addEventListener('click', () => {
+    prods.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.product = b.dataset.product;
+    updateCheckPrices();
+    render();
+  }));
+
+  updateCheckPrices();
+  render();
+})();
+
+/* ── PPF MINI CONFIGURATOR ── */
+(function() {
+  const PPF_PRICES = {
+    sedan: { front: 300, half: 220, full: 450 },
+    suv:   { front: 330, half: 242, full: 495 }
+  };
+  const PPF_META = {
+    front: { name: 'FRONT SET', desc: '전면 후드 · 펜더 · 사이드미러' },
+    half:  { name: 'HALF 패키지', desc: '전면 + 도어 상부 · 트렁크' },
+    full:  { name: 'FULL 전체',  desc: '차량 전체 외부 면 보호' }
+  };
+
+  const pState = { car: 'sedan', pkg: 'front' };
+
+  const pSegs   = document.querySelectorAll('.pf-seg');
+  const pOpts   = document.querySelectorAll('.pf-opt');
+  const pNum    = document.getElementById('pfTotalNum');
+  const pPkgEl  = document.getElementById('pfTotalPkg');
+  const pDescEl = document.getElementById('pfTotalDesc');
+  if (!pNum) return;
+
+  function pAnimate(target) {
+    const start = parseInt(pNum.textContent.replace(/,/g,''),10) || 0;
+    const diff = target - start;
+    if (diff === 0) { pNum.textContent = target.toLocaleString(); return; }
+    const t0 = performance.now();
+    function step(t) {
+      const k = Math.min(1, (t - t0) / 420);
+      const eased = 1 - Math.pow(1 - k, 3);
+      pNum.textContent = Math.round(start + diff * eased).toLocaleString();
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function pUpdateOptionPrices() {
+    pOpts.forEach(o => {
+      const key = o.dataset.ppkg;
+      const priceEl = o.querySelector('.pf-opt-price');
+      const p = PPF_PRICES[pState.car][key];
+      priceEl.innerHTML = p + '<i>만</i>';
+    });
+  }
+
+  function pRender() {
+    const meta = PPF_META[pState.pkg];
+    pPkgEl.textContent = meta.name;
+    pDescEl.textContent = meta.desc;
+    pAnimate(PPF_PRICES[pState.car][pState.pkg]);
+  }
+
+  pSegs.forEach(b => b.addEventListener('click', () => {
+    pSegs.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    pState.car = b.dataset.pcar;
+    pUpdateOptionPrices();
+    pRender();
+  }));
+
+  pOpts.forEach(o => o.addEventListener('click', () => {
+    pOpts.forEach(x => x.classList.remove('active'));
+    o.classList.add('active');
+    pState.pkg = o.dataset.ppkg;
+    pRender();
+  }));
+
+  pUpdateOptionPrices();
+  pRender();
+})();
 
 /* ── VLT 5패널 클립패스 순차 공개 ── */
 (function() {
@@ -2911,34 +4053,6 @@ const PD_DATA = {
       ]},
     ],
   },
-  galaxie: {
-    name: 'Galaxie',
-    tagline: '핵심 기능에 집중한 합리적인 입문 라인.',
-    recommend: '자외선 차단과 기본 열 차단을 원하는 분. 실용적이고 합리적인 가격을 원하는 분.',
-    flagship: false,
-    perf: [
-      { label: 'UV 차단', pct: 99 },
-      { label: '최대 TSER', pct: 50 },
-      { label: '보증', pct: 50 },
-    ],
-    specs: [
-      { title: '농도별 성능 (VLT · TSER)', rows: [
-        { label: '농도 12 — VLT 13%', value: 'TSER 50%', pct: 50 },
-        { label: '농도 35 — VLT 39%', value: 'TSER 41%', pct: 41 },
-        { label: '농도 50 — VLT 54%', value: 'TSER 35%', pct: 35 },
-      ]},
-      { title: 'UV 성능 · 특성', rows: [
-        { label: 'UV 차단율',  value: '99%+',              pct: 99   },
-        { label: 'UV 등급',    value: 'PA+++ SPF285',      pct: null },
-        { label: '필름 타입',  value: '엔트리 라인',       pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
-      ]},
-      { title: '보증', rows: [
-        { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
-      ]},
-    ],
-  },
   shield: {
     name: 'LX SHIELD',
     tagline: '최상의 셀프 힐링 PPF. 자가복원성 초고분자 물질에 독자 기술을 접목.',
@@ -3095,6 +4209,9 @@ function slPhone1(p) {
   return m ? m[0] : p.replace(/[^0-9]/g,'').slice(0,11);
 }
 
+var SL_PAGE = 12;
+var slShown = SL_PAGE;
+
 function slRender() {
   const q   = slQuery.toLowerCase();
   const filtered = STORE_DATA.filter(s => {
@@ -3112,7 +4229,10 @@ function slRender() {
     return;
   }
 
-  grid.innerHTML = filtered.map(s => {
+  var visible = filtered.slice(0, slShown);
+  var remaining = filtered.length - slShown;
+
+  grid.innerHTML = visible.map(s => {
     const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(s.a);
     const tel    = slPhone1(s.p);
     return `<div class="sl-card">
@@ -3125,6 +4245,14 @@ function slRender() {
       </div>
     </div>`;
   }).join('');
+
+  if (remaining > 0) {
+    grid.innerHTML += `<div class="sl-more-wrap"><button class="sl-more-btn" id="slMoreBtn">+ ${remaining}개 더보기</button></div>`;
+    document.getElementById('slMoreBtn').addEventListener('click', function() {
+      slShown += SL_PAGE;
+      slRender();
+    });
+  }
 }
 
 document.querySelectorAll('.sl-rtab').forEach(btn => {
@@ -3132,12 +4260,14 @@ document.querySelectorAll('.sl-rtab').forEach(btn => {
     document.querySelectorAll('.sl-rtab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     slRegion = btn.dataset.r;
+    slShown = SL_PAGE;
     slRender();
   });
 });
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
+  slShown = SL_PAGE;
   slRender();
 });
 
@@ -3151,6 +4281,13 @@ function quizGoTo(stepId, pct) {
   document.getElementById('quizResult').classList.remove('active');
   if (stepId) document.getElementById(stepId).classList.add('active');
   document.getElementById('quizProgressFill').style.width = pct + '%';
+  var indicator = document.getElementById('quizStepIndicator');
+  if (indicator) {
+    var step = pct === 0 ? 1 : pct <= 33 ? 1 : pct <= 66 ? 2 : 3;
+    if (pct > 0) step = Math.ceil(pct / 33);
+    indicator.textContent = step + ' / 3';
+    indicator.style.display = pct >= 100 ? 'none' : '';
+  }
 }
 
 function getQuizResult() {
@@ -3165,7 +4302,7 @@ function getQuizResult() {
   } else if (isFamily || (hasHeat && hasPrivacy)) {
     return { product: 'S-LINE', reason: '가족과 함께하는 모든 주행을 위해. 비반사 필름으로 선명한 시야와 쾌적함을 균형 있게 갖췄습니다.' };
   } else if (q3 === 'low') {
-    return { product: 'Galaxie', reason: '핵심에 집중한 합리적인 선택. UV 99% 차단으로 개인 공간의 기본을 완벽하게.' };
+    return { product: 'S-LINE', reason: '합리적인 선택. 비반사 필름으로 선명한 시야와 쾌적한 주행을 균형 있게 갖췄습니다.' };
   } else {
     return { product: 'G-LINE', reason: '열 차단과 개성을 동시에. 라미네이티드 블루 컬러로 일상의 모든 주행을 쾌적하게 만듭니다.' };
   }
@@ -3178,6 +4315,8 @@ function showQuizResult() {
   document.getElementById('quizResultReason').textContent  = r.reason;
   document.getElementById('quizResult').classList.add('active');
   document.getElementById('quizProgressFill').style.width  = '100%';
+  var indicator = document.getElementById('quizStepIndicator');
+  if (indicator) indicator.style.display = 'none';
 }
 
 function resetQuiz() {
@@ -3229,11 +4368,12 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
   ];
 
   var N      = LAYERS.length;
-  var FH     = 2;     // 레이어 두께(px)
-  var SPREAD = 64;    // 최대 레이어 간격(px)
+  var FH     = 2;   // 필름 두께 (px) — scale 2.2 + rotateX로 시각적 존재감 확보
+  var SPREAD = 64;  // 레이어 분리 간격 (px)
 
   var section    = document.getElementById('film-layers');
   var pin        = section.querySelector('.fl-pin');
+  var stage      = document.getElementById('fl-stage');
   var wrap       = document.getElementById('fl-wrap');
   var logoEl     = document.getElementById('fl-logo');
   var glowRing   = document.getElementById('fl-glow-ring');
@@ -3354,7 +4494,7 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
     els.push(el);
   });
 
-  /* ── 폭 적용 ── */
+  /* ── 폭·높이 적용 ── */
   function applyWidth() {
     var fw    = filmW();
     var halfW = fw / 2;
@@ -3388,62 +4528,76 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
   function lerp(a, b, t) { return a + (b - a) * t; }
   function clamp01(t)  { return Math.max(0, Math.min(1, t)); }
 
-  /* ── 스크롤 핸들러 ── */
+  /* ── 스크롤 핸들러 (rAF 쓰로틀) ── */
   var lastProgress = -1;
+  var rafId = 0;
+
+  function onScrollRaw() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(function () { rafId = 0; onScroll(); });
+  }
 
   function onScroll() {
     var scrollable = section.offsetHeight - window.innerHeight;
     if (scrollable <= 0) return;
-    var sectionTop = section.getBoundingClientRect().top + window.scrollY;
-    var progress   = clamp01((window.scrollY - sectionTop) / scrollable);
+    var rect        = section.getBoundingClientRect();
+    var inSection   = rect.top <= 0 && rect.bottom > window.innerHeight;
+    var rawProgress = -rect.top / scrollable;
+    var progress    = clamp01(rawProgress);
 
-    if (Math.abs(progress - lastProgress) < 0.0005) return;
-    lastProgress = progress;
+    if (Math.abs(rawProgress - lastProgress) < 0.0005) return;
+    lastProgress = rawProgress;
 
-    var ep = easeInOut(progress);
+    /* ── 줌아웃 진입: 살짝 크게 시작 → 정상 스케일로 축소 ── */
+    var entryZone = window.innerHeight * 0.8;
+    var entryT = rect.top < entryZone ? clamp01(1 - rect.top / entryZone) : 0;
+    var preEntry = rect.top > 0;
+    var scale = preEntry ? lerp(3.0, 2.2, easeInOut(entryT)) : 2.2;
 
-    /* ── 스케일: 2.2 → 0.04 (풀스크린에서 극소로) ── */
-    var scale = lerp(2.2, 0.04, ep);
-
-    /* ── 스프레드: SPREAD → 0 (55% 지점에서 완전히 겹침) ── */
+    /* ── 스프레드: SPREAD → 0 (55%에서 완전히 겹침) ── */
     var spreadP = clamp01(progress / 0.55);
     var spread  = lerp(SPREAD, 0, easeInOut(spreadP));
 
-    /* wrap 변환 — rotateX 10deg 고정으로 3D 기울기 */
-    wrap.style.transform = 'translate(-50%, -50%) rotateX(10deg) scale(' + scale + ')';
+    /* 진입 중: stage를 fixed로 전환 → perspective 유지하며 화면 중앙 고정 */
+    pin.style.overflow = preEntry ? 'visible' : '';
+    if (preEntry) {
+      stage.style.position = 'fixed';
+      stage.style.inset = '0';
+      stage.style.zIndex = '9999';
+    } else {
+      stage.style.position = '';
+      stage.style.inset = '';
+      stage.style.zIndex = '';
+    }
+    wrap.style.transform = 'translate3d(-50%,-50%,0) rotateX(10deg) scale(' + scale + ')';
 
     /* 레이어 위치 */
     els.forEach(function (el, i) {
-      el.style.transform = 'translateY(' + ((i - (N - 1) / 2) * spread) + 'px)';
+      var y = Math.round((i - (N - 1) / 2) * spread);
+      el.style.transform = 'translate3d(0,' + y + 'px,0)';
     });
 
-    /* 라벨: 5%~45% 구간에서만 보임 (레이어가 분리된 구간) */
+    /* 라벨: 5%~35%+α 구간 (레이어 분리 구간) */
     var lblOp = clamp01((progress - 0.05) * 16) * clamp01(1 - (progress - 0.35) * 8);
     els.forEach(function (el) { el._lbl.style.opacity = lblOp; });
 
-    /* wrap 전체 opacity: 진입 시 페이드인(0→5%) + 퇴장 시 페이드아웃(72%→85%) */
-    var entryOp = clamp01(progress * 20);
-    var exitOp  = clamp01(1 - (progress - 0.72) * 7);
+    /* wrap opacity: 진입 페이드 + 80% 이후 페이드아웃 */
+    var entryOp = clamp01(entryT);
+    var exitOp  = clamp01(1 - (progress - 0.80) * 9);
     var wrapOp  = entryOp * exitOp;
     wrap.style.opacity    = wrapOp;
     wrap.style.visibility = wrapOp > 0.01 ? 'visible' : 'hidden';
     els.forEach(function (el) { el._body.style.opacity = ''; });
 
-    /* 헤더: 진입 즉시 표시 → 레이어 등장하면서 페이드아웃 (0→15%) */
-    var headerOp = clamp01(1 - (progress - 0.03) * 8);
+    /* 헤더: 레이어 소멸 후 등장(78%) → 피크 유지 → 92% 페이드아웃 시작 → 98% 완전 소멸 */
+    var headerOp = inSection
+      ? clamp01((progress - 0.78) * 14) * clamp01(1 - (progress - 0.92) * 16)
+      : 0;
     if (header) header.style.opacity = headerOp;
 
-    /* 로고: 87% 등장 → 95%에서 페이드아웃 (dark bg 제거 전에 완전히 사라짐) */
-    var logoOp = clamp01((progress - 0.87) * 15) * clamp01(1 - (progress - 0.95) * 25);
-    if (logoEl) {
-      logoEl.style.opacity   = logoOp;
-      var logoScale = 0.94 + clamp01((progress - 0.87) * 15) * 0.06;
-      logoEl.style.transform = 'translate(-50%, -50%) scale(' + logoScale + ')';
-    }
-
-    /* 섹션 배경: 필름 진입 후 끝까지 어둡게 유지 */
-    if (progress > 0.01 && progress < 0.99) { pin.classList.add('fl-active'); }
-    else                                     { pin.classList.remove('fl-active'); }
+    /* 섹션 배경 */
+    if (inSection) { pin.classList.add('fl-active'); }
+    else           { pin.classList.remove('fl-active'); }
 
     /* 글로우 링 크기 동기화 */
     var totalH  = (N - 1) * spread + FH;
@@ -3466,17 +4620,17 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
 
   /* ── 초기화 ── */
   applyWidth();
-  if (header) header.style.opacity = '1';
+  if (header) header.style.opacity = '0';
   if (logoEl) logoEl.style.opacity = '0';
   wrap.style.opacity    = '0';
   wrap.style.visibility = 'hidden';
   wrap.style.filter     = 'brightness(1)';
-  wrap.style.transform  = 'translate(-50%, -50%) rotateX(10deg) scale(2.2)';
+  wrap.style.transform  = 'translate3d(-50%,-50%,0) rotateX(10deg) scale(3.0)';
   els.forEach(function (el) {
-    el.style.transform = 'translateY(' + ((el._i - (N - 1) / 2) * SPREAD) + 'px)';
+    el.style.transform = 'translate3d(0,' + Math.round((el._i - (N - 1) / 2) * SPREAD) + 'px,0)';
   });
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', onScrollRaw, { passive: true });
   window.addEventListener('resize', function () { applyWidth(); onScroll(); });
   onScroll();
 })();

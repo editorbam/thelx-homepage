@@ -59,6 +59,12 @@ body {
 a { text-decoration: none; color: inherit; }
 button { font-family: var(--font); border: none; background: none; }
 
+/* ── 오프스크린 렌더링 차단 — 모바일 스크롤 성능 핵심 ── */
+#compare, #products, #pricing, #quiz, #trust, #awards, #reviews,
+#process, #faq, #booking, #cta, #store-locator, footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
 
 /* ============================
    SCROLL ANIMATION CLASSES
@@ -1518,6 +1524,13 @@ footer {
 @media (max-width:768px) {
   :root { --section-v:3.5rem; --section-v-sm:2.5rem; }
 
+  /* ── 스크롤 애니메이션 경량화 ── */
+  .fi { transform:translateY(16px); transition-duration:.5s; }
+  .fi-card { transform:translateY(20px) scale(0.98); transition-duration:.5s; }
+  .fi-big { transform:translateY(24px); filter:none; transition-duration:.6s; }
+  .fi-left { transform:translateX(-20px); transition-duration:.5s; }
+  .fi-right { transform:translateX(20px); transition-duration:.5s; }
+
   /* ── NAV ── */
   nav { padding:0 1.25rem; }
   .nav-links,.nav-cta { display:none; }
@@ -1526,6 +1539,7 @@ footer {
   body.menu-open { overflow:hidden; }
 
   /* ── HERO ── */
+  #hero { height:180vh; }
   .hero-label { display:none; }
   .hero-title { font-size:clamp(2rem, 8vw, 3.2rem); }
   .hero-bridge { font-size:1rem; margin-top:1.2rem; }
@@ -1533,6 +1547,8 @@ footer {
   .hero-sub { font-size:.9rem; margin-top:1.4rem; }
   .hero-btns { margin-top:2rem; gap:.75rem; }
   .hero-scroll-hint { bottom:1.8rem; }
+  .hero-lx { will-change:opacity; }
+  .hero-copy { will-change:opacity; }
 
   /* ── MARQUEE ── */
   .marquee-item { font-size:clamp(1rem, 4vw, 1.4rem); padding:0 1.2rem; }
@@ -1543,11 +1559,14 @@ footer {
   .why-hero-body { font-size:.9rem; }
 
   /* ── FILM LAYERS ── */
+  #film-layers { height:160vh; }
   .fl-header { padding:0 1.25rem; }
   .fl-title { font-size:clamp(1rem, 4vw, 1.4rem); }
   .fl-sub { font-size:12px; }
   .fl-scroll-hint { font-size:8px; bottom:3vh; }
   #fl-infotext { font-size:10px; bottom:7vh; }
+  .fl-sweep::after { animation:none; }
+  .fl-iridescent { animation:none; }
 
   /* ── SECTION UTILITIES ── */
   .section-inner { padding:0 1.25rem; }
@@ -3522,25 +3541,33 @@ function cacheLayout() {
   _winH   = window.innerHeight;
 }
 
+const _isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
 let _lastHeroP = -1;
+
 function updateHero() {
   const sy = window.scrollY;
   if (sy > _heroH * 1.2) return;
   const h  = _heroH;
   const p  = Math.min(1, sy / (h * 0.45));
 
-  const rounded = Math.round(p * 200) / 200;
+  const step = _isMobile ? 50 : 200;
+  const rounded = Math.round(p * step) / step;
   if (rounded === _lastHeroP) return;
   _lastHeroP = rounded;
 
-  const blur1 = (32 * (1 - p)).toFixed(0);
-  heroLx.style.filter  = blur1 === '0' ? 'none' : `blur(${blur1}px)`;
-  heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
-
-  const cp = Math.min(1, p / 0.55);
-  const blur2 = (cp * 14).toFixed(0);
-  heroCopy.style.filter  = blur2 === '0' ? 'none' : `blur(${blur2}px)`;
-  heroCopy.style.opacity = (1 - cp).toFixed(2);
+  if (_isMobile) {
+    heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
+    const cp = Math.min(1, p / 0.55);
+    heroCopy.style.opacity = (1 - cp).toFixed(2);
+  } else {
+    const blur1 = (32 * (1 - p)).toFixed(0);
+    heroLx.style.filter  = blur1 === '0' ? 'none' : `blur(${blur1}px)`;
+    heroLx.style.opacity = (0.10 + 0.90 * p).toFixed(2);
+    const cp = Math.min(1, p / 0.55);
+    const blur2 = (cp * 14).toFixed(0);
+    heroCopy.style.filter  = blur2 === '0' ? 'none' : `blur(${blur2}px)`;
+    heroCopy.style.opacity = (1 - cp).toFixed(2);
+  }
 
   const bgP = Math.max(0, Math.min(1, (p - 0.3) / 0.7));
   const g = Math.round(255 * (1 - bgP) + 10 * bgP);
@@ -3554,8 +3581,10 @@ function updateHero() {
     heroSticky.classList.remove('going-dark');
   }
 
-  const pct = Math.round((1 - p) * 100);
-  heroLabel.textContent = pct > 0 ? `Blur ${pct}%` : 'Clear';
+  if (!_isMobile) {
+    const pct = Math.round((1 - p) * 100);
+    heroLabel.textContent = pct > 0 ? `Blur ${pct}%` : 'Clear';
+  }
 }
 
 
@@ -4149,12 +4178,18 @@ document.addEventListener('keydown', e => {
 
 });
 
-/* ── NAV on-dark 스크롤 감지 + 카카오 플로팅 ── */
+/* ── NAV on-dark 스크롤 감지 + 카카오 플로팅 + 영상 제어 ── */
 const kakaoFloat = document.getElementById('kakaoFloat');
+const heroVideo = document.querySelector('.hero-video');
+let _videoPaused = false;
 window.addEventListener('scroll', () => {
   const sy = window.scrollY;
   if (sy >= _heroH) mainNav.classList.remove('on-dark');
   if (kakaoFloat) kakaoFloat.classList.toggle('show', sy > _winH * 0.8);
+  if (heroVideo) {
+    if (sy > _heroH && !_videoPaused) { heroVideo.pause(); _videoPaused = true; }
+    else if (sy <= _heroH && _videoPaused) { heroVideo.play(); _videoPaused = false; }
+  }
 }, { passive: true });
 
 /* ============================
@@ -4870,6 +4905,7 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
   function clamp01(t)  { return Math.max(0, Math.min(1, t)); }
 
   /* ── 스크롤 핸들러 (rAF 쓰로틀) ── */
+  var flMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
   var lastProgress = -1;
   var rafId = 0;
 
@@ -4891,7 +4927,8 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
     var rawProgress = -rect.top / _flScrollable;
     var progress    = clamp01(rawProgress);
 
-    if (Math.abs(rawProgress - lastProgress) < 0.0005) return;
+    var delta = flMobile ? 0.005 : 0.0005;
+    if (Math.abs(rawProgress - lastProgress) < delta) return;
     lastProgress = rawProgress;
 
     /* ── 줌아웃 진입: 살짝 크게 시작 → 정상 스케일로 축소 ── */
@@ -4953,10 +4990,12 @@ document.getElementById('quizBackResult').addEventListener('click', () => {
 
     if (scrollHint) scrollHint.style.opacity = clamp01(1 - progress * 10);
 
-    /* 레이어 간 간섭 — 겹칠수록 밝아짐 (visible 상태에서만) */
-    var proximity = 1 - clamp01(spread / SPREAD);
-    if (wrapOp > 0.01) {
-      wrap.style.filter = 'brightness(' + (1 + proximity * 0.75) + ')';
+    /* 레이어 간 간섭 — 겹칠수록 밝아짐 (모바일에서는 filter 비용 회피) */
+    if (!flMobile) {
+      var proximity = 1 - clamp01(spread / SPREAD);
+      if (wrapOp > 0.01) {
+        wrap.style.filter = 'brightness(' + (1 + proximity * 0.75) + ')';
+      }
     }
 
     /* 55% 지점 (겹침 완료) 글로우 */

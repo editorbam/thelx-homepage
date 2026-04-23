@@ -453,14 +453,22 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   .why-fc-icon { font-size:2rem; }
   .why-fc-title { font-size:1.05rem; }
   .why-fc-desc { font-size:.85rem; }
-  .why-carousel-wrap { padding:clamp(2rem,4vh,4rem) 0 clamp(3.5rem,6vh,5rem); }
+  .why-carousel-wrap { padding:clamp(2rem,4vh,4rem) 0 clamp(3.5rem,6vh,5rem); overflow:visible; }
   .why-carousel-head { padding:0 1.25rem; margin-bottom:1.8rem; }
   .why-carousel-title { font-size:clamp(1.2rem, 5vw, 1.6rem); }
-  .why-carousel-card { flex: 0 0 80vw; }
-  .why-carousel-track { animation-duration: 20s; }
-  .why-cc-body { padding:1.4rem 1.2rem; }
-  .why-cc-title { font-size:.95rem; }
-  .why-cc-desc { font-size:.8rem; }
+  .why-carousel-track {
+    animation:none !important;
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    padding:0 1.25rem;
+    gap:1rem;
+    scrollbar-width:none;
+  }
+  .why-carousel-track::-webkit-scrollbar { display:none; }
+  .why-carousel-card { flex:0 0 85vw !important; scroll-snap-align:center; border-radius:16px; }
+  .why-cc-body { padding:1.2rem 1rem; }
+  .why-cc-title { font-size:.92rem; }
+  .why-cc-desc { font-size:.78rem; }
 }
 
 /* ============================

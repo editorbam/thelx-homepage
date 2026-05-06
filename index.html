@@ -510,36 +510,78 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 #products .section-title { color:#fff; }
 #products .section-title em { color:rgba(255,255,255,.7); }
 
-/* ── Product Guide (Quiz 대체) ── */
-.product-guide { margin-bottom:2.5rem; }
-.product-guide-label {
-  font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,.35);
-  text-transform:uppercase; margin-bottom:1.2rem; font-weight:400;
+/* ── Product Hero Cards ── */
+.product-hero-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:1.2rem;
+  max-width:1000px; margin:0 auto 0;
 }
-.product-guide-items {
-  display:inline-flex; flex-wrap:wrap; gap:.6rem;
-  justify-content:center;
-}
-.product-guide-item {
-  display:inline-flex; align-items:center; gap:.6rem;
-  padding:.7rem 1.3rem;
+.product-hero-card {
   background:rgba(255,255,255,.06);
-  border:.5px solid rgba(255,255,255,.12);
-  border-radius:980px;
-  font-family:var(--font); font-size:.85rem; font-weight:300;
-  color:rgba(255,255,255,.75);
-  transition:all .25s cubic-bezier(.22,1,.36,1);
-  cursor:pointer;
+  border:.5px solid rgba(255,255,255,.1);
+  border-radius:20px;
+  padding:2rem 1.8rem;
+  text-align:left;
+  transition:all .3s cubic-bezier(.22,1,.36,1);
 }
-.product-guide-item:hover {
-  background:rgba(255,255,255,.12);
-  border-color:rgba(255,255,255,.25);
-  transform:translateY(-2px);
-  color:#fff;
+.product-hero-card:hover {
+  background:rgba(255,255,255,.1);
+  border-color:rgba(255,255,255,.2);
+  transform:translateY(-4px);
 }
-.product-guide-item .guide-keyword { color:rgba(255,255,255,.9); font-weight:400; }
-.product-guide-item .guide-arrow { color:rgba(255,255,255,.3); font-size:.75rem; }
-.product-guide-item .guide-product { color:rgba(255,255,255,.5); font-size:.8rem; letter-spacing:.04em; }
+.phc-badge {
+  display:inline-block; font-size:9px; letter-spacing:.14em;
+  background:#fff; color:#0a0a0a;
+  padding:3px 10px; border-radius:8px; font-weight:600;
+  margin-bottom:1rem; text-transform:uppercase;
+}
+.phc-badge-sub { background:rgba(255,255,255,.15); color:rgba(255,255,255,.8); }
+.phc-name {
+  font-size:clamp(1.6rem,3vw,2.2rem); font-weight:600; color:#fff;
+  letter-spacing:-0.03em; margin-bottom:.5rem;
+}
+.phc-for {
+  font-size:.85rem; color:rgba(255,255,255,.45); font-weight:300;
+  margin-bottom:1.5rem;
+}
+.phc-stats {
+  display:flex; gap:2rem; margin-bottom:1.5rem;
+  padding-bottom:1.2rem; border-bottom:.5px solid rgba(255,255,255,.08);
+}
+.phc-stat-value {
+  display:block; font-size:1.6rem; font-weight:600; color:#fff;
+  letter-spacing:-0.02em; line-height:1;
+}
+.phc-stat-label {
+  display:block; font-size:.7rem; color:rgba(255,255,255,.35);
+  letter-spacing:.06em; margin-top:.4rem; font-weight:300;
+}
+.phc-desc {
+  font-size:.85rem; color:rgba(255,255,255,.5); font-weight:300;
+  line-height:1.6; margin-bottom:1.5rem;
+}
+.product-hero-card .product-detail-btn {
+  font-size:.8rem; color:rgba(255,255,255,.6); background:none; border:none;
+  font-family:var(--font); padding:0; transition:color .2s;
+}
+.product-hero-card .product-detail-btn:hover { color:#fff; }
+
+/* ── 전체 라인업 토글 ── */
+.product-all-btn {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-size:.9rem; font-weight:400; color:rgba(255,255,255,.6);
+  background:none; border:.5px solid rgba(255,255,255,.15);
+  border-radius:980px; padding:.8rem 2rem;
+  font-family:var(--font); transition:all .25s; cursor:pointer;
+}
+.product-all-btn:hover { color:#fff; border-color:rgba(255,255,255,.35); }
+.product-all-count {
+  font-size:.75rem; color:rgba(255,255,255,.3); font-weight:300;
+}
+.product-all-wrap {
+  margin-top:2.5rem;
+  animation:panelFade .5s ease;
+}
+.product-all-wrap .product-tabs-nav { margin-top:1rem; }
 
 .product-tabs-nav {
   display:inline-flex; margin-bottom:3rem;
@@ -1478,9 +1520,11 @@ footer {
 
 /* ── PRODUCTS ── */
   #products { padding:4rem 1.25rem 8rem; }
-  .product-guide { margin-bottom:1.8rem; }
-  .product-guide-items { flex-direction:column; align-items:stretch; gap:.5rem; display:flex; }
-  .product-guide-item { justify-content:center; padding:.65rem 1rem; font-size:.8rem; }
+  .product-hero-grid { grid-template-columns:1fr; gap:.8rem; max-width:100%; }
+  .product-hero-card { padding:1.5rem 1.25rem; }
+  .phc-name { font-size:1.4rem; }
+  .phc-stats { gap:1.5rem; }
+  .phc-stat-value { font-size:1.3rem; }
   .product-tabs-nav { margin-bottom:2rem; padding:.2rem; }
   .tab-btn { padding:.6rem .8rem; font-size:11px; min-height:40px; }
   .product-glass-bar { padding:1.5rem 1.25rem; border-radius:18px; grid-template-columns:1fr; gap:1.5rem; }
@@ -2393,264 +2437,235 @@ body.pd-open { overflow: hidden; }
       8개의 선택지.<br><em>당신의 기준으로.</em>
     </h2>
 
-    <div class="product-guide fi">
-      <p class="product-guide-label">어디서부터 볼지 모르겠다면</p>
-      <div class="product-guide-items">
-        <button class="product-guide-item" data-guide-tab="lx">
-          <span class="guide-keyword">열 차단이 최우선</span>
-          <span class="guide-arrow">→</span>
-          <span class="guide-product">LX SIGNATURE</span>
-        </button>
-        <button class="product-guide-item" data-guide-tab="xenith">
-          <span class="guide-keyword">밝고 자연스러운 시야</span>
-          <span class="guide-arrow">→</span>
-          <span class="guide-product">Xenith IR</span>
-        </button>
-        <button class="product-guide-item" data-guide-tab="sline">
-          <span class="guide-keyword">실용적인 가성비</span>
-          <span class="guide-arrow">→</span>
-          <span class="guide-product">S-LINE</span>
-        </button>
-        <button class="product-guide-item" data-guide-tab="vogue">
-          <span class="guide-keyword">개성 있는 외관</span>
-          <span class="guide-arrow">→</span>
-          <span class="guide-product">Vogue</span>
-        </button>
+    <!-- ── 핵심 3 카드 ── -->
+    <div class="product-hero-grid fi">
+
+      <div class="product-hero-card">
+        <span class="phc-badge">FLAGSHIP</span>
+        <h3 class="phc-name">LX</h3>
+        <p class="phc-for">열 차단이 최우선이라면</p>
+        <div class="phc-stats">
+          <div class="phc-stat"><span class="phc-stat-value">81%</span><span class="phc-stat-label">열차단 TSER</span></div>
+          <div class="phc-stat"><span class="phc-stat-value">10년</span><span class="phc-stat-label">보증</span></div>
+        </div>
+        <p class="phc-desc">세계특허 5레이어 나노세라믹. 모든 불편을 설계로 해결합니다.</p>
+        <button class="product-detail-btn" data-product="lx">자세히 보기 →</button>
       </div>
+
+      <div class="product-hero-card">
+        <span class="phc-badge phc-badge-sub">PREMIUM</span>
+        <h3 class="phc-name">Xenith IR</h3>
+        <p class="phc-for">밝고 자연스러운 시야</p>
+        <div class="phc-stats">
+          <div class="phc-stat"><span class="phc-stat-value">68%</span><span class="phc-stat-label">열차단 TSER</span></div>
+          <div class="phc-stat"><span class="phc-stat-value">5년</span><span class="phc-stat-label">보증</span></div>
+        </div>
+        <p class="phc-desc">차세대 세라믹 IR. 선명한 시야와 균형 잡힌 열 차단.</p>
+        <button class="product-detail-btn" data-product="xenith">자세히 보기 →</button>
+      </div>
+
+      <div class="product-hero-card">
+        <span class="phc-badge phc-badge-sub">SMART</span>
+        <h3 class="phc-name">S-LINE</h3>
+        <p class="phc-for">실용적인 가성비</p>
+        <div class="phc-stats">
+          <div class="phc-stat"><span class="phc-stat-value">60%</span><span class="phc-stat-label">열차단 TSER</span></div>
+          <div class="phc-stat"><span class="phc-stat-value">5년</span><span class="phc-stat-label">보증</span></div>
+        </div>
+        <p class="phc-desc">비반사 필름. 선명한 시야와 쾌적함을 합리적으로.</p>
+        <button class="product-detail-btn" data-product="sline">자세히 보기 →</button>
+      </div>
+
     </div>
 
-    <div class="product-tabs-nav fi">
-      <button class="tab-btn active" data-tab="lx">LX <span class="flagship-badge">FLAGSHIP</span></button>
-      <button class="tab-btn" data-tab="vogue">Vogue</button>
-      <button class="tab-btn" data-tab="xenith">Xenith IR</button>
-      <button class="tab-btn" data-tab="quantum">Quantum</button>
-      <button class="tab-btn" data-tab="titanium">Titanium</button>
-      <button class="tab-btn" data-tab="gline">G-LINE</button>
-      <button class="tab-btn" data-tab="sline">S-LINE</button>
-      <button class="tab-btn" data-tab="shield">LX SHIELD <span class="ppf-badge">PPF</span></button>
+    <!-- ── 전체 라인업 토글 ── -->
+    <div class="product-all-toggle fi" style="text-align:center; margin-top:2.5rem;">
+      <button class="product-all-btn" id="productAllBtn">전체 라인업 보기 <span class="product-all-count">8개 제품 + PPF</span></button>
     </div>
 
-    <div class="product-panels">
-
-      <!-- LX -->
-      <div class="product-panel active" id="panel-lx">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.31"></div><span class="vlt-col-label">LX 15</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.29"></div><span class="vlt-col-label">LX 25</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.25"></div><span class="vlt-col-label">LX 40</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.21"></div><span class="vlt-col-label">LX 55</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.18"></div><span class="vlt-col-label">LX 70</span></div>
-          </div>
-        </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Intelligent &amp; Luxury</span>
-            <h3 class="product-name">LX</h3>
-            <p class="product-tagline">최고급 명성을 지닌 혁신적 기술의 결정체. THE LX 윈도우 필름의 정수.</p>
-            <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
-            <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~70%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">71%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="71"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
-            <p class="spec-note">* 비반사 세라믹 · 농도 15 기준 최대 TSER</p>
-          </div>
-        </div>
+    <div class="product-all-wrap" id="productAllWrap" style="display:none;">
+      <div class="product-tabs-nav">
+        <button class="tab-btn active" data-tab="lx">LX <span class="flagship-badge">FLAGSHIP</span></button>
+        <button class="tab-btn" data-tab="xenith">Xenith IR</button>
+        <button class="tab-btn" data-tab="vogue">Vogue</button>
+        <button class="tab-btn" data-tab="quantum">Quantum</button>
+        <button class="tab-btn" data-tab="titanium">Titanium</button>
+        <button class="tab-btn" data-tab="gline">G-LINE</button>
+        <button class="tab-btn" data-tab="sline">S-LINE</button>
+        <button class="tab-btn" data-tab="shield">LX SHIELD <span class="ppf-badge">PPF</span></button>
       </div>
 
-      <!-- Vogue -->
-      <div class="product-panel" id="panel-vogue">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.33"></div><span class="vlt-col-label">VOGUE 10</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.30"></div><span class="vlt-col-label">VOGUE 20</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.28"></div><span class="vlt-col-label">VOGUE 30</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.25"></div><span class="vlt-col-label">VOGUE 40</span></div>
-          </div>
-        </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Reflective Series</span>
-            <h3 class="product-name">Vogue</h3>
-            <p class="product-tagline">반사 타입 필름 중 최고 등급. 강렬한 색상과 경이로운 열 차단 성능.</p>
-            <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~40%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="40"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">80%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="80"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
-            <p class="spec-note">* 반사 타입 · 농도 10 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
+      <div class="product-panels">
 
-      <!-- Xenith IR -->
-      <div class="product-panel" id="panel-xenith">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.31"></div><span class="vlt-col-label">XENITH IR 15</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.28"></div><span class="vlt-col-label">XENITH IR 30</span></div>
+        <!-- LX -->
+        <div class="product-panel active" id="panel-lx">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.31"></div><span class="vlt-col-label">LX 15</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.29"></div><span class="vlt-col-label">LX 25</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.25"></div><span class="vlt-col-label">LX 40</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.21"></div><span class="vlt-col-label">LX 55</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.18"></div><span class="vlt-col-label">LX 70</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Intelligent &amp; Luxury</span>
+              <h3 class="product-name">LX</h3>
+              <p class="product-tagline">최고급 명성을 지닌 혁신적 기술의 결정체. THE LX 윈도우 필름의 정수.</p>
+              <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
+              <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~70%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">71%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="71"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+              <p class="spec-note">* 비반사 세라믹 · 농도 15 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Ceramic &amp; Top Class</span>
-            <h3 class="product-name">Xenith IR</h3>
-            <p class="product-tagline">차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.</p>
-            <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">68%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="68"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
-            <p class="spec-note">* 세라믹 IR · 농도 15 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Quantum -->
-      <div class="product-panel" id="panel-quantum">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.34"></div><span class="vlt-col-label">QT BLACK</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.32"></div><span class="vlt-col-label">QT 14</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.30"></div><span class="vlt-col-label">QT 19</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.28"></div><span class="vlt-col-label">QT 28</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.26"></div><span class="vlt-col-label">QT 37</span></div>
+        <!-- Xenith IR -->
+        <div class="product-panel" id="panel-xenith">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.31"></div><span class="vlt-col-label">XENITH IR 15</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.28"></div><span class="vlt-col-label">XENITH IR 30</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Ceramic &amp; Top Class</span>
+              <h3 class="product-name">Xenith IR</h3>
+              <p class="product-tagline">차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.</p>
+              <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">68%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="68"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+              <p class="spec-note">* 세라믹 IR · 농도 15 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Full Metal Sputter</span>
-            <h3 class="product-name">Quantum</h3>
-            <p class="product-tagline">생고뱅 솔라가드의 최신 스퍼터링 기술. 글로벌 베스트셀러.</p>
-            <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">5~37%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="37"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="72"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
-            <p class="spec-note">* 메탈 스퍼터 · Quantum Black 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Titanium -->
-      <div class="product-panel" id="panel-titanium">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.34"></div><span class="vlt-col-label">TT 6</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.31"></div><span class="vlt-col-label">TT 16</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.29"></div><span class="vlt-col-label">TT 26</span></div>
+        <!-- Vogue -->
+        <div class="product-panel" id="panel-vogue">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.33"></div><span class="vlt-col-label">VOGUE 10</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.30"></div><span class="vlt-col-label">VOGUE 20</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.28"></div><span class="vlt-col-label">VOGUE 30</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.25"></div><span class="vlt-col-label">VOGUE 40</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Reflective Series</span>
+              <h3 class="product-name">Vogue</h3>
+              <p class="product-tagline">반사 타입 필름 중 최고 등급. 강렬한 색상과 경이로운 열 차단 성능.</p>
+              <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~40%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="40"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">80%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="80"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+              <p class="spec-note">* 반사 타입 · 농도 10 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Intelligent &amp; Unique</span>
-            <h3 class="product-name">Titanium</h3>
-            <p class="product-tagline">세계 유일 티타늄 증착 딥 블랙 컬러. 깊이 있는 외관.</p>
-            <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">6~26%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="26"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">57%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="57"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
-            <p class="spec-note">* 티타늄 증착 · 농도 6 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- G-LINE -->
-      <div class="product-panel" id="panel-gline">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">G-LINE 10</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">G-LINE 30</span></div>
+        <!-- Quantum -->
+        <div class="product-panel" id="panel-quantum">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.34"></div><span class="vlt-col-label">QT BLACK</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.32"></div><span class="vlt-col-label">QT 14</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.30"></div><span class="vlt-col-label">QT 19</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.28"></div><span class="vlt-col-label">QT 28</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.26"></div><span class="vlt-col-label">QT 37</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Full Metal Sputter</span>
+              <h3 class="product-name">Quantum</h3>
+              <p class="product-tagline">생고뱅 솔라가드의 최신 스퍼터링 기술. 글로벌 베스트셀러.</p>
+              <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">5~37%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="37"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="72"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+              <p class="spec-note">* 메탈 스퍼터 · Quantum Black 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Balance &amp; Hybrid</span>
-            <h3 class="product-name">G-LINE</h3>
-            <p class="product-tagline">라미네이티드 블루 컬러의 메탈반사 하이브리드 필름.</p>
-            <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">67%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="67"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
-            <p class="spec-note">* 메탈 하이브리드 · 농도 10 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- S-LINE -->
-      <div class="product-panel" id="panel-sline">
-        <div class="vlt-preview">
-          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
-          <div class="vlt-preview-cols">
-            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">S-LINE 10</span></div>
-            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">S-LINE 30</span></div>
+        <!-- Titanium -->
+        <div class="product-panel" id="panel-titanium">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.34"></div><span class="vlt-col-label">TT 6</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.31"></div><span class="vlt-col-label">TT 16</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.29"></div><span class="vlt-col-label">TT 26</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Intelligent &amp; Unique</span>
+              <h3 class="product-name">Titanium</h3>
+              <p class="product-tagline">세계 유일 티타늄 증착 딥 블랙 컬러. 깊이 있는 외관.</p>
+              <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">6~26%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="26"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">57%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="57"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+              <p class="spec-note">* 티타늄 증착 · 농도 6 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-        <div class="product-glass-bar">
-          <div>
-            <span class="product-category">Comfort &amp; Smart</span>
-            <h3 class="product-name">S-LINE</h3>
-            <p class="product-tagline">우수한 성능과 합리적인 가격의 비반사 필름.</p>
-            <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Performance</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">60%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="60"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
-            <p class="spec-note">* 비반사 · 농도 10 기준 최대 TSER</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- LX SHIELD -->
-      <div class="product-panel" id="panel-shield">
-        <div class="product-glass-bar" style="margin-top:0;">
-          <div>
-            <span class="product-category">Clear Guard · PPF</span>
-            <h3 class="product-name">LX SHIELD</h3>
-            <p class="product-tagline">최상의 셀프 힐링 PPF. 자가복원성 초고분자 물질에 독자 기술.</p>
-            <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
-          </div>
-          <div class="product-specs">
-            <p class="spec-eyebrow">Protection</p>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">SPF285+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">광택도 <span class="spec-bar-eng">Gloss</span></span><span class="spec-bar-value">92 GU</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="92"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">셀프힐링 <span class="spec-bar-eng">잔 스크래치 자동 복원</span></span><span class="spec-bar-value">1분</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
-            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">내후성 <span class="spec-bar-eng">자외선·열·습도에 견디는 힘</span></span><span class="spec-bar-value">3,000h</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
-            <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+        <!-- G-LINE -->
+        <div class="product-panel" id="panel-gline">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">G-LINE 10</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">G-LINE 30</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Balance &amp; Hybrid</span>
+              <h3 class="product-name">G-LINE</h3>
+              <p class="product-tagline">라미네이티드 블루 컬러의 메탈반사 하이브리드 필름.</p>
+              <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">67%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="67"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+              <p class="spec-note">* 메탈 하이브리드 · 농도 10 기준 최대 TSER</p>
+            </div>
           </div>
         </div>
-      </div>
 
+        <!-- S-LINE -->
+        <div class="product-panel" id="panel-sline">
+          <div class="vlt-preview"><img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy"><div class="vlt-preview-cols"><div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">S-LINE 10</span></div><div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">S-LINE 30</span></div></div></div>
+          <div class="product-glass-bar">
+            <div>
+              <span class="product-category">Comfort &amp; Smart</span>
+              <h3 class="product-name">S-LINE</h3>
+              <p class="product-tagline">우수한 성능과 합리적인 가격의 비반사 필름.</p>
+              <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Performance</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">60%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="60"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+              <p class="spec-note">* 비반사 · 농도 10 기준 최대 TSER</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LX SHIELD -->
+        <div class="product-panel" id="panel-shield">
+          <div class="product-glass-bar" style="margin-top:0;">
+            <div>
+              <span class="product-category">Clear Guard · PPF</span>
+              <h3 class="product-name">LX SHIELD</h3>
+              <p class="product-tagline">최상의 셀프 힐링 PPF. 자가복원성 초고분자 물질에 독자 기술.</p>
+              <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
+            </div>
+            <div class="product-specs">
+              <p class="spec-eyebrow">Protection</p>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">SPF285+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">광택도 <span class="spec-bar-eng">Gloss</span></span><span class="spec-bar-value">92 GU</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="92"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">셀프힐링 <span class="spec-bar-eng">잔 스크래치 자동 복원</span></span><span class="spec-bar-value">1분</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+              <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">내후성 <span class="spec-bar-eng">자외선·열·습도에 견디는 힘</span></span><span class="spec-bar-value">3,000h</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+              <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <div class="products-cta fi" style="text-align:center; margin-top:3rem; margin-bottom:2rem;">
@@ -4389,17 +4404,26 @@ document.getElementById('slSearch').addEventListener('input', e => {
 
 slRender();
 
-/* ── Product Guide → Tab Switch ── */
-document.querySelectorAll('.product-guide-item').forEach(function(btn) {
+/* ── 전체 라인업 토글 ── */
+(function() {
+  var btn = document.getElementById('productAllBtn');
+  var wrap = document.getElementById('productAllWrap');
+  if (!btn || !wrap) return;
+  var open = false;
   btn.addEventListener('click', function() {
-    var tab = btn.dataset.guideTab;
-    var tabBtn = document.querySelector('.tab-btn[data-tab="' + tab + '"]');
-    if (tabBtn) {
-      tabBtn.click();
-      document.getElementById('products').scrollIntoView({ behavior:'smooth', block:'start' });
+    open = !open;
+    wrap.style.display = open ? 'block' : 'none';
+    btn.innerHTML = open
+      ? '라인업 접기'
+      : '전체 라인업 보기 <span class="product-all-count">8개 제품 + PPF</span>';
+    if (open) {
+      wrap.querySelectorAll('.spec-bar-fill').forEach(function(bar) {
+        var pct = bar.dataset.percent;
+        bar.style.width = pct + '%';
+      });
     }
   });
-});
+})();
 
 /* ── AI QUIZ ── */
 let quizAnswers = { q1: [], q2: [], q3: null };

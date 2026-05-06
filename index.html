@@ -61,8 +61,8 @@ button { font-family: var(--font); border: none; background: none; }
 
 /* ── 오프스크린 렌더링 차단 — 모바일 스크롤 성능 핵심 ── */
 @supports (content-visibility: auto) {
-  #compare, #products, #pricing, #quiz, #trust, #awards, #reviews,
-  #process, #faq, #booking, #cta, #store-locator, footer {
+  #products, #pricing, #quiz, #trust, #reviews,
+  #faq, #booking, #store-locator, footer {
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
   }
@@ -314,36 +314,14 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 /* ============================
    MARQUEE
 ============================ */
-.marquee-wrap {
-  overflow: hidden; padding: 16px 0;
-}
-.marquee-wrap.dark  { background: var(--gray-1); border-top:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2); }
-.marquee-wrap.light { background: var(--white); border-top:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2); }
-.marquee-wrap.black { background: var(--black); border-top:.5px solid rgba(255,255,255,.06); border-bottom:.5px solid rgba(255,255,255,.06); }
-
-.marquee-track { display: flex; width: max-content; animation: marquee 20s linear infinite; }
-.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-
-.marquee-item {
-  font-size: clamp(1.2rem, 2.4vw, 1.9rem); font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  white-space: nowrap; padding: 0 2rem; user-select: none; line-height: 1;
-}
-.marquee-wrap.dark  .marquee-item { color: rgba(0,0,0,.78); }
-.marquee-wrap.light .marquee-item { color: rgba(0,0,0,.88); }
-.marquee-wrap.black .marquee-item { color: rgba(255,255,255,.55); }
-.marquee-item .sep { margin: 0 1.4rem; font-weight: 300; }
-.marquee-wrap.dark  .marquee-item .sep { color: rgba(0,0,0,.18); }
-.marquee-wrap.light .marquee-item .sep { color: rgba(0,0,0,.18); }
-.marquee-wrap.black .marquee-item .sep { color: rgba(255,255,255,.14); }
 
 /* ============================
    WHY STORY — Apple style (A/B/C/D blocks)
 ============================ */
 .why-hero-block {
   position: relative; min-height: 100vh;
-  display: flex; align-items: flex-end;
-  padding: clamp(4rem,8vh,8rem) clamp(1.5rem,4vw,4rem);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(4rem,8vh,6rem) clamp(2rem,5vw,5rem);
   overflow: hidden;
 }
 .why-hero-block img {
@@ -354,121 +332,49 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   content:''; position:absolute; inset:0; z-index:1;
   background: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.3) 100%);
 }
-.why-hero-content { position: relative; z-index: 2; max-width: 780px; }
-.why-hero-eyebrow {
-  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 1.5rem;
-}
+.why-hero-content { position: relative; z-index: 2; width: 100%; max-width: 1100px; text-align: center; }
 .why-hero-title {
-  font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 600;
-  line-height: 1.2; letter-spacing: -0.03em; color: #fff;
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700;
+  line-height: 1.1; letter-spacing: .08em; color: #fff;
+  margin-bottom: 3.5rem;
 }
-.why-hero-body {
-  font-size: clamp(.95rem,1.1vw,1.15rem); font-weight: 300;
-  line-height: 1.8; color: rgba(255,255,255,.65); max-width: 560px;
+.why-pairs { max-width: 700px; margin: 0 auto 3rem; }
+.why-pair { margin-bottom: 2.5rem; }
+.why-hero-line {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.why-hero-line.vis { opacity: 1; transform: none; }
+.why-hero-line.why-old {
+  font-size: clamp(.95rem,1.2vw,1.15rem); font-weight: 300;
+  color: rgba(255,255,255,.3);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,.25);
+  line-height: 1.8;
+  margin-bottom: .4rem;
+}
+.why-hero-line.why-new {
+  font-size: clamp(1.3rem,1.8vw,1.7rem); font-weight: 500;
+  color: #fff;
+  line-height: 1.5;
+}
+.why-conclusion { text-align: center; max-width: 600px; margin: 0 auto; }
+.why-hero-line.why-bridge {
+  font-size: clamp(1rem,1.3vw,1.2rem); font-weight: 300;
+  color: rgba(255,255,255,.45);
+  line-height: 1.8; margin-bottom: 1rem;
+}
+.why-hero-line.why-strong {
+  color: #fff; font-weight: 500;
+  font-size: clamp(1.2rem,1.6vw,1.5rem);
 }
 
 /* B — 3-col feature grid */
-.why-features {
-  background: #0a0a0a; padding: clamp(5rem,10vh,9rem) clamp(1.5rem,4vw,4rem);
-}
-.why-features-title {
-  font-size: clamp(1.6rem,3.2vw,2.6rem); font-weight: 600;
-  color: #fff; letter-spacing: -0.02em; margin-bottom: 3rem;
-  max-width: 780px;
-}
-.why-features-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-  max-width: 1100px;
-}
-.why-feature-card {
-  background: #161616; border-radius: 20px; padding: 2.5rem 2rem;
-  border: .5px solid rgba(255,255,255,.06);
-  display: flex; flex-direction: column; gap: 1rem;
-}
-.why-fc-icon {
-  font-size: 2.4rem; line-height: 1;
-}
-.why-fc-title {
-  font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.3;
-}
-.why-fc-desc {
-  font-size: .9rem; font-weight: 300; color: rgba(255,255,255,.5); line-height: 1.7;
-}
-
-/* D — auto-scroll marquee carousel */
-.why-carousel-wrap {
-  background: #0a0a0a;
-  padding: clamp(3rem,6vh,6rem) 0 clamp(5rem,8vh,8rem);
-  overflow: hidden;
-}
-.why-carousel-head {
-  max-width: 1100px; margin: 0 auto;
-  padding: 0 clamp(1.5rem,4vw,4rem); margin-bottom: 2.5rem;
-}
-.why-carousel-title {
-  font-size: clamp(1.4rem,2.8vw,2.2rem); font-weight: 600;
-  color: #fff; letter-spacing: -0.02em;
-}
-.why-carousel-track {
-  display: flex; gap: 1.5rem;
-  width: fit-content;
-  animation: whyMarquee 40s linear infinite;
-}
-.why-carousel-wrap:hover .why-carousel-track {
-  animation-play-state: paused;
-}
-@keyframes whyMarquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.why-carousel-card {
-  flex: 0 0 clamp(280px, 32vw, 380px);
-  border-radius: 20px; overflow: hidden;
-  background: #161616; border: .5px solid rgba(255,255,255,.06);
-  display: flex; flex-direction: column;
-}
-.why-cc-img {
-  width: 100%; aspect-ratio: 4/3; object-fit: cover;
-}
-.why-cc-body { padding: 1.8rem 1.6rem; }
-.why-cc-title {
-  font-size: 1.05rem; font-weight: 600; color: #fff;
-  margin-bottom: .6rem; line-height: 1.3;
-}
-.why-cc-desc {
-  font-size: .85rem; font-weight: 300; color: rgba(255,255,255,.5);
-  line-height: 1.7;
-}
 @media (max-width: 768px) {
-  .why-hero-block { min-height: 70vh; align-items: center; text-align: center; padding:clamp(3rem,6vh,5rem) 1.25rem; }
+  .why-hero-block { min-height: 70vh; padding:clamp(5rem,10vh,7rem) 1.25rem; }
   .why-hero-content { max-width: 100%; }
-  .why-hero-body { margin: 0 auto; font-size:.88rem; }
-  .why-hero-eyebrow { font-size:10px; margin-bottom:1rem; }
-  .why-features { padding:clamp(3.5rem,8vh,6rem) 1.25rem; }
-  .why-features-title { font-size:clamp(1.3rem, 5vw, 1.8rem); margin-bottom:2rem; }
-  .why-features-grid { grid-template-columns: 1fr; gap:1rem; }
-  .why-feature-card { padding:2rem 1.5rem; border-radius:16px; }
-  .why-fc-icon { font-size:2rem; }
-  .why-fc-title { font-size:1.05rem; }
-  .why-fc-desc { font-size:.85rem; }
-  .why-carousel-wrap { padding:clamp(2rem,4vh,4rem) 0 clamp(3.5rem,6vh,5rem); overflow:visible; }
-  .why-carousel-head { padding:0 1.25rem; margin-bottom:1.8rem; }
-  .why-carousel-title { font-size:clamp(1.2rem, 5vw, 1.6rem); }
-  .why-carousel-track {
-    animation:none !important;
-    overflow-x:auto; -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x mandatory;
-    padding:0 1.25rem;
-    gap:1rem;
-    scrollbar-width:none;
-  }
-  .why-carousel-track::-webkit-scrollbar { display:none; }
-  .why-carousel-card { flex:0 0 85vw !important; scroll-snap-align:center; border-radius:16px; }
-  .why-cc-body { padding:1.2rem 1rem; }
-  .why-cc-title { font-size:.92rem; }
-  .why-cc-desc { font-size:.78rem; }
+  .why-hero-line.why-old { font-size:.88rem; }
+  .why-hero-line.why-new { font-size:1.15rem; }
 }
 
 /* ============================
@@ -491,73 +397,11 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 
-/* ============================
-   COMPARE TABLE (restructured)
-============================ */
-#compare {
-  background: var(--black); padding: var(--section-v) 2rem;
-}
-.compare-inner { max-width:980px; margin:0 auto; }
-.compare-header { text-align:center; margin-bottom:3rem; }
-.compare-header .section-title { color:var(--white); }
-.compare-header .section-title em { color:var(--accent); }
-.compare-grid {
-  position: relative;
-  display:grid; grid-template-columns:1fr 1fr; gap:0;
-  border:.5px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden;
-}
-.compare-col-header { padding:2rem 2.4rem; display:flex; flex-direction:column; gap:.5rem; }
-.compare-col-header.col-normal { background:#1c1c1e; border-right:.5px solid rgba(255,255,255,.08); }
-.compare-col-header.col-lx    { background:#080808; }
-.compare-col-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; font-weight:400; }
-.col-normal .compare-col-label { color:rgba(255,255,255,.35); }
-.col-lx .compare-col-label    { color:rgba(255,255,255,.35); }
-.compare-col-name { font-size:1.4rem; font-weight:300; letter-spacing:-0.02em; }
-.col-normal .compare-col-name { color:rgba(255,255,255,.55); }
-.col-lx .compare-col-name     { color:var(--white); }
-
-.compare-row-cell { padding:1.5rem 2.4rem; border-top:.5px solid rgba(255,255,255,.07); display:flex; flex-direction:column; gap:.3rem; }
-.compare-row-cell.cell-normal { background:#161618; border-right:.5px solid rgba(255,255,255,.07); }
-.compare-row-cell.cell-lx    { background:#0a0a0a; }
-.compare-row-label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:400; margin-bottom:.2rem; }
-.cell-normal .compare-row-label { color:rgba(255,255,255,.28); }
-.cell-lx .compare-row-label    { color:rgba(255,255,255,.28); }
-.compare-row-value { font-size:clamp(1rem,1.6vw,1.3rem); font-weight:300; letter-spacing:-0.01em; line-height:1.3; }
-.cell-normal .compare-row-value { color:rgba(255,255,255,.5); }
-.cell-lx .compare-row-value    { color:rgba(255,255,255,.88); }
-.cell-lx .compare-row-value.accent { color:var(--white); font-weight:400; }
-
-/* ── COMPARE 행 호버 ── */
-.compare-col-header,
-.compare-row-cell {
-  transition: background .22s ease, box-shadow .22s ease;
-}
-.compare-row-cell.row-hover.cell-normal {
-  background: rgba(255,255,255,.08);
-}
-.compare-row-cell.row-hover.cell-lx {
-  background: rgba(255,255,255,.06);
-  box-shadow: inset 2px 0 0 var(--accent);
-}
-.compare-row-cell.row-hover .compare-row-value {
-  color: rgba(255,255,255,.75);
-}
-.compare-row-cell.row-hover.cell-lx .compare-row-value {
-  color: var(--white);
-}
-.compare-col-header.row-hover.col-normal {
-  background: rgba(255,255,255,.06);
-}
-.compare-col-header.row-hover.col-lx {
-  background: rgba(255,255,255,.04);
-  box-shadow: inset 2px 0 0 var(--accent);
-}
-
 
 /* ============================
    VLT — 5단계 패널 (클립패스 커튼 공개)
 ============================ */
-#vlt { height: 100vh; background: var(--black); }
+#vlt { height: 100vh; background: var(--black); position: relative; }
 
 .vlt-wrap {
   position: relative;
@@ -651,25 +495,73 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 /* ============================
    PRODUCTS — 탭 (index.html)
 ============================ */
-#products { background:var(--white); padding:var(--section-v) 2rem; }
+#products {
+  position:relative; overflow:hidden;
+  background:#0a0a0a;
+  padding:6rem 2rem 10rem;
+}
+#products .products-bg-video {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; object-position:center 55%;
+  z-index:0; opacity:.78;
+}
+
+#products .section-inner { position:relative; z-index:1; text-align:center; }
+#products .section-title { color:#fff; }
+#products .section-title em { color:rgba(255,255,255,.7); }
+
+/* ── Product Guide (Quiz 대체) ── */
+.product-guide { margin-bottom:2.5rem; }
+.product-guide-label {
+  font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,.35);
+  text-transform:uppercase; margin-bottom:1.2rem; font-weight:400;
+}
+.product-guide-items {
+  display:inline-flex; flex-wrap:wrap; gap:.6rem;
+  justify-content:center;
+}
+.product-guide-item {
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:.7rem 1.3rem;
+  background:rgba(255,255,255,.06);
+  border:.5px solid rgba(255,255,255,.12);
+  border-radius:980px;
+  font-family:var(--font); font-size:.85rem; font-weight:300;
+  color:rgba(255,255,255,.75);
+  transition:all .25s cubic-bezier(.22,1,.36,1);
+  cursor:pointer;
+}
+.product-guide-item:hover {
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.25);
+  transform:translateY(-2px);
+  color:#fff;
+}
+.product-guide-item .guide-keyword { color:rgba(255,255,255,.9); font-weight:400; }
+.product-guide-item .guide-arrow { color:rgba(255,255,255,.3); font-size:.75rem; }
+.product-guide-item .guide-product { color:rgba(255,255,255,.5); font-size:.8rem; letter-spacing:.04em; }
+
 .product-tabs-nav {
-  display:flex; border-bottom:1px solid rgba(0,0,0,.08); margin-bottom:3rem;
+  display:inline-flex; margin-bottom:3rem;
   overflow-x:auto; scrollbar-width:none;
+  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
+  border-radius:14px; border:.5px solid rgba(255,255,255,.15);
+  padding:.3rem;
 }
 .product-tabs-nav::-webkit-scrollbar { display:none; }
 .tab-btn {
-  padding:.9rem 1.4rem; font-size:14px; font-weight:400;
-  color:var(--gray-3); position:relative;
-  white-space:nowrap; transition:color .2s;
+  padding:.7rem 1.2rem; font-size:13px; font-weight:400;
+  color:rgba(255,255,255,.75); position:relative;
+  white-space:nowrap; transition:color .2s, background .2s;
   font-family:var(--font); letter-spacing:.04em;
   display:flex; align-items:center; gap:.5rem; border:none; background:none;
+  border-radius:10px;
 }
-.tab-btn::after {
-  content:''; position:absolute; bottom:-1px; left:0; right:0;
-  height:2px; background:var(--black); transform:scaleX(0); transition:transform .25s ease;
-}
-.tab-btn.active { color:var(--black); font-weight:500; }
-.tab-btn.active::after { transform:scaleX(1); }
+.tab-btn::after { display:none; }
+.tab-btn.active { color:#fff; font-weight:600; background:rgba(255,255,255,.15); }
+.tab-btn:hover:not(.active) { color:rgba(255,255,255,.9); }
 .flagship-badge {
   font-size:9px; letter-spacing:.12em; background:var(--black);
   color:white; padding:2px 7px; border-radius:8px; font-weight:500;
@@ -694,33 +586,62 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .spec-feature::before {
   content:'·'; position:absolute; left:0; color:var(--gray-3); opacity:.5;
 }
-.product-panel { display:none; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
-.product-panel.active { display:grid; animation:panelFade .4s ease; }
-.product-name    { font-size:clamp(2rem,3.5vw,3rem); font-weight:600; letter-spacing:-0.04em; color:var(--black); margin-bottom:.5rem; }
-.product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:1.75rem; font-weight:300; line-height:1.6; }
-.product-recommend {
-  font-size:.9rem; color:var(--gray-3); padding:1.25rem 1.5rem;
-  border:1px solid rgba(0,0,0,.06); border-radius:12px; line-height:1.6; margin-bottom:2rem;
+/* ── Product Panel — Glassmorphism ── */
+.product-panel {
+  display:none; position:relative;
 }
-.product-recommend strong { display:block; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--gray-3); margin-bottom:.5rem; }
-.product-specs  { display:flex; flex-direction:column; gap:1.25rem; }
-.spec-header    { display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem; }
-.spec-label     { font-size:13px; color:var(--gray-3); font-weight:300; }
-.spec-value     { font-size:13px; font-weight:600; color:var(--black); }
-.spec-bar-track { height:3px; background:var(--gray-1); border-radius:3px; overflow:hidden; }
-.spec-bar-fill  { height:100%; background:var(--black); border-radius:3px; width:0%; transition:width .9s cubic-bezier(.22,1,.36,1); }
+.product-panel.active {
+  display:block; animation:panelFade .4s ease;
+}
+
+/* 패널 내부 VLT 프리뷰 — 배경 레벨로 이동했으므로 숨김 */
+.vlt-preview { display:none; }
+
+/* 글래스 카드 — 블러 없이 반투명 */
+.product-glass-bar {
+  position:relative; z-index:2;
+  background:rgba(10,10,10,.55);
+  border:.5px solid rgba(255,255,255,.1);
+  border-radius:24px;
+  padding:2rem 2.5rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  text-align:left;
+  transition:background .6s ease;
+}
+
+/* 텍스트 색상 */
+.product-name    { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:600; letter-spacing:-0.04em; color:#fff; margin-bottom:.4rem; }
+.product-tagline { font-size:clamp(.9rem,1.1vw,1rem); color:rgba(255,255,255,.55); margin-bottom:.8rem; font-weight:300; line-height:1.6; }
+.product-category { color:rgba(255,255,255,.35) !important; font-size:10px !important; }
+.product-recommend {
+  font-size:.85rem; color:rgba(255,255,255,.5); padding:1rem 1.2rem;
+  border:1px solid rgba(255,255,255,.08); border-radius:10px; line-height:1.6; margin-bottom:0;
+  background:rgba(255,255,255,.04);
+}
+.product-recommend strong { display:block; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:.4rem; }
+.product-patent { color:rgba(255,255,255,.3) !important; font-size:11px !important; }
+.product-specs { display:flex; flex-direction:column; gap:.75rem; justify-content:center; }
+.spec-eyebrow { font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.25); font-weight:400; padding-bottom:.6rem; margin-bottom:.2rem; border-bottom:.5px solid rgba(255,255,255,.08); }
+.spec-bar-item { width:100%; }
+.spec-bar-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:.45rem; }
+.spec-bar-label { font-size:13px; color:rgba(255,255,255,.5); font-weight:400; }
+.spec-bar-eng { font-size:10px; color:rgba(255,255,255,.3); font-weight:300; letter-spacing:.05em; margin-left:.4rem; }
+.spec-bar-value { font-size:14px; font-weight:600; color:#fff; letter-spacing:-.01em; }
+.spec-bar-track { height:2px; background:rgba(255,255,255,.08); border-radius:2px; position:relative; }
+.spec-bar-fill { height:100%; border-radius:2px; width:0%; transition:width 1.2s cubic-bezier(.22,1,.36,1); background:rgba(255,255,255,.7); position:relative; }
+.spec-bar-fill::after { content:''; position:absolute; right:-2px; top:50%; transform:translateY(-50%); width:6px; height:6px; border-radius:50%; background:inherit; box-shadow:0 0 4px rgba(255,255,255,.3); }
 
 .product-detail-btn {
-  display: inline-block; margin-top: 1.75rem;
-  font-size: 13px; font-weight: 500; letter-spacing: .06em;
-  color: var(--black); border-bottom: 1px solid var(--black);
-  padding-bottom: 2px; background: none; border-top: none; border-left: none; border-right: none; font-family: var(--font);
-  transition: opacity .2s;
+  display:inline-block; margin-top:1.25rem;
+  font-size:12px; font-weight:500; letter-spacing:.06em;
+  color:rgba(255,255,255,.8); border-bottom:1px solid rgba(255,255,255,.3);
+  padding-bottom:2px; background:none; border-top:none; border-left:none; border-right:none; font-family:var(--font);
+  transition:opacity .2s;
 }
-.product-detail-btn:hover { opacity: .55; }
+.product-detail-btn:hover { opacity:.6; }
 .spec-note {
-  font-size:11px; color:var(--gray-3); opacity:.55; margin-top:.5rem;
-  font-weight:300; letter-spacing:.02em;
+  font-size:11px; color:rgba(255,255,255,.3); margin-top:.75rem;
+  font-weight:300; letter-spacing:.02em; text-align:left;
 }
 
 /* ============================
@@ -729,7 +650,15 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 #pricing {
   background:#0a0a0a;
   padding:var(--section-v) 2rem;
+  position:relative; overflow:hidden;
 }
+#pricing::before {
+  content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%);
+  width:min(1200px, 120vw); height:600px;
+  background:radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.03) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.cf-inner { max-width:1180px; margin:0 auto; position:relative; z-index:1; }
 .cf-inner { max-width:1180px; margin:0 auto; }
 
 .cf-head { text-align:center; margin-bottom:4rem; }
@@ -740,45 +669,46 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   margin-top:1rem; line-height:1.6;
 }
 
-/* Floating white card */
+/* Floating glass card */
 .cf-card {
   display:grid;
   grid-template-columns:1.55fr 1fr;
-  background:var(--white);
-  border:.5px solid rgba(0,0,0,.05);
+  background:rgba(255,255,255,.07);
+  border:.5px solid rgba(255,255,255,.12);
   border-radius:32px;
   overflow:hidden;
-  box-shadow:0 50px 120px rgba(0,0,0,.1), 0 16px 40px rgba(0,0,0,.05);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
 }
 
 /* Left panel — Configurator */
 .cf-config {
   padding:4rem 4rem 4.5rem;
-  border-right:.5px solid rgba(0,0,0,.06);
+  border-right:.5px solid rgba(255,255,255,.08);
 }
 .cf-step { margin-bottom:3rem; }
 .cf-step:last-child { margin-bottom:0; }
 .cf-step-label {
   font-size:10px; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--gray-3); font-weight:400;
+  color:rgba(255,255,255,.4); font-weight:400;
   margin-bottom:1.3rem;
 }
 
 /* Step 01 — Car type segments */
 .cf-segments {
   display:inline-flex; gap:.25rem; padding:.3rem;
-  border:.5px solid rgba(0,0,0,.1);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:980px;
-  background:#fafafa;
+  background:rgba(255,255,255,.05);
 }
 .cf-seg {
   padding:.65rem 1.6rem; border-radius:980px; border:none;
-  background:transparent; color:var(--gray-3);
+  background:transparent; color:rgba(255,255,255,.5);
   font-size:13px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
 }
-.cf-seg:hover { color:var(--black); }
-.cf-seg.active { background:var(--black); color:var(--white); }
+.cf-seg:hover { color:rgba(255,255,255,.8); }
+.cf-seg.active { background:#fff; color:#0a0a0a; }
 
 /* Step 02 — Position checkboxes */
 .cf-checks {
@@ -787,20 +717,20 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-check {
   display:flex; align-items:center; gap:1rem;
   padding:1.15rem 1.3rem;
-  border:.5px solid rgba(0,0,0,.08);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:14px;
-  background:#fafafa;
+  background:rgba(255,255,255,.06);
   transition:all .25s ease;
   user-select:none;
 }
 .cf-check:hover {
-  border-color:rgba(0,0,0,.2);
-  background:var(--white);
+  border-color:rgba(255,255,255,.22);
+  background:rgba(255,255,255,.1);
 }
 .cf-check.active {
-  border-color:var(--black);
-  background:rgba(0,0,0,.03);
-  box-shadow:0 0 0 1px rgba(0,0,0,.18) inset;
+  border-color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.1);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset;
 }
 .cf-check.disabled {
   opacity:.4; pointer-events:none;
@@ -808,25 +738,25 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-check-box {
   width:18px; height:18px;
   border-radius:5px;
-  border:1.5px solid rgba(0,0,0,.22);
+  border:1.5px solid rgba(255,255,255,.22);
   position:relative;
   flex-shrink:0;
   transition:background .25s ease, border-color .25s ease;
 }
 .cf-check.active .cf-check-box {
-  background:var(--black); border-color:var(--black);
+  background:#fff; border-color:#fff;
 }
 .cf-check.active .cf-check-box::after {
   content:''; position:absolute;
   left:5px; top:1.5px;
   width:5px; height:9px;
-  border:solid #ffffff;
+  border:solid #0a0a0a;
   border-width:0 2px 2px 0;
   transform:rotate(45deg);
 }
 .cf-check.disabled .cf-check-box {
   background:transparent !important;
-  border-color:rgba(0,0,0,.12) !important;
+  border-color:rgba(255,255,255,.1) !important;
 }
 .cf-check.disabled .cf-check-box::after { display:none; }
 .cf-check-text {
@@ -835,11 +765,11 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .cf-check-name {
   font-size:.95rem; font-weight:400;
-  color:var(--gray-4);
+  color:rgba(255,255,255,.85);
 }
 .cf-check-price {
   font-size:.92rem; font-weight:400;
-  color:var(--gray-3);
+  color:rgba(255,255,255,.5);
   font-variant-numeric:tabular-nums;
 }
 .cf-check-price i {
@@ -853,56 +783,56 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .cf-prod {
   padding:1rem .85rem;
-  border:.5px solid rgba(0,0,0,.08);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:12px;
-  background:#fafafa;
+  background:rgba(255,255,255,.06);
   display:flex; flex-direction:column; gap:.3rem;
   align-items:flex-start; text-align:left;
   transition:all .25s ease;
   font-family:var(--font);
 }
 .cf-prod:hover {
-  border-color:rgba(0,0,0,.2);
-  background:var(--white);
+  border-color:rgba(255,255,255,.22);
+  background:rgba(255,255,255,.1);
 }
 .cf-prod.active {
-  border-color:rgba(0,0,0,.4);
-  background:var(--white);
+  border-color:rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);
 }
 .cf-prod.flagship.active {
-  border-color:var(--black);
-  background:rgba(0,0,0,.04);
-  box-shadow:0 0 0 1px rgba(0,0,0,.2) inset;
+  border-color:rgba(255,255,255,.45);
+  background:rgba(255,255,255,.12);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset;
 }
 .cf-prod-name {
   font-size:.88rem; font-weight:500;
-  color:var(--gray-4);
+  color:rgba(255,255,255,.85);
   letter-spacing:.005em;
 }
-.cf-prod.flagship .cf-prod-name { color:var(--black); }
+.cf-prod.flagship .cf-prod-name { color:#fff; }
 .cf-prod-tag {
   font-size:9px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--gray-3); font-weight:400;
+  color:rgba(255,255,255,.4); font-weight:400;
 }
-.cf-prod.flagship .cf-prod-tag { color:var(--black); }
+.cf-prod.flagship .cf-prod-tag { color:rgba(255,255,255,.7); }
 
 /* ── 모드 토글 (간편/조합) ── */
 .cf-mode-toggle {
   display:inline-flex; gap:.25rem; padding:.3rem;
-  border:.5px solid rgba(0,0,0,.1);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:980px;
-  background:#fafafa;
+  background:rgba(255,255,255,.05);
   margin-bottom:2.4rem;
 }
 .cf-mode-btn {
   padding:.6rem 1.4rem; border-radius:980px; border:none;
-  background:transparent; color:var(--gray-3);
+  background:transparent; color:rgba(255,255,255,.5);
   font-size:12px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
   display:flex; align-items:center; gap:.4rem;
 }
-.cf-mode-btn:hover { color:var(--black); }
-.cf-mode-btn.active { background:var(--black); color:var(--white); }
+.cf-mode-btn:hover { color:rgba(255,255,255,.8); }
+.cf-mode-btn.active { background:#fff; color:#0a0a0a; }
 .cf-mode-btn .cf-mode-badge {
   font-size:8px; letter-spacing:.12em; text-transform:uppercase;
   padding:1px 6px; border-radius:980px;
@@ -919,7 +849,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-pos-block {
   margin-bottom:1.6rem;
   padding-bottom:1.6rem;
-  border-bottom:.5px solid rgba(0,0,0,.06);
+  border-bottom:.5px solid rgba(255,255,255,.06);
 }
 .cf-pos-block:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
 .cf-pos-block.disabled { display:none; }
@@ -928,10 +858,10 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   margin-bottom:.85rem;
 }
 .cf-pos-block-name {
-  font-size:.95rem; font-weight:500; color:var(--gray-4);
+  font-size:.95rem; font-weight:500; color:rgba(255,255,255,.85);
 }
 .cf-pos-block-price {
-  font-size:.88rem; color:var(--gray-3);
+  font-size:.88rem; color:rgba(255,255,255,.5);
   font-variant-numeric:tabular-nums;
 }
 .cf-pos-block-price i { font-style:normal; font-size:10px; margin-left:1px; opacity:.7; }
@@ -940,18 +870,18 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .cf-pos-prod {
   padding:.7rem .55rem;
-  border:.5px solid rgba(0,0,0,.08);
+  border:.5px solid rgba(255,255,255,.08);
   border-radius:10px;
-  background:#fafafa;
+  background:rgba(255,255,255,.04);
   font-family:var(--font);
   font-size:.78rem; font-weight:400;
-  color:var(--gray-3);
+  color:rgba(255,255,255,.5);
   transition:all .2s ease;
   text-align:center;
 }
-.cf-pos-prod:hover { border-color:rgba(0,0,0,.2); background:var(--white); color:var(--gray-4); }
+.cf-pos-prod:hover { border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.07); color:rgba(255,255,255,.85); }
 .cf-pos-prod.active {
-  border-color:var(--black); background:var(--black); color:var(--white);
+  border-color:#fff; background:#fff; color:#0a0a0a;
   font-weight:500;
 }
 
@@ -963,78 +893,79 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-bd-row {
   display:flex; justify-content:space-between; align-items:baseline;
   padding:.55rem 0;
-  border-bottom:.5px dashed rgba(0,0,0,.08);
+  border-bottom:.5px dashed rgba(255,255,255,.08);
   font-size:.82rem;
 }
 .cf-bd-row:last-child { border-bottom:none; }
 .cf-bd-pos {
-  color:var(--gray-3);
+  color:rgba(255,255,255,.5);
   font-weight:400;
 }
 .cf-bd-prod {
-  color:var(--gray-4);
+  color:rgba(255,255,255,.85);
   font-weight:500;
   margin-left:auto; margin-right:.6rem;
 }
 .cf-bd-price {
-  color:var(--gray-4);
+  color:rgba(255,255,255,.85);
   font-variant-numeric:tabular-nums;
   font-weight:500;
 }
 .cf-bd-price i { font-style:normal; font-size:9px; margin-left:1px; opacity:.7; }
 
 /* ============================
-   PPF Configurator Card (light gray)
+   PPF Configurator Card
 ============================ */
 .pf-card {
   margin-top:3rem;
   display:grid;
   grid-template-columns:1.55fr 1fr;
-  background:#f5f5f7;
-  border:.5px solid rgba(0,0,0,.05);
+  background:rgba(255,255,255,.07);
+  border:.5px solid rgba(255,255,255,.12);
   border-radius:32px;
   overflow:hidden;
-  box-shadow:0 30px 80px rgba(0,0,0,.06), 0 10px 24px rgba(0,0,0,.03);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
 }
 .pf-config {
   padding:4rem 4rem 4.5rem;
-  border-right:.5px solid rgba(0,0,0,.06);
+  border-right:.5px solid rgba(255,255,255,.08);
 }
 .pf-head { margin-bottom:3rem; }
 .pf-eyebrow {
   font-size:11px; letter-spacing:.22em; text-transform:uppercase;
-  color:var(--black); font-weight:500; margin-bottom:.7rem;
+  color:rgba(255,255,255,.4); font-weight:500; margin-bottom:.7rem;
 }
 .pf-title {
-  font-size:1.7rem; font-weight:500; color:var(--black);
+  font-size:1.7rem; font-weight:500; color:#fff;
   letter-spacing:-0.018em; margin:0 0 .55rem;
 }
 .pf-sub {
-  font-size:.92rem; color:var(--gray-3); font-weight:300;
+  font-size:.92rem; color:rgba(255,255,255,.5); font-weight:300;
   line-height:1.6;
 }
 .pf-step { margin-bottom:2.5rem; }
 .pf-step:last-child { margin-bottom:0; }
 .pf-step-label {
   font-size:10px; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--gray-3); font-weight:400; margin-bottom:1.2rem;
+  color:rgba(255,255,255,.4); font-weight:400; margin-bottom:1.2rem;
 }
 
 /* PPF — Car type segments */
 .pf-segments {
   display:inline-flex; gap:.25rem; padding:.3rem;
-  border:.5px solid rgba(0,0,0,.1);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:980px;
-  background:var(--white);
+  background:rgba(255,255,255,.05);
 }
 .pf-seg {
   padding:.65rem 1.6rem; border-radius:980px; border:none;
-  background:transparent; color:var(--gray-3);
+  background:transparent; color:rgba(255,255,255,.5);
   font-size:13px; font-weight:400; letter-spacing:.04em; font-family:var(--font);
   transition:background .25s ease, color .25s ease;
 }
-.pf-seg:hover { color:var(--black); }
-.pf-seg.active { background:var(--black); color:var(--white); }
+.pf-seg:hover { color:rgba(255,255,255,.8); }
+.pf-seg.active { background:#fff; color:#0a0a0a; }
 
 /* PPF — Package options */
 .pf-options {
@@ -1047,38 +978,38 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   column-gap:1.2rem; row-gap:.25rem;
   align-items:center;
   padding:1.3rem 1.5rem;
-  border:.5px solid rgba(0,0,0,.08);
+  border:.5px solid rgba(255,255,255,.1);
   border-radius:16px;
-  background:var(--white);
+  background:rgba(255,255,255,.06);
   font-family:var(--font);
   text-align:left;
   transition:all .25s ease;
 }
 .pf-opt:hover {
-  border-color:rgba(0,0,0,.2);
+  border-color:rgba(255,255,255,.18);
   transform:translateY(-1px);
 }
 .pf-opt.active {
-  border-color:var(--black);
-  background:rgba(0,0,0,.03);
-  box-shadow:0 0 0 1px rgba(0,0,0,.2) inset;
+  border-color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.1);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset;
 }
 .pf-opt-name {
-  font-size:1rem; font-weight:500; color:var(--black);
+  font-size:1rem; font-weight:500; color:#fff;
   letter-spacing:.005em;
   grid-column:1; grid-row:1;
 }
 .pf-opt-desc {
-  font-size:.82rem; color:var(--gray-3); font-weight:300;
+  font-size:.82rem; color:rgba(255,255,255,.5); font-weight:300;
   grid-column:1; grid-row:2;
 }
 .pf-opt-price {
-  font-size:1.15rem; font-weight:400; color:var(--gray-3);
+  font-size:1.15rem; font-weight:400; color:rgba(255,255,255,.5);
   font-variant-numeric:tabular-nums;
   grid-column:2; grid-row:1 / span 2;
   align-self:center;
 }
-.pf-opt.active .pf-opt-price { color:var(--black); font-weight:500; }
+.pf-opt.active .pf-opt-price { color:#fff; font-weight:500; }
 .pf-opt-price i {
   font-style:normal; font-size:10px; margin-left:2px;
   opacity:.7;
@@ -1091,18 +1022,18 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .pf-total-eyebrow {
   font-size:10px; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--gray-3); font-weight:400; margin-bottom:1.3rem;
+  color:rgba(255,255,255,.4); font-weight:400; margin-bottom:1.3rem;
 }
 .pf-total-pkg {
-  font-size:1.7rem; font-weight:500; color:var(--black);
+  font-size:1.7rem; font-weight:500; color:#fff;
   letter-spacing:-0.02em; margin-bottom:.45rem;
 }
 .pf-total-desc {
-  font-size:.85rem; font-weight:300; color:var(--gray-3);
+  font-size:.85rem; font-weight:300; color:rgba(255,255,255,.5);
   line-height:1.7; min-height:2.6rem;
 }
 .pf-total-divider {
-  height:.5px; background:rgba(0,0,0,.1);
+  height:.5px; background:rgba(255,255,255,.1);
   margin:2.2rem 0 1.8rem;
 }
 .pf-total-price {
@@ -1112,16 +1043,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .pf-total-num {
   font-size:clamp(3.4rem, 5.6vw, 5rem);
   font-weight:300; letter-spacing:-0.045em;
-  color:var(--black); line-height:1;
+  color:#fff; line-height:1;
   font-variant-numeric:tabular-nums;
   font-feature-settings:"tnum";
 }
 .pf-total-unit {
-  font-size:1.2rem; font-weight:300; color:var(--gray-3);
+  font-size:1.2rem; font-weight:300; color:rgba(255,255,255,.5);
   letter-spacing:.02em;
 }
 .pf-total-note {
-  font-size:11px; color:var(--gray-3); opacity:.7;
+  font-size:11px; color:rgba(255,255,255,.5); opacity:.7;
   font-weight:300; letter-spacing:.02em;
 }
 .pf-cta {
@@ -1130,7 +1061,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .pf-cta a {
   display:flex; align-items:center; justify-content:center;
   padding:1.15rem 2rem;
-  background:var(--black); color:var(--white);
+  background:#fff; color:#0a0a0a;
   border-radius:980px;
   font-size:14px; font-weight:500; letter-spacing:.04em;
   text-decoration:none;
@@ -1139,29 +1070,29 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .pf-cta a:hover {
   transform:translateY(-2px);
-  box-shadow:0 14px 32px rgba(0,0,0,.32);
+  box-shadow:0 14px 32px rgba(0,0,0,.5);
 }
 
 /* Right panel — Total */
 .cf-total {
   padding:4rem 3.5rem 4.5rem;
   display:flex; flex-direction:column;
-  background:#fafafa;
+  background:rgba(255,255,255,.04);
 }
 .cf-total-eyebrow {
   font-size:10px; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--gray-3); font-weight:400; margin-bottom:1.3rem;
+  color:rgba(255,255,255,.4); font-weight:400; margin-bottom:1.3rem;
 }
 .cf-total-product {
-  font-size:1.7rem; font-weight:500; color:var(--black);
+  font-size:1.7rem; font-weight:500; color:#fff;
   letter-spacing:-0.02em; margin-bottom:.4rem;
 }
 .cf-total-positions {
-  font-size:.85rem; font-weight:300; color:var(--gray-3);
+  font-size:.85rem; font-weight:300; color:rgba(255,255,255,.5);
   line-height:1.7; min-height:2.9rem;
 }
 .cf-total-divider {
-  height:.5px; background:rgba(0,0,0,.1);
+  height:.5px; background:rgba(255,255,255,.1);
   margin:2.2rem 0 1.8rem;
 }
 .cf-total-price {
@@ -1171,16 +1102,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-total-num {
   font-size:clamp(3.4rem, 5.6vw, 5rem);
   font-weight:300; letter-spacing:-0.045em;
-  color:var(--black); line-height:1;
+  color:#fff; line-height:1;
   font-variant-numeric:tabular-nums;
   font-feature-settings:"tnum";
 }
 .cf-total-unit {
-  font-size:1.2rem; font-weight:300; color:var(--gray-3);
+  font-size:1.2rem; font-weight:300; color:rgba(255,255,255,.5);
   letter-spacing:.02em;
 }
 .cf-total-note {
-  font-size:11px; color:var(--gray-3); opacity:.7;
+  font-size:11px; color:rgba(255,255,255,.5); opacity:.7;
   font-weight:300; letter-spacing:.02em;
 }
 .cf-cta {
@@ -1189,7 +1120,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-cta a {
   display:flex; align-items:center; justify-content:center;
   padding:1.15rem 2rem;
-  background:var(--black); color:var(--white);
+  background:#fff; color:#0a0a0a;
   border-radius:980px;
   font-size:14px; font-weight:500; letter-spacing:.04em;
   text-decoration:none;
@@ -1198,11 +1129,11 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .cf-cta a:hover {
   transform:translateY(-2px);
-  box-shadow:0 14px 32px rgba(0,0,0,.32);
+  box-shadow:0 14px 32px rgba(0,0,0,.5);
 }
 
 .cf-footer-note {
-  font-size:11px; color:var(--gray-3); opacity:.55;
+  font-size:11px; color:rgba(255,255,255,.5); opacity:.55;
   margin-top:2.5rem; font-weight:300; line-height:1.8;
   text-align:center;
 }
@@ -1212,7 +1143,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   .cf-config {
     padding:2.8rem 2rem 3rem;
     border-right:none;
-    border-bottom:.5px solid rgba(0,0,0,.06);
+    border-bottom:.5px solid rgba(255,255,255,.06);
   }
   .cf-total { padding:2.8rem 2rem 3.2rem; }
   .cf-checks { grid-template-columns:1fr; }
@@ -1221,7 +1152,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   .pf-config {
     padding:2.8rem 2rem 3rem;
     border-right:none;
-    border-bottom:.5px solid rgba(0,0,0,.06);
+    border-bottom:.5px solid rgba(255,255,255,.06);
   }
   .pf-total { padding:2.8rem 2rem 3.2rem; }
 }
@@ -1244,73 +1175,69 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 /* ============================
    TRUST NUMBERS (index.html)
 ============================ */
-#trust { background:var(--white); padding:var(--section-v) 2rem; }
-#trust .section-eyebrow { color:rgba(0,0,0,.3); }
-#trust .section-title   { color:var(--black); }
+#trust { background:#0d0d10; padding:var(--section-v) 2rem; border-top:.5px solid rgba(255,255,255,.05); }
+#trust .section-eyebrow { color:rgba(255,255,255,.4); }
+#trust .section-title   { color:#fff; }
 .trust-grid {
   display:grid; grid-template-columns:repeat(4,1fr); gap:0;
-  border:.5px solid var(--gray-2); border-radius:20px; overflow:hidden;
+  border:.5px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden;
   max-width:980px; margin:0 auto;
 }
-.trust-item { padding:3rem 2rem; border-right:.5px solid var(--gray-2); text-align:center; }
+.trust-item { padding:3rem 2rem; border-right:.5px solid rgba(255,255,255,.1); text-align:center; }
 .trust-item:last-child { border-right:none; }
-.trust-num   { font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.04em; color:var(--black); line-height:1; display:block; }
-.trust-label { font-size:13px; color:var(--gray-3); margin-top:.5rem; font-weight:300; line-height:1.5; }
+.trust-num   { font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.04em; color:#fff; line-height:1; display:block; }
+.trust-label { font-size:13px; color:rgba(255,255,255,.55); margin-top:.5rem; font-weight:300; line-height:1.5; }
 
 
 /* ============================
    AWARDS & RECOGNITION
 ============================ */
-#awards { background:var(--black); padding:var(--section-v) 2rem; border-top:.5px solid rgba(255,255,255,.06); }
-#awards .section-eyebrow { color:rgba(255,255,255,.28); }
-#awards .section-title   { color:var(--white); }
-#awards .section-title em { color:var(--accent); }
 .awards-inner { max-width:980px; margin:0 auto; }
 .awards-grid {
   display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem;
 }
 .award-card {
-  border:.5px solid rgba(0,0,0,.05); border-radius:24px;
+  border:.5px solid rgba(255,255,255,.1); border-radius:24px;
   padding:2.8rem 3rem; display:flex; flex-direction:column; gap:1.4rem;
-  background:var(--white);
-  box-shadow:0 40px 100px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.28);
-  transition: box-shadow .35s ease, transform .35s ease;
+  background:rgba(255,255,255,.05);
+  box-shadow:none;
+  transition: border-color .35s ease, transform .35s ease;
 }
 .award-card:hover {
-  box-shadow:0 50px 120px rgba(0,0,0,.55), 0 18px 48px rgba(0,0,0,.35);
+  border-color:rgba(255,255,255,.18);
   transform:translateY(-4px);
 }
 .award-card.featured {
-  background:var(--white);
-  border-color:rgba(0,0,0,.05);
+  background:rgba(255,255,255,.07);
+  border-color:rgba(255,255,255,.12);
   grid-column: 1 / -1;
   flex-direction:row; align-items:center; gap:3rem; padding:3rem 3.5rem;
-  box-shadow:0 50px 130px rgba(0,0,0,.5), 0 18px 50px rgba(0,0,0,.32);
+  box-shadow:none;
 }
 .award-card.featured:hover {
-  box-shadow:0 60px 150px rgba(0,0,0,.58), 0 22px 60px rgba(0,0,0,.38);
+  border-color:rgba(255,255,255,.22);
 }
 .award-badge {
   font-size:10px; letter-spacing:.22em; text-transform:uppercase; font-weight:500;
-  color:var(--gray-3); display:inline-block; margin-bottom:.2rem;
+  color:rgba(255,255,255,.4); display:inline-block; margin-bottom:.2rem;
 }
-.award-card.featured .award-badge { color:var(--gray-3); }
+.award-card.featured .award-badge { color:rgba(255,255,255,.4); }
 .award-name {
   font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:300; letter-spacing:-0.03em;
-  line-height:1.2; color:var(--black);
+  line-height:1.2; color:#fff;
 }
-.award-card.featured .award-name { color:var(--black); }
+.award-card.featured .award-name { color:#fff; }
 .award-name strong { font-weight:600; }
 .award-desc {
-  font-size:13px; font-weight:300; color:var(--gray-3); line-height:1.8;
+  font-size:13px; font-weight:300; color:rgba(255,255,255,.5); line-height:1.8;
 }
-.award-card.featured .award-desc { color:var(--gray-3); }
+.award-card.featured .award-desc { color:rgba(255,255,255,.5); }
 .award-year {
   font-size:clamp(4rem,8vw,6.5rem); font-weight:200; letter-spacing:-0.05em;
-  line-height:1; color:rgba(0,0,0,.06); flex-shrink:0; align-self:center;
+  line-height:1; color:rgba(255,255,255,.06); flex-shrink:0; align-self:center;
 }
 .award-card.featured .award-year {
-  color: rgba(0,0,0,.08);
+  color: rgba(255,255,255,.08);
   letter-spacing: -0.06em;
 }
 .award-meta {
@@ -1324,8 +1251,15 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   background: var(--black);
   padding: var(--section-v) 2rem;
   border-top: .5px solid rgba(255,255,255,.06);
+  position:relative; overflow:hidden;
 }
-.reviews-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+#reviews::before {
+  content:'\201C'; position:absolute; top:50%; left:50%; transform:translate(-50%,-55%);
+  font-size:clamp(20rem, 40vw, 40rem); font-weight:700; line-height:1;
+  color:rgba(255,255,255,.015); pointer-events:none; z-index:0;
+  font-family:Georgia, 'Times New Roman', serif;
+}
+.reviews-inner { max-width: 780px; margin: 0 auto; text-align: center; position:relative; z-index:1; }
 
 /* 진행 바 */
 .rv-progress {
@@ -1373,51 +1307,27 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .rv-dot.active { background: var(--accent); transform: scale(1.3); }
 
-/* ============================
-   PROCESS
-============================ */
-#process { background:var(--gray-1); padding:var(--section-v) 2rem; border-top:.5px solid var(--gray-2); }
-.process-steps {
-  display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
-  align-items:start; gap:0; margin-top:4rem;
-}
-.process-step { display:flex; flex-direction:column; gap:1.25rem; padding:0 1rem; }
-.process-num {
-  font-size:11px; letter-spacing:.22em; color:var(--gray-3);
-  font-weight:400; text-transform:uppercase;
-}
-.process-title {
-  font-size:1.3rem; font-weight:500; color:var(--black); letter-spacing:-0.02em;
-}
-.process-body {
-  font-size:.9rem; font-weight:300; color:var(--gray-3); line-height:1.8;
-}
-.process-divider {
-  width:1px; height:60px; background:var(--gray-2);
-  align-self:center; margin:0 1.5rem; flex-shrink:0;
-}
-
 
 /* ============================
    FAQ (restructured)
 ============================ */
-#faq { background:var(--white); padding:var(--section-v) 2rem; border-top:.5px solid var(--gray-2); }
+#faq { background:#111114; padding:var(--section-v) 2rem; border-top:.5px solid rgba(255,255,255,.06); }
 .faq-inner  { max-width:800px; margin:0 auto; }
-.faq-title  { font-size:clamp(1.8rem,3.2vw,2.6rem); font-weight:300; letter-spacing:-0.025em; line-height:1.15; color:var(--black); margin-top:.75rem; }
+.faq-title  { font-size:clamp(1.8rem,3.2vw,2.6rem); font-weight:300; letter-spacing:-0.025em; line-height:1.15; color:#fff; margin-top:.75rem; }
 .faq-list   { display:flex; flex-direction:column; margin-top:3rem; }
-.faq-item   { border-bottom:.5px solid var(--gray-2); }
-.faq-item:first-child { border-top:.5px solid var(--gray-2); }
+.faq-item   { border-bottom:.5px solid rgba(255,255,255,.1); }
+.faq-item:first-child { border-top:.5px solid rgba(255,255,255,.1); }
 .faq-question {
   width:100%; background:none; border:none;
   display:flex; align-items:center; justify-content:space-between;
   padding:1.6rem 0; text-align:left; gap:1rem;
 }
-.faq-question-text { font-size:1rem; font-weight:400; color:var(--black); line-height:1.5; letter-spacing:-.01em; }
-.faq-toggle { font-size:1.4rem; font-weight:300; color:var(--gray-3); line-height:1; flex-shrink:0; transition:transform .3s ease, color .3s; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
-.faq-item.open .faq-toggle { color:var(--black); }
+.faq-question-text { font-size:1rem; font-weight:400; color:rgba(255,255,255,.85); line-height:1.5; letter-spacing:-.01em; }
+.faq-toggle { font-size:1.4rem; font-weight:300; color:rgba(255,255,255,.4); line-height:1; flex-shrink:0; transition:transform .3s ease, color .3s; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
+.faq-item.open .faq-toggle { color:#fff; }
 .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.22,1,.36,1), padding .4s; }
 .faq-item.open .faq-answer { max-height:300px; padding-bottom:1.6rem; }
-.faq-answer p { font-size:.95rem; font-weight:300; color:var(--gray-3); line-height:1.85; }
+.faq-answer p { font-size:.95rem; font-weight:300; color:rgba(255,255,255,.55); line-height:1.85; }
 
 /* ============================
    BOOKING FORM (index.html — light)
@@ -1455,20 +1365,6 @@ select.field-underline option { background:var(--black); color:var(--white); }
 }
 .booking-success p { color:rgba(255,255,255,.7); font-size:1.1rem; line-height:1.7; font-weight:300; }
 
-/* ============================
-   CTA (restructured)
-============================ */
-#cta { padding:9rem 2rem; background:var(--black); text-align:center; position:relative; overflow:hidden; }
-#cta::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:600px; height:400px; background:radial-gradient(ellipse at top, rgba(255,255,255,.03) 0%, transparent 65%); pointer-events:none; }
-.cta-inner { max-width:700px; margin:0 auto; position:relative; z-index:1; }
-.cta-eyebrow { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:2rem; display:block; }
-.cta-title { font-size:clamp(2rem,5vw,4rem); font-weight:300; line-height:1.15; letter-spacing:-0.02em; color:var(--white); margin-bottom:3rem; }
-.cta-title strong { font-weight:500; }
-.cta-actions { display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
-.btn-fill { display:inline-flex; align-items:center; background:var(--white); color:var(--black); padding:14px 28px; border-radius:980px; font-size:15px; font-weight:400; text-decoration:none; transition:background .2s, transform .15s; }
-.btn-fill:hover { background:var(--gray-2); transform:scale(1.01); }
-.btn-ghost-light { display:inline-flex; align-items:center; color:rgba(255,255,255,.55); font-size:15px; font-weight:300; text-decoration:none; transition:color .2s; }
-.btn-ghost-light:hover { color:var(--white); }
 
 /* ============================
    FOOTER
@@ -1519,7 +1415,6 @@ footer {
 ============================ */
 @keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
 @keyframes scrollPulse { 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.15)} }
-@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 @keyframes panelFade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
 /* ============================
@@ -1528,7 +1423,7 @@ footer {
 @media (max-width:1024px) {
   .trust-grid { grid-template-columns:repeat(2,1fr); }
   .trust-item:nth-child(2) { border-right:none; }
-  .trust-item:nth-child(1),.trust-item:nth-child(2) { border-bottom:.5px solid var(--gray-2); }
+  .trust-item:nth-child(1),.trust-item:nth-child(2) { border-bottom:.5px solid rgba(255,255,255,.1); }
 }
 
 @media (max-width:768px) {
@@ -1561,12 +1456,9 @@ footer {
   .hero-scroll-hint { bottom:1.8rem; }
 
   /* ── MARQUEE ── */
-  .marquee-item { font-size:clamp(1rem, 4vw, 1.4rem); padding:0 1.2rem; }
-  .marquee-item .sep { margin:0 .8rem; }
 
   /* ── WHY STORY ── */
   .why-hero-title { font-size:clamp(1.6rem, 7vw, 2.4rem); }
-  .why-hero-body { font-size:.9rem; }
 
   /* ── FILM LAYERS ── */
   #film-layers { height:160vh; }
@@ -1584,16 +1476,17 @@ footer {
   .section-sub { font-size:.92rem; margin-bottom:2.5rem; }
   .section-eyebrow { font-size:10px; }
 
-  /* ── COMPARE ── */
-  #compare { padding:var(--section-v) 1.25rem; }
-  .compare-row-cell { padding:1.2rem 1rem; }
-  .compare-col-header { padding:1.4rem 1rem; }
-
-  /* ── PRODUCTS ── */
-  #products { padding:var(--section-v) 1.25rem; }
-  .product-tabs-nav { gap:0; margin-bottom:2rem; }
-  .tab-btn { padding:.75rem 1rem; font-size:13px; min-height:44px; }
-  .product-panel.active { grid-template-columns:1fr; gap:2rem; }
+/* ── PRODUCTS ── */
+  #products { padding:4rem 1.25rem 8rem; }
+  .product-guide { margin-bottom:1.8rem; }
+  .product-guide-items { flex-direction:column; align-items:stretch; gap:.5rem; display:flex; }
+  .product-guide-item { justify-content:center; padding:.65rem 1rem; font-size:.8rem; }
+  .product-tabs-nav { margin-bottom:2rem; padding:.2rem; }
+  .tab-btn { padding:.6rem .8rem; font-size:11px; min-height:40px; }
+  .product-glass-bar { padding:1.5rem 1.25rem; border-radius:18px; grid-template-columns:1fr; gap:1.5rem; }
+  .product-specs { gap:.6rem; }
+  .spec-bar-label { font-size:12px; }
+  .spec-bar-value { font-size:13px; }
   .product-name { font-size:clamp(1.6rem, 6vw, 2.4rem); }
   .product-tagline { font-size:.92rem; margin-bottom:1.25rem; }
 
@@ -1622,8 +1515,7 @@ footer {
   .trust-num { font-size:clamp(2.2rem, 10vw, 3.5rem); }
   .trust-label { font-size:12px; }
 
-  /* ── AWARDS ── */
-  #awards { padding:var(--section-v) 1.25rem; }
+  /* ── AWARDS (inside #trust) ── */
   .awards-grid { grid-template-columns:1fr; }
   .award-card.featured { flex-direction:column; gap:1.5rem; padding:2rem 1.5rem; }
   .award-year { font-size:3.5rem; }
@@ -1638,15 +1530,7 @@ footer {
   .rv-attr { font-size:10px; margin-top:1.5rem; }
   .rv-dots { margin-top:2rem; }
 
-  /* ── PROCESS ── */
-  #process { padding:var(--section-v) 1.25rem; }
-  .process-steps { grid-template-columns:1fr; gap:0; margin-top:2.5rem; }
-  .process-divider { width:40px; height:1px; margin:1.2rem 0; }
-  .process-step { padding:0; }
-  .process-title { font-size:1.1rem; }
-  .process-body { font-size:.85rem; }
-
-  /* ── FAQ ── */
+/* ── FAQ ── */
   #faq { padding:var(--section-v) 1.25rem; }
   .faq-title { font-size:clamp(1.4rem, 6vw, 2rem); }
   .faq-question { padding:1.3rem 0; }
@@ -1661,12 +1545,7 @@ footer {
   .booking-form .form-group.full { grid-column:1; }
   .booking-submit { width:100%; margin-top:1.5rem; }
 
-  /* ── CTA ── */
-  #cta { padding:5rem 1.25rem; }
-  .cta-title { font-size:clamp(1.6rem, 6vw, 2.6rem); margin-bottom:2rem; }
-  .cta-actions { flex-direction:column; gap:1rem; }
-
-  /* ── FOOTER ── */
+/* ── FOOTER ── */
   footer { padding:2.5rem 1.25rem; }
   .footer-inner { flex-direction:column; align-items:flex-start; gap:1.2rem; }
   .footer-links { gap:1.2rem; }
@@ -1683,20 +1562,14 @@ footer {
   .hero-btns { flex-direction:column; align-items:center; }
   .hero-btns .btn-dark,
   .hero-btns .btn-outline-dark { width:100%; max-width:280px; text-align:center; justify-content:center; }
-  .compare-grid { grid-template-columns:1fr; }
-  .compare-col-header.col-normal { border-right:none; border-bottom:.5px solid var(--gray-2); }
-  .compare-row-cell.cell-normal { border-right:none; }
-  .trust-grid { grid-template-columns:1fr; }
+.trust-grid { grid-template-columns:1fr; }
   .trust-item { border-right:none !important; }
-  .trust-item:not(:last-child) { border-bottom:.5px solid var(--gray-2); }
+  .trust-item:not(:last-child) { border-bottom:.5px solid rgba(255,255,255,.1); }
   .cf-segments { width:100%; justify-content:center; }
   .cf-seg { padding:.5rem 1rem; font-size:11px; }
   .cf-products { grid-template-columns:1fr 1fr; }
   .cf-pos-prods { grid-template-columns:1fr 1fr; }
   .award-year { font-size:2.8rem; }
-  .why-hero-title { font-size:clamp(1.4rem, 7vw, 2rem); }
-  .why-features-grid { gap:1rem; }
-  .why-feature-card { padding:2rem 1.5rem; }
 }
 
 
@@ -1992,14 +1865,24 @@ body.pd-open { overflow: hidden; }
 /* ============================
    AI QUIZ
 ============================ */
-#quiz { background:var(--gray-1); padding:var(--section-v) 2rem; }
+#quiz {
+  background:#111114; padding:var(--section-v) 2rem; border-top:.5px solid rgba(255,255,255,.06);
+  position:relative; overflow:hidden;
+}
+#quiz::before {
+  content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(700px, 90vw); height:min(700px, 90vw);
+  background:radial-gradient(circle, rgba(200,169,110,.06) 0%, rgba(200,169,110,.02) 35%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.quiz-inner { max-width:680px; margin:0 auto; position:relative; z-index:1; }
 .quiz-inner  { max-width:680px; margin:0 auto; }
 .quiz-header { text-align:center; margin-bottom:3rem; }
-.quiz-progress { height:2px; background:rgba(0,0,0,.06); border-radius:2px; margin-bottom:1rem; overflow:hidden; }
-.quiz-progress-fill { height:100%; background:var(--black); border-radius:2px; width:0%; transition:width .5s cubic-bezier(.22,1,.36,1); }
+.quiz-progress { height:2px; background:rgba(255,255,255,.08); border-radius:2px; margin-bottom:1rem; overflow:hidden; }
+.quiz-progress-fill { height:100%; background:#fff; border-radius:2px; width:0%; transition:width .5s cubic-bezier(.22,1,.36,1); }
 .quiz-step-indicator {
   text-align:center; margin-bottom:2.5rem;
-  font-size:12px; letter-spacing:.15em; color:rgba(0,0,0,.25); font-weight:400;
+  font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,.25); font-weight:400;
 }
 .quiz-step { display:none; }
 .quiz-step.active { display:block; animation:quizSlideIn .45s cubic-bezier(.22,1,.36,1); }
@@ -2008,54 +1891,57 @@ body.pd-open { overflow: hidden; }
   to   { opacity:1; transform:translateY(0); }
 }
 .quiz-question {
-  font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:var(--black);
+  font-size:clamp(1.4rem,3vw,2rem); font-weight:300; color:#fff;
   letter-spacing:-0.02em; line-height:1.3; margin-bottom:2rem; text-align:center;
 }
 .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
 .quiz-option {
-  padding:1.25rem 1.5rem; border:1px solid rgba(0,0,0,.08); border-radius:14px;
-  background:var(--white); font-size:.95rem; color:var(--black); transition:all .25s cubic-bezier(.22,1,.36,1);
+  padding:1.25rem 1.5rem; border:1px solid rgba(255,255,255,.1); border-radius:14px;
+  background:rgba(255,255,255,.06); font-size:.95rem; color:rgba(255,255,255,.85); transition:all .25s cubic-bezier(.22,1,.36,1);
   text-align:left; font-family:var(--font); font-weight:300; line-height:1.4;
-  box-shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.02);
+  box-shadow:none;
   position:relative;
 }
 .quiz-option:hover {
-  border-color:rgba(0,0,0,.2); transform:translateY(-3px);
-  box-shadow:0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+  border-color:rgba(255,255,255,.22); transform:translateY(-3px);
+  background:rgba(255,255,255,.1);
 }
 .quiz-option.selected {
-  border-color:var(--black); background:var(--black); color:white;
+  border-color:#fff; background:#fff; color:#0a0a0a;
   transform:scale(1.02);
-  box-shadow:0 6px 24px rgba(0,0,0,.15);
+  box-shadow:0 6px 24px rgba(0,0,0,.3);
 }
 .quiz-result { display:none; text-align:center; animation:panelFade .4s ease; }
 .quiz-result.active { display:block; }
-.quiz-result-label   { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gray-3); margin-bottom:1rem; }
-.quiz-result-product { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:700; letter-spacing:-0.04em; color:var(--black); margin-bottom:1rem; }
-.quiz-result-reason  { font-size:1rem; color:var(--gray-3); line-height:1.7; max-width:480px; margin:0 auto 2.5rem; font-weight:300; }
+.quiz-result-label   { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:1rem; }
+.quiz-result-product { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:700; letter-spacing:-0.04em; color:#fff; margin-bottom:1rem; }
+.quiz-result-reason  { font-size:1rem; color:rgba(255,255,255,.55); line-height:1.7; max-width:480px; margin:0 auto 2.5rem; font-weight:300; }
 .quiz-next {
   display:block; margin:1.75rem auto 0;
   font-size:14px; font-weight:500; letter-spacing:.08em;
-  background:var(--black); color:var(--white);
+  background:#fff; color:#0a0a0a;
   padding:.85rem 2.4rem; border-radius:980px; font-family:var(--font); transition:opacity .2s;
 }
-.quiz-next:disabled { background:var(--gray-2); color:var(--gray-3); cursor:not-allowed; }
+.quiz-next:disabled { background:rgba(255,255,255,.1); color:rgba(255,255,255,.3); cursor:not-allowed; }
 .quiz-next:not(:disabled):hover { opacity:.75; }
 .quiz-nav { display:flex; align-items:center; justify-content:space-between; margin-top:1.75rem; }
 .quiz-nav-end  { justify-content:flex-end; }
 .quiz-nav-start { justify-content:flex-start; }
 .quiz-nav .quiz-next { display:inline-flex; align-items:center; margin:0; }
 .quiz-back {
-  font-size:14px; color:var(--gray-3); background:none; border:none;
+  font-size:14px; color:rgba(255,255,255,.45); background:none; border:none;
   font-family:var(--font); transition:color .2s; padding:0;
 }
-.quiz-back:hover { color:var(--black); }
+.quiz-back:hover { color:#fff; }
 .quiz-back-result { display:block; margin:1rem auto 0; }
 .quiz-retry {
-  font-size:14px; color:var(--gray-3); background:none; border:none;
+  font-size:14px; color:rgba(255,255,255,.45); background:none; border:none;
   font-family:var(--font); margin-top:.5rem; display:inline-block; transition:color .2s;
 }
-.quiz-retry:hover { color:var(--black); }
+.quiz-retry:hover { color:#fff; }
+#quiz .section-title { color:#fff; }
+#quiz .section-title em { color:rgba(255,255,255,.7); }
+#quiz .btn-dark { background:#fff; color:#0a0a0a; }
 
 /* ============================
    FILM LAYERS — Apple M5 style scroll-driven
@@ -2347,7 +2233,7 @@ body.pd-open { overflow: hidden; }
 <!-- 모바일 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#why-story" onclick="closeMobileMenu()">브랜드</a>
-  <a href="#how"       onclick="closeMobileMenu()">기술</a>
+  <a href="#film-layers" onclick="closeMobileMenu()">기술</a>
   <a href="#products"  onclick="closeMobileMenu()">제품</a>
   <a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener" onclick="closeMobileMenu()">보증서</a>
   <a href="#booking"   onclick="closeMobileMenu()">예약하기</a>
@@ -2362,7 +2248,7 @@ body.pd-open { overflow: hidden; }
   </a>
   <ul class="nav-links">
     <li><a href="#why-story">브랜드</a></li>
-    <li><a href="#how">기술</a></li>
+    <li><a href="#film-layers">기술</a></li>
     <li><a href="#products">제품</a></li>
     <li><a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener">보증서</a></li>
   </ul>
@@ -2400,167 +2286,32 @@ body.pd-open { overflow: hidden; }
   </div>
 </section>
 
-<!-- MARQUEE DARK -->
-<div class="marquee-wrap dark">
-  <div class="marquee-track">
-    <div class="marquee-item">WORLD PATENT <span class="sep">·</span> CERAMIC FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> 5-LAYER TECHNOLOGY <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2015102923 <span class="sep">·</span></div>
-    <div class="marquee-item" aria-hidden="true">WORLD PATENT <span class="sep">·</span> CERAMIC FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> 5-LAYER TECHNOLOGY <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2015102923 <span class="sep">·</span></div>
-  </div>
-</div>
 
 <!-- ========================================
-     WHY STORY A — 풀스크린 선언 (불친절한 시장)
+     WHY — 한 화면 선언 (문제 + 브랜드 응답)
 ======================================== -->
 <div class="why-hero-block" id="why-story">
   <img src="why-car-top.jpg" alt="THE LX 필름이 시공된 차량" loading="eager" fetchpriority="high">
   <div class="why-hero-content fi">
-    <span class="why-hero-eyebrow">WHY THE LX</span>
-    <h2 class="why-hero-title">
-      당신이 알아야 할 것을,<br>아무도 쉽게 말해주지 않았습니다.
-    </h2>
-    <p class="why-hero-body">
-      UV 99%? TSER? VLT? 이 시장은 어려운 숫자로만 말합니다.<br>
-      왜 중요한지, 당신의 차 안에서 무엇이 바뀌는지는 아무도 설명하지 않았습니다.
-    </p>
-  </div>
-</div>
-
-<!-- ========================================
-     WHY STORY B — 3컬럼 피처 그리드 (경험 언어)
-======================================== -->
-<div class="why-features">
-  <div style="max-width:1100px; margin:0 auto;">
-    <p class="why-hero-eyebrow fi" style="margin-bottom:1rem;">Experience, Not Spec</p>
-    <h3 class="why-features-title fi">숫자가 아니라, 경험으로.</h3>
-    <div class="why-features-grid fi">
-      <div class="why-feature-card">
-        <h4 class="why-fc-title">한여름에도<br>시원한 차</h4>
-        <p class="why-fc-desc">총 태양에너지의 최대 81%를 차단합니다. 에어컨 부담이 줄고, 전기차 배터리 효율이 올라갑니다.</p>
+    <h2 class="why-hero-title fi">WHY THE LX</h2>
+    <div class="why-pairs">
+      <div class="why-pair">
+        <p class="why-hero-line why-old" data-why-delay="0">자외선 차단율 99%.</p>
+        <p class="why-hero-line why-new" data-why-delay="1">한여름에도 시원한 차.</p>
       </div>
-      <div class="why-feature-card">
-        <h4 class="why-fc-title">눈부심 없이<br>달리는 도로</h4>
-        <p class="why-fc-desc">투과율 15%부터 70%까지. 당신이 원하는 만큼만 빛을 들이고, 나머지는 조용히 막습니다.</p>
+      <div class="why-pair">
+        <p class="why-hero-line why-old" data-why-delay="2">TSER 81%.</p>
+        <p class="why-hero-line why-new" data-why-delay="3">눈부심 없이 달리는 오후.</p>
       </div>
-      <div class="why-feature-card">
-        <h4 class="why-fc-title">10년간<br>변하지 않는 보호</h4>
-        <p class="why-fc-desc">자외선 99% 이상 차단. 피부도, 가죽 시트도, 대시보드도. 최대 10년 보증으로 품질을 책임집니다.</p>
+      <div class="why-pair">
+        <p class="why-hero-line why-old" data-why-delay="4">5레이어 나노세라믹.</p>
+        <p class="why-hero-line why-new" data-why-delay="5">아이가 뒷자리에서 편히 잠드는 길.</p>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ========================================
-     WHY STORY C — 풀스크린 브랜드 선언
-======================================== -->
-<div class="why-hero-block">
-  <img src="why-car-side.jpg" alt="THE LX 차량 사이드뷰" loading="eager">
-  <div class="why-hero-content fi">
-    <span class="why-hero-eyebrow">THE LX</span>
-    <h2 class="why-hero-title">
-      처음으로<br>쉽고 솔직하게 말합니다.
-    </h2>
-    <p class="why-hero-body">
-      스펙이 아니라 경험으로. "5레이어 나노세라믹"이 아니라 "한여름에도 시원한 차"로.<br>
-      THE LX는 당신이 알아야 할 것을, 당신의 언어로 말하는 최초의 필름 브랜드입니다.
-    </p>
-  </div>
-</div>
-
-<!-- ========================================
-     WHY STORY D — 라이프스타일 캐러셀
-======================================== -->
-<div class="why-carousel-wrap">
-  <div class="why-carousel-head">
-    <p class="why-hero-eyebrow fi" style="margin-bottom:1rem;">Life with THE LX</p>
-    <h3 class="why-carousel-title fi">매일이 달라지는 순간.</h3>
-  </div>
-  <div class="why-carousel-track" id="whyCarouselTrack">
-    <div class="why-carousel-card">
-      <img src="why-carousel-1.jpg" alt="가을 드라이브" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">빛과 함께 달리는 도로</h4>
-        <p class="why-cc-desc">역광에도 시야가 선명합니다. 눈부심 없이, 풍경은 그대로.</p>
-      </div>
+    <div class="why-conclusion">
+      <p class="why-hero-line why-bridge" data-why-delay="6">숫자는 많은데, 느끼는 말은 없었습니다.</p>
+      <p class="why-hero-line why-strong" data-why-delay="7">THE LX는 당신의 언어로 말합니다.</p>
     </div>
-    <div class="why-carousel-card">
-      <img src="why-carousel-2.jpg" alt="차와 함께하는 일상" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">차 안이 편안한 이유</h4>
-        <p class="why-cc-desc">UV 99% 차단. 피부도 시트도 보호받는 공간.</p>
-      </div>
-    </div>
-    <div class="why-carousel-card">
-      <img src="why-carousel-3.jpg" alt="석양 드라이브" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">에어컨을 한 단 낮추다</h4>
-        <p class="why-cc-desc">태양에너지 81% 차단. 한여름에도, 에어컨이 조용해집니다.</p>
-      </div>
-    </div>
-    <div class="why-carousel-card">
-      <img src="why-carousel-4.jpg" alt="일상 주행" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">10년의 약속</h4>
-        <p class="why-cc-desc">세계특허 5레이어. 변색도, 기포도, 박리도 없는 10년.</p>
-      </div>
-    </div>
-    <!-- 무한 루프용 복제 -->
-    <div class="why-carousel-card" aria-hidden="true">
-      <img src="why-carousel-1.jpg" alt="" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">빛과 함께 달리는 도로</h4>
-        <p class="why-cc-desc">역광에도 시야가 선명합니다. 눈부심 없이, 풍경은 그대로.</p>
-      </div>
-    </div>
-    <div class="why-carousel-card" aria-hidden="true">
-      <img src="why-carousel-2.jpg" alt="" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">차 안이 편안한 이유</h4>
-        <p class="why-cc-desc">UV 99% 차단. 피부도 시트도 보호받는 공간.</p>
-      </div>
-    </div>
-    <div class="why-carousel-card" aria-hidden="true">
-      <img src="why-carousel-3.jpg" alt="" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">에어컨을 한 단 낮추다</h4>
-        <p class="why-cc-desc">태양에너지 81% 차단. 한여름에도, 에어컨이 조용해집니다.</p>
-      </div>
-    </div>
-    <div class="why-carousel-card" aria-hidden="true">
-      <img src="why-carousel-4.jpg" alt="" class="why-cc-img" loading="lazy">
-      <div class="why-cc-body">
-        <h4 class="why-cc-title">10년의 약속</h4>
-        <p class="why-cc-desc">세계특허 5레이어. 변색도, 기포도, 박리도 없는 10년.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ========================================
-     FILM LAYERS — Apple M5 style scroll-driven
-======================================== -->
-<section id="film-layers">
-  <div class="fl-pin">
-    <svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="fl-noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise"/></filter></defs></svg>
-    <div id="fl-bg-flash"></div>
-    <div class="fl-header" id="fl-header">
-      <h2 class="fl-title">5겹의 기술. 한 장의 필름.</h2>
-    </div>
-    <div id="fl-stage">
-      <div id="fl-wrap">
-        <div id="fl-glow-ring"></div>
-      </div>
-    </div>
-    <div id="fl-logo" style="display:none;"></div>
-    <div id="fl-infotext"></div>
-    <div class="fl-scroll-hint" id="fl-scroll-hint">scroll</div>
-  </div>
-</section>
-
-<!-- 전환 마크 (Film Layers → VLT) -->
-<div class="marquee-wrap black">
-  <div class="marquee-track">
-    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
-    <div class="marquee-item">VISIBLE LIGHT TRANSMITTANCE <span class="sep">·</span> LX 15 <span class="sep">·</span> LX 25 <span class="sep">·</span> LX 40 <span class="sep">·</span> LX 55 <span class="sep">·</span> LX 70 <span class="sep">·</span> PRECISION FILM <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> NANO CERAMIC <span class="sep">·</span></div>
   </div>
 </div>
 
@@ -2568,6 +2319,11 @@ body.pd-open { overflow: hidden; }
      VLT — 투과율 시각화
 ======================================== -->
 <section id="vlt">
+  <div class="vlt-heading fi" style="position:absolute;top:2.5rem;left:0;right:0;z-index:6;text-align:center;pointer-events:none;">
+    <p class="section-eyebrow" style="color:rgba(255,255,255,.35);">Visible Light</p>
+    <h2 style="color:#fff;font-size:clamp(1.6rem,3.6vw,2.8rem);font-weight:600;letter-spacing:-0.03em;margin:0;">빛의 양을 고르는 일.</h2>
+    <p style="color:rgba(255,255,255,.4);font-size:clamp(.8rem,1.1vw,1rem);font-weight:300;margin-top:.5rem;letter-spacing:.02em;">숫자가 낮을수록 어둡고, 높을수록 밝습니다.</p>
+  </div>
   <div class="vlt-wrap" id="vltWrap">
     <img src="vlt-sky.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img" loading="eager" decoding="sync" fetchpriority="high">
 
@@ -2607,13 +2363,61 @@ body.pd-open { overflow: hidden; }
 </section>
 
 <!-- ========================================
+     FILM LAYERS — Apple M5 style scroll-driven
+======================================== -->
+<section id="film-layers">
+  <div class="fl-pin">
+    <svg style="position:absolute;width:0;height:0;overflow:hidden"><defs><filter id="fl-noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise"/></filter></defs></svg>
+    <div id="fl-bg-flash"></div>
+    <div class="fl-header" id="fl-header">
+      <h2 class="fl-title">5겹의 기술. 한 장의 필름.</h2>
+    </div>
+    <div id="fl-stage">
+      <div id="fl-wrap">
+        <div id="fl-glow-ring"></div>
+      </div>
+    </div>
+    <div id="fl-logo" style="display:none;"></div>
+    <div id="fl-infotext"></div>
+    <div class="fl-scroll-hint" id="fl-scroll-hint">scroll</div>
+  </div>
+</section>
+
+<!-- ========================================
      PRODUCTS — 탭 (index.html)
 ======================================== -->
 <section id="products">
+  <video class="products-bg-video" autoplay muted loop playsinline preload="auto"><source src="products-bg.mp4" type="video/mp4"></video>
   <div class="section-inner">
     <h2 class="section-title fi">
-      당신의 공간을 위한<br><em>선택된 제품</em>
+      8개의 선택지.<br><em>당신의 기준으로.</em>
     </h2>
+
+    <div class="product-guide fi">
+      <p class="product-guide-label">어디서부터 볼지 모르겠다면</p>
+      <div class="product-guide-items">
+        <button class="product-guide-item" data-guide-tab="lx">
+          <span class="guide-keyword">열 차단이 최우선</span>
+          <span class="guide-arrow">→</span>
+          <span class="guide-product">LX SIGNATURE</span>
+        </button>
+        <button class="product-guide-item" data-guide-tab="xenith">
+          <span class="guide-keyword">밝고 자연스러운 시야</span>
+          <span class="guide-arrow">→</span>
+          <span class="guide-product">Xenith IR</span>
+        </button>
+        <button class="product-guide-item" data-guide-tab="sline">
+          <span class="guide-keyword">실용적인 가성비</span>
+          <span class="guide-arrow">→</span>
+          <span class="guide-product">S-LINE</span>
+        </button>
+        <button class="product-guide-item" data-guide-tab="vogue">
+          <span class="guide-keyword">개성 있는 외관</span>
+          <span class="guide-arrow">→</span>
+          <span class="guide-product">Vogue</span>
+        </button>
+      </div>
+    </div>
 
     <div class="product-tabs-nav fi">
       <button class="tab-btn active" data-tab="lx">LX <span class="flagship-badge">FLAGSHIP</span></button>
@@ -2630,177 +2434,227 @@ body.pd-open { overflow: hidden; }
 
       <!-- LX -->
       <div class="product-panel active" id="panel-lx">
-        <div>
-          <span class="product-category">Intelligent &amp; Luxury</span>
-          <h3 class="product-name">LX</h3>
-          <p class="product-tagline">최고급 명성을 지닌 혁신적 기술의 결정체. THE LX 윈도우 필름의 정수.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            최고 성능을 원하는 분. 프리미엄 수입차 오너. 공간 설계에 대한 기준이 높은 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.31"></div><span class="vlt-col-label">LX 15</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.29"></div><span class="vlt-col-label">LX 25</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.25"></div><span class="vlt-col-label">LX 40</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.21"></div><span class="vlt-col-label">LX 55</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1800;opacity:.18"></div><span class="vlt-col-label">LX 70</span></div>
           </div>
-          <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
-          <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">71%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="71"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">12 ~ 72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="72"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
-          <p class="spec-note">* 농도 15 기준 최대 TSER · VLT 범위: 농도 15–70</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Intelligent &amp; Luxury</span>
+            <h3 class="product-name">LX</h3>
+            <p class="product-tagline">최고급 명성을 지닌 혁신적 기술의 결정체. THE LX 윈도우 필름의 정수.</p>
+            <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
+            <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~70%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">71%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="71"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+            <p class="spec-note">* 비반사 세라믹 · 농도 15 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- Vogue -->
       <div class="product-panel" id="panel-vogue">
-        <div>
-          <span class="product-category">Reflective Series</span>
-          <h3 class="product-name">Vogue</h3>
-          <p class="product-tagline">반사 타입 필름 중 최고 등급. 강렬한 색상과 경이로운 열 차단 성능, 광학적 선명한 시인성.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            개성 있는 외관과 뛰어난 열 차단 성능을 동시에 원하는 분. 프라이버시를 중시하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.33"></div><span class="vlt-col-label">VOGUE 10</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.30"></div><span class="vlt-col-label">VOGUE 20</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.28"></div><span class="vlt-col-label">VOGUE 30</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:linear-gradient(135deg,#003818,#005028,#003818);opacity:.25"></div><span class="vlt-col-label">VOGUE 40</span></div>
           </div>
-          <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">80%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="80"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 43%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="43"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
-          <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–40</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Reflective Series</span>
+            <h3 class="product-name">Vogue</h3>
+            <p class="product-tagline">반사 타입 필름 중 최고 등급. 강렬한 색상과 경이로운 열 차단 성능.</p>
+            <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~40%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="40"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">80%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="80"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+            <p class="spec-note">* 반사 타입 · 농도 10 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- Xenith IR -->
       <div class="product-panel" id="panel-xenith">
-        <div>
-          <span class="product-category">Ceramic &amp; Top Class</span>
-          <h3 class="product-name">Xenith IR</h3>
-          <p class="product-tagline">차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            전파 방해 없이 최고의 열 차단 성능을 원하는 분. 세라믹 순수 기술을 원하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.31"></div><span class="vlt-col-label">XENITH IR 15</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#2a1a00;opacity:.28"></div><span class="vlt-col-label">XENITH IR 30</span></div>
           </div>
-          <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">68%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="68"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 56%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="56"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <p class="spec-note">* 농도 5 기준 최대 TSER · VLT 범위: 농도 5–50</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Ceramic &amp; Top Class</span>
+            <h3 class="product-name">Xenith IR</h3>
+            <p class="product-tagline">차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.</p>
+            <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">15~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">68%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="68"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+            <p class="spec-note">* 세라믹 IR · 농도 15 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- Quantum -->
       <div class="product-panel" id="panel-quantum">
-        <div>
-          <span class="product-category">Full Metal Sputter</span>
-          <h3 class="product-name">Quantum</h3>
-          <p class="product-tagline">생고뱅 솔라가드의 최신 스퍼터링 기술. 프리미엄 라인의 글로벌 베스트셀러.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            개성 넘치는 스타일과 높은 열 차단 성능을 함께 원하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.34"></div><span class="vlt-col-label">QT BLACK</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.32"></div><span class="vlt-col-label">QT 14</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.30"></div><span class="vlt-col-label">QT 19</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.28"></div><span class="vlt-col-label">QT 28</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#000820;opacity:.26"></div><span class="vlt-col-label">QT 37</span></div>
           </div>
-          <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="72"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
-          <p class="spec-note">* Quantum Black 기준 최대 TSER · VLT 범위: Black–52</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Full Metal Sputter</span>
+            <h3 class="product-name">Quantum</h3>
+            <p class="product-tagline">생고뱅 솔라가드의 최신 스퍼터링 기술. 글로벌 베스트셀러.</p>
+            <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">5~37%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="37"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="72"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="70"></div></div></div>
+            <p class="spec-note">* 메탈 스퍼터 · Quantum Black 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- Titanium -->
       <div class="product-panel" id="panel-titanium">
-        <div>
-          <span class="product-category">Intelligent &amp; Unique</span>
-          <h3 class="product-name">Titanium</h3>
-          <p class="product-tagline">세계 유일 티타늄 증착 딥 블랙 컬러. 모든 차량에 깊이 있고 멋진 외관.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            합리적인 가격과 높은 열 차단 성능을 원하는 분. 깊고 세련된 외관을 원하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.34"></div><span class="vlt-col-label">TT 6</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.31"></div><span class="vlt-col-label">TT 16</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="background:#0a0a18;opacity:.29"></div><span class="vlt-col-label">TT 26</span></div>
           </div>
-          <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">57%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="57"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">6 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <p class="spec-note">* 농도 6 기준 최대 TSER · VLT 범위: 농도 6–50</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Intelligent &amp; Unique</span>
+            <h3 class="product-name">Titanium</h3>
+            <p class="product-tagline">세계 유일 티타늄 증착 딥 블랙 컬러. 깊이 있는 외관.</p>
+            <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">6~26%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="26"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">57%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="57"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+            <p class="spec-note">* 티타늄 증착 · 농도 6 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- G-LINE -->
       <div class="product-panel" id="panel-gline">
-        <div>
-          <span class="product-category">Balance &amp; Hybrid</span>
-          <h3 class="product-name">G-LINE</h3>
-          <p class="product-tagline">라미네이티드 블루 컬러의 종합적 균형이 잘 잡힌 메탈반사 하이브리드 필름.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            개성 있는 컬러와 우수한 열 차단 성능, 탁월한 시인성을 동시에 원하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">G-LINE 10</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">G-LINE 30</span></div>
           </div>
-          <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">67%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="67"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 27%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="27"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Balance &amp; Hybrid</span>
+            <h3 class="product-name">G-LINE</h3>
+            <p class="product-tagline">라미네이티드 블루 컬러의 메탈반사 하이브리드 필름.</p>
+            <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">67%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="67"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+            <p class="spec-note">* 메탈 하이브리드 · 농도 10 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- S-LINE -->
       <div class="product-panel" id="panel-sline">
-        <div>
-          <span class="product-category">Comfort &amp; Smart</span>
-          <h3 class="product-name">S-LINE</h3>
-          <p class="product-tagline">우수한 성능과 합리적인 가격을 갖춘 비반사 필름.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            VLT에 상관없이 쾌적한 주행 환경을 원하는 분. 전파 방해 없는 선명한 시야를 원하는 분.
+        <div class="vlt-preview">
+          <img src="vlt-cabin.jpg" alt="VLT 농도 비교" loading="lazy">
+          <div class="vlt-preview-cols">
+            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.33"></div><span class="vlt-col-label">S-LINE 10</span></div>
+            <div class="vlt-col"><div class="vlt-col-overlay" style="opacity:.28"></div><span class="vlt-col-label">S-LINE 30</span></div>
           </div>
-          <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
         </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · SPF285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">총 태양에너지 차단 (TSER)</span><span class="spec-value">60%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="60"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 31%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="31"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
-          <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
+        <div class="product-glass-bar">
+          <div>
+            <span class="product-category">Comfort &amp; Smart</span>
+            <h3 class="product-name">S-LINE</h3>
+            <p class="product-tagline">우수한 성능과 합리적인 가격의 비반사 필름.</p>
+            <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
+          </div>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Performance</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단율 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">99%+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">빛 투과율 <span class="spec-bar-eng">VLT</span></span><span class="spec-bar-value">10~30%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="30"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">열차단율 <span class="spec-bar-eng">TSER</span></span><span class="spec-bar-value">60%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="60"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">보증 <span class="spec-bar-eng">Warranty</span></span><span class="spec-bar-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="50"></div></div></div>
+            <p class="spec-note">* 비반사 · 농도 10 기준 최대 TSER</p>
+          </div>
         </div>
       </div>
 
       <!-- LX SHIELD -->
       <div class="product-panel" id="panel-shield">
-        <div>
-          <span class="product-category">Clear Guard · PPF</span>
-          <h3 class="product-name">LX SHIELD</h3>
-          <p class="product-tagline">최상의 셀프 힐링 PPF. 자가복원성 초고분자 물질에 독자 기술을 접목.</p>
-          <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            차량 외부 도장을 장기 보호하고 싶은 분. 스크래치 자가 복원 기능을 원하는 분.
+        <div class="product-glass-bar" style="margin-top:0;">
+          <div>
+            <span class="product-category">Clear Guard · PPF</span>
+            <h3 class="product-name">LX SHIELD</h3>
+            <p class="product-tagline">최상의 셀프 힐링 PPF. 자가복원성 초고분자 물질에 독자 기술.</p>
+            <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
           </div>
-          <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
-        </div>
-        <div class="product-specs">
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단</span><span class="spec-value">SPF 285+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">광택도</span><span class="spec-value">92 GU</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="92"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">셀프힐링</span><span class="spec-value">상온 1분 이내</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
-          <div class="spec-item"><div class="spec-header"><span class="spec-label">내후성 인증</span><span class="spec-value">ASTM G155 · 3,000hrs</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
-          <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+          <div class="product-specs">
+            <p class="spec-eyebrow">Protection</p>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">UV 차단 <span class="spec-bar-eng">UV Protection</span></span><span class="spec-bar-value">SPF285+</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="99"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">광택도 <span class="spec-bar-eng">Gloss</span></span><span class="spec-bar-value">92 GU</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="92"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">셀프힐링 <span class="spec-bar-eng">잔 스크래치 자동 복원</span></span><span class="spec-bar-value">1분</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+            <div class="spec-bar-item"><div class="spec-bar-header"><span class="spec-bar-label">내후성 <span class="spec-bar-eng">자외선·열·습도에 견디는 힘</span></span><span class="spec-bar-value">3,000h</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-percent="100"></div></div></div>
+            <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <div class="products-cta fi" style="text-align:center; margin-top:3.5rem;">
-      <a href="#pricing" class="btn-dark" style="display:inline-flex;">시공 가격 확인 →</a>
+    <div class="products-cta fi" style="text-align:center; margin-top:3rem; margin-bottom:2rem;">
+      <a href="#pricing" class="btn-outline-dark" style="display:inline-flex; color:#fff; border-color:rgba(255,255,255,.3);">시공 가격 확인 →</a>
     </div>
   </div>
 </section>
@@ -2809,7 +2663,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      AI QUIZ — 나에게 맞는 필름 찾기
 ======================================== -->
-<section id="quiz">
+<section id="quiz" style="display:none;">
   <div class="quiz-inner">
     <div class="quiz-header">
       <h2 class="section-title fi" style="text-align:center;">
@@ -3065,57 +2919,6 @@ body.pd-open { overflow: hidden; }
 </section>
 
 <!-- ========================================
-     PROOF — 숫자 + 수상·파트너 (TRUST + AWARDS 통합)
-======================================== -->
-<section id="trust">
-  <div class="section-inner" style="text-align:center;margin-bottom:3rem;">
-    <span class="section-eyebrow fi">Proof</span>
-    <h2 class="section-title fi" style="text-align:center;">THE LX를 증명하는 것</h2>
-  </div>
-  <div class="awards-inner" style="background:#0a0a0a; padding:clamp(2.5rem,5vw,5rem) clamp(1.5rem,3vw,3rem); border-radius:28px; border:.5px solid rgba(255,255,255,.06);">
-    <div class="awards-grid" style="margin-top:0;">
-
-      <!-- Lexus — featured (가장 강력한 신뢰 자산) -->
-      <div class="award-card featured fi">
-        <div class="award-year">LX</div>
-        <div class="award-meta">
-          <span class="award-badge">Official Partner</span>
-          <p class="award-name"><strong>Lexus Club Korea</strong><br>공식 파트너</p>
-          <p class="award-desc">
-            Lexus가 선택한 유일한 국내 필름 브랜드.<br>
-            최고급 자동차 브랜드의 기준으로 검증된 품질입니다.
-          </p>
-        </div>
-      </div>
-
-      <!-- 퍼스트브랜드 대상 -->
-      <div class="award-card fi" style="transition-delay:.06s">
-        <div class="award-year">2026</div>
-        <span class="award-badge">Brand Award</span>
-        <p class="award-name">대한민국<br><strong>퍼스트브랜드 대상</strong></p>
-        <p class="award-desc">소비자가 직접 선택한 최고의 브랜드. 기술이 아닌 신뢰가 받은 상입니다.</p>
-      </div>
-
-      <!-- Saint-Gobain -->
-      <div class="award-card fi" style="transition-delay:.12s">
-        <div class="award-year">360</div>
-        <span class="award-badge">Material Science</span>
-        <p class="award-name">Saint-Gobain<br><strong>360년의 소재과학</strong></p>
-        <p class="award-desc">1665년 프랑스 왕실 유리 제조소로 시작. 세계 67개국, 나노세라믹 기술의 원천입니다.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="trust-grid fi-big" style="margin-top:5rem;">
-    <div class="trust-item"><span class="trust-num" data-target="10"  data-suffix="+">0</span><p class="trust-label">년 보증</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="200" data-suffix="+">0</span><p class="trust-label">공식 시공점</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="99"  data-suffix="%">0</span><p class="trust-label">자외선 차단</p></div>
-    <div class="trust-item"><span class="trust-num" data-target="5"   data-suffix="">0</span><p class="trust-label">레이어 특허</p></div>
-  </div>
-</section>
-
-<!-- ========================================
      REVIEWS (restructured)
 ======================================== -->
 <section id="reviews">
@@ -3151,6 +2954,57 @@ body.pd-open { overflow: hidden; }
     <div class="rv-progress"><div class="rv-progress-fill" id="rvFill"></div></div>
 
     <div class="rv-dots" id="rvDots"></div>
+  </div>
+</section>
+
+<!-- ========================================
+     PROOF — 숫자 + 수상·파트너 (TRUST + AWARDS 통합)
+======================================== -->
+<section id="trust">
+  <div class="section-inner" style="text-align:center;margin-bottom:3rem;">
+    <span class="section-eyebrow fi">Proof</span>
+    <h2 class="section-title fi" style="text-align:center;color:#fff;">THE LX를 증명하는 것</h2>
+  </div>
+  <div class="awards-inner" style="background:#0a0a0a; padding:clamp(2.5rem,5vw,5rem) clamp(1.5rem,3vw,3rem); border-radius:28px; border:.5px solid rgba(255,255,255,.06);">
+    <div class="awards-grid" style="margin-top:0;">
+
+      <!-- Lexus — featured (가장 강력한 신뢰 자산) -->
+      <div class="award-card featured fi">
+        <div class="award-year">LX</div>
+        <div class="award-meta">
+          <span class="award-badge">Official Partner</span>
+          <p class="award-name"><strong>Lexus Club Korea</strong><br>공식 파트너</p>
+          <p class="award-desc">
+            Lexus가 선택한 유일한 국내 필름 브랜드.<br>
+            최고급 자동차 브랜드의 기준으로 검증된 품질입니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 퍼스트브랜드 대상 -->
+      <div class="award-card fi" style="transition-delay:.06s">
+        <div class="award-year">2026</div>
+        <span class="award-badge">Brand Award</span>
+        <p class="award-name">대한민국<br><strong>퍼스트브랜드 대상</strong></p>
+        <p class="award-desc">소비자가 직접 선택한 최고의 브랜드. 기술이 아닌 신뢰가 받은 상입니다.</p>
+      </div>
+
+      <!-- Saint-Gobain -->
+      <div class="award-card fi" style="transition-delay:.12s">
+        <div class="award-year" style="font-size:0; line-height:0;"><img src="saint-gobain-logo.png" alt="Saint-Gobain" style="height:clamp(5.5rem, 11vw, 9rem); width:auto; filter:brightness(0) invert(1); opacity:.08; margin-top:-1.5rem;"></div>
+        <span class="award-badge">Material Science</span>
+        <p class="award-name">Saint-Gobain<br><strong>360년의 소재과학</strong></p>
+        <p class="award-desc">1665년 프랑스 왕실 유리 제조소로 시작. 세계 67개국, 나노세라믹 기술의 원천입니다.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="trust-grid fi-big" style="margin-top:5rem;">
+    <div class="trust-item"><span class="trust-num" data-target="10"  data-suffix="+">0</span><p class="trust-label">년 보증</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="200" data-suffix="+">0</span><p class="trust-label">공식 시공점</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="99"  data-suffix="%">0</span><p class="trust-label">자외선 차단</p></div>
+    <div class="trust-item"><span class="trust-num" data-target="5"   data-suffix="">0</span><p class="trust-label">레이어 특허</p></div>
   </div>
 </section>
 
@@ -3254,9 +3108,9 @@ body.pd-open { overflow: hidden; }
   <div class="booking-inner">
     <p class="section-eyebrow fi" style="color:rgba(255,255,255,.35);">Reserve</p>
     <h2 class="booking-title fi">
-      오늘부터,<br><em>다른 공간</em>
+      오늘,<br><em>달라지는 90분.</em>
     </h2>
-    <p class="booking-sub fi"></p>
+    <p class="booking-sub fi">당신의 공간, 여기서 시작됩니다.</p>
 
     <div class="booking-steps fi" style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:3rem; padding:1.4rem 0; border-top:.5px solid rgba(255,255,255,.1); border-bottom:.5px solid rgba(255,255,255,.1);">
       <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
@@ -3312,7 +3166,7 @@ body.pd-open { overflow: hidden; }
         </select>
       </div>
       <div class="form-group full">
-        <button type="submit" class="booking-submit" id="bookingBtn">예약 신청하기</button>
+        <button type="submit" class="booking-submit" id="bookingBtn">시공 상담 예약</button>
       </div>
     </form>
     <div class="booking-success" id="bookingSuccess">
@@ -3343,7 +3197,7 @@ body.pd-open { overflow: hidden; }
     <img src="thelx-logo-footer.png" alt="THE LX" class="footer-logo-img">
     <ul class="footer-links">
       <li><a href="#why-story">브랜드</a></li>
-      <li><a href="#how">기술</a></li>
+      <li><a href="#film-layers">기술</a></li>
       <li><a href="#products">제품</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
@@ -3400,138 +3254,6 @@ body.pd-open { overflow: hidden; }
      JAVASCRIPT
 ======================================== -->
 <script>
-/* ── COMPARE ROW HOVER ── */
-(function(){
-  const grid = document.querySelector('.compare-grid');
-  if (!grid) return;
-  const cells = [...grid.children];
-  cells.forEach((cell, i) => {
-    cell.addEventListener('mouseenter', () => {
-      const j = i % 2 === 0 ? i + 1 : i - 1;
-      cell.classList.add('row-hover');
-      if (cells[j]) cells[j].classList.add('row-hover');
-    });
-    cell.addEventListener('mouseleave', () => {
-      const j = i % 2 === 0 ? i + 1 : i - 1;
-      cell.classList.remove('row-hover');
-      if (cells[j]) cells[j].classList.remove('row-hover');
-    });
-  });
-})();
-
-/* ── COMPARE SHINE TRACE (Canvas) ── */
-(function(){
-  var grid = document.querySelector('.compare-grid');
-  if (!grid) return;
-
-  /* canvas 생성 — grid 위에 겹침 */
-  var canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;border-radius:20px;';
-  grid.style.position = 'relative';
-  grid.appendChild(canvas);
-
-  var ctx = canvas.getContext('2d');
-  var active = false;
-  var angle = 0;
-  var dpr = window.devicePixelRatio || 1;
-
-  function resize() {
-    var r = grid.getBoundingClientRect();
-    canvas.width = r.width * dpr;
-    canvas.height = r.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  function getPointOnRoundedRect(t, w, h, r) {
-    /* t: 0~1, 둘레를 따라 이동. 좌상단 모서리부터 시작 */
-    var straight = (w - 2*r)*2 + (h - 2*r)*2;
-    var corners = 2 * Math.PI * r;
-    var perimeter = straight + corners;
-    var d = t * perimeter;
-    /* 상단 직선 */
-    var seg = w - 2*r;
-    if (d < seg) return { x: r + d, y: 0 };
-    d -= seg;
-    /* 우상단 코너 */
-    seg = Math.PI * r / 2;
-    if (d < seg) { var a = d / r - Math.PI/2; return { x: w - r + Math.cos(a)*r, y: r + Math.sin(a)*r }; }
-    d -= seg;
-    /* 우측 직선 */
-    seg = h - 2*r;
-    if (d < seg) return { x: w, y: r + d };
-    d -= seg;
-    /* 우하단 코너 */
-    seg = Math.PI * r / 2;
-    if (d < seg) { var a2 = d / r; return { x: w - r + Math.cos(a2)*r, y: h - r + Math.sin(a2)*r }; }
-    d -= seg;
-    /* 하단 직선 */
-    seg = w - 2*r;
-    if (d < seg) return { x: w - r - d, y: h };
-    d -= seg;
-    /* 좌하단 코너 */
-    seg = Math.PI * r / 2;
-    if (d < seg) { var a3 = d / r + Math.PI/2; return { x: r + Math.cos(a3)*r, y: h - r + Math.sin(a3)*r }; }
-    d -= seg;
-    /* 좌측 직선 */
-    seg = h - 2*r;
-    if (d < seg) return { x: 0, y: h - r - d };
-    d -= seg;
-    /* 좌상단 코너 */
-    seg = Math.PI * r / 2;
-    var a4 = d / r + Math.PI;
-    return { x: r + Math.cos(a4)*r, y: r + Math.sin(a4)*r };
-  }
-
-  function draw() {
-    if (!active) return;
-    requestAnimationFrame(draw);
-
-    var w = canvas.width / dpr;
-    var h = canvas.height / dpr;
-    var R = 20;
-    ctx.clearRect(0, 0, w, h);
-
-    angle += 0.002;
-    if (angle > 1) angle -= 1;
-
-    /* 빛 포인트 위치 */
-    var pt = getPointOnRoundedRect(angle, w, h, R);
-
-    /* 테두리 위에 글로우 그리기 — 순백 · 쿨 화이트 */
-    var radius = 320;
-    var grad = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, radius);
-    grad.addColorStop(0,    'rgba(255,255,255,0.9)');
-    grad.addColorStop(0.08, 'rgba(250,252,255,0.6)');
-    grad.addColorStop(0.2,  'rgba(230,240,255,0.25)');
-    grad.addColorStop(0.5,  'rgba(220,235,255,0.06)');
-    grad.addColorStop(1,    'transparent');
-
-    /* 테두리 경로만 클리핑 */
-    ctx.save();
-    ctx.beginPath();
-    /* 외곽 둥근사각형 */
-    ctx.roundRect(0, 0, w, h, R);
-    /* 내부 둥근사각형 (2px 안쪽) */
-    ctx.roundRect(2, 2, w - 4, h - 4, R - 2);
-    ctx.clip('evenodd');
-
-    ctx.fillStyle = grad;
-    ctx.fillRect(pt.x - radius, pt.y - radius, radius*2, radius*2);
-    ctx.restore();
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting && !active) { active = true; draw(); }
-      else if (!e.isIntersecting) { active = false; }
-    });
-  }, { threshold: 0.1 });
-  observer.observe(grid);
-})();
-
 
 /* ── HERO blur→reveal + bg transition ── */
 const heroSec    = document.getElementById('hero');
@@ -3626,6 +3348,19 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
 document.querySelectorAll('.fi, .fi-card, .fi-big, .fi-left, .fi-right').forEach(el => io.observe(el));
 
+/* ── WHY 서사 한 줄씩 순차 페이드인 ── */
+const whyLines = document.querySelectorAll('.why-hero-line');
+const whyIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const delay = parseInt(e.target.dataset.whyDelay) || 0;
+      setTimeout(() => e.target.classList.add('vis'), delay * 400);
+      whyIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+whyLines.forEach(el => whyIO.observe(el));
+
 // 내비게이션 앵커 클릭 → 스크롤 후 뷰포트 내 .fi 요소 즉시 표시
 function revealInView() {
   document.querySelectorAll('.fi, .fi-card, .fi-big, .fi-left, .fi-right').forEach(el => {
@@ -3677,9 +3412,33 @@ const cntIO = new IntersectionObserver(entries => {
 document.querySelectorAll('[data-target]').forEach(el => cntIO.observe(el));
 
 
+
 /* ── PRODUCT TABS ── */
 const tabBtns       = document.querySelectorAll('.tab-btn');
 const productPanels = document.querySelectorAll('.product-panel');
+
+const filmRingColors = {
+  lx:       'rgba(210,160,80,.85)',
+  vogue:    'rgba(160,210,180,.8)',
+  xenith:   'rgba(210,175,70,.8)',
+  quantum:  'rgba(100,160,220,.8)',
+  titanium: 'rgba(140,120,180,.75)',
+  gline:    'rgba(100,150,210,.8)',
+  sline:    'rgba(255,255,255,.6)',
+  shield:   'rgba(255,255,255,.6)'
+};
+function animateBars(panel, name) {
+  const color = filmRingColors[name] || 'rgba(255,255,255,.7)';
+  panel.querySelectorAll('.spec-bar-fill').forEach(b => {
+    b.style.width = '0%';
+    b.style.background = color;
+  });
+  setTimeout(() => {
+    panel.querySelectorAll('.spec-bar-fill').forEach(b => {
+      b.style.width = (b.dataset.percent || 0) + '%';
+    });
+  }, 50);
+}
 
 function activateTab(name) {
   tabBtns.forEach(b => b.classList.remove('active'));
@@ -3688,23 +3447,19 @@ function activateTab(name) {
   const panel = document.getElementById(`panel-${name}`);
   if (btn)   btn.classList.add('active');
   if (panel) {
-    panel.querySelectorAll('.spec-bar-fill').forEach(f => f.style.width = '0%');
     panel.classList.add('active');
-    setTimeout(() => {
-      panel.querySelectorAll('.spec-bar-fill').forEach(f => f.style.width = f.dataset.width + '%');
-    }, 50);
+    animateBars(panel, name);
   }
 }
 tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
 
-// 제품 섹션 진입 시 스펙바 애니메이션
 const prodIO = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const ap = document.querySelector('.product-panel.active');
-      if (ap) setTimeout(() => {
-        ap.querySelectorAll('.spec-bar-fill').forEach(f => f.style.width = f.dataset.width + '%');
-      }, 200);
+      const activeBtn = document.querySelector('.tab-btn.active');
+      const tabName = activeBtn ? activeBtn.dataset.tab : 'lx';
+      if (ap) setTimeout(() => animateBars(ap, tabName), 200);
       prodIO.unobserve(e.target);
     }
   });
@@ -4633,6 +4388,18 @@ document.getElementById('slSearch').addEventListener('input', e => {
 });
 
 slRender();
+
+/* ── Product Guide → Tab Switch ── */
+document.querySelectorAll('.product-guide-item').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var tab = btn.dataset.guideTab;
+    var tabBtn = document.querySelector('.tab-btn[data-tab="' + tab + '"]');
+    if (tabBtn) {
+      tabBtn.click();
+      document.getElementById('products').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  });
+});
 
 /* ── AI QUIZ ── */
 let quizAnswers = { q1: [], q2: [], q3: null };

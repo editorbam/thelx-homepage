@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# 백업 폴더
+_backup/
+
+# 참조용 옛 버전 (로컬에만 보관, GitHub 푸시 X)
+index-v2.html
+index-거실.html
+index-why.html
+thelx-final.html
+
+# 사용 미확인 / 임시
+sim-guide.html
+
+# 큰 원본 파일 (lx-film.jpg 압축본만 사용)
+lx-film-original.jpg
+
+# 문서/PDF
+*.pdf
+
+# 에디터 메타
+*.swp
+*.swo
+*~

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000; }
+.card {
+  width: 1200px;
+  height: 630px;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 배경 그라디언트 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: -20%;
+  width: 140%; height: 180%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(200,169,110,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.03) 0%, transparent 50%);
+}
+
+/* 상단 보더라인 */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(200,169,110,0.3) 50%, transparent 90%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #c8a96e;
+}
+
+.logo {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.divider {
+  width: 40px;
+  height: 0.5px;
+  background: rgba(255,255,255,0.15);
+}
+
+.headline {
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  color: rgba(255,255,255,0.88);
+}
+
+.headline em {
+  font-style: normal;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.sub {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.35);
+}
+
+/* 하단 정보 */
+.bottom {
+  position: absolute;
+  bottom: 36px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  z-index: 1;
+}
+
+.bottom-item {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+}
+
+.bottom-item .sep {
+  margin: 0 12px;
+  opacity: 0.4;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="content">
+    <span class="eyebrow">Solar Gard Premium · Saint-Gobain</span>
+    <span class="logo">THE LX</span>
+    <div class="divider"></div>
+    <h1 class="headline">하루 90분의 <em>거실</em>.</h1>
+    <p class="sub">매일 들어가는 차 안을 처음으로 설계한 필름</p>
+  </div>
+  <div class="bottom">
+    <span class="bottom-item">세계특허 5레이어<span class="sep">·</span>UV 99% 차단<span class="sep">·</span>최대 10년 보증<span class="sep">·</span>전국 200+ 시공점</span>
+  </div>
+</div>
+</body>
+</html>

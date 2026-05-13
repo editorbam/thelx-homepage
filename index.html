@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE LX — 차 안을 공간으로 설계하는 자동차 윈도우 필름</title>
-<meta name="description" content="THE LX는 Saint-Gobain 나노세라믹 소재와 정밀 기술로 차 안의 빛·온도·시야를 다시 설계합니다. 전국 200+ 공식 인증 시공점, 최대 10년 보증.">
+<meta name="description" content="THE LX는 Saint-Gobain 나노세라믹 소재와 정밀 기술로 차 안의 빛·온도·시야를 다시 설계합니다. AIMCAL Technology of the Year 2회 수상, 전국 200+ 공식 인증 시공점, 최대 10년 보증.">
 <meta name="keywords" content="THE LX, 자동차 윈도우 필름, 자동차 틴팅, Solar Gard Premium, Saint-Gobain, 나노세라믹, 시공 가격, 자외선 차단, 열차단">
 <!-- 프리뷰 모드 — 정식 배포 시 "noindex, nofollow" → "index, follow" 로 변경 -->
 <meta name="robots" content="noindex, nofollow">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="THE LX">
 <meta property="og:title" content="THE LX — 차 안을 공간으로 설계하는 자동차 윈도우 필름">
-<meta property="og:description" content="Saint-Gobain 나노세라믹 정밀 기술. 차 안의 빛·온도·시야를 다시 설계합니다. 전국 200+ 공식 인증 시공점.">
+<meta property="og:description" content="Saint-Gobain 나노세라믹 정밀 기술. AIMCAL Tech of the Year 2회 수상. 전국 200+ 공식 인증 시공점, 최대 10년 보증.">
 <meta property="og:url" content="https://isolargard.com/">
 <meta property="og:image" content="https://isolargard.com/why-car-side.jpg">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="THE LX — 차 안을 공간으로 설계하는 자동차 윈도우 필름">
-<meta name="twitter:description" content="Saint-Gobain 나노세라믹 정밀 기술. 차 안의 빛·온도·시야를 다시 설계합니다.">
+<meta name="twitter:description" content="Saint-Gobain 나노세라믹 정밀 기술. AIMCAL Tech of the Year 2회 수상. 최대 10년 보증.">
 <meta name="twitter:image" content="https://isolargard.com/why-car-side.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3482,35 +3482,6 @@ if (prodSec) prodIO.observe(prodSec);
     updateCheckPrices();
     render();
   }));
-
-  // QUIZ → PRICING 연결: 추천 제품 자동 선택 + 배지
-  function applyQuizProduct(product) {
-    if (!product || !PROD_LIST.includes(product)) return;
-    state.product = product;
-    POS_LIST.forEach(pos => state.positionProducts[pos] = product);
-    prods.forEach(b => {
-      b.classList.toggle('active', b.dataset.product === product);
-      b.querySelectorAll('.cf-prod-badge').forEach(el => el.remove());
-      if (b.dataset.product === product) {
-        const badge = document.createElement('span');
-        badge.className = 'cf-prod-badge';
-        badge.textContent = '당신의 추천';
-        badge.style.cssText = 'position:absolute; top:-9px; right:-6px; background:var(--accent); color:#0a0a0a; font-size:9px; font-weight:600; padding:3px 8px; border-radius:980px; letter-spacing:.04em; white-space:nowrap; box-shadow:0 4px 14px rgba(200,169,110,.45); z-index:2;';
-        b.style.position = 'relative';
-        b.appendChild(badge);
-      }
-    });
-    if (state.mode === 'custom') buildCustomBlocks();
-    updateCheckPrices();
-    render();
-  }
-  window.applyQuizToPricing = applyQuizProduct;
-
-  // 초기 로드 시 sessionStorage 확인 (페이지 새로고침 대응)
-  try {
-    const saved = sessionStorage.getItem('quizProduct');
-    if (saved) applyQuizProduct(saved);
-  } catch (e) {}
 
   updateCheckPrices();
   render();

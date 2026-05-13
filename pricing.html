@@ -2966,35 +2966,6 @@ setTimeout(() => {
     render();
   }));
 
-  // QUIZ → PRICING 연결: 추천 제품 자동 선택 + 배지
-  function applyQuizProduct(product) {
-    if (!product || !PROD_LIST.includes(product)) return;
-    state.product = product;
-    POS_LIST.forEach(pos => state.positionProducts[pos] = product);
-    prods.forEach(b => {
-      b.classList.toggle('active', b.dataset.product === product);
-      b.querySelectorAll('.cf-prod-badge').forEach(el => el.remove());
-      if (b.dataset.product === product) {
-        const badge = document.createElement('span');
-        badge.className = 'cf-prod-badge';
-        badge.textContent = '당신의 추천';
-        badge.style.cssText = 'position:absolute; top:-9px; right:-6px; background:var(--accent); color:#0a0a0a; font-size:9px; font-weight:600; padding:3px 8px; border-radius:980px; letter-spacing:.04em; white-space:nowrap; box-shadow:0 4px 14px rgba(200,169,110,.45); z-index:2;';
-        b.style.position = 'relative';
-        b.appendChild(badge);
-      }
-    });
-    if (state.mode === 'custom') buildCustomBlocks();
-    updateCheckPrices();
-    render();
-  }
-  window.applyQuizToPricing = applyQuizProduct;
-
-  // 초기 로드 시 sessionStorage 확인 (페이지 새로고침 대응)
-  try {
-    const saved = sessionStorage.getItem('quizProduct');
-    if (saved) applyQuizProduct(saved);
-  } catch (e) {}
-
   updateCheckPrices();
   render();
 })();

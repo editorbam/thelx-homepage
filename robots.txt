@@ -1,0 +1,11 @@
+# THE LX — robots.txt
+# 정식 배포 시 도메인 루트(isolargard.com/robots.txt)에 위치하면 작동
+#
+# 프리뷰 단계: 검색엔진 인덱싱 차단
+# 정식 배포 시: 아래 "Disallow: /" 를 "Allow: /" 로 변경하면 즉시 활성화
+
+User-agent: *
+Disallow: /
+
+# 정식 배포 시 활성화될 sitemap (현재는 Disallow 상태라 검색엔진이 보지 않음)
+Sitemap: https://isolargard.com/sitemap.xml

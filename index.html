@@ -1711,14 +1711,29 @@ footer {
   .compare-col-header { padding:1.4rem 1rem; }
   .product-panel.active { grid-template-columns:1fr; gap:2rem; }
   .trust-grid { grid-template-columns:repeat(2,1fr); }
-  .awards-grid { grid-template-columns:1fr; }
-  .award-card.featured { flex-direction:column; gap:1.5rem; padding:2.4rem 2rem; }
-  .award-year { font-size:4rem; }
-  .award-card { padding:2rem 1.6rem; }
+  /* PROOF 섹션 — 모바일 마감재 */
+  #trust .awards-inner { padding: 1.5rem 1rem !important; border-radius: 18px !important; }
+  .awards-grid { grid-template-columns:1fr; gap:1rem; }
+  .award-card,
+  .award-card.featured {
+    padding: 1.8rem 1.4rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.10);
+    gap: .8rem;
+  }
+  .award-card.featured { flex-direction: column; align-items: flex-start; }
+  .award-card:hover, .award-card.featured:hover { transform: none; }
+  .award-year { font-size: 2.8rem; align-self: flex-start; line-height: .9; }
+  .award-name { font-size: 1.2rem; line-height: 1.3; }
+  .award-desc { font-size: 12.5px; line-height: 1.7; }
+  .award-badge { margin-bottom: 0; font-size: 9.5px; }
   .booking-form { grid-template-columns:1fr; }
   .booking-form .form-group.full { grid-column:1; }
   .footer-inner { flex-direction:column; align-items:flex-start; }
   .cta-actions { flex-direction:column; gap:1rem; }
+  /* FILM LAYERS — 모바일 타이틀 임팩트 */
+  #film-layers .fl-title { font-size: 1.55rem; line-height: 1.4; letter-spacing: -.01em; }
+  #film-layers .fl-header { padding: 0 1.5rem; }
 }
 @media (max-width:480px) {
   .hero-btns { flex-direction:column; align-items:center; }
@@ -2272,7 +2287,18 @@ body.pd-open { overflow: hidden; }
 <section id="hero">
   <div class="hero-sticky" id="heroSticky">
     <!-- HERO BG VIDEO — 제거하려면 이 한 줄만 주석 처리 -->
-    <video class="hero-video" autoplay muted loop playsinline preload="auto"><source src="hero-drive.mp4" type="video/mp4"></video>
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"></video>
+    <script>
+      (function(){
+        var v = document.getElementById('heroVideo');
+        var mobile = window.matchMedia('(max-width: 768px)').matches;
+        var s = document.createElement('source');
+        s.src = mobile ? 'hero-drive-mobile.mp4' : 'hero-drive.mp4';
+        s.type = 'video/mp4';
+        v.appendChild(s);
+        v.load();
+      })();
+    </script>
     <img class="hero-lx" id="heroLx" src="thelx-badge.png" alt="THE LX — Solar Gard Premium 자동차 윈도우 필름">
     <div class="hero-copy" id="heroCopy">
       <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain</p>
@@ -4153,8 +4179,12 @@ slRender();
   var els       = [];
   var glowFired = false;
 
-  /* 반응형 필름 폭 */
-  function filmW() { return Math.min(600, window.innerWidth * 0.78); }
+  /* 반응형 필름 폭 — 모바일에선 화면을 더 채워 "5겹"이 또렷하게 */
+  function filmW() {
+    var w = window.innerWidth;
+    var ratio = w <= 768 ? 0.88 : 0.78;
+    return Math.min(600, w * ratio);
+  }
 
   /* ── 레이어 생성 ── */
   LAYERS.forEach(function (l, i) {

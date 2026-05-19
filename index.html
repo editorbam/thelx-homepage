@@ -49,6 +49,7 @@
     "name": "Saint-Gobain"
   },
   "areaServed": "KR",
+  "foundingDate": "1985",
   "knowsAbout": ["자동차 윈도우 필름", "나노세라믹 필름", "자외선 차단", "열차단 필름", "공간 설계"],
   "award": [
     "대한민국 퍼스트브랜드 대상 2026",
@@ -1769,8 +1770,9 @@ footer {
   transition: transform .55s cubic-bezier(.22,1,.36,1);
   overflow-y: auto; overflow-x: hidden;
   will-change: transform;
+  pointer-events: none;
 }
-#pdOverlay.open { transform: translateX(0); }
+#pdOverlay.open { transform: translateX(0); pointer-events: auto; }
 body.pd-open { overflow: hidden; }
 
 .pd-nav {
@@ -2285,7 +2287,6 @@ body.pd-open { overflow: hidden; }
   </a>
   <ul class="nav-links">
     <li><a href="#why-story">브랜드</a></li>
-    <li><a href="#how">기술</a></li>
     <li><a href="#products">제품</a></li>
     <li><a href="pricing.html">가격</a></li>
     <li><a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener">보증서</a></li>
@@ -2316,16 +2317,12 @@ body.pd-open { overflow: hidden; }
     </script>
     <img class="hero-lx" id="heroLx" src="thelx-badge.png" alt="THE LX — Solar Gard Premium 자동차 윈도우 필름">
     <div class="hero-copy" id="heroCopy">
-      <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain</p>
+      <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain · Since 1985</p>
       <h1 class="hero-title">
         하루 90분의 <em>거실</em>.
       </h1>
       <p class="hero-bridge">매일 들어가는 공간.</p>
       <p class="hero-tagline">차 안을 공간으로 설계한 최초의 필름</p>
-      <div class="hero-btns">
-        <a href="#why-story" class="btn-dark">우리의 이야기</a>
-        <a href="#products"  class="btn-outline-dark">제품 보기</a>
-      </div>
     </div>
     <div class="hero-scroll-hint">
       <span>Scroll</span>
@@ -2933,7 +2930,6 @@ body.pd-open { overflow: hidden; }
     <img src="thelx-logo-footer.png" alt="THE LX 로고 — Solar Gard Premium" class="footer-logo-img">
     <ul class="footer-links">
       <li><a href="#why-story">브랜드</a></li>
-      <li><a href="#film-layers">기술</a></li>
       <li><a href="#products">제품</a></li>
       <li><a href="#store-locator">시공점 찾기</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -3232,7 +3228,16 @@ function revealInView() {
   });
 }
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', () => setTimeout(revealInView, 650));
+  a.addEventListener('click', (e) => {
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    history.pushState(null, '', href);
+    setTimeout(revealInView, 650);
+  });
 });
 
 // fi-card stagger

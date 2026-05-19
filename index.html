@@ -1609,8 +1609,15 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .faq-toggle { font-size:1.4rem; font-weight:300; color:var(--gray-3); line-height:1; flex-shrink:0; transition:transform .3s ease, color .3s; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
 .faq-item.open .faq-toggle { color:var(--black); }
 .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.22,1,.36,1), padding .4s; }
-.faq-item.open .faq-answer { max-height:300px; padding-bottom:1.6rem; }
+.faq-item.open .faq-answer { max-height:420px; padding-bottom:1.6rem; }
 .faq-answer p { font-size:.95rem; font-weight:300; color:var(--gray-3); line-height:1.85; }
+.faq-answer p.faq-deepread { margin-top:1rem; font-size:.82rem; letter-spacing:.01em; }
+.faq-answer p.faq-deepread a {
+  color:var(--gray-3); text-decoration:none;
+  border-bottom:.5px solid rgba(0,0,0,.18);
+  transition:color .2s, border-color .2s;
+}
+.faq-answer p.faq-deepread a:hover { color:var(--black); border-color:var(--black); }
 
 /* ============================
    BOOKING FORM (index.html — light)
@@ -2793,7 +2800,10 @@ body.pd-open { overflow: hidden; }
       </div>
       <div class="faq-item">
         <button class="faq-question"><span class="faq-question-text">IR 차단율과 TSER, 어떤 게 정확한 지표인가요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>TSER(Total Solar Energy Rejected, 총 태양에너지 차단율)가 실내 온도를 결정하는 더 정확한 지표입니다. 적외선 차단율(IR Cut)은 적외선 일부 파장(보통 900~1000nm 구간)만 측정한 결과를 표기하는 경우가 많아, 태양 에너지 전체 영역에서의 실제 차단 성능을 나타내지 않습니다. THE LX는 ASTM E891·ISO&nbsp;9050:2003 기준으로 태양 에너지 전체 영역(280~2500nm)의 실효 차단량을 TSER로 표기합니다.</p></div>
+        <div class="faq-answer">
+          <p>TSER(Total Solar Energy Rejected, 총 태양에너지 차단율)가 실내 온도를 결정하는 더 정확한 지표입니다. 적외선 차단율(IR Cut)은 적외선 일부 파장(보통 900~1000nm 구간)만 측정한 결과를 표기하는 경우가 많아, 태양 에너지 전체 영역에서의 실제 차단 성능을 나타내지 않습니다. THE LX는 ASTM E891·ISO&nbsp;9050:2003 기준으로 태양 에너지 전체 영역(280~2500nm)의 실효 차단량을 TSER로 표기합니다.</p>
+          <p class="faq-deepread"><a href="https://blog.naver.com/kor_choppers/224048293191" target="_blank" rel="noopener noreferrer">측정 기준에 대한 더 깊은 분석 — 김이사 딥다이브 →</a></p>
+        </div>
       </div>
     </div>
   </div>

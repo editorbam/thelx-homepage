@@ -52,7 +52,9 @@
   "foundingDate": "1985",
   "knowsAbout": ["자동차 윈도우 필름", "풀 메탈 스퍼터 필름", "열반사 필름", "나노세라믹 필름", "자외선 차단", "열차단 필름", "공간 설계"],
   "award": [
-    "대한민국 퍼스트브랜드 대상 2026"
+    "대한민국 퍼스트브랜드 대상 2026",
+    "AIMCAL 업종 기술대상 2년 연속 (Solar Gard, 1994·1995)",
+    "ISO 14001 국제 환경경영 인증 (Solar Gard)"
   ]
 }
 </script>
@@ -548,6 +550,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .marquee-wrap.dark  .marquee-item .sep { color: rgba(0,0,0,.18); }
 .marquee-wrap.light .marquee-item .sep { color: rgba(0,0,0,.18); }
 .marquee-wrap.black .marquee-item .sep { color: rgba(255,255,255,.14); }
+/* PROOF 캐러셀 (오른쪽→왼쪽 무한 흐름) */
+.proof-carousel { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+.proof-track { display:flex; align-items:flex-start; width:max-content; animation: marquee 50s linear infinite; }
+.proof-carousel:hover .proof-track { animation-play-state:paused; }
+.proof-item { flex-shrink:0; width:200px; margin:0 1.1rem 0 0; }
+.proof-pcard { width:100%; height:154px; border-radius:14px; border:.5px solid rgba(0,0,0,.07); background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.06); display:flex; align-items:center; justify-content:center; padding:14px; }
+.proof-cap { display:block; text-align:center; margin-top:.7rem; font-size:.72rem; font-weight:300; color:var(--gray-3); letter-spacing:.01em; line-height:1.35; }
+.proof-pcard img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; }
+.proof-pcard.photo { padding:0; overflow:hidden; background:#0d0d0d; }
+.proof-pcard.photo img { width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; }
 
 /* ============================
    WHY — 다크 풀스크린 단일 선언 (이미지 + belief + CTA)
@@ -1805,6 +1817,7 @@ footer {
     gap: .8rem;
   }
   .award-card.featured { flex-direction: column; align-items: flex-start; }
+  .award-card.featured .award-feature-img { width: 100% !important; min-height: 0 !important; height: clamp(180px, 52vw, 260px); }
   .award-card:hover, .award-card.featured:hover { transform: none; }
   .award-year { font-size: 2.8rem; align-self: flex-start; line-height: .9; }
   .award-name { font-size: 1.2rem; line-height: 1.3; }
@@ -2408,8 +2421,8 @@ body.pd-open { overflow: hidden; }
 <!-- MARQUEE DARK -->
 <div class="marquee-wrap dark">
   <div class="marquee-track">
-    <div class="marquee-item">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span></div>
-    <div class="marquee-item" aria-hidden="true">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span></div>
+    <div class="marquee-item">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2004042435 <span class="sep">·</span></div>
+    <div class="marquee-item" aria-hidden="true">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2004042435 <span class="sep">·</span></div>
   </div>
 </div>
 
@@ -2787,39 +2800,93 @@ body.pd-open { overflow: hidden; }
     <span class="section-eyebrow fi">Proof</span>
     <h2 class="section-title fi" style="text-align:center;">THE LX를 증명하는 것</h2>
   </div>
-  <div class="awards-inner" style="background:#0a0a0a; padding:clamp(2.5rem,5vw,5rem) clamp(1.5rem,3vw,3rem); border-radius:28px; border:.5px solid rgba(255,255,255,.06);">
-    <div class="awards-grid" style="margin-top:0;">
+  <div style="padding:1rem 0 2rem; overflow:hidden;">
+    <div class="proof-carousel fi">
+      <div class="proof-track">
 
-      <!-- Lexus — featured (가장 강력한 신뢰 자산) -->
-      <div class="award-card featured fi">
-        <div class="award-year">LX</div>
-        <div class="award-meta">
-          <span class="award-badge">Official Partner</span>
-          <p class="award-name"><strong>Lexus Club Korea</strong><br>공식 파트너</p>
-          <p class="award-desc">
-            Lexus가 선택한 유일한 국내 필름 브랜드.<br>
-            최고급 자동차 브랜드의 기준으로 검증된 품질입니다.
-          </p>
-        </div>
-      </div>
-
-      <!-- 퍼스트브랜드 대상 -->
-      <div class="award-card fi" style="transition-delay:.06s">
-        <div class="award-year">2026</div>
-        <span class="award-badge">Brand Award</span>
-        <p class="award-name">대한민국<br><strong>퍼스트브랜드 대상</strong></p>
-        <p class="award-desc">소비자가 직접 선택한 최고의 브랜드. 기술이 아닌 신뢰가 받은 상입니다.</p>
-      </div>
-
-      <!-- Saint-Gobain -->
-      <div class="award-card fi" style="transition-delay:.12s">
-        <div class="award-year">360</div>
-        <span class="award-badge">Material Science</span>
-        <p class="award-name">Saint-Gobain<br><strong>360년의 소재과학</strong></p>
-        <p class="award-desc">1665년 프랑스 왕실 유리 제조소로 시작. 세계 67개국, 첨단 필름 소재 기술의 원천입니다.</p>
-      </div>
-
-
+        <!-- 흐름 (오른쪽→왼쪽 무한) -->
+        <figure class="proof-item">
+          <div class="proof-pcard photo"><img src="lexus-thelx.png" alt="Lexus Club Korea 공식 파트너" loading="lazy"></div>
+          <figcaption class="proof-cap">Lexus Club Korea 공식 파트너</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="sg-logo.png" alt="Saint-Gobain" loading="lazy"></div>
+          <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="미국특허 US7709095 — 적외선 반사 다층 구조" loading="lazy"></div>
+          <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="cert-iso.png" alt="ISO 14001 · Bureau Veritas 인증" loading="lazy"></div>
+          <figcaption class="proof-cap">ISO 14001 환경인증</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="cert-iwfa.png" alt="IWFA 윈도우 필름 전문가 인증" loading="lazy"></div>
+          <figcaption class="proof-cap">IWFA 전문가 인증</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard photo"><img src="lexus-thelx.png" alt="Lexus Club Korea 공식 파트너" loading="lazy"></div>
+          <figcaption class="proof-cap">Lexus Club Korea 공식 파트너</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="sg-logo.png" alt="Saint-Gobain" loading="lazy"></div>
+          <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="미국특허 US7709095 — 적외선 반사 다층 구조" loading="lazy"></div>
+          <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="cert-iso.png" alt="ISO 14001 · Bureau Veritas 인증" loading="lazy"></div>
+          <figcaption class="proof-cap">ISO 14001 환경인증</figcaption>
+        </figure>
+        <figure class="proof-item">
+          <div class="proof-pcard"><img src="cert-iwfa.png" alt="IWFA 윈도우 필름 전문가 인증" loading="lazy"></div>
+          <figcaption class="proof-cap">IWFA 전문가 인증</figcaption>
+        </figure>
+        <!-- loop 복제 -->
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard photo"><img src="lexus-thelx.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">Lexus Club Korea 공식 파트너</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="sg-logo.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="cert-iso.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">ISO 14001 환경인증</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="cert-iwfa.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">IWFA 전문가 인증</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard photo"><img src="lexus-thelx.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">Lexus Club Korea 공식 파트너</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="sg-logo.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="cert-iso.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">ISO 14001 환경인증</figcaption>
+        </figure>
+        <figure class="proof-item" aria-hidden="true">
+          <div class="proof-pcard"><img src="cert-iwfa.png" alt="" loading="lazy"></div>
+          <figcaption class="proof-cap">IWFA 전문가 인증</figcaption>
+        </figure>
+            </div>
     </div>
   </div>
 

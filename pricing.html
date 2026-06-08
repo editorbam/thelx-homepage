@@ -2696,6 +2696,21 @@ const mainNav = document.getElementById('mainNav');
 let _winH = window.innerHeight;
 window.addEventListener('resize', () => { _winH = window.innerHeight; }, { passive: true });
 
+/* ── NAV 테마: 상단 라인이 다크 섹션(상단 배너·예약) 위면 흰 글자(on-dark), 라이트 섹션이면 검정 ── */
+const _navDarkSecs = Array.from(document.querySelectorAll('.cf-banner, #booking'));
+function updateNavTheme() {
+  const line = 26; // NAV 세로 중심
+  let dark = false;
+  for (let i = 0; i < _navDarkSecs.length; i++) {
+    const r = _navDarkSecs[i].getBoundingClientRect();
+    if (r.top <= line && r.bottom > line) { dark = true; break; }
+  }
+  mainNav.classList.toggle('on-dark', dark);
+}
+updateNavTheme();
+window.addEventListener('scroll', updateNavTheme, { passive: true });
+window.addEventListener('resize', updateNavTheme, { passive: true });
+
 /* ── INTERSECTION OBSERVER ── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {

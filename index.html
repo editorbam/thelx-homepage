@@ -1905,7 +1905,7 @@ body.pd-open { overflow: hidden; }
 .pd-hero-wrap::after {
   content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(10,10,10,.45) 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,.35) 62%, rgba(10,10,10,.85) 100%),
+    linear-gradient(180deg, rgba(10,10,10,.86) 0%, rgba(10,10,10,.7) 20%, rgba(10,10,10,.46) 38%, rgba(10,10,10,.14) 52%, rgba(10,10,10,0) 64%, rgba(10,10,10,.4) 80%, rgba(10,10,10,.85) 100%),
     linear-gradient(90deg, rgba(10,10,10,.7) 0%, rgba(10,10,10,.25) 48%, rgba(10,10,10,0) 78%);
 }
 .pd-hero {
@@ -3184,7 +3184,7 @@ body.pd-open { overflow: hidden; }
 
   <!-- 상세 hero — 풀블리드 시공 영상 배경 (8개 제품 공통) -->
   <div class="pd-hero-wrap">
-    <video class="pd-hero-video" autoplay muted loop playsinline preload="metadata"
+    <video class="pd-hero-video" autoplay muted loop playsinline preload="auto"
            poster="pd-craft-poster.jpg" aria-hidden="true">
       <source src="pd-craft-mobile.mp4" media="(max-width: 768px)" type="video/mp4">
       <source src="pd-craft.mp4" type="video/mp4">
@@ -4307,6 +4307,14 @@ function pdOpen(id) {
   pdOverlay.scrollTop = 0;
   pdOverlay.classList.add('open');
   document.body.classList.add('pd-open');
+
+  // hero 영상 즉시 재생 (오버레이가 화면 밖이라 autoplay가 지연되는 것 방지)
+  const heroVid = pdOverlay.querySelector('.pd-hero-video');
+  if (heroVid) {
+    try { heroVid.currentTime = 0; } catch (e) {}
+    const pr = heroVid.play();
+    if (pr && pr.catch) pr.catch(() => {});
+  }
 
   // 브라우저 history에 진입점 추가 → 뒤로가기로 닫을 수 있게
   history.pushState({ pd: id }, '');

@@ -977,7 +977,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .product-image { border-radius:16px; overflow:hidden; aspect-ratio:3/4; background:var(--gray-1); align-self:start; width:100%; }
 .product-image img { width:100%; height:100%; object-fit:cover; display:block; }
 .product-name    { font-size:clamp(2rem,3.5vw,3rem); font-weight:600; letter-spacing:-0.04em; color:var(--black); margin-bottom:.5rem; }
-.product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:1.75rem; font-weight:300; line-height:1.6; }
+.product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:.9rem; font-weight:300; line-height:1.6; }
+.product-bridge  { font-size:.95rem; color:var(--gray-4); font-weight:400; line-height:1.6; margin-bottom:1.75rem; padding-left:.85rem; border-left:2px solid var(--black); }
 .product-recommend {
   font-size:.9rem; color:var(--gray-3); padding:1.25rem 1.5rem;
   border:1px solid rgba(0,0,0,.06); border-radius:12px; line-height:1.6; margin-bottom:2rem;
@@ -2663,10 +2664,11 @@ body.pd-open { overflow: hidden; }
         <div>
           <span class="product-category">Ceramic &amp; Top Class</span>
           <h3 class="product-name">Xenith IR</h3>
-          <p class="product-tagline">차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.</p>
+          <p class="product-tagline">세라믹이 할 수 있는 전부.</p>
+          <p class="product-bridge">금속 없이 열을 막습니다. 그래서 신호를 건드리지 않습니다.</p>
           <div class="product-recommend">
             <strong>이런 분께 추천합니다</strong>
-            전파 방해 없이 최고의 열 차단 성능을 원하는 분. 세라믹 순수 기술을 원하는 분.
+            내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전자장비가 많은 차일수록 차이가 큽니다.
           </div>
           <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
         </div>
@@ -4065,8 +4067,8 @@ const PD_DATA = {
   },
   xenith: {
     name: 'Xenith IR',
-    tagline: '차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름.',
-    recommend: '전파 방해 없이 최고의 열 차단 성능을 원하는 분. 세라믹 순수 기술을 원하는 분.',
+    tagline: '세라믹이 할 수 있는 전부. 금속 없이 열을 막아, 신호를 건드리지 않습니다.',
+    recommend: '내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전자장비가 많은 차일수록 차이가 큽니다.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },

@@ -23,3 +23,6 @@ lx-film-original.jpg
 *.swp
 *.swo
 *~
+
+# 이미지 압축 원본 백업 (로컬 전용)
+_img-backup/

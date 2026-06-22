@@ -1768,6 +1768,26 @@ footer {
 .footer-copy { font-size:11px; color:rgba(255,255,255,.18); font-weight:300; width:100%; margin-top:.2rem; }
 
 /* ============================
+   카카오톡 상담 플로팅
+============================ */
+.kakao-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 900;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  transition: opacity .4s, transform .4s;
+  opacity: 0; transform: translateY(12px);
+  pointer-events: none;
+  text-decoration: none;
+}
+.kakao-float.show { opacity: 1; transform: none; pointer-events: auto; }
+.kakao-float:hover { box-shadow: 0 6px 24px rgba(0,0,0,.28); transform: scale(1.06); }
+@media (max-width:768px) {
+  .kakao-float { bottom: 20px; right: 16px; width: 48px; height: 48px; }
+}
+
+/* ============================
    KEYFRAMES
 ============================ */
 @keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
@@ -2355,6 +2375,10 @@ body.pd-open { overflow: hidden; }
   font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.18);
   text-transform: uppercase; z-index: 10; pointer-events: none;
 }
+.tech-entry { background:#0a0a0a; text-align:center; padding:clamp(3.5rem,8vh,6rem) 1.5rem; }
+.tech-entry a { display:inline-flex; align-items:center; gap:.5rem; font-size:clamp(1.05rem,1.4vw,1.25rem); font-weight:500; color:#fff; text-decoration:none; letter-spacing:-.012em; border-bottom:1px solid rgba(255,255,255,.28); padding-bottom:.45rem; transition:border-color .3s, gap .3s; }
+.tech-entry a:hover { border-color:#fff; gap:.85rem; }
+.tech-entry a span { color:rgba(255,255,255,.5); font-size:1.2em; }
 .fl-scroll-hint::after {
   content: ''; display: block; width: 1px; height: 22px;
   background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
@@ -2504,6 +2528,11 @@ body.pd-open { overflow: hidden; }
     <div class="fl-scroll-hint" id="fl-scroll-hint">scroll</div>
   </div>
 </section>
+
+<!-- 기술 페이지 입구 -->
+<div class="tech-entry">
+  <a href="technology.html">열을 되돌려보내는 기술, 더 알아보기 <span aria-hidden="true">&rsaquo;</span></a>
+</div>
 
 <!-- ========================================
      PROCESS — Workshop / Craftsmanship (실제 시공 사진)
@@ -3160,6 +3189,11 @@ body.pd-open { overflow: hidden; }
 </section>
 
 </main>
+
+<!-- 카카오톡 상담 플로팅 -->
+<a href="http://pf.kakao.com/_rxlIxeK/chat" target="_blank" rel="noopener" id="kakaoFloat" class="kakao-float" aria-label="카카오톡 상담">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3C6.48 3 2 6.54 2 10.84c0 2.76 1.84 5.18 4.6 6.58-.14.52-.92 3.36-.95 3.58 0 0-.02.16.08.22.1.06.22.02.22.02.3-.04 3.44-2.26 3.98-2.64.66.1 1.36.14 2.07.14 5.52 0 10-3.54 10-7.9S17.52 3 12 3z"/></svg>
+</a>
 
 <!-- FOOTER -->
 <footer>

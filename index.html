@@ -714,7 +714,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   display: flex;
   gap: 1rem;
   width: max-content;
-  animation: processScroll 22s linear infinite;
+  animation: processScroll 31s linear infinite;
   animation-direction: reverse;
   padding: .5rem 0;
 }
@@ -743,7 +743,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   .process-section { padding: 4.5rem 1.4rem; }
   .process-title { font-size: clamp(1.4rem, 6.5vw, 1.9rem); }
   .process-photo { height: 240px; border-radius: 8px; }
-  .process-strip { animation-duration: 16s; gap: .7rem; }
+  .process-strip { animation-duration: 23s; gap: .7rem; }
   .process-sub { font-size: .92rem; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2514,14 +2514,17 @@ body.pd-open { overflow: hidden; }
     <h2 class="process-title">설계는 손에서<br>완성됩니다.</h2>
     <div class="process-strip-wrap">
       <div class="process-strip">
-        <!-- Set A (실제 캡션) -->
-        <img class="process-photo" src="process-1.jpg" alt="THE LX 시공 — 정확한 손길" loading="lazy">
-        <img class="process-photo" src="process-2.jpg" alt="THE LX 시공 — 장인의 작업" loading="lazy">
-        <img class="process-photo" src="process-3.jpg" alt="THE LX 시공 — 보양과 마감" loading="lazy">
-        <img class="process-photo" src="process-4.jpg" alt="THE LX 시공 — 디테일의 정밀함" loading="lazy">
-        <img class="process-photo" src="process-5.jpg" alt="THE LX 시공 — 인증 시공점의 현장" loading="lazy">
-        <img class="process-photo" src="process-6.jpg" alt="THE LX 시공 — 필름을 올리는 손" loading="lazy">
-        <img class="process-photo" src="process-7.jpg" alt="THE LX 시공 — 창에 닿는 마지막 정밀" loading="lazy">
+        <!-- Set A (실제 캡션) — 시공 순서: 재단 → 부착 → 마감 -->
+        <img class="process-photo" src="process-1.jpg" alt="THE LX 시공 — 필름을 재단하는 손" loading="lazy">
+        <img class="process-photo" src="process-2.jpg" alt="THE LX 시공 — 정밀 재단" loading="lazy">
+        <img class="process-photo" src="process-3.jpg" alt="THE LX 시공 — 필름을 펼치다" loading="lazy">
+        <img class="process-photo" src="process-4.jpg" alt="THE LX 시공 — 유리에 올리는 순간" loading="lazy">
+        <img class="process-photo" src="process-5.jpg" alt="THE LX 시공 — 물기를 밀어내는 스퀴지" loading="lazy">
+        <img class="process-photo" src="process-6.jpg" alt="THE LX 시공 — 표면을 닦는 마감" loading="lazy">
+        <img class="process-photo" src="process-7.jpg" alt="THE LX 시공 — 곡면을 잡는 열성형" loading="lazy">
+        <img class="process-photo" src="process-8.jpg" alt="THE LX 시공 — 열로 완성하는 밀착" loading="lazy">
+        <img class="process-photo" src="process-9.jpg" alt="THE LX 시공 — 창에 닿는 마지막 정밀" loading="lazy">
+        <img class="process-photo" src="process-10.jpg" alt="THE LX 시공 — Solar Gard 프리미엄 필름" loading="lazy">
         <!-- Set B (seamless loop을 위한 복제) -->
         <img class="process-photo" src="process-1.jpg" alt="" aria-hidden="true" loading="lazy">
         <img class="process-photo" src="process-2.jpg" alt="" aria-hidden="true" loading="lazy">
@@ -2530,6 +2533,9 @@ body.pd-open { overflow: hidden; }
         <img class="process-photo" src="process-5.jpg" alt="" aria-hidden="true" loading="lazy">
         <img class="process-photo" src="process-6.jpg" alt="" aria-hidden="true" loading="lazy">
         <img class="process-photo" src="process-7.jpg" alt="" aria-hidden="true" loading="lazy">
+        <img class="process-photo" src="process-8.jpg" alt="" aria-hidden="true" loading="lazy">
+        <img class="process-photo" src="process-9.jpg" alt="" aria-hidden="true" loading="lazy">
+        <img class="process-photo" src="process-10.jpg" alt="" aria-hidden="true" loading="lazy">
       </div>
     </div>
     <p class="process-sub">437개 인증 시공점. 동일한 기준.</p>

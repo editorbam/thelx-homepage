@@ -302,9 +302,10 @@
     .panel.lx .ptitle { color:#9cc6ee; }
     .panel.abs .ptitle { color:#efa89c; }
     .ptitle small { display:block; font-size:12px; font-weight:600; color:rgba(255,255,255,.4); margin-top:4px; letter-spacing:.04em; }
-    .scene { position:relative; width:100%; }
+    .scene { position:relative; width:100%; aspect-ratio:1040/492; overflow:hidden; }
     .scene img { width:100%; display:block; }
-    .sun { position:absolute; top:-6%; left:-2%; width:42%; height:54%; background:radial-gradient(ellipse at 40% 40%, rgba(255,170,85,.55), transparent 64%); filter:blur(8px); mix-blend-mode:screen; z-index:1; }
+    .scene video { width:100%; height:100%; object-fit:cover; object-position:center 72%; display:block; }
+    .sun { position:absolute; top:-6%; right:-2%; width:42%; height:54%; background:radial-gradient(ellipse at 60% 40%, rgba(255,170,85,.55), transparent 64%); filter:blur(8px); mix-blend-mode:screen; z-index:1; }
     .cabin-cool { position:absolute; left:8%; top:45%; width:48%; height:23%; background:radial-gradient(ellipse, rgba(95,165,235,.34), transparent 70%); filter:blur(9px); mix-blend-mode:screen; z-index:1; }
     .cabin-hot { position:absolute; left:8%; top:45%; width:50%; height:26%; background:radial-gradient(ellipse, rgba(240,75,50,.5), rgba(240,75,50,.12) 55%, transparent 72%); filter:blur(7px); mix-blend-mode:screen; z-index:1; animation:hotPulse 1.7s ease-in-out infinite; }
     @keyframes hotPulse { 0%,100%{opacity:.55; transform:scale(.97)} 50%{opacity:1; transform:scale(1.04)} }
@@ -319,11 +320,12 @@
     .foot { margin:28px auto 0; max-width:1160px; border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:20px 24px; display:flex; gap:13px; align-items:center; background:rgba(255,255,255,.015); }
     .foot p { color:rgba(255,255,255,.55); font-size:14.5px; line-height:1.6; word-break:keep-all; }
     .foot b { color:#fff; font-weight:600; }
+    @keyframes waveReveal { 0%,42%{opacity:0} 54%,92%{opacity:1} 100%{opacity:0} }
     @keyframes heatwave { 0%{transform:translateY(2px) scaleX(.9);opacity:0} 25%{opacity:.95} 100%{transform:translateY(-16px) scaleX(1.15);opacity:0} }
-    .heat { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; }
+    .heat { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; opacity:0; transition:opacity .8s ease; }
     .heat span { color:#ff6a4a; font-size:24px; font-weight:800; line-height:.7; text-shadow:0 0 10px rgba(255,90,60,.7); animation:heatwave 1.5s ease-out infinite; }
     .heat span:nth-child(2){animation-delay:.5s} .heat span:nth-child(3){animation-delay:1s} .heat span:nth-child(4){animation-delay:.25s}
-    .cool { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; }
+    .cool { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; opacity:0; transition:opacity .8s ease; }
     .cool span { color:#6ab4ff; font-size:24px; font-weight:800; line-height:.7; text-shadow:0 0 10px rgba(90,170,255,.7); animation:heatwave 1.5s ease-out infinite; }
     .cool span:nth-child(2){animation-delay:.5s} .cool span:nth-child(3){animation-delay:1s} .cool span:nth-child(4){animation-delay:.25s}
     @media (max-width:768px) { .grid { grid-template-columns:1fr; gap:32px; } .vs { display:none; } }
@@ -379,25 +381,23 @@
 <section class="cmp-section">
   <p class="cmp-sub">열을 다루는 방식이, 시간이 지날수록 차 안의 온도를 가릅니다.</p>
   <div class="grid">
-    <div class="vs">VS</div>
 
     <!-- 반사 (THE LX) -->
     <div class="panel lx">
       <div class="ptitle">열을 되돌려보냅니다<small>THE LX · 반사</small></div>
       <div class="scene">
-        <img src="why-car-side.jpg" alt="열을 외부로 반사하는 차">
-        <div class="sun"></div>
-        <div class="cabin-cool"></div>
+        <video src="tech-reflect.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
         <div class="cool"><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span></div>
+        <div class="sun"></div>
         <svg class="thermo" viewBox="0 0 32 116"><rect x="12" y="6" width="8" height="78" rx="4" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.28)"/><circle cx="16" cy="98" r="14" fill="#3f82c8"/><rect x="13" y="52" width="6" height="40" rx="3" fill="#3f82c8"/><circle cx="16" cy="98" r="14" fill="none" stroke="rgba(120,180,240,.5)" stroke-width="1"/></svg>
         <svg class="player" viewBox="0 0 1040 492" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <marker id="ahHeatR" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff7a4c"/></marker>
             <marker id="ahReflR" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ffffff"/></marker>
           </defs>
-          <line x1="120" y1="44" x2="293" y2="192" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
-          <line x1="306" y1="194" x2="498" y2="36" stroke="#ffffff" stroke-width="8" stroke-linecap="round" marker-end="url(#ahReflR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
-          <circle cx="300" cy="194" r="8" fill="#fff"><animate attributeName="opacity" values="0;.75;0" dur="1.3s" repeatCount="indefinite"/><animate attributeName="r" values="5;14;5" dur="1.3s" repeatCount="indefinite"/></circle>
+          <line x1="668" y1="120" x2="552" y2="256" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
+          <line x1="548" y1="254" x2="442" y2="104" stroke="#ffffff" stroke-width="8" stroke-linecap="round" marker-end="url(#ahReflR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
+          <circle cx="550" cy="255" r="8" fill="#fff"><animate attributeName="opacity" values="0;.75;0" dur="1.3s" repeatCount="indefinite"/><animate attributeName="r" values="5;14;5" dur="1.3s" repeatCount="indefinite"/></circle>
         </svg>
       </div>
       <div class="pcap"><span class="dot">&#10003;</span><p>열을 바깥으로 <b>되돌려보내</b> 실내 온도 상승을 막습니다. 시간이 지나도 시원합니다.</p></div>
@@ -407,18 +407,17 @@
     <div class="panel abs">
       <div class="ptitle">열을 머금습니다<small>흡수</small></div>
       <div class="scene">
-        <img src="why-car-side.jpg" alt="열을 내부에 축적하는 차">
-        <div class="sun"></div>
-        <div class="cabin-hot"></div>
+        <video src="tech-absorb.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
         <div class="heat"><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span></div>
+        <div class="sun"></div>
         <svg class="thermo" viewBox="0 0 32 116"><rect x="12" y="6" width="8" height="78" rx="4" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.28)"/><circle cx="16" cy="98" r="14" fill="#d2503c"/><rect x="13" y="18" width="6" height="74" rx="3" fill="#d2503c"><animate attributeName="height" values="22;74;74" keyTimes="0;0.65;1" dur="3.2s" repeatCount="indefinite"/><animate attributeName="y" values="70;18;18" keyTimes="0;0.65;1" dur="3.2s" repeatCount="indefinite"/></rect><circle cx="16" cy="98" r="14" fill="none" stroke="rgba(240,120,100,.5)" stroke-width="1"/></svg>
         <svg class="player" viewBox="0 0 1040 492" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <marker id="ahHeatA" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff7a4c"/></marker>
-            <marker id="ahAbsA" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff4a2c"/></marker>
+            <marker id="ahTransA" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff4a2c"/></marker>
           </defs>
-          <line x1="120" y1="44" x2="325" y2="198" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatA)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
-          <line x1="332" y1="204" x2="398" y2="362" stroke="#ff4a2c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahAbsA)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
+          <line x1="725" y1="104" x2="552" y2="252" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatA)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
+          <line x1="548" y1="258" x2="500" y2="330" stroke="#ff4a2c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahTransA)" stroke-dasharray="14 11" opacity="0.5"><animate attributeName="stroke-dashoffset" from="25" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
         </svg>
       </div>
       <div class="pcap"><span class="dot">!</span><p>머금은 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p></div>
@@ -507,5 +506,27 @@
   <p class="tech-footer-mark">THE LX</p>
   <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
 </footer>
+<script>
+  /* 두 비교 영상 동기화 + ≋ 물결을 영상 시간 기준으로 등장 */
+  (function(){
+    var vids = document.querySelectorAll('.scene video');
+    var waves = document.querySelectorAll('.cool, .heat');
+    if (vids.length < 2) return;
+    function start(){ vids.forEach(function(v){ try{ v.currentTime = 0; v.play(); }catch(e){} }); }
+    var ready = 0;
+    vids.forEach(function(v){
+      if (v.readyState >= 3) { if(++ready >= vids.length) start(); }
+      else v.addEventListener('canplaythrough', function(){ if(++ready >= vids.length) start(); }, {once:true});
+    });
+    setInterval(function(){
+      if (vids[0].seeking || vids[1].seeking) return;
+      if (Math.abs(vids[0].currentTime - vids[1].currentTime) > 0.12) {
+        vids[1].currentTime = vids[0].currentTime;
+      }
+      var show = vids[0].currentTime > 4.8;
+      waves.forEach(function(el){ el.style.opacity = show ? '1' : '0'; });
+    }, 200);
+  })();
+</script>
 </body>
 </html>

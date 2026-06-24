@@ -4926,6 +4926,18 @@ slRender();
   });
 }());
 
+/* iOS 저전력 모드 등 자동재생이 원천 차단된 경우 — 첫 사용자 입력(터치·탭)에 모든 배경 영상 재생 */
+(function () {
+  function kick() {
+    document.querySelectorAll('video[autoplay]').forEach(function (v) {
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+  }
+  ['touchstart', 'pointerdown', 'click'].forEach(function (ev) {
+    document.addEventListener(ev, kick, { once: true, passive: true });
+  });
+}());
+
 </script>
 </body>
 </html>

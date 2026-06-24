@@ -612,6 +612,12 @@
     // 루프 시작 보장(혹시 canplaythrough 누락 시)
     setTimeout(function(){ if (ready < 2) start(); }, 1500);
   })();
+
+  /* iOS 저전력 모드 등 자동재생 차단 시 — 첫 사용자 입력에 비교 영상 재생 */
+  (function(){
+    function kick(){ document.querySelectorAll('video[autoplay]').forEach(function(v){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }); }
+    ['touchstart','pointerdown','click'].forEach(function(ev){ document.addEventListener(ev, kick, {once:true, passive:true}); });
+  })();
 </script>
 </body>
 </html>

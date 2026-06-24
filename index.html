@@ -679,10 +679,24 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   background: #0a0a0a;
   padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+/* 시공 영상 배경 — 사진 스트립/제목 뒤에 깔리는 톤 레이어 */
+.process-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 0; opacity: .78; pointer-events: none;
+  filter: grayscale(1) contrast(1.05);
+}
+.process-section::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 38%, rgba(10,10,10,.42), rgba(10,10,10,.6) 95%);
 }
 .process-inner {
   max-width: 1100px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 .process-eyebrow {
   font-size: 11px;
@@ -700,6 +714,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   line-height: 1.25;
   margin: 0 0 clamp(3rem, 6vh, 4.5rem);
   word-break: keep-all;
+  text-shadow: 0 2px 30px rgba(0,0,0,.6);
 }
 .process-strip-wrap {
   position: relative;
@@ -990,6 +1005,16 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .spec-value     { font-size:13px; font-weight:600; color:var(--black); }
 .spec-bar-track { height:3px; background:var(--gray-1); border-radius:3px; overflow:hidden; }
 .spec-bar-fill  { height:100%; background:var(--black); border-radius:3px; width:0%; transition:width .9s cubic-bezier(.22,1,.36,1); }
+
+/* Key Point 픽토그램 — 3열 아래 전체폭 한 줄 */
+.product-keypoints { grid-column:1 / -1; margin-top:.5rem; padding-top:2rem; border-top:1px solid rgba(0,0,0,.08); }
+.product-keypoints-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-3); font-weight:600; margin:0 0 1.5rem; }
+.kp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem 2rem; }
+.kp { display:flex; align-items:center; gap:.9rem; }
+.kp-ico { flex:0 0 auto; width:42px; height:42px; color:var(--black); }
+.kp-ico svg { width:100%; height:100%; display:block; }
+.kp-text { font-size:.92rem; line-height:1.4; color:var(--gray-4); font-weight:500; word-break:keep-all; }
+@media (max-width:768px) { .kp-grid { grid-template-columns:1fr 1fr; gap:1.2rem 1rem; } }
 
 .product-detail-btn {
   display: inline-block; margin-top: 1.75rem;
@@ -2471,8 +2496,8 @@ body.pd-open { overflow: hidden; }
 <!-- MARQUEE DARK -->
 <aside class="marquee-wrap dark" aria-label="THE LX 신뢰 키워드">
   <div class="marquee-track">
-    <div class="marquee-item">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2004042435 <span class="sep">·</span></div>
-    <div class="marquee-item" aria-hidden="true">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO2004042435 <span class="sep">·</span></div>
+    <div class="marquee-item">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO0961339A1 <span class="sep">·</span></div>
+    <div class="marquee-item" aria-hidden="true">WORLD PATENT <span class="sep">·</span> FULL METAL SPUTTER <span class="sep">·</span> SAINT-GOBAIN <span class="sep">·</span> THE LX PRECISION <span class="sep">·</span> UV 99% 차단 <span class="sep">·</span> 10년 내구 보증 <span class="sep">·</span> WO0961339A1 <span class="sep">·</span></div>
   </div>
 </aside>
 
@@ -2531,13 +2556,14 @@ body.pd-open { overflow: hidden; }
 
 <!-- 기술 페이지 입구 -->
 <div class="tech-entry">
-  <a href="technology.html">열을 되돌려보내는 기술, 더 알아보기 <span aria-hidden="true">&rsaquo;</span></a>
+  <a href="technology.html">열반사 기술, 더 알아보기 <span aria-hidden="true">&rsaquo;</span></a>
 </div>
 
 <!-- ========================================
      PROCESS — Workshop / Craftsmanship (실제 시공 사진)
 ======================================== -->
 <section class="process-section" id="process">
+  <video class="process-bg" src="process-bg.mp4" poster="process-4.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
   <div class="process-inner fi">
     <p class="process-eyebrow">Craft</p>
     <h2 class="process-title">설계는 손에서<br>완성됩니다.</h2>
@@ -2567,7 +2593,7 @@ body.pd-open { overflow: hidden; }
         <img class="process-photo" src="process-10.jpg" alt="" aria-hidden="true" loading="lazy">
       </div>
     </div>
-    <p class="process-sub">437개 인증 시공점. 동일한 기준.</p>
+    <!-- <p class="process-sub">437개 인증 시공점. 동일한 기준.</p> -->
   </div>
 </section>
 
@@ -2660,7 +2686,7 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             몇 년 뒤 보라색으로 바랜 필름을 본 적 있는 분. 차를 오래 타고, 매일 땡볕에 세우는 분.
           </div>
-          <p class="product-patent">세계특허 WO2004/042435 · 미국특허 US7709095</p>
+          <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
           <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
@@ -2669,6 +2695,27 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">12 ~ 72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="72"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">* 농도 15 기준 최대 TSER · VLT 범위: 농도 15–70</p>
+        </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp">
+              <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span>
+              <span class="kp-text">투과율 대비<br>최대 열차단</span>
+            </div>
+            <div class="kp">
+              <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 33 13 20 19 7 13Z"/><path d="M7 19 20 25 33 19"/><path d="M7 25 20 31 33 25"/></svg></span>
+              <span class="kp-text">10년 변색 없는<br>풀메탈</span>
+            </div>
+            <div class="kp">
+              <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/></svg></span>
+              <span class="kp-text">유리처럼<br>맑은 시야</span>
+            </div>
+            <div class="kp">
+              <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="24" width="24" height="3.4" rx="1.7"/><rect x="8" y="30" width="24" height="3.4" rx="1.7"/><path d="M14 8v8M14 16l-2.2-2.2M14 16l2.2-2.2M20 8v8M20 16l-2.2-2.2M20 16l2.2-2.2M26 8v8M26 16l-2.2-2.2M26 16l2.2-2.2"/></svg></span>
+              <span class="kp-text">3mil 2배 두께<br>비산 방지</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2693,6 +2740,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–40</p>
         </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span><span class="kp-text">반사로<br>강한 열차단</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M27 7v26"/><path d="M10 11 26 19 10 27"/><path d="M10 27h4M10 27v-4"/></svg></span><span class="kp-text">거울 같은<br>외관</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/><path d="M9 9 31 31"/></svg></span><span class="kp-text">밖에선 안 보이는<br>프라이버시</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40"><defs><linearGradient id="clr-vogue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb792"/><stop offset="1" stop-color="#3c7a55"/></linearGradient></defs><path d="M13 17 19.5 10.5 29 10.5 29 17Z" fill="url(#clr-vogue)"/><path d="M8 31V17l11-8h11a2 2 0 0 1 2 2v20Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 17h17M22 9.5V17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="13" cy="27" r="1.2" fill="currentColor"/></svg></span><span class="kp-text">메탈릭<br>컬러</span></div>
+          </div>
+        </div>
       </div>
 
       <!-- Xenith IR -->
@@ -2716,6 +2772,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 5 기준 최대 TSER · VLT 범위: 농도 5–50</p>
         </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="29" r="1.4"/><path d="M14.5 24a8 8 0 0 1 11 0"/><path d="M11 20.5a13 13 0 0 1 18 0"/><path d="M7.5 17a18 18 0 0 1 25 0"/></svg></span><span class="kp-text">전파 간섭 없는<br>세라믹</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span><span class="kp-text">세라믹 IR<br>열차단</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/></svg></span><span class="kp-text">맑고 선명한<br>시야</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40"><defs><linearGradient id="clr-xenith" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#454a55"/><stop offset="1" stop-color="#131316"/></linearGradient></defs><path d="M13 17 19.5 10.5 29 10.5 29 17Z" fill="url(#clr-xenith)"/><path d="M8 31V17l11-8h11a2 2 0 0 1 2 2v20Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 17h17M22 9.5V17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="13" cy="27" r="1.2" fill="currentColor"/></svg></span><span class="kp-text">깊은<br>비크 블랙</span></div>
+          </div>
+        </div>
       </div>
 
       <!-- Quantum -->
@@ -2738,6 +2803,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* Quantum Black 기준 최대 TSER · VLT 범위: Black–52</p>
         </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7h12l6 6v20H11Z"/><path d="M23 7v6h6"/><circle cx="20" cy="23" r="3.2"/><path d="M18 26l-1 5 3-2 3 2-1-5"/></svg></span><span class="kp-text">국제특허<br>등록 디자인</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 33 13 20 19 7 13Z"/><path d="M7 19 20 25 33 19"/><path d="M7 25 20 31 33 25"/></svg></span><span class="kp-text">희귀금속<br>스퍼터</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 31 11v8c0 7-5 11-11 14-6-3-11-7-11-14v-8Z"/><path d="M15 20l4 4 7-8"/></svg></span><span class="kp-text">오래가는<br>내구성</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40"><defs><linearGradient id="clr-quantum" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fd29a"/><stop offset="1" stop-color="#0a8f57"/></linearGradient></defs><path d="M13 17 19.5 10.5 29 10.5 29 17Z" fill="url(#clr-quantum)"/><path d="M8 31V17l11-8h11a2 2 0 0 1 2 2v20Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 17h17M22 9.5V17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="13" cy="27" r="1.2" fill="currentColor"/></svg></span><span class="kp-text">에메랄드<br>컬러</span></div>
+          </div>
+        </div>
       </div>
 
       <!-- Titanium -->
@@ -2758,6 +2832,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">6 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 6 기준 최대 TSER · VLT 범위: 농도 6–50</p>
+        </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40"><defs><linearGradient id="clr-titanium" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3e"/><stop offset="1" stop-color="#0c0c0e"/></linearGradient></defs><path d="M13 17 19.5 10.5 29 10.5 29 17Z" fill="url(#clr-titanium)"/><path d="M8 31V17l11-8h11a2 2 0 0 1 2 2v20Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 17h17M22 9.5V17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="13" cy="27" r="1.2" fill="currentColor"/></svg></span><span class="kp-text">세계 유일<br>딥 블랙</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span><span class="kp-text">안정적인<br>열차단</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 18 20 8H10v10l10 10Z"/><circle cx="14.5" cy="13.5" r="1.8"/></svg></span><span class="kp-text">합리적인<br>가격</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="13"/><path d="M14 20l4 4 8-9"/></svg></span><span class="kp-text">깔끔한<br>시공</span></div>
+          </div>
         </div>
       </div>
 
@@ -2780,6 +2863,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
         </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 30 22 9l4 7-8 14Z" stroke="currentColor"/><path d="M26 16h7" stroke="#7fb0ea"/><path d="M25 20h8" stroke="#3f78d0"/><path d="M24 24h7" stroke="#27499c"/></svg></span><span class="kp-text">빛 따라 피는<br>블루</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span><span class="kp-text">균형 잡힌<br>열차단</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/><path d="M9 9 31 31"/></svg></span><span class="kp-text">은은한<br>프라이버시</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/></svg></span><span class="kp-text">편안한<br>시야</span></div>
+          </div>
+        </div>
       </div>
 
       <!-- S-LINE -->
@@ -2801,6 +2893,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
         </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="29" r="1.4"/><path d="M14.5 24a8 8 0 0 1 11 0"/><path d="M11 20.5a13 13 0 0 1 18 0"/><path d="M7.5 17a18 18 0 0 1 25 0"/></svg></span><span class="kp-text">전파 막지 않는<br>비반사</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span><span class="kp-text">안정적인<br>열차단</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/></svg></span><span class="kp-text">편안한<br>시야</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 18 20 8H10v10l10 10Z"/><circle cx="14.5" cy="13.5" r="1.8"/></svg></span><span class="kp-text">합리적인<br>가격</span></div>
+          </div>
+        </div>
       </div>
 
       <!-- LX SHIELD -->
@@ -2821,6 +2922,15 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">셀프힐링</span><span class="spec-value">상온 1분 이내</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내후성 인증</span><span class="spec-value">ASTM G155 · 3,000hrs</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+        </div>
+        <div class="product-keypoints">
+          <p class="product-keypoints-label">Key Point</p>
+          <div class="kp-grid">
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M31 16a12 12 0 1 0 1 8"/><path d="M31 12v5h-5"/></svg></span><span class="kp-text">긁힘<br>자가 복원</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 31 11v8c0 7-5 11-11 14-6-3-11-7-11-14v-8Z"/><path d="M13 18h14"/><path d="M16 23h8"/></svg></span><span class="kp-text">도장<br>장기 보호</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 8l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/><path d="M31 9l1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"/></svg></span><span class="kp-text">92 GU<br>깊은 광택</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 31 11v8c0 7-5 11-11 14-6-3-11-7-11-14v-8Z"/><path d="M15 20l4 4 7-8"/></svg></span><span class="kp-text">8mil<br>초고분자 도막</span></div>
+          </div>
         </div>
       </div>
 
@@ -2886,7 +2996,7 @@ body.pd-open { overflow: hidden; }
           <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
         </figure>
         <figure class="proof-item">
-          <div class="proof-pcard"><img src="patent-us7709095.png" alt="미국특허 US7709095 · 국제특허 WO2004/042435 — 적외선 반사 다층 박막" loading="lazy"></div>
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="THE LX 세계특허·미국특허 등록 — 적외선 반사 다층 박막" loading="lazy"></div>
           <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
         </figure>
         <figure class="proof-item">
@@ -2914,7 +3024,7 @@ body.pd-open { overflow: hidden; }
           <figcaption class="proof-cap">Saint-Gobain 소재 과학</figcaption>
         </figure>
         <figure class="proof-item">
-          <div class="proof-pcard"><img src="patent-us7709095.png" alt="미국특허 US7709095 · 국제특허 WO2004/042435 — 적외선 반사 다층 박막" loading="lazy"></div>
+          <div class="proof-pcard"><img src="patent-us7709095.png" alt="THE LX 세계특허·미국특허 등록 — 적외선 반사 다층 박막" loading="lazy"></div>
           <figcaption class="proof-cap">세계·미국 특허 등록</figcaption>
         </figure>
         <figure class="proof-item">
@@ -4068,7 +4178,7 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
         { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
-        { label: '세계특허',   value: 'WO2004/042435 / 미국특허 US7709095', pct: null },
+        { label: '세계특허',   value: 'WO0961339A1 / 미국특허 551304', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '10년', pct: null },
@@ -4779,6 +4889,25 @@ slRender();
   onScroll();
 })();
 
+/* PROCESS 배경 영상 — Safari 등에서 막힌 자동재생을 강제로 풀어 poster에 멈추지 않게 */
+(function () {
+  var v = document.querySelector('.process-bg');
+  if (!v) return;
+  function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { tryPlay(); }   /* preload='auto' 강제 제거 — 28MB 전체 선다운로드 방지, play()가 필요한 만큼만 스트리밍 */
+        else { try { v.pause(); } catch (x) {} }
+      });
+    }, { rootMargin: '400px 0px' });
+    io.observe(v);
+  } else { tryPlay(); }
+  // 사용자가 탭으로 돌아오면 재생 복구
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) tryPlay();
+  });
+}());
 
 </script>
 </body>

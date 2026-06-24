@@ -4819,7 +4819,11 @@ slRender();
     var entryZone = window.innerHeight * 0.8;
     var entryT = rect.top < entryZone ? clamp01(1 - rect.top / entryZone) : 0;
     var preEntry = rect.top > 0;
-    var scale = preEntry ? lerp(3.0, 2.2, easeInOut(entryT)) : 2.2;
+    /* 모바일은 배율을 낮춰 라벨·층 간격이 화면에 맞게(데스크탑 그대로) */
+    var flMobile  = window.innerWidth <= 768;
+    var flMain    = flMobile ? 1.7 : 2.2;
+    var flEntry   = flMobile ? 2.3 : 3.0;
+    var scale = preEntry ? lerp(flEntry, flMain, easeInOut(entryT)) : flMain;
 
     /* ── 스프레드: SPREAD → 0 (55%에서 완전히 겹침) ── */
     var spreadP = clamp01(progress / 0.55);
@@ -4892,7 +4896,7 @@ slRender();
   wrap.style.opacity    = '0';
   wrap.style.visibility = 'hidden';
   wrap.style.filter     = 'brightness(1)';
-  wrap.style.transform  = 'translate3d(-50%,-50%,0) rotateX(10deg) scale(3.0)';
+  wrap.style.transform  = 'translate3d(-50%,-50%,0) rotateX(10deg) scale(' + (window.innerWidth <= 768 ? 2.3 : 3.0) + ')';
   els.forEach(function (el) {
     el.style.transform = 'translate3d(0,' + Math.round((el._i - (N - 1) / 2) * SPREAD) + 'px,0)';
   });

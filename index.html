@@ -559,6 +559,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .proof-pcard img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; }
 .proof-pcard.photo { padding:0; overflow:hidden; background:#0d0d0d; }
 .proof-pcard.photo img { width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; }
+/* 모바일 — 카드 축소해 좁은 화면에서 흐르는 스트립처럼(양옆 어정쩡한 잘림 완화) */
+@media (max-width:768px) {
+  .proof-item { width:150px; margin-right:.8rem; }
+  .proof-pcard { height:116px; padding:11px; border-radius:12px; }
+  .proof-cap { font-size:.66rem; margin-top:.55rem; }
+}
 
 /* ============================
    WHY — 다크 풀스크린 단일 선언 (이미지 + belief + CTA)
@@ -948,6 +954,13 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   overflow-x:auto; scrollbar-width:none;
 }
 .product-tabs-nav::-webkit-scrollbar { display:none; }
+/* 모바일 — 탭이 가로로 더 있음을 우측 페이드로 암시 */
+@media (max-width:768px) {
+  .product-tabs-nav {
+    -webkit-mask-image: linear-gradient(90deg, #000 86%, transparent);
+            mask-image: linear-gradient(90deg, #000 86%, transparent);
+  }
+}
 .tab-btn {
   padding:.9rem 1.4rem; font-size:14px; font-weight:400;
   color:var(--gray-3); cursor:none; position:relative;

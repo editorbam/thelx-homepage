@@ -29,9 +29,17 @@
 <meta name="twitter:description" content="승용차 기준 30만원부터. 차종·부위·제품을 선택하면 즉시 계산됩니다.">
 <meta name="twitter:image" content="https://isolargard.com/vlt-cabin.jpg">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- 폰트 자체 호스팅 — 운영 페이지 공유 가변 woff2(굵기 100~900). 구글 폰트 링크 금지 -->
+<link rel="preload" href="noto-sans-kr-subset.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('noto-sans-kr-subset.woff2') format('woff2');
+}
+</style>
 
 <!-- JSON-LD: Organization -->
 <script type="application/ld+json">

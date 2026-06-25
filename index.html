@@ -4926,10 +4926,18 @@ slRender();
   });
 }());
 
-/* iOS 저전력 모드 등 자동재생이 원천 차단된 경우 — 첫 사용자 입력(터치·탭)에 모든 배경 영상 재생 */
+/* iOS 저전력 모드 등 자동재생이 원천 차단된 경우 — 첫 사용자 입력(터치·탭)에 화면 안 배경 영상만 재생.
+   화면 밖 영상은 IntersectionObserver(process-bg)·스크롤 핸들러(heroVideo)가 일부러 멈춰두므로 건드리지 않는다. */
 (function () {
+  var done = false;
+  function inView(v) {
+    var r = v.getBoundingClientRect();
+    return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+  }
   function kick() {
+    if (done) return; done = true;   /* 한 번의 탭이 touchstart→pointerdown→click을 연쇄 발생시켜도 본체는 1회만 */
     document.querySelectorAll('video[autoplay]').forEach(function (v) {
+      if (!inView(v)) return;
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     });
   }

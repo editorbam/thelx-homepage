@@ -2436,6 +2436,27 @@ body.pd-open { overflow: hidden; }
   50%      { opacity: 0.8; transform: scaleY(0.5); transform-origin: top; }
 }
 
+/* ============================
+   배경음악 토글 (히어로) — 카카오 버튼과 한 쌍, 스크롤 시 그 위로 스택
+============================ */
+.music-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 900;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  transition: bottom .4s, box-shadow .3s, transform .3s;
+}
+.music-float:hover { box-shadow: 0 6px 24px rgba(0,0,0,.28); transform: scale(1.06); }
+.music-float.lifted { bottom: 92px; }            /* 카카오 버튼 등장 시 그 위로 */
+.music-float .mf-on { display: none; }
+.music-float.playing .mf-off { display: none; }
+.music-float.playing .mf-on  { display: block; }
+@media (max-width:768px) {
+  .music-float { bottom: 20px; right: 16px; width: 48px; height: 48px; }
+  .music-float.lifted { bottom: 78px; }
+}
+
 </style>
 
 <!-- BUILD:STORE_SCHEMA:START -->
@@ -3325,6 +3346,13 @@ body.pd-open { overflow: hidden; }
 <a href="http://pf.kakao.com/_rxlIxeK/chat" target="_blank" rel="noopener" id="kakaoFloat" class="kakao-float" aria-label="카카오톡 상담">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3C6.48 3 2 6.54 2 10.84c0 2.76 1.84 5.18 4.6 6.58-.14.52-.92 3.36-.95 3.58 0 0-.02.16.08.22.1.06.22.02.22.02.3-.04 3.44-2.26 3.98-2.64.66.1 1.36.14 2.07.14 5.52 0 10-3.54 10-7.9S17.52 3 12 3z"/></svg>
 </a>
+
+<!-- 히어로 배경음악 (Artlist: Hadasa Atzmon - The Swan) — 기본 꺼짐, 우측 하단 버튼으로 켬. 자동재생 안 함(브라우저 정책 + 브랜드 절제) -->
+<audio id="heroMusic" src="hero-music.mp3" loop preload="none"></audio>
+<button id="musicToggle" class="music-float" type="button" aria-label="배경음악 켜기" aria-pressed="false">
+  <svg class="mf-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9v6h4l5 4V5L9 9H5z"/><line x1="17" y1="9" x2="22" y2="14"/><line x1="22" y1="9" x2="17" y2="14"/></svg>
+  <svg class="mf-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M16 8.8a4.5 4.5 0 0 1 0 6.4"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
+</button>
 
 <!-- FOOTER -->
 <footer>
@@ -4951,6 +4979,40 @@ slRender();
   }
   ['touchstart', 'pointerdown', 'click'].forEach(function (ev) {
     document.addEventListener(ev, kick, { once: true, passive: true });
+  });
+}());
+
+/* 히어로 배경음악 토글 — 클릭 시 재생/정지(브라우저 정책상 자동재생 불가, 사용자 클릭이 트리거).
+   스크롤로 카카오 버튼이 나타나면 음악 버튼을 그 위로 올림. 탭 숨기면 일시정지. */
+(function () {
+  var audio = document.getElementById('heroMusic');
+  var btn = document.getElementById('musicToggle');
+  if (!audio || !btn) return;
+  audio.volume = 0.45;                       // 배경음악은 은은하게
+  var wantsMusic = false;
+  btn.addEventListener('click', function () {
+    if (audio.paused) {
+      var p = audio.play(); if (p && p.catch) p.catch(function () {});
+      wantsMusic = true;
+      btn.classList.add('playing');
+      btn.setAttribute('aria-pressed', 'true');
+      btn.setAttribute('aria-label', '배경음악 끄기');
+    } else {
+      audio.pause();
+      wantsMusic = false;
+      btn.classList.remove('playing');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', '배경음악 켜기');
+    }
+  });
+  // 카카오 버튼과 동일 트리거(뷰포트 80% 스크롤)에 맞춰 위로 스택
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('lifted', window.scrollY > window.innerHeight * 0.8);
+  }, { passive: true });
+  // 다른 탭 갔다 오면: 사용자가 켜둔 경우에만 재개
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { if (!audio.paused) audio.pause(); }
+    else if (wantsMusic && audio.paused) { var p = audio.play(); if (p && p.catch) p.catch(function () {}); }
   });
 }());
 

@@ -450,7 +450,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 /* 거실 버전 — 인지 다리 (hook 해소) */
 .hero-bridge {
-  font-size: 1.1rem;
+  font-size: clamp(1.3rem, 2.1vw, 1.75rem);
   font-weight: 400;
   color: rgba(255,255,255,.92);
   margin-top: 1.6rem;
@@ -463,7 +463,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 /* 거실 버전 — 카테고리 선언 (가장 작게) */
 .hero-tagline {
-  font-size: .82rem;
+  font-size: clamp(.98rem, 1.4vw, 1.2rem);
   font-weight: 300;
   color: rgba(255,255,255,.62);
   margin-top: 0.85rem;
@@ -1038,14 +1038,20 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 @media (max-width:768px) { .kp-grid { grid-template-columns:1fr 1fr; gap:1.2rem 1rem; } }
 
 .product-detail-btn {
-  display: inline-block; margin-top: 1.75rem;
-  font-size: 13px; font-weight: 500; letter-spacing: .06em;
-  color: var(--black); border-bottom: 1px solid var(--black);
-  padding-bottom: 2px; background: none; border-top: none; border-left: none; border-right: none;
+  display: inline-flex; align-items: center; align-self: flex-start; margin-top: 1.4rem;
+  font-size: 13px; font-weight: 500; letter-spacing: .04em;
+  color: #fff; background: var(--black);
+  border: 0.5px solid var(--black); border-radius: 980px;
+  padding: .62rem 1.45rem;
   cursor: none; font-family: var(--font);
-  transition: opacity .2s;
+  box-shadow: 0 6px 20px rgba(10,10,10,.22);
+  transition: opacity .3s ease, box-shadow .3s ease, transform .3s ease;
 }
-.product-detail-btn:hover { opacity: .55; }
+.product-detail-btn:hover {
+  opacity: .92;
+  box-shadow: 0 10px 30px rgba(10,10,10,.34);
+  transform: translateY(-1px);
+}
 .spec-note {
   font-size:11px; color:var(--gray-3); opacity:.55; margin-top:.5rem;
   font-weight:300; letter-spacing:.02em;
@@ -1805,8 +1811,12 @@ footer {
   display:flex; align-items:center; justify-content:space-between;
   flex-wrap:wrap; gap:1.5rem;
 }
+.footer-logos { display:flex; align-items:center; gap:1.1rem; }
 .footer-logo-img { height:52px; width:auto; filter:invert(1); opacity:.35; transition:opacity .3s; }
 .footer-logo-img:hover { opacity:.6; }
+.footer-logo-div { width:1px; height:30px; background:rgba(255,255,255,.13); }
+.footer-logo-sg { height:34px; width:auto; opacity:.35; transition:opacity .3s; }
+.footer-logo-sg:hover { opacity:.6; }
 .footer-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
 .footer-links a { font-size:12px; font-weight:300; color:rgba(255,255,255,.28); transition:color .2s; }
 .footer-links a:hover { color:rgba(255,255,255,.65); }
@@ -1860,8 +1870,8 @@ footer {
   /* Hero badge — 화면 너비 안에 머물도록 (PC clamp min 420px가 모바일에서 오버플로) */
   .hero-lx { width: 88vw; min-width:0; }
   .hero-title { font-size: clamp(2rem, 8.5vw, 3rem); }
-  .hero-bridge { font-size: .98rem; margin-top: 1.2rem; }
-  .hero-tagline { font-size: .78rem; }
+  .hero-bridge { font-size: 1.2rem; margin-top: 1.2rem; }
+  .hero-tagline { font-size: .92rem; }
   .hero-btns { margin-top: 2.2rem; }
 .how-pin { gap:2rem; padding:0 1.5rem; }
   .how-visual { display:none; }
@@ -2701,14 +2711,14 @@ body.pd-open { overflow: hidden; }
         <div>
           <span class="product-category">Intelligent &amp; Luxury</span>
           <h3 class="product-name">LX</h3>
-          <p class="product-tagline">10년 뒤에도, 처음 그대로.</p>
-          <p class="product-bridge">염료가 아니라 금속으로 막습니다. 그래서 색이 바래지도, 성능이 처지지도 않습니다.</p>
+          <p class="product-tagline">유리처럼 맑은 시야.</p>
+          <p class="product-bridge">빛은 통과시키고, 열만 반사합니다.</p>
+          <p class="product-bridge">색을 입힌 필름은 햇빛에 변색됩니다. LX는 금속막이라, 변색되지 않습니다.</p>
           <div class="product-recommend">
             <strong>이런 분께 추천합니다</strong>
             몇 년 뒤 보라색으로 바랜 필름을 본 적 있는 분. 차를 오래 타고, 매일 땡볕에 세우는 분.
           </div>
           <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
-          <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2716,6 +2726,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">12 ~ 72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="72"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">* 농도 15 기준 최대 TSER · VLT 범위: 농도 15–70</p>
+          <button class="product-detail-btn" data-product="lx">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2734,7 +2745,7 @@ body.pd-open { overflow: hidden; }
             </div>
             <div class="kp">
               <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="24" width="24" height="3.4" rx="1.7"/><rect x="8" y="30" width="24" height="3.4" rx="1.7"/><path d="M14 8v8M14 16l-2.2-2.2M14 16l2.2-2.2M20 8v8M20 16l-2.2-2.2M20 16l2.2-2.2M26 8v8M26 16l-2.2-2.2M26 16l2.2-2.2"/></svg></span>
-              <span class="kp-text">3mil 2배 두께<br>비산 방지</span>
+              <span class="kp-text">세이프티 기능과<br>비산 방지</span>
             </div>
           </div>
         </div>
@@ -2752,7 +2763,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             남들과 같은 검정이 싫은 분. 밖에선 안 보이고, 안에선 트인 시야를 원하는 분.
           </div>
-          <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2760,6 +2770,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 43%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="43"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–40</p>
+          <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2784,7 +2795,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전자장비가 많은 차일수록 차이가 큽니다.
           </div>
-          <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2792,6 +2802,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 56%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="56"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 5 기준 최대 TSER · VLT 범위: 농도 5–50</p>
+          <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2815,7 +2826,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             밖에선 색이 살고, 운전석에선 비치지 않길 바라는 분. 어떤 차에도 무난히 어울리는 색을 찾는 분.
           </div>
-          <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2823,6 +2833,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* Quantum Black 기준 최대 TSER · VLT 범위: Black–52</p>
+          <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2845,7 +2856,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             합리적인 가격으로 깊은 검정을 원하는 분. 시공이 깔끔하게 끝나길 바라는 분.
           </div>
-          <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2853,6 +2863,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">6 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 6 기준 최대 TSER · VLT 범위: 농도 6–50</p>
+          <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2875,7 +2886,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             빛마다 다르게 피는 색을 원하는 분. 튀지 않으면서 개성을 더하고 싶은 분.
           </div>
-          <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2883,6 +2893,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 27%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="27"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
+          <button class="product-detail-btn" data-product="gline">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2905,7 +2916,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             VLT에 상관없이 쾌적한 주행 환경을 원하는 분. 전파 방해 없는 선명한 시야를 원하는 분.
           </div>
-          <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2913,6 +2923,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 31%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="31"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · VLT 범위: 농도 10–30</p>
+          <button class="product-detail-btn" data-product="sline">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -2935,7 +2946,6 @@ body.pd-open { overflow: hidden; }
             <strong>이런 분께 추천합니다</strong>
             차량 외부 도장을 장기 보호하고 싶은 분. 스크래치 자가 복원 기능을 원하는 분.
           </div>
-          <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
         </div>
         <div class="product-specs">
           <div class="spec-item"><div class="spec-header"><span class="spec-label">UV 차단율</span><span class="spec-value">99%+ · PA+++ SPF 285</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="99"></div></div></div>
@@ -2943,6 +2953,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">셀프힐링</span><span class="spec-value">상온 1분 이내</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내후성 인증</span><span class="spec-value">ASTM G155 · 3,000hrs</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
+          <button class="product-detail-btn" data-product="shield">상세 스펙 보기 →</button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3329,7 +3340,11 @@ body.pd-open { overflow: hidden; }
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <img src="thelx-logo-footer.png" alt="THE LX 로고 — Solar Gard Premium" class="footer-logo-img">
+    <div class="footer-logos">
+      <img src="thelx-logo-footer.png" alt="THE LX 로고 — Solar Gard Premium" class="footer-logo-img">
+      <span class="footer-logo-div"></span>
+      <img src="solargard-logo-footer.png" alt="Solar Gard Premium" class="footer-logo-sg">
+    </div>
     <ul class="footer-links">
       <li><a href="#why-story">브랜드</a></li>
       <li><a href="#products">제품</a></li>
@@ -4179,7 +4194,7 @@ window.addEventListener('scroll', () => {
 const PD_DATA = {
   lx: {
     name: 'LX',
-    tagline: '10년 뒤에도, 처음 그대로. 염료가 아니라 금속으로 막아, 색이 바래지도 성능이 처지지도 않습니다.',
+    tagline: '유리처럼 맑은 시야. 빛은 통과시키고 열만 반사합니다. 색을 입힌 필름과 달리 금속막이라 햇빛에 변색되지 않습니다.',
     recommend: '몇 년 뒤 보라색으로 바랜 필름을 본 적 있는 분. 차를 오래 타고, 매일 땡볕에 세우는 분.',
     flagship: true,
     perf: [

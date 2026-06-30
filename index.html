@@ -532,6 +532,38 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 .hero-sticky.going-dark .hero-label { color: rgba(255,255,255,.18); }
 
+/* SOUND TOGGLE (히어로 섹션 안에서만 노출 — 스크롤하면 사라지고 음악도 정지) */
+.hero-sound {
+  position: fixed; bottom: 1.6rem; left: 1.6rem;
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .82rem .5rem .72rem;
+  background: rgba(15,15,17,.34); border: .5px solid rgba(255,255,255,.16);
+  border-radius: 980px; cursor: pointer;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  z-index: 10001;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity .55s ease, transform .55s ease, background .3s, border-color .3s;
+}
+.hero-sound.show { opacity: 1; transform: none; pointer-events: auto; }
+.hero-sound:hover { background: rgba(15,15,17,.5); border-color: rgba(255,255,255,.28); }
+.hero-sound .eq { display: flex; align-items: flex-end; gap: 2px; height: 13px; }
+.hero-sound .eq i {
+  width: 2px; height: 4px; background: rgba(255,255,255,.85);
+  transition: height .15s ease;
+}
+.hero-sound.playing .eq i { animation: eqBar .9s ease-in-out infinite; }
+.hero-sound.playing .eq i:nth-child(1){ animation-delay: 0s; }
+.hero-sound.playing .eq i:nth-child(2){ animation-delay: .28s; }
+.hero-sound.playing .eq i:nth-child(3){ animation-delay: .52s; }
+.hero-sound.playing .eq i:nth-child(4){ animation-delay: .16s; }
+@keyframes eqBar { 0%,100%{ height:3px; } 50%{ height:13px; } }
+.hero-sound .label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+}
+/* 모바일은 사운드 기능 제외 (무음 스위치·볼륨 제약으로 의도대로 안 됨) */
+@media (max-width: 768px){ .hero-sound { display: none !important; } }
+
 /* ============================
    MARQUEE
 ============================ */
@@ -4730,6 +4762,83 @@ slRender();
   });
 }());
 
+</script>
+
+<!-- 배경 음악 (페이지 전역 사운드 토글) -->
+<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 켜기 / 끄기" aria-pressed="false">
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  <span class="label" id="heroSoundLabel">Sound</span>
+</button>
+<audio id="heroAudio" src="hero-music.mp3" loop preload="none"></audio>
+<script>
+  (function(){
+    var audio = document.getElementById('heroAudio');
+    var btn   = document.getElementById('heroSound');
+    var label = document.getElementById('heroSoundLabel');
+    if(!audio || !btn) return;
+    // 모바일은 사운드 비활성화 — 버튼·오디오 모두 작동시키지 않음
+    if(window.matchMedia('(max-width: 768px)').matches) return;
+    var TARGET = 0.32;          // 배경음 적정 볼륨 (1.0이 최대)
+    var playing = false, fadeTimer = null;
+    audio.volume = 0;
+
+    function fadeTo(target, done){
+      if(fadeTimer) clearInterval(fadeTimer);
+      var steps = 14, i = 0, start = audio.volume, delta = (target - start)/steps;
+      fadeTimer = setInterval(function(){
+        i++; audio.volume = Math.min(1, Math.max(0, start + delta*i));
+        if(i>=steps){ audio.volume = target; clearInterval(fadeTimer); fadeTimer=null; if(done) done(); }
+      }, 45);
+    }
+    function setState(on){
+      playing = on;
+      btn.classList.toggle('playing', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      label.textContent = on ? 'Sound On' : 'Sound';
+    }
+    function play(){
+      audio.play().then(function(){ setState(true); fadeTo(TARGET); })
+                  .catch(function(){ /* 브라우저가 막음 — 첫 클릭 때 다시 시도 */ });
+    }
+    function pause(){ fadeTo(0, function(){ audio.pause(); }); setState(false); }
+
+    // 사운드 버튼 = 손님이 직접 켜고/끄기 (자동재생 없음 — 기본은 음소거)
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(playing){ pause(); }
+      else { play(); }
+    });
+
+    // 히어로 섹션 안에서만 버튼 노출 — 본문으로 스크롤하면 버튼 사라지고 음악 정지
+    var heroSec = document.getElementById('hero');
+    var inHero = false;
+    if(heroSec && 'IntersectionObserver' in window){
+      var introDone = false;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){
+            inHero = true;
+            // 첫 등장만 히어로 연출에 맞춰 약간 지연, 이후 스크롤 복귀는 즉시
+            // 지연 동안 손님이 본문으로 빠르게 스크롤했으면(inHero=false) 띄우지 않음
+            if(!introDone){ introDone = true; setTimeout(function(){ if(inHero) btn.classList.add('show'); }, 1400); }
+            else { btn.classList.add('show'); }
+          } else {
+            inHero = false;
+            btn.classList.remove('show');
+            if(playing) pause();          // 히어로를 벗어나면 음악도 함께 꺼짐
+          }
+        });
+      }, { threshold: 0 });
+      io.observe(heroSec);
+    } else {
+      btn.classList.add('show');          // IntersectionObserver 미지원 폴백
+    }
+
+    // 데스크탑에서 창을 모바일 폭(≤768px)으로 줄이면 음악도 정지 (버튼은 CSS로 숨음)
+    window.matchMedia('(max-width: 768px)').addEventListener('change', function(e){
+      if(e.matches && playing) pause();
+    });
+  })();
 </script>
 </body>
 </html>

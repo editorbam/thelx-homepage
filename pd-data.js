@@ -3,8 +3,9 @@
 const PD_DATA = {
   lx: {
     name: 'LX',
-    tagline: '유리처럼 맑은 시야. 빛은 통과시키고 열만 반사합니다. 색을 입힌 필름과 달리 금속막이라 햇빛에 변색되지 않습니다.',
-    recommend: '몇 년 뒤 보라색으로 바랜 필름을 본 적 있는 분. 차를 오래 타고, 매일 땡볕에 세우는 분.',
+    tagline: '유리처럼 맑은 시야. 빛은 통과시키고 열만 반사합니다. 색이 아니라 금속 스퍼터. 변하지 않는 LX.',
+    recommendLabel: '왜 LX인가',
+    recommend: '타협 없는 나만의 공간. 맑은 시야, 흔들리지 않는 온도, 변하지 않는 10년. LX는 그 무엇도 포기하지 않습니다.',
     flagship: true,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -34,8 +35,9 @@ const PD_DATA = {
   },
   vogue: {
     name: 'Vogue',
-    tagline: '반사가 곧 외관, 반사가 곧 시원함. 빛을 되쏘아 가장 강하게 막고, 밖에선 거울이 됩니다.',
-    recommend: '남들과 같은 검정이 싫은 분. 밖에선 안 보이고, 안에선 트인 시야를 원하는 분.',
+    tagline: '반사가 곧 외관, 반사가 곧 시원함. 밖에선 강렬한 그린 골드로 빛나고, 열은 가장 강하게 막습니다.',
+    recommendLabel: '왜 Vogue인가',
+    recommend: '같은 검정은 거부합니다. 거울처럼 빛나는 그린 골드, 가장 강한 열 차단. 그게 Vogue입니다.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -64,8 +66,9 @@ const PD_DATA = {
   },
   xenith: {
     name: 'Xenith IR',
-    tagline: '열은 막고, 신호는 통과시킨다. 금속 없이 열을 막아, 신호를 건드리지 않습니다.',
-    recommend: '내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전기차·커넥티드카일수록 차이가 큽니다.',
+    tagline: '열은 차단하고, 전파에서 자유롭다. 가장 진보된 세라믹 소재. 어떤 차에도 어울리는 비크 블랙.',
+    recommendLabel: '왜 Xenith인가',
+    recommend: '전기차 오너에게 사랑받는 이유. 확실한 열 차단, 방해받지 않는 신호, 선명한 시야, 눈부심 없는 주행. 그게 Xenith입니다.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -96,7 +99,8 @@ const PD_DATA = {
   quantum: {
     name: 'Quantum',
     tagline: '밖에선 에메랄드, 안에선 맑은 시야.',
-    recommend: '밖에선 색이 살고, 운전석에선 비치지 않길 바라는 분. 어떤 차에도 무난히 어울리는 색을 찾는 분.',
+    recommendLabel: '왜 Quantum인가',
+    recommend: '햇빛에 피어나는 에메랄드 그린, 안에선 맑은 시야, 차의 수명까지 가는 색과 성능. 글로벌 베스트셀러 Quantum.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -129,7 +133,8 @@ const PD_DATA = {
   titanium: {
     name: 'Titanium',
     tagline: '티타늄을 증착한 세계 유일의 딥 블랙. 어떤 차에도 내려앉는 검정.',
-    recommend: '합리적인 가격으로 깊은 검정을 원하는 분. 시공이 깔끔하게 끝나길 바라는 분.',
+    recommendLabel: '왜 Titanium인가',
+    recommend: '합리적인 가격, 깔끔한 마감의 Titanium.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -159,7 +164,8 @@ const PD_DATA = {
   gline: {
     name: 'G-LINE',
     tagline: '빛에 따라 색이 달라지는 라미네이티드 블루.',
-    recommend: '빛마다 다르게 피는 색을 원하는 분. 튀지 않으면서 개성을 더하고 싶은 분.',
+    recommendLabel: '왜 G-LINE인가',
+    recommend: '빛마다 다르게 피는 라미네이티드 블루, 튀지 않는 개성, 균형 잡힌 하이브리드 G-LINE.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -188,7 +194,8 @@ const PD_DATA = {
   sline: {
     name: 'S-LINE',
     tagline: '신호를 막지 않는 비반사 필름. 합리적인 가격의 편안한 시야.',
-    recommend: 'VLT에 상관없이 쾌적한 주행 환경을 원하는 분. 전파 방해 없는 선명한 시야를 원하는 분.',
+    recommendLabel: '왜 S-LINE인가',
+    recommend: '비반사로 편안한 시야, 방해받지 않는 신호, 농도와 상관없이 쾌적한 S-LINE.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -216,7 +223,8 @@ const PD_DATA = {
   shield: {
     name: 'LX SHIELD',
     tagline: '긁히면 스스로 메우는 PPF. 자가복원 초고분자 도막.',
-    recommend: '차량 외부 도장을 장기 보호하고 싶은 분. 스크래치 자가 복원 기능을 원하는 분.',
+    recommendLabel: '왜 LX SHIELD인가',
+    recommend: '긁혀도 스스로 메우는 자가복원, 8mil 보호막, 도장을 오래 지키는 LX SHIELD.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },

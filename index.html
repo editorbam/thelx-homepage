@@ -1063,11 +1063,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .product-keypoints { grid-column:1 / -1; margin-top:.5rem; padding-top:2rem; border-top:1px solid rgba(0,0,0,.08); }
 .product-keypoints-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-3); font-weight:600; margin:0 0 1.5rem; }
 .kp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem 2rem; }
+.kp-grid.kp5 { grid-template-columns:repeat(5,1fr); gap:1.6rem 1.5rem; }
 .kp { display:flex; align-items:center; gap:.9rem; }
 .kp-ico { flex:0 0 auto; width:42px; height:42px; color:var(--black); }
 .kp-ico svg { width:100%; height:100%; display:block; }
 .kp-text { font-size:.92rem; line-height:1.4; color:var(--gray-4); font-weight:500; word-break:keep-all; }
-@media (max-width:768px) { .kp-grid { grid-template-columns:1fr 1fr; gap:1.2rem 1rem; } }
+@media (max-width:768px) { .kp-grid, .kp-grid.kp5 { grid-template-columns:1fr 1fr; gap:1.2rem 1rem; } }
 
 .product-detail-btn {
   display: inline-flex; align-items: center; align-self: flex-start; margin-top: 1.4rem;
@@ -2748,11 +2749,10 @@ body.pd-open { overflow: hidden; }
           <span class="product-category">Intelligent &amp; Luxury</span>
           <h3 class="product-name">LX</h3>
           <p class="product-tagline">유리처럼 맑은 시야.</p>
-          <p class="product-bridge">빛은 통과시키고, 열만 반사합니다.</p>
-          <p class="product-bridge">색을 입힌 필름은 햇빛에 변색됩니다. LX는 금속막이라, 변색되지 않습니다.</p>
+          <p class="product-bridge">빛은 통과시키고, 열만 반사합니다. 색이 아니라 금속 스퍼터. 변하지 않는 LX.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            몇 년 뒤 보라색으로 바랜 필름을 본 적 있는 분. 차를 오래 타고, 매일 땡볕에 세우는 분.
+            <strong>왜 LX인가</strong>
+            타협 없는 나만의 공간. 맑은 시야, 흔들리지 않는 온도, 변하지 않는 10년. LX는 그 무엇도 포기하지 않습니다.
           </div>
           <p class="product-patent">세계특허 WO0961339A1 · 미국특허 551304</p>
         </div>
@@ -2766,7 +2766,7 @@ body.pd-open { overflow: hidden; }
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
-          <div class="kp-grid">
+          <div class="kp-grid kp5">
             <div class="kp">
               <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="14" r="5"/><path d="M13 5v2.5M13 20.5V23M4 14h2.5M19.5 14H22M7 8l1.6 1.6M17.4 18.4 19 20M19 8l-1.6 1.6M8.6 18.4 7 20"/><path d="M21 31 33 19"/><path d="M33 19h-5M33 19v5"/></svg></span>
               <span class="kp-text">투과율 대비<br>최대 열차단</span>
@@ -2783,6 +2783,10 @@ body.pd-open { overflow: hidden; }
               <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="24" width="24" height="3.4" rx="1.7"/><rect x="8" y="30" width="24" height="3.4" rx="1.7"/><path d="M14 8v8M14 16l-2.2-2.2M14 16l2.2-2.2M20 8v8M20 16l-2.2-2.2M20 16l2.2-2.2M26 8v8M26 16l-2.2-2.2M26 16l2.2-2.2"/></svg></span>
               <span class="kp-text">세이프티 기능과<br>비산 방지</span>
             </div>
+            <div class="kp">
+              <span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="#4a7c59" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 33V18"/><path d="M20 18C20 12 24 8 30 8 30 14 26 18 20 18Z"/><path d="M20 23C20 18 16 14 10 14 10 19 14 23 20 23Z"/></svg></span>
+              <span class="kp-text">탄소를 줄이는<br>친환경 필름</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2794,10 +2798,10 @@ body.pd-open { overflow: hidden; }
           <span class="product-category">Reflective Series</span>
           <h3 class="product-name">Vogue</h3>
           <p class="product-tagline">반사가 곧 외관, 반사가 곧 시원함.</p>
-          <p class="product-bridge">빛을 흡수하지 않고 되쏩니다. 그래서 가장 강하게 막고, 밖에선 거울이 됩니다.</p>
+          <p class="product-bridge">밖에선 강렬한 그린 골드로 빛나고, 열은 가장 강하게 막습니다.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            남들과 같은 검정이 싫은 분. 밖에선 안 보이고, 안에선 트인 시야를 원하는 분.
+            <strong>왜 Vogue인가</strong>
+            같은 검정은 거부합니다. 거울처럼 빛나는 그린 골드, 가장 강한 열 차단. 그게 Vogue입니다.
           </div>
         </div>
         <div class="product-specs">
@@ -2825,11 +2829,11 @@ body.pd-open { overflow: hidden; }
         <div>
           <span class="product-category">Ceramic &amp; Top Class</span>
           <h3 class="product-name">Xenith IR</h3>
-          <p class="product-tagline">열은 막고, 신호는 통과시킨다.</p>
-          <p class="product-bridge">금속 없이 열을 막습니다. 그래서 신호를 건드리지 않습니다.</p>
+          <p class="product-tagline">열은 차단하고, 전파에서 자유롭다.</p>
+          <p class="product-bridge">가장 진보된 세라믹 소재. 어떤 차에도 어울리는 비크 블랙.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전기차·커넥티드카일수록 차이가 큽니다.
+            <strong>왜 Xenith인가</strong>
+            전기차 오너에게 사랑받는 이유. 확실한 열 차단, 방해받지 않는 신호, 선명한 시야, 눈부심 없는 주행. 그게 Xenith입니다.
           </div>
         </div>
         <div class="product-specs">
@@ -2859,8 +2863,8 @@ body.pd-open { overflow: hidden; }
           <h3 class="product-name">Quantum</h3>
           <p class="product-tagline">밖에선 에메랄드, 안에선 맑은 시야.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            밖에선 색이 살고, 운전석에선 비치지 않길 바라는 분. 어떤 차에도 무난히 어울리는 색을 찾는 분.
+            <strong>왜 Quantum인가</strong>
+            햇빛에 피어나는 에메랄드 그린, 안에선 맑은 시야, 차의 수명까지 가는 색과 성능. 글로벌 베스트셀러 Quantum.
           </div>
         </div>
         <div class="product-specs">
@@ -2889,8 +2893,8 @@ body.pd-open { overflow: hidden; }
           <h3 class="product-name">Titanium</h3>
           <p class="product-tagline">티타늄을 증착한 세계 유일의 딥 블랙. 어떤 차에도 내려앉는 검정.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            합리적인 가격으로 깊은 검정을 원하는 분. 시공이 깔끔하게 끝나길 바라는 분.
+            <strong>왜 Titanium인가</strong>
+            합리적인 가격, 깔끔한 마감의 Titanium.
           </div>
         </div>
         <div class="product-specs">
@@ -2919,8 +2923,8 @@ body.pd-open { overflow: hidden; }
           <h3 class="product-name">G-LINE</h3>
           <p class="product-tagline">빛에 따라 색이 달라지는 라미네이티드 블루.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            빛마다 다르게 피는 색을 원하는 분. 튀지 않으면서 개성을 더하고 싶은 분.
+            <strong>왜 G-LINE인가</strong>
+            빛마다 다르게 피는 라미네이티드 블루, 튀지 않는 개성, 균형 잡힌 하이브리드 G-LINE.
           </div>
         </div>
         <div class="product-specs">
@@ -2949,8 +2953,8 @@ body.pd-open { overflow: hidden; }
           <h3 class="product-name">S-LINE</h3>
           <p class="product-tagline">신호를 막지 않는 비반사 필름. 합리적인 가격의 편안한 시야.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            VLT에 상관없이 쾌적한 주행 환경을 원하는 분. 전파 방해 없는 선명한 시야를 원하는 분.
+            <strong>왜 S-LINE인가</strong>
+            비반사로 편안한 시야, 방해받지 않는 신호, 농도와 상관없이 쾌적한 S-LINE.
           </div>
         </div>
         <div class="product-specs">
@@ -2979,8 +2983,8 @@ body.pd-open { overflow: hidden; }
           <h3 class="product-name">LX SHIELD</h3>
           <p class="product-tagline">긁히면 스스로 메우는 PPF. 자가복원 초고분자 도막.</p>
           <div class="product-recommend">
-            <strong>이런 분께 추천합니다</strong>
-            차량 외부 도장을 장기 보호하고 싶은 분. 스크래치 자가 복원 기능을 원하는 분.
+            <strong>왜 LX SHIELD인가</strong>
+            긁혀도 스스로 메우는 자가복원, 8mil 보호막, 도장을 오래 지키는 LX SHIELD.
           </div>
         </div>
         <div class="product-specs">
@@ -3423,7 +3427,7 @@ body.pd-open { overflow: hidden; }
         <h2 class="pd-name" id="pdName"></h2>
         <p class="pd-tagline" id="pdTagline"></p>
         <div class="pd-recommend">
-          <strong>이런 분께 추천합니다</strong>
+          <strong id="pdRecommendLabel">이런 분께 추천합니다</strong>
           <span id="pdRecommend"></span>
         </div>
       </div>
@@ -4258,6 +4262,7 @@ function pdOpen(id) {
   // 히어로 채우기
   document.getElementById('pdName').textContent      = p.name;
   document.getElementById('pdTagline').textContent   = p.tagline;
+  document.getElementById('pdRecommendLabel').textContent = p.recommendLabel || '이런 분께 추천합니다';
   document.getElementById('pdRecommend').textContent = p.recommend;
   document.getElementById('pdCtaName').textContent   = p.name;
   const badge = document.getElementById('pdBadge');

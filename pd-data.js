@@ -34,7 +34,7 @@ const PD_DATA = {
   },
   vogue: {
     name: 'Vogue',
-    tagline: '보여주기로 한 차. 빛을 되쏘아 가장 강하게 막고, 밖에선 거울이 됩니다.',
+    tagline: '반사가 곧 외관, 반사가 곧 시원함. 빛을 되쏘아 가장 강하게 막고, 밖에선 거울이 됩니다.',
     recommend: '남들과 같은 검정이 싫은 분. 밖에선 안 보이고, 안에선 트인 시야를 원하는 분.',
     flagship: false,
     perf: [
@@ -64,8 +64,8 @@ const PD_DATA = {
   },
   xenith: {
     name: 'Xenith IR',
-    tagline: '세라믹이 할 수 있는 전부. 금속 없이 열을 막아, 신호를 건드리지 않습니다.',
-    recommend: '내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전자장비가 많은 차일수록 차이가 큽니다.',
+    tagline: '열은 막고, 신호는 통과시킨다. 금속 없이 열을 막아, 신호를 건드리지 않습니다.',
+    recommend: '내비·하이패스·스마트키가 먹통이 된 적 있는 분. 전기차·커넥티드카일수록 차이가 큽니다.',
     flagship: false,
     perf: [
       { label: 'UV 차단', pct: 99 },

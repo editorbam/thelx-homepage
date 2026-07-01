@@ -561,8 +561,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: rgba(255,255,255,.82);
 }
-/* 모바일은 사운드 기능 제외 (무음 스위치·볼륨 제약으로 의도대로 안 됨) */
-@media (max-width: 768px){ .hero-sound { display: none !important; } }
+/* 모바일 — 버튼 위치·크기 조정 (사운드는 audio.muted 방식이라 iOS에서도 작동) */
+@media (max-width: 768px){ .hero-sound { left: 1.1rem; bottom: 1.1rem; padding: .45rem .7rem .45rem .62rem; } }
 
 /* ============================
    MARQUEE
@@ -4766,10 +4766,10 @@ slRender();
 
 </script>
 
-<!-- 배경 음악 (페이지 전역 사운드 토글) -->
-<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 켜기 / 끄기" aria-pressed="false">
+<!-- 배경 음악 (페이지 전역 재생 + 음소거 토글) -->
+<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
   <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-  <span class="label" id="heroSoundLabel">Sound</span>
+  <span class="label" id="heroSoundLabel">Mute</span>
 </button>
 <audio id="heroAudio" src="hero-music.mp3" loop preload="none"></audio>
 <script>
@@ -4778,11 +4778,11 @@ slRender();
     var btn   = document.getElementById('heroSound');
     var label = document.getElementById('heroSoundLabel');
     if(!audio || !btn) return;
-    // 모바일은 사운드 비활성화 — 버튼·오디오 모두 작동시키지 않음
-    if(window.matchMedia('(max-width: 768px)').matches) return;
-    var TARGET = 0.32;          // 배경음 적정 볼륨 (1.0이 최대)
-    var playing = false, fadeTimer = null;
+    // 모바일 포함 전 기기 동작 — 음소거는 audio.muted(iOS도 됨), 음량은 파일에 이미 반영
+    var TARGET = 1.0;           // 파일 자체를 은은한 음량으로 구웠으므로 재생 볼륨은 최대
+    var started = false, muted = false, fadeTimer = null;
     audio.volume = 0;
+    btn.classList.add('show');  // 페이지 전역 상시 노출
 
     function fadeTo(target, done){
       if(fadeTimer) clearInterval(fadeTimer);
@@ -4792,54 +4792,39 @@ slRender();
         if(i>=steps){ audio.volume = target; clearInterval(fadeTimer); fadeTimer=null; if(done) done(); }
       }, 45);
     }
-    function setState(on){
-      playing = on;
+    function updateUI(){
+      var on = started && !muted;
       btn.classList.toggle('playing', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      label.textContent = on ? 'Sound On' : 'Sound';
+      btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+      label.textContent = (started && muted) ? 'Muted' : 'Mute';
     }
-    function play(){
-      audio.play().then(function(){ setState(true); fadeTo(TARGET); })
-                  .catch(function(){ /* 브라우저가 막음 — 첫 클릭 때 다시 시도 */ });
-    }
-    function pause(){ fadeTo(0, function(){ audio.pause(); }); setState(false); }
 
-    // 사운드 버튼 = 손님이 직접 켜고/끄기 (자동재생 없음 — 기본은 음소거)
+    var GESTURES = ['pointerdown','keydown','scroll','touchstart'];
+    function dropGestures(){ GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); }); }
+
+    // 첫 재생 — 히어로부터 끝까지 계속 흐름 (스크롤해도 멈추지 않음)
+    function startPlayback(){
+      if(started) return;
+      audio.muted = false;
+      audio.play().then(function(){ started = true; muted = false; fadeTo(TARGET); updateUI(); dropGestures(); })
+                  .catch(function(){ /* 브라우저가 막음 — 다음 제스처/클릭 때 재시도 */ });
+    }
+    // 음소거는 audio.muted로 (iOS는 volume 조절 불가라 이 방식이라야 실제로 꺼짐)
+    function setMuted(m){ muted = m; audio.muted = m; updateUI(); }
+
+    // 버튼 = 음소거 토글 (아직 재생 전이면 재생 시작)
     btn.addEventListener('click', function(e){
       e.stopPropagation();
-      if(playing){ pause(); }
-      else { play(); }
+      if(!started){ startPlayback(); }
+      else { setMuted(!muted); }
     });
 
-    // 히어로 섹션 안에서만 버튼 노출 — 본문으로 스크롤하면 버튼 사라지고 음악 정지
-    var heroSec = document.getElementById('hero');
-    var inHero = false;
-    if(heroSec && 'IntersectionObserver' in window){
-      var introDone = false;
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(en){
-          if(en.isIntersecting){
-            inHero = true;
-            // 첫 등장만 히어로 연출에 맞춰 약간 지연, 이후 스크롤 복귀는 즉시
-            // 지연 동안 손님이 본문으로 빠르게 스크롤했으면(inHero=false) 띄우지 않음
-            if(!introDone){ introDone = true; setTimeout(function(){ if(inHero) btn.classList.add('show'); }, 1400); }
-            else { btn.classList.add('show'); }
-          } else {
-            inHero = false;
-            btn.classList.remove('show');
-            if(playing) pause();          // 히어로를 벗어나면 음악도 함께 꺼짐
-          }
-        });
-      }, { threshold: 0 });
-      io.observe(heroSec);
-    } else {
-      btn.classList.add('show');          // IntersectionObserver 미지원 폴백
+    // 브라우저 자동재생 정책상, 손님이 페이지를 처음 건드리는 순간 재생 시작
+    function firstGesture(e){
+      if(e && btn.contains(e.target)) return;   // 버튼 클릭은 위에서 처리
+      startPlayback();
     }
-
-    // 데스크탑에서 창을 모바일 폭(≤768px)으로 줄이면 음악도 정지 (버튼은 CSS로 숨음)
-    window.matchMedia('(max-width: 768px)').addEventListener('change', function(e){
-      if(e.matches && playing) pause();
-    });
+    GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
   })();
 </script>
 </body>

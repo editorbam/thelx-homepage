@@ -2536,9 +2536,8 @@ body.pd-open { overflow: hidden; }
     <script>
       (function(){
         var v = document.getElementById('heroVideo');
-        var mobile = window.matchMedia('(max-width: 768px)').matches;
         var s = document.createElement('source');
-        s.src = mobile ? 'hero-drive-mobile.mp4' : 'hero-drive.mp4';
+        s.src = 'hero-drive.mp4';   // 데스크탑·모바일 모두 1080p 고화질 (모바일 저화질 분기 제거)
         s.type = 'video/mp4';
         v.appendChild(s);
         v.load();

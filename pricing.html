@@ -2241,7 +2241,6 @@ body.pd-open { overflow: hidden; }
           <div class="cf-segments">
             <button class="cf-seg active" data-car="sedan">승용</button>
             <button class="cf-seg" data-car="suv">SUV</button>
-            <button class="cf-seg" data-car="compact">경차</button>
           </div>
         </div>
 
@@ -2773,19 +2772,26 @@ setTimeout(() => {
 
 /* ── PRICING CONFIGURATOR ── */
 (function() {
+  /* 2026 공식 PRICE LIST 기준 — 제품×차종×부위 실가격(만원). 배율 계산 아님 */
   const PRICES = {
-    sedan:   { '전면': 90,  '측·후면': 150, '일반 썬루프': 30, '파노라마 썬루프': 60 },
-    suv:     { '전면': 100, '측·후면': 180, '일반 썬루프': 35, '파노라마 썬루프': 70 },
-    compact: { '전면': 70,  '측·후면': 110, '일반 썬루프': 25, '파노라마 썬루프': null }
-  };
-  const MUL = {
-    'LX':       1.00,
-    'Vogue':    0.72,
-    'Xenith IR':0.78,
-    'Quantum':  0.58,
-    'Titanium': 0.52,
-    'G-LINE':   0.42,
-    'S-LINE':   0.36
+    sedan: {
+      'LX':        { '전면': 90,  '측·후면': 150, '일반 썬루프': 30, '파노라마 썬루프': 60 },
+      'Vogue':     { '전면': 70,  '측·후면': 110, '일반 썬루프': 25, '파노라마 썬루프': 45 },
+      'Xenith IR': { '전면': 60,  '측·후면': 90,  '일반 썬루프': 20, '파노라마 썬루프': 40 },
+      'Quantum':   { '전면': 55,  '측·후면': 85,  '일반 썬루프': 20, '파노라마 썬루프': 35 },
+      'Titanium':  { '전면': 45,  '측·후면': 65,  '일반 썬루프': 15, '파노라마 썬루프': 25 },
+      'G-LINE':    { '전면': 35,  '측·후면': 45,  '일반 썬루프': 10, '파노라마 썬루프': 20 },
+      'S-LINE':    { '전면': 30,  '측·후면': 40,  '일반 썬루프': 8,  '파노라마 썬루프': 16 }
+    },
+    suv: {
+      'LX':        { '전면': 100, '측·후면': 160, '일반 썬루프': 30, '파노라마 썬루프': 60 },
+      'Vogue':     { '전면': 80,  '측·후면': 120, '일반 썬루프': 25, '파노라마 썬루프': 45 },
+      'Xenith IR': { '전면': 70,  '측·후면': 100, '일반 썬루프': 20, '파노라마 썬루프': 40 },
+      'Quantum':   { '전면': 65,  '측·후면': 95,  '일반 썬루프': 20, '파노라마 썬루프': 35 },
+      'Titanium':  { '전면': 50,  '측·후면': 70,  '일반 썬루프': 15, '파노라마 썬루프': 25 },
+      'G-LINE':    { '전면': 40,  '측·후면': 50,  '일반 썬루프': 10, '파노라마 썬루프': 20 },
+      'S-LINE':    { '전면': 35,  '측·후면': 45,  '일반 썬루프': 8,  '파노라마 썬루프': 16 }
+    }
   };
   const NAMES = {
     'LX':'THE LX','Vogue':'Vogue','Xenith IR':'Xenith IR',
@@ -2822,9 +2828,10 @@ setTimeout(() => {
   if (!totalNum) return;
 
   function priceForPos(pos, product) {
-    const base = PRICES[state.car][pos];
-    if (base == null) return null;
-    return Math.round(base * MUL[product] / 5) * 5;
+    const table = PRICES[state.car][product];
+    if (!table) return null;
+    const p = table[pos];
+    return p == null ? null : p;
   }
 
   function priceForActivePos(pos) {
@@ -2879,7 +2886,7 @@ setTimeout(() => {
       const block = document.createElement('div');
       block.className = 'cf-pos-block';
       block.dataset.pos = pos;
-      const isAvail = PRICES[state.car][pos] != null;
+      const isAvail = PRICES[state.car]['LX'][pos] != null;
       const isActive = state.positions.has(pos);
       if (!isAvail || !isActive) block.classList.add('disabled');
 

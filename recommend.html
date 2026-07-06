@@ -198,6 +198,38 @@
       padding: clamp(1.2rem, 3vw, 2rem); background: rgba(255,255,255,.02);
     }
     .rc-chart svg { width: 100%; height: auto; }
+
+    /* ── 모션: 스크롤 진입 시 1회 재생 ─────────────────
+       띠 펼침 → 라벨 → 곡선 드로잉 → 면 차오름 → 문장 → 글로우 루프 */
+    .rc-chart .ch-strip-bar { transform: scaleX(0); transform-box: fill-box; transform-origin: left center; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+    .rc-chart .ch-strip-bar.b2 { transition-delay: .15s; }
+    .rc-chart .ch-strip-bar.b3 { transition-delay: .3s; }
+    .rc-chart .ch-fade { opacity: 0; transform: translateY(8px); transform-box: fill-box; transition: opacity .6s ease, transform .6s ease; }
+    .rc-chart .ch-zonelabels { transition-delay: .35s; }
+    .rc-chart .ch-striplabels { transition-delay: .5s; }
+    .rc-chart #chLx  { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.7s cubic-bezier(.4,0,.2,1) .45s; }
+    .rc-chart #chAbs { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s ease 1.25s; }
+    .rc-chart #chArea { opacity: 0; transition: opacity 1s ease 1.5s; }
+    .rc-chart .ch-callout-vis { transition-delay: 1.9s; }
+    .rc-chart .ch-callout-ir  { transition-delay: 2.3s; }
+    .rc-chart .ch-linenames   { transition-delay: 2.6s; }
+    .rc-chart.in .ch-strip-bar { transform: scaleX(1); }
+    .rc-chart.in .ch-fade { opacity: 1; transform: translateY(0); }
+    .rc-chart.in #chLx, .rc-chart.in #chAbs { stroke-dashoffset: 0; }
+    .rc-chart.in #chArea { opacity: 1; }
+    /* 드로잉 완료 후 — 곡선 글로우 호흡 (technology lxGlow 모티프) */
+    @keyframes chGlow {
+      0%,100% { filter: drop-shadow(0 0 4px rgba(110,170,230,.25)); }
+      50%     { filter: drop-shadow(0 0 11px rgba(120,185,240,.55)); }
+    }
+    .rc-chart.in #chLx { animation: chGlow 3.6s ease-in-out 2.8s infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .rc-chart .ch-strip-bar, .rc-chart .ch-fade, .rc-chart #chLx, .rc-chart #chAbs, .rc-chart #chArea { transition: none; animation: none !important; }
+      .rc-chart .ch-strip-bar { transform: scaleX(1); }
+      .rc-chart .ch-fade { opacity: 1; transform: none; }
+      .rc-chart #chLx, .rc-chart #chAbs { stroke-dashoffset: 0; }
+      .rc-chart #chArea { opacity: 1; }
+    }
     .rc-legend {
       display: flex; justify-content: center; gap: 1.6rem; flex-wrap: wrap;
       margin-top: 1rem; font-size: clamp(.78rem, .9vw, .86rem); color: rgba(255,255,255,.6);
@@ -370,10 +402,12 @@
       <line x1="260" y1="20" x2="260" y2="286" stroke="rgba(255,255,255,.14)" stroke-dasharray="3 4"/>
 
       <!-- 구간 라벨: 쉬운 말 먼저 -->
-      <text x="95"  y="40" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,.5)" font-weight="600">자외선</text>
-      <text x="195" y="40" text-anchor="middle" font-size="12.5" fill="rgba(255,255,255,.78)" font-weight="700">눈에 보이는 빛</text>
-      <text x="475" y="40" text-anchor="middle" font-size="12.5" fill="#ffb09a" font-weight="700">보이지 않는 열 — 적외선</text>
-      <text x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(255,176,154,.6)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
+      <g class="ch-fade ch-zonelabels">
+        <text x="95"  y="40" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,.5)" font-weight="600">자외선</text>
+        <text x="195" y="40" text-anchor="middle" font-size="12.5" fill="rgba(255,255,255,.78)" font-weight="700">눈에 보이는 빛</text>
+        <text x="475" y="40" text-anchor="middle" font-size="12.5" fill="#ffb09a" font-weight="700">보이지 않는 열 — 적외선</text>
+        <text x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(255,176,154,.6)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
+      </g>
 
       <!-- Y축: 세 눈금만 -->
       <g font-size="10" fill="rgba(255,255,255,.35)" text-anchor="end">
@@ -386,38 +420,46 @@
       <text x="20" y="150" font-size="11" fill="rgba(255,255,255,.45)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">되돌리는 비율</text>
 
       <!-- 곡선 아래 채움 (반사형이 되돌리는 몫) — ISO9050 실측 경향 반영 -->
-      <path d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118 L690,280 L60,280 Z"
+      <path id="chArea" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118 L690,280 L60,280 Z"
             fill="url(#lxArea)"/>
 
       <!-- 흡수형: 전 구간 낮고 평평 (실측 4~5%) -->
-      <path d="M60,268 C180,266 420,267 690,266"
+      <path id="chAbs" pathLength="1" d="M60,268 C180,266 420,267 690,266"
             fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2.5" stroke-linecap="round"/>
       <!-- 반사형(THE LX): 가시광선 낮음(빛 통과) → 780nm부터 급상승, 1,600nm 부근 정점 후 완만 -->
-      <path d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118"
+      <path id="chLx" pathLength="1" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118"
             fill="none" stroke="url(#lxLine)" stroke-width="3.5" stroke-linecap="round"/>
 
       <!-- 문장 라벨: 그래프가 하는 말 -->
-      <text x="195" y="200" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.9)" font-weight="700">빛은 통과</text>
-      <text x="195" y="219" text-anchor="middle" font-size="10.5" fill="rgba(255,255,255,.5)">시야는 밝게 유지됩니다</text>
-      <text x="497" y="150" text-anchor="middle" font-size="14" fill="#cfe6ff" font-weight="700">열은 반사</text>
-      <text x="497" y="169" text-anchor="middle" font-size="10.5" fill="rgba(207,230,255,.6)">표면에서 바깥으로 되돌립니다</text>
+      <g class="ch-fade ch-callout-vis">
+        <text x="195" y="200" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.9)" font-weight="700">빛은 통과</text>
+        <text x="195" y="219" text-anchor="middle" font-size="10.5" fill="rgba(255,255,255,.5)">시야는 밝게 유지됩니다</text>
+      </g>
+      <g class="ch-fade ch-callout-ir">
+        <text x="497" y="150" text-anchor="middle" font-size="14" fill="#cfe6ff" font-weight="700">열은 반사</text>
+        <text x="497" y="169" text-anchor="middle" font-size="10.5" fill="rgba(207,230,255,.6)">표면에서 바깥으로 되돌립니다</text>
+      </g>
 
       <!-- 선 이름 -->
-      <text x="686" y="102" text-anchor="end" font-size="11.5" fill="#cfe6ff" font-weight="700">THE LX · 반사형</text>
-      <text x="686" y="254" text-anchor="end" font-size="11" fill="rgba(255,255,255,.45)" font-weight="600">흡수형 · 일반 필름</text>
+      <g class="ch-fade ch-linenames">
+        <text x="686" y="102" text-anchor="end" font-size="11.5" fill="#cfe6ff" font-weight="700">THE LX · 반사형</text>
+        <text x="686" y="254" text-anchor="end" font-size="11" fill="rgba(255,255,255,.45)" font-weight="600">흡수형 · 일반 필름</text>
+      </g>
 
       <!-- 빛 스펙트럼 띠: 보이지 않는 빛을 색으로 -->
-      <rect x="60"  y="292" width="70"  height="10" rx="2" fill="url(#uvSpec)"/>
-      <rect x="132" y="292" width="126" height="10" rx="2" fill="url(#visSpec)"/>
-      <rect x="260" y="292" width="430" height="10" rx="2" fill="url(#irSpec)"/>
-      <!-- 경계 파장만 최소 표기 -->
-      <g font-size="9.5" fill="rgba(255,255,255,.3)" text-anchor="middle">
-        <text x="130" y="318">380nm</text><text x="260" y="318">780nm</text>
-        <text x="676" y="318">2,500nm</text>
+      <rect class="ch-strip-bar"    x="60"  y="292" width="70"  height="10" rx="2" fill="url(#uvSpec)"/>
+      <rect class="ch-strip-bar b2" x="132" y="292" width="126" height="10" rx="2" fill="url(#visSpec)"/>
+      <rect class="ch-strip-bar b3" x="260" y="292" width="430" height="10" rx="2" fill="url(#irSpec)"/>
+      <g class="ch-fade ch-striplabels">
+        <!-- 경계 파장만 최소 표기 -->
+        <g font-size="9.5" fill="rgba(255,255,255,.3)" text-anchor="middle">
+          <text x="130" y="318">380nm</text><text x="260" y="318">780nm</text>
+          <text x="676" y="318">2,500nm</text>
+        </g>
+        <!-- 띠가 뜻하는 것 -->
+        <text x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.35)">사람 눈이 보는 전부</text>
+        <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,176,154,.45)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
       </g>
-      <!-- 띠가 뜻하는 것 -->
-      <text x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.35)">사람 눈이 보는 전부</text>
-      <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,176,154,.45)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
     </svg>
     <div class="rc-legend">
       <span class="lx"><i></i>반사형 (THE LX) — 열을 되돌림</span>
@@ -483,5 +525,17 @@
   <p class="tech-footer-mark">THE LX</p>
   <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
 </footer>
+<script>
+  /* 스펙트럼 그래프 — 스크롤 진입 시 1회 재생 (모션 정의는 CSS .rc-chart.in) */
+  (function(){
+    var chart = document.querySelector('.rc-chart');
+    if (!chart) return;
+    if (!('IntersectionObserver' in window)) { chart.classList.add('in'); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ chart.classList.add('in'); io.disconnect(); } });
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    io.observe(chart);
+  })();
+</script>
 </body>
 </html>

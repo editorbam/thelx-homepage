@@ -198,6 +198,26 @@
       padding: clamp(1.2rem, 3vw, 2rem); background: rgba(255,255,255,.02);
     }
     .rc-chart svg { width: 100%; height: auto; }
+    .rc-chart-intro {
+      font-size: clamp(.84rem, .98vw, .94rem); line-height: 1.7;
+      color: rgba(255,255,255,.55); text-align: center;
+      margin: 0 0 clamp(.9rem, 2vw, 1.4rem); word-break: keep-all;
+    }
+    .rc-chart-intro strong { color: rgba(255,255,255,.85); font-weight: 700; }
+    .rc-conclusion {
+      display: flex; justify-content: center; align-items: center; gap: .55rem;
+      margin: clamp(1rem, 2.4vw, 1.5rem) 0 0;
+      font-size: clamp(.95rem, 1.15vw, 1.08rem); font-weight: 700;
+      color: #cfe6ff; word-break: keep-all; text-align: center;
+      opacity: 0; transform: translateY(8px); transition: opacity .6s ease 2.9s, transform .6s ease 2.9s;
+    }
+    .rc-chart.in .rc-conclusion { opacity: 1; transform: none; }
+    .rc-conclusion .num {
+      flex: 0 0 auto; width: 21px; height: 21px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #cfe6ff;
+      border: 1px solid rgba(156,198,238,.55); background: rgba(90,160,230,.14);
+    }
 
     /* ── 모션: 스크롤 진입 시 1회 재생 ─────────────────
        띠 펼침 → 라벨 → 곡선 드로잉 → 면 차오름 → 문장 → 글로우 루프 */
@@ -224,9 +244,9 @@
     }
     .rc-chart.in #chLx { animation: chGlow 3.6s ease-in-out 2.8s infinite; }
     @media (prefers-reduced-motion: reduce) {
-      .rc-chart .ch-strip-bar, .rc-chart .ch-fade, .rc-chart #chLx, .rc-chart #chAbs, .rc-chart #chArea { transition: none; animation: none !important; }
+      .rc-chart .ch-strip-bar, .rc-chart .ch-fade, .rc-chart #chLx, .rc-chart #chAbs, .rc-chart #chArea, .rc-chart .rc-conclusion { transition: none; animation: none !important; }
       .rc-chart .ch-strip-bar { transform: scaleX(1); }
-      .rc-chart .ch-fade { opacity: 1; transform: none; }
+      .rc-chart .ch-fade, .rc-chart .rc-conclusion { opacity: 1; transform: none; }
       .rc-chart #chLx, .rc-chart #chAbs { stroke-dashoffset: 0; }
       .rc-chart #chArea { opacity: 1; }
     }
@@ -366,7 +386,8 @@
     어둡게 만들지 않아도 시원한 이유입니다.
   </p>
 
-  <div class="rc-chart" role="img" aria-label="빛의 종류별로 필름이 되돌리는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 되돌립니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다.">
+  <div class="rc-chart" role="img" aria-label="빛의 종류별로 필름이 되돌리는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 되돌립니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다. 파란 선이 높을수록 차 안은 시원합니다.">
+    <p class="rc-chart-intro">가로축은 시간이 아니라 <strong>빛의 종류</strong>입니다.<br>햇빛을 세 종류로 나눠, 필름이 종류마다 어떻게 다루는지 왼쪽부터 보여줍니다.</p>
     <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id="lxLine" x1="0" y1="0" x2="1" y2="0">
@@ -430,12 +451,16 @@
       <path id="chLx" pathLength="1" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118"
             fill="none" stroke="url(#lxLine)" stroke-width="3.5" stroke-linecap="round"/>
 
-      <!-- 문장 라벨: 그래프가 하는 말 -->
+      <!-- 문장 라벨: 그래프가 하는 말 — ①② 읽기 순서 -->
       <g class="ch-fade ch-callout-vis">
+        <circle cx="195" cy="172" r="10" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+        <text x="195" y="176.5" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.9)" font-weight="700">1</text>
         <text x="195" y="200" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.9)" font-weight="700">빛은 통과</text>
         <text x="195" y="219" text-anchor="middle" font-size="10.5" fill="rgba(255,255,255,.5)">시야는 밝게 유지됩니다</text>
       </g>
       <g class="ch-fade ch-callout-ir">
+        <circle cx="497" cy="122" r="10" fill="rgba(90,160,230,.16)" stroke="rgba(156,198,238,.65)" stroke-width="1"/>
+        <text x="497" y="126.5" text-anchor="middle" font-size="12" fill="#cfe6ff" font-weight="700">2</text>
         <text x="497" y="150" text-anchor="middle" font-size="14" fill="#cfe6ff" font-weight="700">열은 반사</text>
         <text x="497" y="169" text-anchor="middle" font-size="10.5" fill="rgba(207,230,255,.6)">표면에서 바깥으로 되돌립니다</text>
       </g>
@@ -461,6 +486,7 @@
         <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,176,154,.45)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
       </g>
     </svg>
+    <p class="rc-conclusion"><span class="num">3</span>파란 선이 높을수록, 차 안은 시원합니다.</p>
     <div class="rc-legend">
       <span class="lx"><i></i>반사형 (THE LX) — 열을 되돌림</span>
       <span class="abs"><i></i>흡수형 (일반 필름) — 열을 받아들임</span>

@@ -334,7 +334,7 @@
   <h2 class="rc-title">열을 어떻게 다루는가.</h2>
   <p class="rc-body">
     같은 차단율로 표기된 필름도, 열을 다루는 방식은 두 갈래로 나뉩니다.
-    열을 <strong>머금는 필름</strong>과, 열을 <strong>되돌리는 필름</strong>.
+    열을 <strong>머금는 필름</strong>과, 열을 <strong>반사하는 필름</strong>.
     측정기 앞의 순간 수치는 비슷해 보여도, 여름 한낮의 정체된 도로 위에서 갈라지는 것은 이 구조입니다.
   </p>
 
@@ -350,7 +350,7 @@
       <tbody>
         <tr>
           <td class="head">열 처리 방식</td>
-          <td class="col-lx"><strong>표면에서 반사</strong> — 열이 들어오기 전에 되돌림</td>
+          <td class="col-lx"><strong>표면에서 반사</strong> — 열이 들어오기 전에 차단</td>
           <td>필름이 <strong>흡수</strong> — 열을 안에 쌓아둠</td>
         </tr>
         <tr>
@@ -382,18 +382,18 @@
   <p class="rc-body">
     태양 에너지의 약 절반은 눈에 보이지 않는 <strong>적외선</strong>에 실려 있습니다.
     반사형 구조는 시야를 결정하는 가시광선은 통과시키고,
-    열을 실어 나르는 적외선 구간을 표면에서 되돌립니다.
+    열을 실어 나르는 적외선 구간을 표면에서 반사합니다.
     어둡게 만들지 않아도 시원한 이유입니다.
   </p>
 
-  <div class="rc-chart" role="img" aria-label="빛의 종류별로 필름이 되돌리는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 되돌립니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다. 파란 선이 높을수록 차 안은 시원합니다.">
+  <div class="rc-chart" role="img" aria-label="빛의 종류별로 필름이 반사하는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 반사합니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다. 파란 선이 높을수록 차 안은 시원합니다.">
     <p class="rc-chart-intro">가로축은 시간이 아니라 <strong>빛의 종류</strong>입니다.<br>햇빛을 세 종류로 나눠, 필름이 종류마다 어떻게 다루는지 왼쪽부터 보여줍니다.</p>
     <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id="lxLine" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#9fd4ff"/><stop offset="1" stop-color="#5aa0e6"/>
         </linearGradient>
-        <!-- 곡선 아래 채움 — 적외선 구간에서 진해짐: "이만큼 되돌린다" -->
+        <!-- 곡선 아래 채움 — 적외선 구간에서 진해짐: "이만큼 반사한다" -->
         <linearGradient id="lxArea" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0"    stop-color="#5aa0e6" stop-opacity=".03"/>
           <stop offset=".3"  stop-color="#5aa0e6" stop-opacity=".05"/>
@@ -438,9 +438,9 @@
         <line x1="60" y1="150" x2="690" y2="150"/><line x1="60" y1="20" x2="690" y2="20"/>
       </g>
       <line x1="60" y1="280" x2="690" y2="280" stroke="rgba(255,255,255,.14)"/>
-      <text x="20" y="150" font-size="11" fill="rgba(255,255,255,.45)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">되돌리는 비율</text>
+      <text x="20" y="150" font-size="11" fill="rgba(255,255,255,.45)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">반사율</text>
 
-      <!-- 곡선 아래 채움 (반사형이 되돌리는 몫) — ISO9050 실측 경향 반영 -->
+      <!-- 곡선 아래 채움 (반사로 차단되는 몫) — ISO9050 실측 경향 반영 -->
       <path id="chArea" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118 L690,280 L60,280 Z"
             fill="url(#lxArea)"/>
 
@@ -462,7 +462,7 @@
         <circle cx="497" cy="122" r="10" fill="rgba(90,160,230,.16)" stroke="rgba(156,198,238,.65)" stroke-width="1"/>
         <text x="497" y="126.5" text-anchor="middle" font-size="12" fill="#cfe6ff" font-weight="700">2</text>
         <text x="497" y="150" text-anchor="middle" font-size="14" fill="#cfe6ff" font-weight="700">열은 반사</text>
-        <text x="497" y="169" text-anchor="middle" font-size="10.5" fill="rgba(207,230,255,.6)">표면에서 바깥으로 되돌립니다</text>
+        <text x="497" y="169" text-anchor="middle" font-size="10.5" fill="rgba(207,230,255,.6)">표면에서 바깥으로 반사합니다</text>
       </g>
 
       <!-- 선 이름 -->
@@ -488,8 +488,8 @@
     </svg>
     <p class="rc-conclusion"><span class="num">3</span>파란 선이 높을수록, 차 안은 시원합니다.</p>
     <div class="rc-legend">
-      <span class="lx"><i></i>반사형 (THE LX) — 열을 되돌림</span>
-      <span class="abs"><i></i>흡수형 (일반 필름) — 열을 받아들임</span>
+      <span class="lx"><i></i>반사형 (THE LX) — 열을 반사</span>
+      <span class="abs"><i></i>흡수형 (일반 필름) — 열을 흡수</span>
     </div>
   </div>
   <p class="rc-note">ISO 9050 기준 파장별 외부 반사율의 실측 경향을 단순화한 그래프입니다. 실제 곡선은 제품·농도에 따라 다릅니다.</p>

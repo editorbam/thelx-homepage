@@ -1,5 +1,7 @@
 /* THE LX 제품 모달 데이터 — index.html · pricing.html 공용 단일 소스.
-   카피·스펙 수정은 이 파일 한 곳만. (이전엔 두 파일에 복붙되어 어긋남 반복) */
+   카피·스펙 수정은 이 파일 한 곳만. (이전엔 두 파일에 복붙되어 어긋남 반복)
+   ⚠️ 예외: recommend.html의 농도별 스펙표와 index.html VLT 밴드 라벨은 정적 HTML 사본 —
+   LX 농도별 VLT/TSER 수정 시 그 두 곳도 함께 고칠 것. */
 const PD_DATA = {
   lx: {
     name: 'LX',

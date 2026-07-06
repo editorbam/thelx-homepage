@@ -379,7 +379,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   gap: 2.4rem;
   opacity: 0; pointer-events: none;
   transition: opacity .35s ease;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 2rem 1rem;
 }
+/* 항목이 화면보다 길면(가로 모드 등) 중앙정렬 대신 스크롤 — margin:auto가 공간 있을 땐 중앙, 넘칠 땐 처음/끝 도달 보장 */
+.mobile-menu a:first-child { margin-top: auto; }
+.mobile-menu a:last-child { margin-bottom: auto; }
 .mobile-menu.open { opacity: 1; pointer-events: auto; }
 .mobile-menu a {
   font-size: clamp(1.6rem, 8vw, 2.8rem); font-weight: 200;
@@ -2692,23 +2697,23 @@ body.pd-open { overflow: hidden; }
 
     <div class="vlt-band" id="vb0" style="left:0%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.80);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 15%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 12%</span></div>
     </div>
     <div class="vlt-band" id="vb1" style="left:20%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.48);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 25%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 23%</span></div>
     </div>
     <div class="vlt-band" id="vb2" style="left:40%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.40);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 40%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 42%</span></div>
     </div>
     <div class="vlt-band" id="vb3" style="left:60%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.24);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 55%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 59%</span></div>
     </div>
     <div class="vlt-band" id="vb4" style="left:80%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.05);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 70%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 72%</span></div>
     </div>
     <div class="vlt-divider" style="left:20%;"></div>
     <div class="vlt-divider" style="left:40%;"></div>
@@ -3392,7 +3397,9 @@ body.pd-open { overflow: hidden; }
     </div>
     <ul class="footer-links">
       <li><a href="#why-story">브랜드</a></li>
+      <li><a href="technology.html">기술</a></li>
       <li><a href="#products">제품</a></li>
+      <li><a href="recommend.html">필름추천</a></li>
       <li><a href="#store-locator">시공점 찾기</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="http://sgp.isolargard.com/" target="_blank" rel="noopener noreferrer" class="footer-cms">총판·파트너 로그인 <span>(SGP CMS)</span></a></li>

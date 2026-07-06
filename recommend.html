@@ -158,11 +158,12 @@
     }
     .rc-note a { color: rgba(156,198,238,.8); text-decoration: none; }
     .rc-note a:hover { text-decoration: underline; }
+    /* 스크롤 힌트 — 실제로 가로 스크롤이 생길 때만 JS(.show)로 표시 */
     .rc-scroll-hint {
       display: none; font-size: .74rem; color: rgba(255,255,255,.35);
       margin: .55rem .2rem 0; text-align: right; letter-spacing: .01em;
     }
-    @media (max-width: 768px) { .rc-scroll-hint { display: block; } }
+    .rc-scroll-hint.show { display: block; }
 
     /* ===========================
        표 공통 (모바일 가로 스크롤)
@@ -198,6 +199,9 @@
       padding: clamp(1.2rem, 3vw, 2rem); background: rgba(255,255,255,.02);
     }
     .rc-chart svg { width: 100%; height: auto; }
+    /* 모바일 — 그래프를 축소해 라벨이 깨알이 되는 대신, 표와 같은 가로 스크롤 패턴 */
+    .rc-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    @media (max-width: 768px) { .rc-chart-scroll svg { min-width: 640px; } }
     .rc-chart-intro {
       font-size: clamp(.84rem, .98vw, .94rem); line-height: 1.7;
       color: rgba(255,255,255,.55); text-align: center;
@@ -308,6 +312,16 @@
       .rc-legend { gap: 1rem; }
     }
   </style>
+  <!-- no-JS 폴백 — 모션 없이 그래프 완성 상태로 표시 (reduced-motion 블록과 동일 상태) -->
+  <noscript>
+    <style>
+      .rc-chart .ch-strip-bar { transform: scaleX(1); }
+      .rc-chart .ch-fade, .rc-chart .rc-conclusion { opacity: 1; transform: none; }
+      .rc-chart #chLx, .rc-chart #chAbs { stroke-dashoffset: 0; }
+      .rc-chart #chArea { opacity: 1; }
+      .rc-chart #chLx { animation: none; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -386,9 +400,10 @@
     어둡게 만들지 않아도 시원한 이유입니다.
   </p>
 
-  <div class="rc-chart" role="img" aria-label="빛의 종류별로 필름이 반사하는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 반사합니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다. 파란 선이 높을수록 차 안은 시원합니다.">
+  <div class="rc-chart">
     <p class="rc-chart-intro">가로축은 시간이 아니라 <strong>빛의 종류</strong>입니다.<br>햇빛을 세 종류로 나눠, 필름이 종류마다 어떻게 다루는지 왼쪽부터 보여줍니다.</p>
-    <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <div class="rc-chart-scroll">
+    <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="빛의 종류별로 필름이 반사하는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 반사합니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다.">
       <defs>
         <linearGradient id="lxLine" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#9fd4ff"/><stop offset="1" stop-color="#5aa0e6"/>
@@ -486,6 +501,8 @@
         <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(255,176,154,.45)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
       </g>
     </svg>
+    </div>
+    <p class="rc-scroll-hint">그래프를 옆으로 밀면 적외선 구간까지 보입니다 →</p>
     <p class="rc-conclusion"><span class="num">3</span>파란 선이 높을수록, 차 안은 시원합니다.</p>
     <div class="rc-legend">
       <span class="lx"><i></i>반사형 (THE LX) — 열을 반사</span>
@@ -506,6 +523,8 @@
     시야는 밝게, 열은 바깥에.
   </p>
 
+  <!-- ⚠️ 아래 농도별 수치는 pd-data.js(스펙 단일 소스)의 LX specs와 항상 함께 수정할 것.
+       15/12/71 · 25/23/67 · 40/42/63 · 55/59/57 · 70/72/55 (2026-07-03 확정, 농도70 TSER=55) -->
   <div class="rc-table-wrap">
     <table class="rc-table">
       <thead>
@@ -561,6 +580,21 @@
       es.forEach(function(e){ if (e.isIntersecting){ chart.classList.add('in'); io.disconnect(); } });
     }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
     io.observe(chart);
+  })();
+
+  /* 스크롤 힌트 — 바로 앞 컨테이너가 실제로 가로 스크롤될 때만 표시 */
+  (function(){
+    var hints = document.querySelectorAll('.rc-scroll-hint');
+    if (!hints.length) return;
+    function update(){
+      hints.forEach(function(h){
+        var s = h.previousElementSibling;
+        if (s && s.scrollWidth > s.clientWidth + 1) h.classList.add('show');
+        else h.classList.remove('show');
+      });
+    }
+    window.addEventListener('resize', update, { passive: true });
+    update();
   })();
 </script>
 </body>

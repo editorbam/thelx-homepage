@@ -246,7 +246,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   gap: 2.4rem;
   opacity: 0; pointer-events: none;
   transition: opacity .35s ease;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 2rem 1rem;
 }
+/* 항목이 화면보다 길면(가로 모드 등) 중앙정렬 대신 스크롤 — margin:auto가 공간 있을 땐 중앙, 넘칠 땐 처음/끝 도달 보장 */
+.mobile-menu a:first-child { margin-top: auto; }
+.mobile-menu a:last-child { margin-bottom: auto; }
 .mobile-menu.open { opacity: 1; pointer-events: auto; }
 .mobile-menu a {
   font-size: clamp(1.6rem, 8vw, 2.8rem); font-weight: 200;
@@ -1553,6 +1558,7 @@ footer {
 .footer-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
 .footer-links a { font-size:12px; font-weight:300; color:rgba(255,255,255,.28); transition:color .2s; }
 .footer-links a:hover { color:rgba(255,255,255,.65); }
+.footer-links .footer-cms span { color:rgba(255,255,255,.5); }
 .footer-copy { font-size:11px; color:rgba(255,255,255,.18); font-weight:300; width:100%; }
 
 /* ============================
@@ -2496,9 +2502,12 @@ body.pd-open { overflow: hidden; }
     </div>
     <ul class="footer-links">
       <li><a href="index.html#why-story">브랜드</a></li>
+      <li><a href="technology.html">기술</a></li>
       <li><a href="index.html#products">제품</a></li>
+      <li><a href="recommend.html">필름추천</a></li>
       <li><a href="index.html#store-locator">시공점 찾기</a></li>
       <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="http://sgp.isolargard.com/" target="_blank" rel="noopener noreferrer" class="footer-cms">총판·파트너 로그인 <span>(SGP CMS)</span></a></li>
     </ul>
     <p class="footer-legal">주식회사 에스지이피 · 대표 김창완 · 사업자등록번호 131-86-58566</p>
     <p class="footer-legal">인천광역시 남동구 논현동 767-10 · 고객센터 1899-3280 · isolargard@gmail.com</p>

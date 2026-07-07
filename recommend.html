@@ -319,7 +319,8 @@
       .rc-chart .ch-fade, .rc-chart .rc-conclusion { opacity: 1; transform: none; }
       .rc-chart #chLx, .rc-chart #chAbs { stroke-dashoffset: 0; }
       .rc-chart #chArea { opacity: 1; }
-      .rc-chart #chLx { animation: none; }
+      /* 힌트는 JS(.show)가 못 켜주므로, 표·그래프가 잘리는 모바일 폭에서는 항상 표시 */
+      @media (max-width: 768px) { .rc-scroll-hint { display: block; } }
     </style>
   </noscript>
 </head>
@@ -582,19 +583,22 @@
     io.observe(chart);
   })();
 
-  /* 스크롤 힌트 — 바로 앞 컨테이너가 실제로 가로 스크롤될 때만 표시 */
+  /* 스크롤 힌트 — 앞쪽의 스크롤 컨테이너(.rc-table-wrap/.rc-chart-scroll)가 실제로 가로 스크롤될 때만 표시 */
   (function(){
     var hints = document.querySelectorAll('.rc-scroll-hint');
     if (!hints.length) return;
     function update(){
       hints.forEach(function(h){
         var s = h.previousElementSibling;
+        while (s && !s.matches('.rc-table-wrap, .rc-chart-scroll')) s = s.previousElementSibling;
         if (s && s.scrollWidth > s.clientWidth + 1) h.classList.add('show');
         else h.classList.remove('show');
       });
     }
     window.addEventListener('resize', update, { passive: true });
     update();
+    /* 웹폰트 적용 후 표 폭이 달라질 수 있어 한 번 더 측정 */
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
   })();
 </script>
 </body>

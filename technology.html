@@ -470,8 +470,17 @@
             <marker id="ahHeatR" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff7a4c"/></marker>
             <marker id="ahReflR" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ffffff"/></marker>
           </defs>
+          <!-- 태양 — 화살표와 같은 선 문법 (원+짧은 광선 획) -->
+          <g stroke="#ff9a6c" stroke-width="3.5" stroke-linecap="round">
+            <circle cx="690" cy="94" r="13" fill="rgba(255,154,108,.16)"/>
+            <line x1="708" y1="94" x2="714" y2="94"/><line x1="702.7" y1="81.3" x2="707" y2="77"/>
+            <line x1="690" y1="76" x2="690" y2="70"/><line x1="677.3" y1="81.3" x2="673" y2="77"/>
+            <line x1="672" y1="94" x2="666" y2="94"/><line x1="677.3" y1="106.7" x2="673" y2="111"/>
+            <line x1="702.7" y1="106.7" x2="707" y2="111"/>
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="2.4s" repeatCount="indefinite"/>
+          </g>
           <line x1="668" y1="120" x2="552" y2="256" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
-          <text x="690" y="98" fill="#ff9a6c" font-size="24" font-weight="600" letter-spacing="1.5" text-anchor="middle" font-family="inherit">태양열</text>
+          <text x="690" y="52" fill="#ff9a6c" font-size="24" font-weight="600" letter-spacing="1.5" text-anchor="middle" font-family="inherit">태양열</text>
           <line x1="548" y1="254" x2="442" y2="104" stroke="#ffffff" stroke-width="8" stroke-linecap="round" marker-end="url(#ahReflR)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
           <circle cx="550" cy="255" r="8" fill="#fff"><animate attributeName="opacity" values="0;.75;0" dur="1.3s" repeatCount="indefinite"/><animate attributeName="r" values="5;14;5" dur="1.3s" repeatCount="indefinite"/></circle>
         </svg>
@@ -492,8 +501,17 @@
             <marker id="ahHeatA" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff7a4c"/></marker>
             <marker id="ahTransA" markerWidth="6" markerHeight="6" refX="4.5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#ff4a2c"/></marker>
           </defs>
+          <!-- 태양 — 화살표와 같은 선 문법 (원+짧은 광선 획) -->
+          <g stroke="#ff9a6c" stroke-width="3.5" stroke-linecap="round">
+            <circle cx="751" cy="82" r="13" fill="rgba(255,154,108,.16)"/>
+            <line x1="769" y1="82" x2="775" y2="82"/><line x1="763.7" y1="69.3" x2="768" y2="65"/>
+            <line x1="751" y1="64" x2="751" y2="58"/><line x1="738.3" y1="69.3" x2="734" y2="65"/>
+            <line x1="733" y1="82" x2="727" y2="82"/><line x1="738.3" y1="94.7" x2="734" y2="99"/>
+            <line x1="763.7" y1="94.7" x2="768" y2="99"/>
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="2.4s" repeatCount="indefinite"/>
+          </g>
           <line x1="725" y1="104" x2="552" y2="252" stroke="#ff7a4c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahHeatA)" stroke-dasharray="16 12"><animate attributeName="stroke-dashoffset" from="28" to="0" dur="0.9s" repeatCount="indefinite"/></line>
-          <text x="748" y="82" fill="#ff9a6c" font-size="24" font-weight="600" letter-spacing="1.5" text-anchor="middle" font-family="inherit">태양열</text>
+          <text x="751" y="40" fill="#ff9a6c" font-size="24" font-weight="600" letter-spacing="1.5" text-anchor="middle" font-family="inherit">태양열</text>
           <line x1="548" y1="258" x2="500" y2="330" stroke="#ff4a2c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahTransA)" stroke-dasharray="14 11" opacity="0.5"><animate attributeName="stroke-dashoffset" from="25" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
         </svg>
       </div>

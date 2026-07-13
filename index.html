@@ -443,7 +443,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   opacity: 0; animation: fadeUp 1s .4s ease forwards;
 }
 .hero-title {
-  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+  /* 신념 문장(긴 카피) 기준 스케일 — 짧은 카피 시절의 5.6vw/5.4rem에서 축소 */
+  font-size: clamp(2.4rem, 4.6vw, 4.4rem);
   font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; color: #fff;
   text-shadow: 0 2px 32px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.4);
   opacity: 0; animation: fadeUp 1s .7s ease forwards;
@@ -1903,7 +1904,7 @@ footer {
   .hero-label { display:none; }
   /* Hero badge — 화면 너비 안에 머물도록 (PC clamp min 420px가 모바일에서 오버플로) */
   .hero-lx { width: 88vw; min-width:0; }
-  .hero-title { font-size: clamp(2rem, 8.5vw, 3rem); }
+  .hero-title { font-size: clamp(1.8rem, 7.6vw, 2.6rem); }
   .hero-tagline { font-size: .92rem; }
   .hero-btns { margin-top: 2.2rem; }
 .how-pin { gap:2rem; padding:0 1.5rem; }

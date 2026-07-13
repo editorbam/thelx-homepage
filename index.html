@@ -449,12 +449,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   opacity: 0; animation: fadeUp 1s .7s ease forwards;
 }
 .hero-title em { font-style: normal; font-weight: 600; }
-/* 히어로 도입줄 — 숫자는 story.html '540시간'과 동일해야 함 (브랜드 스토리 확정 수치) */
-.hero-title .line-year {
-  display: block; font-size: .42em; font-weight: 400;
-  letter-spacing: .02em; color: rgba(255,255,255,.85);
-  margin-bottom: .55em;
-}
 .hero-sub {
   font-size: .98rem; font-weight: 400; color: rgba(255,255,255,.95);
   text-shadow:
@@ -464,25 +458,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   margin-top: 1.8rem; line-height: 1.8;
   opacity: 0; animation: fadeUp 1s 1s ease forwards;
 }
-/* 거실 버전 — 인지 다리 (hook 해소) */
-.hero-bridge {
-  font-size: clamp(1.3rem, 2.1vw, 1.75rem);
-  font-weight: 400;
-  color: rgba(255,255,255,.92);
-  margin-top: 1.6rem;
-  letter-spacing: -0.005em;
-  text-shadow:
-    0 0 16px rgba(0,0,0,.65),
-    0 1px 6px rgba(0,0,0,.85);
-  opacity: 0;
-  animation: fadeUp 1s 1.05s ease forwards;
-}
 /* 거실 버전 — 카테고리 선언 (가장 작게) */
 .hero-tagline {
   font-size: clamp(.98rem, 1.4vw, 1.2rem);
   font-weight: 300;
   color: rgba(255,255,255,.62);
-  margin-top: 0.85rem;
+  margin-top: 1.7rem; /* 브리지 제거 후 h1과의 간격 보정 */
   letter-spacing: 0.02em;
   text-shadow:
     0 0 12px rgba(0,0,0,.6),
@@ -1923,7 +1904,6 @@ footer {
   /* Hero badge — 화면 너비 안에 머물도록 (PC clamp min 420px가 모바일에서 오버플로) */
   .hero-lx { width: 88vw; min-width:0; }
   .hero-title { font-size: clamp(2rem, 8.5vw, 3rem); }
-  .hero-bridge { font-size: 1.2rem; margin-top: 1.2rem; }
   .hero-tagline { font-size: .92rem; }
   .hero-btns { margin-top: 2.2rem; }
 .how-pin { gap:2rem; padding:0 1.5rem; }
@@ -2566,10 +2546,9 @@ body.pd-open { overflow: hidden; }
     <div class="hero-copy" id="heroCopy">
       <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain · Since 1985</p>
       <h1 class="hero-title">
-        <span class="line-year">1년의 540시간,</span>
-        하루 90분의 <em>거실</em>.
+        차 안에서 보내는 시간은<br>
+        <em>인생의 일부</em>다.
       </h1>
-      <p class="hero-bridge">매일 들어가는 공간.</p>
       <p class="hero-tagline">차 안을 공간으로 설계한 최초의 필름</p>
     </div>
     <div class="hero-scroll-hint">
@@ -2596,11 +2575,12 @@ body.pd-open { overflow: hidden; }
   <div class="why-bg-overlay"></div>
 
   <div class="why-teaser fi">
-    <p class="why-eyebrow">우리가 믿는 것</p>
+    <p class="why-eyebrow">우리가 믿는 이유</p>
 
     <h2 class="why-belief">
-      차 안에서 보내는 시간은<br>
-      인생의 일부다.
+      <!-- 숫자는 story.html '540시간'과 동일해야 함 (브랜드 스토리 확정 수치) -->
+      1년의 540시간,<br>
+      하루 90분의 거실.
     </h2>
 
     <p class="why-teaser-bridge">

@@ -2305,14 +2305,14 @@ body.pd-open { overflow: hidden; }
                 <span class="cf-check-price">150<i>만</i></span>
               </span>
             </div>
-            <div class="cf-check active" data-pos="일반 썬루프">
+            <div class="cf-check" data-pos="일반 썬루프">
               <span class="cf-check-box"></span>
               <span class="cf-check-text">
                 <span class="cf-check-name">일반 썬루프</span>
                 <span class="cf-check-price">30<i>만</i></span>
               </span>
             </div>
-            <div class="cf-check active" data-pos="파노라마 썬루프">
+            <div class="cf-check" data-pos="파노라마 썬루프">
               <span class="cf-check-box"></span>
               <span class="cf-check-text">
                 <span class="cf-check-name">파노라마 썬루프</span>
@@ -2854,7 +2854,7 @@ setTimeout(() => {
   const state = {
     car: 'sedan',
     mode: 'simple', // 'simple' | 'custom'
-    positions: new Set(POS_LIST),
+    positions: new Set(['전면', '측·후면']), /* 기본=신차 표준 조합 240만 — 썬루프는 소비자가 직접 추가(비현실적 풀패키지 앵커 회피, 2026-07-14) */
     product: 'LX',
     positionProducts: {
       '전면': 'LX',

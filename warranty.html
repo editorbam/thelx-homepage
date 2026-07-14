@@ -97,8 +97,8 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans KR', -apple-system, 'Helvetica Neue', sans-serif;
-      background: #faf9f6;
-      color: #1d1d1f;
+      background: #0a0a0a;
+      color: #f5f5f7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -111,21 +111,21 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.1rem clamp(1.4rem, 3vw, 3rem);
-      background: rgba(250,249,246,.82);
+      background: rgba(10,10,10,.72);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: .5px solid rgba(0,0,0,.08);
+      border-bottom: .5px solid rgba(255,255,255,.08);
     }
     .tech-nav-brand {
       font-size: 14px; font-weight: 700; letter-spacing: .2em;
-      color: #0a0a0a; text-decoration: none; transition: opacity .2s;
+      color: #fff; text-decoration: none; transition: opacity .2s;
     }
     .tech-nav-brand:hover { opacity: .65; }
     .tech-nav-back {
       font-size: 12px; font-weight: 500; letter-spacing: .04em;
-      color: rgba(0,0,0,.55); text-decoration: none;
+      color: rgba(255,255,255,.55); text-decoration: none;
       display: inline-flex; align-items: center; gap: .4rem; transition: color .2s;
     }
-    .tech-nav-back:hover { color: #0a0a0a; }
+    .tech-nav-back:hover { color: #fff; }
 
     /* ===========================
        HERO
@@ -142,21 +142,17 @@
     .tech-h1 {
       font-size: clamp(2.1rem, 4.6vw, 3.8rem);
       font-weight: 700; line-height: 1.28; letter-spacing: -0.03em;
-      color: #111; margin: 0; word-break: keep-all;
+      color: #fff; margin: 0; word-break: keep-all;
     }
     .tech-h1-latin {
-      font-family: 'Didot', 'Baskerville', 'Times New Roman', Georgia, serif; /* 증서 세리프 — 시스템 폰트(외부 폰트 아님) */
-      font-weight: 400;
-      font-size: clamp(1.9rem, 4.3vw, 3.6rem);
-      letter-spacing: .1em; line-height: 1.3; word-break: normal;
-    }
-    .wr-cert-eyebrow {
-      font-size: 11px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
-      color: #a8863f; margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
+      font-family: 'Helvetica Neue', Arial, sans-serif; /* 라틴 전용 대제목 — 나브 워드마크와 같은 결 (외부 폰트 아님) */
+      font-weight: 200;
+      font-size: clamp(1.7rem, 3.9vw, 3.4rem);
+      letter-spacing: .18em; line-height: 1.25; word-break: normal;
     }
     .tech-lead {
       font-size: clamp(1.05rem, 1.25vw, 1.2rem);
-      line-height: 1.85; color: #6e6e73;
+      line-height: 1.85; color: rgba(255,255,255,.62);
       max-width: 600px; margin: clamp(2rem, 4vh, 3rem) auto 0;
       word-break: keep-all; font-weight: 400;
     }
@@ -171,30 +167,29 @@
       gap: clamp(1rem, 2vw, 1.5rem);
     }
     .vf-card {
-      border: .5px solid rgba(0,0,0,.07); border-radius: 18px;
+      border: .5px solid rgba(255,255,255,.14); border-radius: 18px;
       padding: clamp(1.8rem, 3vw, 2.4rem) clamp(1.4rem, 2.4vw, 1.9rem);
-      background: #fff;
-      box-shadow: 0 14px 36px rgba(10,10,10,.05);
+      background: rgba(255,255,255,.02);
       display: flex; flex-direction: column;
     }
     .vf-num {
       font-size: 12px; font-weight: 700; letter-spacing: .18em;
-      color: #a8863f; margin: 0 0 1.1rem;
+      color: rgba(156,198,238,.85); margin: 0 0 1.1rem;
     }
     .vf-title {
       font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700;
-      color: #111; letter-spacing: -0.015em; margin: 0 0 .9rem;
+      color: #fff; letter-spacing: -0.015em; margin: 0 0 .9rem;
       line-height: 1.4; word-break: keep-all;
     }
     .vf-body {
       font-size: clamp(.92rem, 1.05vw, 1rem); line-height: 1.8;
-      color: #6e6e73; word-break: keep-all;
+      color: rgba(255,255,255,.62); word-break: keep-all;
       margin: 0 0 1.4rem; flex: 1;
     }
-    .vf-body strong { color: #111; font-weight: 600; }
+    .vf-body strong { color: #fff; font-weight: 600; }
     .vf-link {
       font-size: .9rem; font-weight: 600; letter-spacing: .02em;
-      color: #0a0a0a; text-decoration: none;
+      color: #fff; text-decoration: none;
       display: inline-flex; align-items: center; gap: .4rem;
       transition: opacity .2s;
     }
@@ -209,15 +204,15 @@
     }
     .tech-heart-label {
       font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
-      color: #a8863f; font-weight: 600;
+      color: rgba(255,255,255,.42); font-weight: 600;
       margin: 0 0 clamp(1.2rem, 2.4vh, 1.8rem);
     }
     .tech-heart h2 {
       font-size: clamp(2.2rem, 5.4vw, 4rem);
       font-weight: 700; line-height: 1.22; letter-spacing: -0.035em;
-      color: #111; margin: 0; word-break: keep-all;
+      color: #fff; margin: 0; word-break: keep-all;
     }
-    .tech-heart .muted { color: rgba(0,0,0,.3); }
+    .tech-heart .muted { color: rgba(255,255,255,.32); }
 
     /* ===========================
        보증 숫자
@@ -232,16 +227,16 @@
     }
     .tech-stat-num {
       font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-      color: #111; letter-spacing: -0.03em; line-height: 1;
+      color: #fff; letter-spacing: -0.03em; line-height: 1;
     }
     .tech-stat-label {
-      font-size: clamp(.8rem, .95vw, .9rem); color: #6e6e73;
+      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(255,255,255,.5);
       margin: .7rem 0 0; font-weight: 500; letter-spacing: .02em;
     }
     .tech-stat-src {
       max-width: 600px; margin: clamp(2rem,4vh,3rem) auto 0;
       font-size: clamp(.78rem,.9vw,.85rem); line-height: 1.7;
-      color: #8a8a8e; word-break: keep-all;
+      color: rgba(255,255,255,.35); word-break: keep-all;
     }
 
     /* 제품별 보증 칩 */
@@ -252,11 +247,11 @@
     }
     .tech-proof-chip {
       font-size: clamp(.78rem,.9vw,.86rem); font-weight: 500;
-      color: #6e6e73; letter-spacing: .02em;
-      padding: .6rem 1.2rem; border: .5px solid rgba(0,0,0,.14);
-      border-radius: 980px; word-break: keep-all; background: #fff;
+      color: rgba(255,255,255,.62); letter-spacing: .02em;
+      padding: .6rem 1.2rem; border: .5px solid rgba(255,255,255,.16);
+      border-radius: 980px; word-break: keep-all;
     }
-    .tech-proof-chip b { color: #111; font-weight: 700; }
+    .tech-proof-chip b { color: #fff; font-weight: 700; }
 
     /* ===========================
        보증 범위 (포함 / 제외)
@@ -268,33 +263,33 @@
       gap: clamp(1rem, 2.5vw, 2rem);
     }
     .wr-scope-card {
-      border: .5px solid rgba(0,0,0,.1); border-radius: 18px;
+      border: .5px solid rgba(255,255,255,.14); border-radius: 18px;
       padding: clamp(1.8rem, 3.4vw, 2.4rem) clamp(1.4rem, 2.6vw, 2rem);
-      background: #fff; box-shadow: 0 14px 36px rgba(10,10,10,.04);
+      background: rgba(255,255,255,.02);
     }
-    .wr-scope-card.incl { border-color: rgba(168,134,63,.45); background: rgba(168,134,63,.05); }
+    .wr-scope-card.incl { border-color: rgba(120,180,235,.4); background: rgba(80,150,220,.05); }
     .wr-scope-label {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: #8a8a8e; margin: 0 0 1.2rem;
+      color: rgba(255,255,255,.42); margin: 0 0 1.2rem;
     }
-    .wr-scope-card.incl .wr-scope-label { color: #a8863f; }
+    .wr-scope-card.incl .wr-scope-label { color: rgba(156,198,238,.85); }
     .wr-scope-card ul { list-style: none; }
     .wr-scope-card li {
       font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.75;
-      color: #3d3d40; word-break: keep-all;
+      color: rgba(255,255,255,.72); word-break: keep-all;
       padding: .45rem 0 .45rem 1.5rem; position: relative;
     }
     .wr-scope-card.incl li::before {
-      content: "✓"; position: absolute; left: 0; color: #a8863f; font-weight: 700;
+      content: "✓"; position: absolute; left: 0; color: #7cc0ff; font-weight: 700;
     }
     .wr-scope-card.excl li::before {
-      content: "—"; position: absolute; left: 0; color: rgba(0,0,0,.32); font-weight: 700;
+      content: "—"; position: absolute; left: 0; color: rgba(255,255,255,.35); font-weight: 700;
     }
     .wr-scope-note {
       max-width: 880px; margin: 0 auto;
       padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
       font-size: clamp(.8rem, .95vw, .88rem); line-height: 1.7;
-      color: #8a8a8e; text-align: center; word-break: keep-all;
+      color: rgba(255,255,255,.4); text-align: center; word-break: keep-all;
     }
 
     /* ===========================
@@ -306,20 +301,20 @@
     }
     .tech-chapter-title {
       font-size: clamp(1.3rem, 1.9vw, 1.75rem);
-      font-weight: 700; color: #111; letter-spacing: -0.02em;
+      font-weight: 700; color: #fff; letter-spacing: -0.02em;
       margin: 0 0 1.2rem; line-height: 1.4; word-break: keep-all;
     }
     .tech-chapter-body {
       font-size: clamp(1.05rem, 1.2vw, 1.18rem);
-      line-height: 1.85; color: #3d3d40;
+      line-height: 1.85; color: rgba(255,255,255,.72);
       margin: 0; word-break: keep-all; letter-spacing: -0.005em; font-weight: 400;
     }
-    .tech-chapter-body strong { color: #111; font-weight: 700; }
+    .tech-chapter-body strong { color: #fff; font-weight: 700; }
     .tech-declaration {
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
-      font-weight: 700; color: #111; line-height: 1.55;
+      font-weight: 700; color: #fff; line-height: 1.55;
       margin: 1.8rem 0 0; padding: 0 0 0 1.4rem;
-      border-left: 3px solid #a8863f; letter-spacing: -0.012em; word-break: keep-all;
+      border-left: 3px solid #fff; letter-spacing: -0.012em; word-break: keep-all;
     }
 
     /* ===========================
@@ -330,7 +325,7 @@
     }
     .tech-coda h2 {
       font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
-      color: #111; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
+      color: #fff; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
     }
     .tech-cta {
       display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
@@ -342,17 +337,17 @@
       text-decoration: none; padding: .9rem 1.9rem; border-radius: 980px;
       transition: background .3s, border-color .3s, color .3s, opacity .3s;
     }
-    .tech-cta .primary { background: #0a0a0a; color: #fff; }
+    .tech-cta .primary { background: #fff; color: #0a0a0a; }
     .tech-cta .primary:hover { opacity: .85; }
-    .tech-cta .ghost { border: 1px solid rgba(0,0,0,.28); color: #0a0a0a; }
-    .tech-cta .ghost:hover { background: rgba(0,0,0,.05); }
+    .tech-cta .ghost { border: 1px solid rgba(255,255,255,.32); color: #fff; }
+    .tech-cta .ghost:hover { background: rgba(255,255,255,.08); }
 
     .tech-footer {
       padding: 3rem 2rem 2.5rem; text-align: center;
-      border-top: .5px solid rgba(0,0,0,.08);
+      border-top: .5px solid rgba(255,255,255,.08);
     }
-    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #0a0a0a; margin: 0 0 .6rem; }
-    .tech-footer-copy { font-size: 11px; color: rgba(0,0,0,.42); letter-spacing: .04em; margin: 0; }
+    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #fff; margin: 0 0 .6rem; }
+    .tech-footer-copy { font-size: 11px; color: rgba(255,255,255,.38); letter-spacing: .04em; margin: 0; }
 
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
@@ -404,7 +399,6 @@
 <main>
 <!-- HERO -->
 <header class="tech-hero">
-  <p class="wr-cert-eyebrow">Certified by THE LX</p>
   <h1 class="tech-h1 tech-h1-latin">AUTHENTICITY ·<br>WARRANTY</h1>
   <p class="tech-lead">
     어떤 필름이 시공되는지, 그 약속이 몇&nbsp;년짜리인지.<br>

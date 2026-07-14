@@ -2,9 +2,9 @@
 """
 THE LX 시공점 LocalBusiness 스키마 빌더
 ─────────────────────────────────────────
-index.html 안의 STORE_DATA(JS 변수)를 단일 진실 소스로 읽어
+stores.html 안의 STORE_DATA(JS 변수)를 단일 진실 소스로 읽어
 schema.org ItemList(AutomotiveBusiness 437건) JSON-LD를 생성하고
-index.html의 BUILD 마커 사이에 삽입한다.
+stores.html의 BUILD 마커 사이에 삽입한다.
 
 실행:
     cd "홈페이지 최종 수정판"
@@ -23,14 +23,14 @@ import json
 import sys
 from pathlib import Path
 
-HTML_FILE = Path(__file__).parent / "index.html"
+HTML_FILE = Path(__file__).parent / "stores.html"  # 2026-07-14 시공점 목록 페이지 분리로 대상 이동
 BASE_URL = "https://isolargard.com/"
 MARKER_START = "<!-- BUILD:STORE_SCHEMA:START -->"
 MARKER_END = "<!-- BUILD:STORE_SCHEMA:END -->"
 
 
 def extract_store_data(html: str) -> list[dict]:
-    """index.html에서 STORE_DATA JS 배열 추출 → Python list."""
+    """stores.html에서 STORE_DATA JS 배열 추출 → Python list."""
     m = re.search(r"const\s+STORE_DATA\s*=\s*(\[.*?\]);", html, re.DOTALL)
     if not m:
         sys.exit("ERROR: STORE_DATA를 index.html에서 찾을 수 없습니다.")

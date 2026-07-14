@@ -886,11 +886,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   word-break:keep-all;
 }
 @media (max-width:768px) {
-  .cf-banner { aspect-ratio:4/3; }
+  .cf-banner { aspect-ratio:4/3 !important; } /* 인라인 21/10이 이 규칙을 덮어써 배너가 낮아지고 텍스트가 상단 로고와 겹치는 문제 방지 */
   .cf-banner-text { right:auto; left:1.25rem; max-width:calc(100% - 2.5rem); top:auto; bottom:1.5rem; transform:none; }
   .cf-banner-title { font-size:clamp(1.5rem,7vw,2.1rem); }
   .cf-banner-sub { font-size:.92rem; }
   .cf-banner-sub br { display:none; }
+  .cf-prod-tag { font-size:8px; letter-spacing:.06em; white-space:nowrap; } /* 390px 2열 그리드에서 FLAGSHIP · 5 LAYER 한 줄 수용 */
 }
 
 /* Floating white card */
@@ -2263,7 +2264,7 @@ body.pd-open { overflow: hidden; }
     <div class="cf-banner-text">
       <p class="cf-banner-eyebrow">Pricing</p>
       <h1 class="cf-banner-title">시공 견적.</h1>
-      <p class="cf-banner-sub">차종, 부위, 제품을 선택하면<br>패키지 금액이 즉시 계산됩니다.</p>
+      <p class="cf-banner-sub">차종, 부위, 제품을 선택하면 <br>패키지 금액이 즉시 계산됩니다.</p>
     </div>
   </div>
 
@@ -2369,7 +2370,7 @@ body.pd-open { overflow: hidden; }
       <div class="cf-total" id="cfTotal">
         <p class="cf-total-eyebrow">선택한 패키지</p>
         <p class="cf-total-product" id="cfTotalProduct">THE LX</p>
-        <p class="cf-total-positions" id="cfTotalPositions">전면 · 측·후면 · 일반 썬루프 · 파노라마 썬루프</p>
+        <p class="cf-total-positions" id="cfTotalPositions">전면 · 측·후면 · 일반&nbsp;썬루프 · 파노라마&nbsp;썬루프</p>
         <div class="cf-total-breakdown" id="cfTotalBreakdown"></div>
 
         <div class="cf-total-divider"></div>
@@ -2546,7 +2547,7 @@ body.pd-open { overflow: hidden; }
     </ul>
     <p class="footer-legal">주식회사 에스지이피 · 대표 김창완 · 사업자등록번호 131-86-58566</p>
     <p class="footer-legal">인천광역시 남동구 논현동 767-10 · 고객센터 1899-3280 · isolargard@gmail.com</p>
-    <p class="footer-copy">© 2026 THE LX. All rights reserved. · Solar Gard Premium · Saint-Gobain Group</p>
+    <p class="footer-copy">© 2026 THE LX. All rights reserved. · Solar Gard Premium · <span style="white-space:nowrap">Saint-Gobain Group</span></p>
   </div>
 </footer>
 
@@ -2997,7 +2998,7 @@ setTimeout(() => {
     if (state.mode === 'simple') {
       totalProduct.textContent = NAMES[state.product];
       const list = Array.from(state.positions);
-      totalPositions.textContent = list.length ? list.join(' · ') : '시공 부위를 선택해주세요';
+      totalPositions.textContent = list.length ? list.map(n => n.replace(/ /g, ' ')).join(' · ') : '시공 부위를 선택해주세요';
     } else {
       renderBreakdown();
     }

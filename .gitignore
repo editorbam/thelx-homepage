@@ -27,3 +27,4 @@ lx-film-original.jpg
 # 이미지 압축 원본 백업 (로컬 전용)
 _img-backup/
 _media-backup/
+__pycache__/

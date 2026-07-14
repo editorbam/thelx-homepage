@@ -26,7 +26,7 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
         { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
-        { label: '세계특허',   value: 'WO0961339A1 / 미국특허 551304', pct: null },
+        { label: '세계특허',   value: 'WO2004042435 / 미국특허 US7709095', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '10년', pct: null },

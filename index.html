@@ -2259,6 +2259,22 @@ body.pd-open { overflow: hidden; }
   transition:opacity .2s;
 }
 .sl-cta-btn:hover { opacity:.8; }
+
+/* 투톤 스플릿 (2026-07-14 리디자인 — 좌 카피/우 도구, 시안 C안 확정) */
+#store-locator .sl-inner { max-width:1100px; } /* 좌 칼럼에 '437개 시공점' 한 줄 수용 */
+.sl-split { display:grid; grid-template-columns:minmax(240px,1fr) 2fr; gap:clamp(2rem,5vw,4.5rem); align-items:start; }
+.sl-left { border-right:.5px solid rgba(0,0,0,.1); padding-right:clamp(1.5rem,3vw,3rem); }
+.sl-head-eyebrow { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gray-3); }
+.sl-big-num { font-size:clamp(3.4rem,6vw,5.6rem); font-weight:300; letter-spacing:-.04em; color:var(--black); line-height:1; margin-top:1rem; white-space:nowrap; }
+.sl-big-num small { font-size:.32em; font-weight:500; letter-spacing:0; color:var(--gray-3); margin-left:.3rem; }
+.sl-head-title { font-size:1.05rem; font-weight:600; color:var(--black); margin-top:1.1rem; word-break:keep-all; }
+.sl-head-sub { font-size:.9rem; color:var(--gray-3); margin-top:.5rem; line-height:1.65; word-break:keep-all; }
+.sl-right .sl-cta-wrap { text-align:left; }
+@media (max-width:768px){
+  .sl-split { grid-template-columns:1fr; gap:1.8rem; }
+  .sl-left { border-right:none; border-bottom:.5px solid rgba(0,0,0,.1); padding:0 0 1.5rem; }
+  .sl-right .sl-cta-wrap { text-align:center; }
+}
 .sl-empty {
   grid-column:1/-1; text-align:center;
   padding:4rem 0; color:var(--gray-3); font-size:.9rem; font-weight:300;
@@ -3315,7 +3331,15 @@ body.pd-open { overflow: hidden; }
   </div>
 
   <div class="sl-inner">
-    <div class="sl-controls fi">
+    <div class="sl-split fi">
+      <div class="sl-left">
+        <p class="sl-head-eyebrow">Official Network</p>
+        <p class="sl-big-num">437<small>개 시공점</small></p>
+        <p class="sl-head-title">어디서나 같은 필름,<br>같은 보증.</p>
+        <p class="sl-head-sub">THE LX는 공식 인증 시공점을 통해서만 시공됩니다.</p>
+      </div>
+      <div class="sl-right">
+        <div class="sl-controls fi">
       <div class="sl-search-wrap">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.3"/>
@@ -3346,8 +3370,11 @@ body.pd-open { overflow: hidden; }
       <button class="sl-rtab" data-r="세종특별자치시">세종 <span class="sl-cnt">1</span></button>
     </div>
 
-    <div class="sl-cta-wrap fi">
-      <a class="sl-cta-btn" href="stores.html">437개 시공점 전체 보기 <span aria-hidden="true">→</span></a>
+    
+        <div class="sl-cta-wrap fi">
+          <a class="sl-cta-btn" href="stores.html">437개 시공점 전체 보기 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

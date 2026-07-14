@@ -1115,10 +1115,8 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 }
 
 /* ── 우측 패널: 조합 모드 분해 표시 ── */
-.cf-total-breakdown { display:none; margin-top:1rem; }
-.cf-total.mode-custom .cf-total-product,
-.cf-total.mode-custom .cf-total-positions { display:none; }
-.cf-total.mode-custom .cf-total-breakdown { display:block; }
+.cf-total-breakdown { display:block; margin-top:1.4rem; } /* 간편·조합 두 모드 모두 견적서 내역 표시 (2026-07-14) */
+.cf-total.mode-custom .cf-total-product { display:none; }
 .cf-bd-row {
   display:flex; justify-content:space-between; align-items:baseline;
   padding:.55rem 0;
@@ -1319,10 +1317,6 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 .cf-total-product {
   font-size:1.7rem; font-weight:500; color:var(--black);
   letter-spacing:-0.02em; margin-bottom:.4rem;
-}
-.cf-total-positions {
-  font-size:.85rem; font-weight:300; color:var(--gray-3);
-  line-height:1.7; min-height:2.9rem;
 }
 .cf-total-divider {
   height:.5px; background:rgba(0,0,0,.1);
@@ -2376,7 +2370,6 @@ body.pd-open { overflow: hidden; }
       <div class="cf-total" id="cfTotal">
         <p class="cf-total-eyebrow">선택한 패키지</p>
         <p class="cf-total-product" id="cfTotalProduct">THE LX</p>
-        <p class="cf-total-positions" id="cfTotalPositions">전면 · 측·후면 · 일반&nbsp;썬루프 · 파노라마&nbsp;썬루프</p>
         <div class="cf-total-breakdown" id="cfTotalBreakdown"></div>
 
         <div class="cf-total-divider"></div>
@@ -2880,7 +2873,6 @@ setTimeout(() => {
   const cfCustomBlocks = document.getElementById('cfCustomBlocks');
   const totalNum      = document.getElementById('cfTotalNum');
   const totalProduct  = document.getElementById('cfTotalProduct');
-  const totalPositions= document.getElementById('cfTotalPositions');
   const totalBreakdown= document.getElementById('cfTotalBreakdown');
   if (!totalNum) return;
 
@@ -2981,19 +2973,20 @@ setTimeout(() => {
     });
   }
 
+  /* 견적서 내역 — 간편 모드는 부위+금액, 조합 모드는 부위+제품+금액 (2026-07-14 두 모드 공용화) */
   function renderBreakdown() {
     totalBreakdown.innerHTML = '';
     let any = false;
     POS_LIST.forEach(pos => {
       if (!state.positions.has(pos)) return;
-      const product = state.positionProducts[pos];
+      const product = state.mode === 'custom' ? state.positionProducts[pos] : state.product;
       const p = priceForPos(pos, product);
       if (p == null) return;
       any = true;
       const row = document.createElement('div');
       row.className = 'cf-bd-row';
       row.innerHTML = `<span class="cf-bd-pos">${pos.replace(/ /g, '\u00A0')}</span>` +
-                      `<span class="cf-bd-prod">${NAMES[product]}</span>` +
+                      (state.mode === 'custom' ? `<span class="cf-bd-prod">${NAMES[product]}</span>` : '') +
                       `<span class="cf-bd-price">${p}<i>만</i></span>`;
       totalBreakdown.appendChild(row);
     });
@@ -3005,13 +2998,8 @@ setTimeout(() => {
   function render() {
     if (state.mode === 'simple') {
       totalProduct.textContent = NAMES[state.product];
-      const list = Array.from(state.positions);
-      /* POS_LIST 순서 고정(Set 삽입 순서 무시) + 부위명 내부 공백은 NBSP(\u00A0)로 줄바꿈 방지 */
-      const ordered = POS_LIST.filter(p => state.positions.has(p));
-      totalPositions.textContent = ordered.length ? ordered.map(n => n.replace(/ /g, '\u00A0')).join(' · ') : '시공 부위를 선택해주세요';
-    } else {
-      renderBreakdown();
     }
+    renderBreakdown();
     animateNum(calcTotal());
   }
 

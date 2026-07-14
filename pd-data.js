@@ -222,6 +222,37 @@ const PD_DATA = {
       ]},
     ],
   },
+  galaxie: {
+    name: 'Galaxie',
+    tagline: '가격, 시야, 열 차단의 균형. 부담 없이 시작하는 THE LX의 기본형.',
+    recommendLabel: '왜 Galaxie인가',
+    recommend: 'GPS와 하이패스를 방해하지 않는 전파 친화, 눈부심을 줄인 편안한 시야, 부담 없이 시작하는 균형의 Galaxie.',
+    flagship: false,
+    perf: [
+      /* UV 99 = 공식 표기 PA+++ SPF 285의 환산치(1-1/285 ≈ 99.6%) — 갤럭시 공식 페이지는 % 수치 미표기 */
+      { label: 'UV 차단', pct: 99 },
+      { label: '최대 TSER', pct: 50 },
+      { label: '보증', pct: 50 },
+    ],
+    specs: [
+      { title: '농도별 성능 (VLT · TSER)', rows: [
+        { label: '농도 12 — VLT 13%', value: 'TSER 50%', pct: 50 },
+        { label: '농도 35 — VLT 39%', value: 'TSER 41%', pct: 41 },
+        { label: '농도 50 — VLT 54%', value: 'TSER 35%', pct: 35 },
+      ]},
+      { title: 'UV 성능 · 특성', rows: [
+        { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
+        { label: '필름 타입',  value: '기본형 (Intelligent & Balance)', pct: null },
+        { label: '전파 방해',  value: '없음',              pct: null },
+        { label: '표면 코팅',  value: '스크래치 방지 특허 코팅', pct: null },
+        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+      ]},
+      { title: '보증', rows: [
+        { label: '내구성 보증',    value: '5년', pct: null },
+        { label: '기포·박리 보증', value: '5년', pct: null },
+      ]},
+    ],
+  },
   shield: {
     name: 'LX SHIELD',
     tagline: '긁히면 스스로 메우는 PPF. 자가복원 초고분자 도막.',

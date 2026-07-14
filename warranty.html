@@ -152,7 +152,7 @@
     }
     .wr-cert-eyebrow {
       font-size: 11px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
-      color: #c8a96e; margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
+      color: rgba(255,255,255,.45); margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
     }
     .tech-lead {
       font-size: clamp(1.05rem, 1.25vw, 1.2rem);
@@ -171,14 +171,21 @@
       gap: clamp(1rem, 2vw, 1.5rem);
     }
     .vf-card {
-      border: .5px solid rgba(255,255,255,.14); border-radius: 18px;
+      border: .5px solid rgba(255,255,255,.06); border-radius: 18px;
       padding: clamp(1.8rem, 3vw, 2.4rem) clamp(1.4rem, 2.4vw, 1.9rem);
-      background: rgba(255,255,255,.02);
+      background: #1d1d1f; /* 애플 다크 패널 그레이 */
       display: flex; flex-direction: column;
+      animation: cardFloat 7s ease-in-out infinite;
+    }
+    .vf-card:nth-child(2) { animation-delay: -2.3s; }
+    .vf-card:nth-child(3) { animation-delay: -4.6s; }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
     }
     .vf-num {
       font-size: 12px; font-weight: 700; letter-spacing: .18em;
-      color: #c8a96e; margin: 0 0 1.1rem;
+      color: rgba(255,255,255,.45); margin: 0 0 1.1rem;
     }
     .vf-title {
       font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700;
@@ -267,16 +274,21 @@
       gap: clamp(1rem, 2.5vw, 2rem);
     }
     .wr-scope-card {
-      border: .5px solid rgba(255,255,255,.14); border-radius: 18px;
+      border: .5px solid rgba(255,255,255,.06); border-radius: 18px;
       padding: clamp(1.8rem, 3.4vw, 2.4rem) clamp(1.4rem, 2.6vw, 2rem);
-      background: rgba(255,255,255,.02);
+      background: #1d1d1f; /* 애플 다크 패널 그레이 */
+      animation: cardFloat 8s ease-in-out infinite;
     }
-    .wr-scope-card.incl { border-color: rgba(200,169,110,.45); background: rgba(200,169,110,.06); }
+    .wr-scope-card.excl { animation-delay: -3.5s; }
+    @media (prefers-reduced-motion: reduce) {
+      .vf-card, .wr-scope-card { animation: none; }
+    }
+    .wr-scope-card.incl { border-color: rgba(255,255,255,.18); }
     .wr-scope-label {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
       color: rgba(255,255,255,.42); margin: 0 0 1.2rem;
     }
-    .wr-scope-card.incl .wr-scope-label { color: #c8a96e; }
+    .wr-scope-card.incl .wr-scope-label { color: rgba(255,255,255,.65); }
     .wr-scope-card ul { list-style: none; }
     .wr-scope-card li {
       font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.75;
@@ -284,7 +296,7 @@
       padding: .45rem 0 .45rem 1.5rem; position: relative;
     }
     .wr-scope-card.incl li::before {
-      content: "✓"; position: absolute; left: 0; color: #c8a96e; font-weight: 700;
+      content: "✓"; position: absolute; left: 0; color: #fff; font-weight: 700;
     }
     .wr-scope-card.excl li::before {
       content: "—"; position: absolute; left: 0; color: rgba(255,255,255,.35); font-weight: 700;
@@ -318,7 +330,7 @@
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
       font-weight: 700; color: #fff; line-height: 1.55;
       margin: 1.8rem 0 0; padding: 0 0 0 1.4rem;
-      border-left: 3px solid #c8a96e; letter-spacing: -0.012em; word-break: keep-all;
+      border-left: 3px solid #fff; letter-spacing: -0.012em; word-break: keep-all;
     }
 
     /* ===========================

@@ -3022,7 +3022,7 @@ body.pd-open { overflow: hidden; }
             <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="29" r="1.4"/><path d="M14.5 24a8 8 0 0 1 11 0"/><path d="M11 20.5a13 13 0 0 1 18 0"/><path d="M7.5 17a18 18 0 0 1 25 0"/></svg></span><span class="kp-text">GPS·하이패스<br>전파 친화</span></div>
             <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 26h26"/><path d="M13 26a7 7 0 0 1 14 0"/><path d="M20 12v3M11 15l2 2M29 15l-2 2"/></svg></span><span class="kp-text">눈부심 줄인<br>주행</span></div>
             <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c7-9 23-9 30 0-7 9-23 9-30 0Z"/><circle cx="20" cy="20" r="3.8"/></svg></span><span class="kp-text">맑은 광학<br>투명도</span></div>
-            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6l10 4v8c0 7-4.5 11-10 14-5.5-3-10-7-10-14v-8Z"/><path d="M15 19l4 4 7-7"/></svg></span><span class="kp-text">스크래치 방지<br>특허 코팅</span></div>
+            <div class="kp"><span class="kp-ico"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 31 11v8c0 7-5 11-11 14-6-3-11-7-11-14v-8Z"/><path d="M15 20l4 4 7-8"/></svg></span><span class="kp-text">스크래치 방지<br>특허 코팅</span></div>
           </div>
         </div>
       </div>
@@ -3849,312 +3849,9 @@ const prodIO = new IntersectionObserver(entries => {
 const prodSec = document.getElementById('products');
 if (prodSec) prodIO.observe(prodSec);
 
-/* ── PRICING CONFIGURATOR ── */
-(function() {
-  const PRICES = {
-    sedan:   { '전면': 90,  '측·후면': 150, '일반 썬루프': 30, '파노라마 썬루프': 60 },
-    suv:     { '전면': 100, '측·후면': 180, '일반 썬루프': 35, '파노라마 썬루프': 70 },
-    compact: { '전면': 70,  '측·후면': 110, '일반 썬루프': 25, '파노라마 썬루프': null }
-  };
-  const MUL = {
-    'LX':       1.00,
-    'Vogue':    0.72,
-    'Xenith IR':0.78,
-    'Quantum':  0.58,
-    'Titanium': 0.52,
-    'G-LINE':   0.42,
-    'S-LINE':   0.36
-  };
-  const NAMES = {
-    'LX':'THE LX','Vogue':'Vogue','Xenith IR':'Xenith IR',
-    'Quantum':'Quantum','Titanium':'Titanium','G-LINE':'G-LINE','S-LINE':'S-LINE'
-  };
+/* ── PRICING/PPF CONFIGURATOR: index에는 계산기 마크업이 없어(가격 CTA→pricing.html 링크)
+   휴면 상태였던 JS 사본을 제거함(2026-07-14 코드리뷰). 계산기 로직 원본은 pricing.html — 복원 시 그쪽에서 복사할 것 ── */
 
-  const PROD_LIST = ['LX','Vogue','Xenith IR','Quantum','Titanium','G-LINE','S-LINE'];
-  const POS_LIST  = ['전면','측·후면','일반 썬루프','파노라마 썬루프'];
-
-  const state = {
-    car: 'sedan',
-    mode: 'simple', // 'simple' | 'custom'
-    positions: new Set(POS_LIST),
-    product: 'LX',
-    positionProducts: {
-      '전면': 'LX',
-      '측·후면': 'LX',
-      '일반 썬루프': 'LX',
-      '파노라마 썬루프': 'LX'
-    }
-  };
-
-  const checks  = document.querySelectorAll('.cf-check');
-  const segs    = document.querySelectorAll('.cf-seg');
-  const prods   = document.querySelectorAll('.cf-prod');
-  const modeBtns = document.querySelectorAll('.cf-mode-btn');
-  const cfConfig = document.getElementById('cfConfig');
-  const cfTotal  = document.getElementById('cfTotal');
-  const cfCustomBlocks = document.getElementById('cfCustomBlocks');
-  const totalNum      = document.getElementById('cfTotalNum');
-  const totalProduct  = document.getElementById('cfTotalProduct');
-  const totalPositions= document.getElementById('cfTotalPositions');
-  const totalBreakdown= document.getElementById('cfTotalBreakdown');
-  if (!totalNum) return;
-
-  function priceForPos(pos, product) {
-    const base = PRICES[state.car][pos];
-    if (base == null) return null;
-    return Math.round(base * MUL[product] / 5) * 5;
-  }
-
-  function priceForActivePos(pos) {
-    const product = state.mode === 'custom' ? state.positionProducts[pos] : state.product;
-    return priceForPos(pos, product);
-  }
-
-  function calcTotal() {
-    let sum = 0;
-    state.positions.forEach(pos => {
-      const p = priceForActivePos(pos);
-      if (p != null) sum += p;
-    });
-    return sum;
-  }
-
-  function animateNum(target) {
-    const start = parseInt(totalNum.textContent.replace(/,/g,''),10) || 0;
-    const diff = target - start;
-    if (diff === 0) { totalNum.textContent = target.toLocaleString(); return; }
-    const duration = 420;
-    const t0 = performance.now();
-    function step(t) {
-      const k = Math.min(1, (t - t0) / duration);
-      const eased = 1 - Math.pow(1 - k, 3);
-      totalNum.textContent = Math.round(start + diff * eased).toLocaleString();
-      if (k < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function updateCheckPrices() {
-    checks.forEach(c => {
-      const pos = c.dataset.pos;
-      const priceEl = c.querySelector('.cf-check-price');
-      const p = priceForActivePos(pos);
-      if (p == null) {
-        priceEl.innerHTML = 'N/A';
-        c.classList.add('disabled');
-        c.classList.remove('active');
-        state.positions.delete(pos);
-      } else {
-        priceEl.innerHTML = p + '<i>만</i>';
-        c.classList.remove('disabled');
-      }
-    });
-  }
-
-  function buildCustomBlocks() {
-    cfCustomBlocks.innerHTML = '';
-    POS_LIST.forEach(pos => {
-      const block = document.createElement('div');
-      block.className = 'cf-pos-block';
-      block.dataset.pos = pos;
-      const isAvail = PRICES[state.car][pos] != null;
-      const isActive = state.positions.has(pos);
-      if (!isAvail || !isActive) block.classList.add('disabled');
-
-      const head = document.createElement('div');
-      head.className = 'cf-pos-block-head';
-      const name = document.createElement('span');
-      name.className = 'cf-pos-block-name';
-      name.textContent = pos;
-      const price = document.createElement('span');
-      price.className = 'cf-pos-block-price';
-      const p = priceForActivePos(pos);
-      price.innerHTML = p != null ? (p + '<i>만</i>') : 'N/A';
-      head.appendChild(name);
-      head.appendChild(price);
-      block.appendChild(head);
-
-      const grid = document.createElement('div');
-      grid.className = 'cf-pos-prods';
-      PROD_LIST.forEach(prod => {
-        const btn = document.createElement('button');
-        btn.className = 'cf-pos-prod';
-        btn.dataset.pos = pos;
-        btn.dataset.product = prod;
-        btn.textContent = prod === 'LX' ? 'THE LX' : prod;
-        if (state.positionProducts[pos] === prod) btn.classList.add('active');
-        btn.addEventListener('click', () => {
-          state.positionProducts[pos] = prod;
-          buildCustomBlocks();
-          render();
-        });
-        grid.appendChild(btn);
-      });
-      block.appendChild(grid);
-      cfCustomBlocks.appendChild(block);
-    });
-  }
-
-  function renderBreakdown() {
-    totalBreakdown.innerHTML = '';
-    let any = false;
-    POS_LIST.forEach(pos => {
-      if (!state.positions.has(pos)) return;
-      const product = state.positionProducts[pos];
-      const p = priceForPos(pos, product);
-      if (p == null) return;
-      any = true;
-      const row = document.createElement('div');
-      row.className = 'cf-bd-row';
-      row.innerHTML = `<span class="cf-bd-pos">${pos}</span>` +
-                      `<span class="cf-bd-prod">${NAMES[product]}</span>` +
-                      `<span class="cf-bd-price">${p}<i>만</i></span>`;
-      totalBreakdown.appendChild(row);
-    });
-    if (!any) {
-      totalBreakdown.innerHTML = '<p style="font-size:.85rem;color:var(--gray-3);margin-top:.6rem;">시공 부위를 선택해주세요</p>';
-    }
-  }
-
-  function render() {
-    if (state.mode === 'simple') {
-      totalProduct.textContent = NAMES[state.product];
-      const list = Array.from(state.positions);
-      totalPositions.textContent = list.length ? list.join(' · ') : '시공 부위를 선택해주세요';
-    } else {
-      renderBreakdown();
-    }
-    animateNum(calcTotal());
-  }
-
-  function applyMode() {
-    if (state.mode === 'custom') {
-      cfConfig.classList.add('mode-custom');
-      cfTotal.classList.add('mode-custom');
-      buildCustomBlocks();
-    } else {
-      cfConfig.classList.remove('mode-custom');
-      cfTotal.classList.remove('mode-custom');
-    }
-    updateCheckPrices();
-    render();
-  }
-
-  modeBtns.forEach(b => b.addEventListener('click', () => {
-    if (b.classList.contains('active')) return;
-    modeBtns.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    state.mode = b.dataset.mode;
-    applyMode();
-  }));
-
-  segs.forEach(b => b.addEventListener('click', () => {
-    segs.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    state.car = b.dataset.car;
-    updateCheckPrices();
-    if (state.mode === 'custom') buildCustomBlocks();
-    render();
-  }));
-
-  checks.forEach(c => c.addEventListener('click', () => {
-    if (c.classList.contains('disabled')) return;
-    const pos = c.dataset.pos;
-    if (state.positions.has(pos)) {
-      state.positions.delete(pos);
-      c.classList.remove('active');
-    } else {
-      state.positions.add(pos);
-      c.classList.add('active');
-    }
-    if (state.mode === 'custom') buildCustomBlocks();
-    render();
-  }));
-
-  prods.forEach(b => b.addEventListener('click', () => {
-    prods.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    state.product = b.dataset.product;
-    POS_LIST.forEach(pos => state.positionProducts[pos] = state.product);
-    // 사용자가 직접 선택하면 추천 배지 제거
-    document.querySelectorAll('.cf-prod-badge').forEach(el => el.remove());
-    updateCheckPrices();
-    render();
-  }));
-
-  updateCheckPrices();
-  render();
-})();
-
-/* ── PPF MINI CONFIGURATOR ── */
-(function() {
-  const PPF_PRICES = {
-    sedan: { front: 300, half: 220, full: 450 },
-    suv:   { front: 330, half: 242, full: 495 }
-  };
-  const PPF_META = {
-    front: { name: 'FRONT SET', desc: '전면 후드 · 펜더 · 사이드미러' },
-    half:  { name: 'HALF 패키지', desc: '전면 + 도어 상부 · 트렁크' },
-    full:  { name: 'FULL 전체',  desc: '차량 전체 외부 면 보호' }
-  };
-
-  const pState = { car: 'sedan', pkg: 'front' };
-
-  const pSegs   = document.querySelectorAll('.pf-seg');
-  const pOpts   = document.querySelectorAll('.pf-opt');
-  const pNum    = document.getElementById('pfTotalNum');
-  const pPkgEl  = document.getElementById('pfTotalPkg');
-  const pDescEl = document.getElementById('pfTotalDesc');
-  if (!pNum) return;
-
-  function pAnimate(target) {
-    const start = parseInt(pNum.textContent.replace(/,/g,''),10) || 0;
-    const diff = target - start;
-    if (diff === 0) { pNum.textContent = target.toLocaleString(); return; }
-    const t0 = performance.now();
-    function step(t) {
-      const k = Math.min(1, (t - t0) / 420);
-      const eased = 1 - Math.pow(1 - k, 3);
-      pNum.textContent = Math.round(start + diff * eased).toLocaleString();
-      if (k < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function pUpdateOptionPrices() {
-    pOpts.forEach(o => {
-      const key = o.dataset.ppkg;
-      const priceEl = o.querySelector('.pf-opt-price');
-      const p = PPF_PRICES[pState.car][key];
-      priceEl.innerHTML = p + '<i>만</i>';
-    });
-  }
-
-  function pRender() {
-    const meta = PPF_META[pState.pkg];
-    pPkgEl.textContent = meta.name;
-    pDescEl.textContent = meta.desc;
-    pAnimate(PPF_PRICES[pState.car][pState.pkg]);
-  }
-
-  pSegs.forEach(b => b.addEventListener('click', () => {
-    pSegs.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    pState.car = b.dataset.pcar;
-    pUpdateOptionPrices();
-    pRender();
-  }));
-
-  pOpts.forEach(o => o.addEventListener('click', () => {
-    pOpts.forEach(x => x.classList.remove('active'));
-    o.classList.add('active');
-    pState.pkg = o.dataset.ppkg;
-    pRender();
-  }));
-
-  pUpdateOptionPrices();
-  pRender();
-})();
 
 /* ── VLT 5패널 동시 공개 (IntersectionObserver) ── */
 (function() {
@@ -4290,7 +3987,7 @@ window.addEventListener('scroll', () => {
    PRODUCT DETAIL OVERLAY
 ============================ */
 
-function pdRing(pct, size) {
+function pdRing(pct, size, text) { /* text: 링 중앙 표시 문자열 오버라이드(기본 pct%) — 미공시 수치 제품용 */
   const r    = size / 2 - 5;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
@@ -4301,7 +3998,7 @@ function pdRing(pct, size) {
       style="transition:stroke-dasharray 1s cubic-bezier(.22,1,.36,1)"/>
     <text x="${size/2}" y="${size/2+5}" text-anchor="middle"
       font-size="11" font-family="'Noto Sans KR',sans-serif" font-weight="600" fill="#ffffff"
-      transform="rotate(90,${size/2},${size/2})">${pct}%</text>
+      transform="rotate(90,${size/2},${size/2})">${text || pct + '%'}</text>
   </svg>`;
 }
 
@@ -4327,7 +4024,7 @@ function pdOpen(id) {
   // 퍼포먼스 링
   document.getElementById('pdRings').innerHTML = p.perf.map(item =>
     `<div class="pd-ring">
-      ${pdRing(item.pct, 80)}
+      ${pdRing(item.pct, 80, item.text)}
       <span class="pd-ring-label">${item.label}</span>
     </div>`
   ).join('');

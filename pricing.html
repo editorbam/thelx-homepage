@@ -859,7 +859,7 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 
 /* ── 다크 시네마 배너 (감정) ── */
 .cf-banner {
-  position:relative; width:100%; aspect-ratio:21/9; overflow:hidden;
+  position:relative; width:100%; aspect-ratio:21/10; overflow:hidden;
   background:#0a0a0a; margin-bottom:clamp(3.5rem,7vh,5.5rem);
 }
 .cf-banner img {
@@ -886,12 +886,12 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   word-break:keep-all;
 }
 @media (max-width:768px) {
-  .cf-banner { aspect-ratio:4/3 !important; } /* 인라인 21/10이 이 규칙을 덮어써 배너가 낮아지고 텍스트가 상단 로고와 겹치는 문제 방지 */
+  .cf-banner { aspect-ratio:4/3; } /* 4/3 미만으로 낮추면 배너 텍스트가 상단 로고와 겹침. 마크업에 인라인 aspect-ratio 금지(이 규칙이 죽음) */
   .cf-banner-text { right:auto; left:1.25rem; max-width:calc(100% - 2.5rem); top:auto; bottom:1.5rem; transform:none; }
   .cf-banner-title { font-size:clamp(1.5rem,7vw,2.1rem); }
   .cf-banner-sub { font-size:.92rem; }
   .cf-banner-sub br { display:none; }
-  .cf-prod-tag { font-size:8px; letter-spacing:.06em; white-space:nowrap; } /* 390px 2열 그리드에서 FLAGSHIP · 5 LAYER 한 줄 수용 */
+  .cf-prod-tag { white-space:nowrap; } /* 390px 2열 그리드에서 FLAGSHIP · 5 LAYER 한 줄 유지 (9px 기준 실측 109px < 셀 138px). font-size 축소는 뒤의 기본 규칙에 밀려 무효라 제거 */
 }
 
 /* Floating white card */
@@ -1126,6 +1126,9 @@ nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
   font-size:.82rem;
 }
 .cf-bd-row:last-child { border-bottom:none; }
+.cf-prod-note {
+  font-size:12px; color:var(--gray-3); margin:12px 2px 0; word-break:keep-all;
+}
 .cf-bd-pos {
   color:var(--gray-3);
   font-weight:400;
@@ -2258,7 +2261,7 @@ body.pd-open { overflow: hidden; }
      PRICING — Configurator
 ======================================== -->
 <section id="pricing">
-  <div class="cf-banner fi" style="aspect-ratio:21/10;">
+  <div class="cf-banner fi">
     <img src="vlt-cabin.jpg" alt="THE LX 시공 차량 — 운전자 시점" loading="eager" fetchpriority="high" style="object-position:center 40%;">
     <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,transparent 0%,transparent 35%,rgba(0,0,0,.45) 65%,rgba(0,0,0,.72) 100%),linear-gradient(180deg,rgba(0,0,0,.18) 0%,transparent 30%,rgba(0,0,0,.35) 100%);pointer-events:none;"></div>
     <div class="cf-banner-text">
@@ -2356,6 +2359,7 @@ body.pd-open { overflow: hidden; }
               <span class="cf-prod-tag">Non-Reflective</span>
             </button>
           </div>
+          <p class="cf-prod-note">Galaxie는 권장 소비자가 미공시 제품 — 시공가는 가까운 시공점에 문의해 주세요.</p>
         </div>
 
         <!-- Step 03 — 조합 모드 (부위별 제품) -->
@@ -2986,7 +2990,7 @@ setTimeout(() => {
       any = true;
       const row = document.createElement('div');
       row.className = 'cf-bd-row';
-      row.innerHTML = `<span class="cf-bd-pos">${pos}</span>` +
+      row.innerHTML = `<span class="cf-bd-pos">${pos.replace(/ /g, '\u00A0')}</span>` +
                       `<span class="cf-bd-prod">${NAMES[product]}</span>` +
                       `<span class="cf-bd-price">${p}<i>만</i></span>`;
       totalBreakdown.appendChild(row);
@@ -3000,7 +3004,9 @@ setTimeout(() => {
     if (state.mode === 'simple') {
       totalProduct.textContent = NAMES[state.product];
       const list = Array.from(state.positions);
-      totalPositions.textContent = list.length ? list.map(n => n.replace(/ /g, ' ')).join(' · ') : '시공 부위를 선택해주세요';
+      /* POS_LIST 순서 고정(Set 삽입 순서 무시) + 부위명 내부 공백은 NBSP(\u00A0)로 줄바꿈 방지 */
+      const ordered = POS_LIST.filter(p => state.positions.has(p));
+      totalPositions.textContent = ordered.length ? ordered.map(n => n.replace(/ /g, '\u00A0')).join(' · ') : '시공 부위를 선택해주세요';
     } else {
       renderBreakdown();
     }
@@ -3242,7 +3248,7 @@ window.addEventListener('scroll', () => {
    PRODUCT DETAIL OVERLAY
 ============================ */
 
-function pdRing(pct, size) {
+function pdRing(pct, size, text) { /* text: 링 중앙 표시 문자열 오버라이드(기본 pct%) — 미공시 수치 제품용 */
   const r    = size / 2 - 5;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
@@ -3253,7 +3259,7 @@ function pdRing(pct, size) {
       style="transition:stroke-dasharray 1s cubic-bezier(.22,1,.36,1)"/>
     <text x="${size/2}" y="${size/2+5}" text-anchor="middle"
       font-size="11" font-family="'Noto Sans KR',sans-serif" font-weight="600" fill="#0a0a0a"
-      transform="rotate(90,${size/2},${size/2})">${pct}%</text>
+      transform="rotate(90,${size/2},${size/2})">${text || pct + '%'}</text>
   </svg>`;
 }
 
@@ -3278,7 +3284,7 @@ function pdOpen(id) {
   // 퍼포먼스 링
   document.getElementById('pdRings').innerHTML = p.perf.map(item =>
     `<div class="pd-ring">
-      ${pdRing(item.pct, 80)}
+      ${pdRing(item.pct, 80, item.text)}
       <span class="pd-ring-label">${item.label}</span>
     </div>`
   ).join('');

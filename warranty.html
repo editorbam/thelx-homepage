@@ -145,10 +145,14 @@
       color: #fff; margin: 0; word-break: keep-all;
     }
     .tech-h1-latin {
-      font-family: 'Helvetica Neue', Arial, sans-serif; /* 라틴 전용 대제목 — 나브 워드마크와 같은 결 (외부 폰트 아님) */
-      font-weight: 200;
-      font-size: clamp(1.7rem, 3.9vw, 3.4rem);
-      letter-spacing: .18em; line-height: 1.25; word-break: normal;
+      font-family: 'Didot', 'Baskerville', 'Times New Roman', Georgia, serif; /* 증서 세리프 — 시스템 폰트(외부 폰트 아님) */
+      font-weight: 400;
+      font-size: clamp(1.9rem, 4.3vw, 3.6rem);
+      letter-spacing: .1em; line-height: 1.3; word-break: normal;
+    }
+    .wr-cert-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
+      color: #c8a96e; margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
     }
     .tech-lead {
       font-size: clamp(1.05rem, 1.25vw, 1.2rem);
@@ -174,7 +178,7 @@
     }
     .vf-num {
       font-size: 12px; font-weight: 700; letter-spacing: .18em;
-      color: rgba(156,198,238,.85); margin: 0 0 1.1rem;
+      color: #c8a96e; margin: 0 0 1.1rem;
     }
     .vf-title {
       font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700;
@@ -267,12 +271,12 @@
       padding: clamp(1.8rem, 3.4vw, 2.4rem) clamp(1.4rem, 2.6vw, 2rem);
       background: rgba(255,255,255,.02);
     }
-    .wr-scope-card.incl { border-color: rgba(120,180,235,.4); background: rgba(80,150,220,.05); }
+    .wr-scope-card.incl { border-color: rgba(200,169,110,.45); background: rgba(200,169,110,.06); }
     .wr-scope-label {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
       color: rgba(255,255,255,.42); margin: 0 0 1.2rem;
     }
-    .wr-scope-card.incl .wr-scope-label { color: rgba(156,198,238,.85); }
+    .wr-scope-card.incl .wr-scope-label { color: #c8a96e; }
     .wr-scope-card ul { list-style: none; }
     .wr-scope-card li {
       font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.75;
@@ -280,7 +284,7 @@
       padding: .45rem 0 .45rem 1.5rem; position: relative;
     }
     .wr-scope-card.incl li::before {
-      content: "✓"; position: absolute; left: 0; color: #7cc0ff; font-weight: 700;
+      content: "✓"; position: absolute; left: 0; color: #c8a96e; font-weight: 700;
     }
     .wr-scope-card.excl li::before {
       content: "—"; position: absolute; left: 0; color: rgba(255,255,255,.35); font-weight: 700;
@@ -314,7 +318,7 @@
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
       font-weight: 700; color: #fff; line-height: 1.55;
       margin: 1.8rem 0 0; padding: 0 0 0 1.4rem;
-      border-left: 3px solid #fff; letter-spacing: -0.012em; word-break: keep-all;
+      border-left: 3px solid #c8a96e; letter-spacing: -0.012em; word-break: keep-all;
     }
 
     /* ===========================
@@ -399,6 +403,7 @@
 <main>
 <!-- HERO -->
 <header class="tech-hero">
+  <p class="wr-cert-eyebrow">Certified by THE LX</p>
   <h1 class="tech-h1 tech-h1-latin">AUTHENTICITY ·<br>WARRANTY</h1>
   <p class="tech-lead">
     어떤 필름이 시공되는지, 그 약속이 몇&nbsp;년짜리인지.<br>

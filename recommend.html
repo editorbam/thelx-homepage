@@ -202,12 +202,6 @@
     /* 모바일 — 그래프를 축소해 라벨이 깨알이 되는 대신, 표와 같은 가로 스크롤 패턴 */
     .rc-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     @media (max-width: 768px) { .rc-chart-scroll svg { min-width: 640px; } }
-    .rc-chart-intro {
-      font-size: clamp(.84rem, .98vw, .94rem); line-height: 1.7;
-      color: rgba(255,255,255,.55); text-align: center;
-      margin: 0 0 clamp(.9rem, 2vw, 1.4rem); word-break: keep-all;
-    }
-    .rc-chart-intro strong { color: rgba(255,255,255,.85); font-weight: 700; }
     /* ── 모션: 네 장면 순환 (파장 순서대로 누적 공개) ─────────────────
        스크롤 진입 → 곡선 드로잉 → 장면 ①자외선(보라만) → ②+가시광선 → ③+적외선(THE LX 면·라벨) → ④전체+결론
        클릭 없이 저절로 흐르고, 끝나면 처음부터 다시 순환. 번호 버튼은 장면 점프용. */
@@ -434,7 +428,6 @@
   </p>
 
   <div class="rc-chart" data-step="0">
-    <p class="rc-chart-intro">가로축은 시간이 아니라 <strong>빛의 종류</strong>입니다.<br>햇빛을 세 종류로 나눠, 필름이 종류마다 어떻게 다루는지 왼쪽부터 보여줍니다.</p>
     <div class="rc-chart-scroll">
     <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="빛의 종류별로 필름이 반사하는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 반사합니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다.">
       <defs>

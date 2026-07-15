@@ -193,19 +193,17 @@ nav {
   padding: 0 2.5rem;
   transition: color .4s;
 }
-nav.on-dark .nav-logo   { color: rgba(255,255,255,.88); }
 nav.on-dark .nav-links a { color: rgba(255,255,255,.7); }
 nav.on-dark .nav-cta    { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.2); }
 nav.on-dark .nav-hamburger span { background: rgba(255,255,255,.85); }
 
-.nav-logo {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--black);
-  transition: color .4s; text-decoration: none;
-  display: flex; align-items: center; gap: 10px;
-}
-.nav-logo-divider { width:1px; height:14px; background: currentColor; opacity:.25; }
-.nav-logo-sub { font-size:10px; letter-spacing:.2em; font-weight:300; opacity:.6; }
+.nav-logo { display: flex; align-items: center; transition: opacity .2s; }
+.nav-logo:hover { opacity: .65; }
+.nav-logo img { height: 26px; width: auto; display: block; }
+/* 공식 로고 2판 스왑 — 밝은 나브=검정판, on-dark=흰판 (index와 동일 패턴) */
+.nav-logo .nav-logo-w { display: none; }
+nav.on-dark .nav-logo .nav-logo-b { display: none; }
+nav.on-dark .nav-logo .nav-logo-w { display: block; }
 
 .nav-links {
   display: flex; align-items: center; gap: 2rem; list-style: none;
@@ -2234,10 +2232,9 @@ body.pd-open { overflow: hidden; }
 
 <!-- NAV -->
 <nav id="mainNav">
-  <a href="index.html" class="nav-logo">
-    THE LX
-    <div class="nav-logo-divider"></div>
-    <span class="nav-logo-sub">Precision Film</span>
+  <a href="index.html" class="nav-logo" aria-label="THE LX 홈">
+    <img src="thelx-logo-nav-b.png" alt="THE LX" class="nav-logo-b">
+    <img src="thelx-logo-nav-w.png" alt="" aria-hidden="true" class="nav-logo-w">
   </a>
   <ul class="nav-links">
     <li><a href="index.html#why-story">브랜드</a></li>

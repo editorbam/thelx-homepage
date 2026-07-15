@@ -208,8 +208,8 @@
       margin: 0 0 clamp(.9rem, 2vw, 1.4rem); word-break: keep-all;
     }
     .rc-chart-intro strong { color: rgba(255,255,255,.85); font-weight: 700; }
-    /* ── 모션: 세 장면 순환 ─────────────────
-       스크롤 진입 → 곡선 드로잉 → 장면 ①(가시광선만 밝힘) → ②(적외선만 밝힘) → ③(전체 + 결론)
+    /* ── 모션: 네 장면 순환 (파장 순서대로 누적 공개) ─────────────────
+       스크롤 진입 → 곡선 드로잉 → 장면 ①자외선(보라만) → ②+가시광선 → ③+적외선(THE LX 면·라벨) → ④전체+결론
        클릭 없이 저절로 흐르고, 끝나면 처음부터 다시 순환. 번호 버튼은 장면 점프용. */
     .rc-chart #chLx, .rc-chart #chAbs { stroke-dasharray: 1; stroke-dashoffset: 1; }
     .rc-chart #chLx  { transition: stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1) .2s; }
@@ -217,12 +217,14 @@
     .rc-chart.in #chLx, .rc-chart.in #chAbs { stroke-dashoffset: 0; }
     /* 장면 덮개 — 해당 장면 구간만 걷힘 (자외선 구간은 덮지 않음: 보라 틴트 상시 노출) */
     .rc-chart .dim { fill: #0a0a0a; opacity: 0; transition: opacity .7s ease; pointer-events: none; }
-    .rc-chart[data-step="1"] .dim.ir  { opacity: .78; }
-    .rc-chart[data-step="2"] .dim.vis { opacity: .78; }
+    .rc-chart[data-step="1"] .dim.vis, .rc-chart[data-step="1"] .dim.ir { opacity: .78; }
+    .rc-chart[data-step="2"] .dim.ir { opacity: .78; }
     .rc-chart #chArea { opacity: 0; transition: opacity .8s ease; }
-    .rc-chart[data-step="2"] #chArea, .rc-chart[data-step="3"] #chArea { opacity: 1; }
+    .rc-chart[data-step="3"] #chArea, .rc-chart[data-step="4"] #chArea { opacity: 1; }
     .rc-chart .czl { opacity: 0; transition: opacity .6s ease; }
-    .rc-chart[data-step="1"] .czl.vis, .rc-chart[data-step="2"] .czl.ir, .rc-chart[data-step="2"] .czl.lxname, .rc-chart[data-step="3"] .czl { opacity: 1; }
+    .rc-chart[data-step="2"] .czl.vis, .rc-chart[data-step="3"] .czl.vis,
+    .rc-chart[data-step="3"] .czl.ir, .rc-chart[data-step="3"] .czl.lxname,
+    .rc-chart[data-step="4"] .czl { opacity: 1; }
     /* 장면 캡션 — 겹쳐 두고 크로스페이드 */
     .rc-caption { margin-top: clamp(1rem, 2.4vw, 1.5rem); text-align: center; }
     .rc-caps { display: grid; }
@@ -233,7 +235,7 @@
       font-size: clamp(.95rem, 1.15vw, 1.08rem); font-weight: 700;
       color: #fff; word-break: keep-all;
     }
-    .rc-cap.c2 strong, .rc-cap.c3 strong { color: #cfe6ff; }
+    .rc-cap.c3 strong, .rc-cap.c4 strong { color: #cfe6ff; }
     .rc-cap .sub { display: block; margin-top: .45rem; font-size: clamp(.78rem, .9vw, .86rem); color: rgba(255,255,255,.5); word-break: keep-all; }
     .rc-cap .num {
       flex: 0 0 auto; width: 21px; height: 21px; border-radius: 50%;
@@ -340,13 +342,13 @@
 }
 @media (max-width: 768px){ .hero-sound { left: 1.1rem; bottom: 1.1rem; padding: .45rem .7rem .45rem .62rem; } }
 </style>
-  <!-- no-JS 폴백 — 장면 순환 없이 그래프 완성 상태(장면 ③)로 표시 -->
+  <!-- no-JS 폴백 — 장면 순환 없이 그래프 완성 상태(장면 ④)로 표시 -->
   <noscript>
     <style>
       .rc-chart #chLx, .rc-chart #chAbs { stroke-dashoffset: 0; }
       .rc-chart #chArea, .rc-chart .czl { opacity: 1; }
       .rc-chart .dim { opacity: 0 !important; }
-      .rc-cap.c3 { opacity: 1; transform: none; }
+      .rc-cap.c4 { opacity: 1; transform: none; }
       .rc-dots { display: none; }
       /* 힌트는 JS(.show)가 못 켜주므로, 표·그래프가 잘리는 모바일 폭에서는 항상 표시 */
       @media (max-width: 768px) { .rc-scroll-hint { display: block; } }
@@ -531,14 +533,16 @@
     <p class="rc-scroll-hint">그래프를 옆으로 밀면 적외선 구간까지 보입니다 →</p>
     <div class="rc-caption">
       <div class="rc-caps">
-        <div class="rc-cap c1"><strong><span class="num">1</span>눈에 보이는 빛은, 통과시킵니다.</strong><span class="sub">곡선이 낮다 = 반사하지 않는다. 시야는 밝게 유지됩니다.</span></div>
-        <div class="rc-cap c2"><strong><span class="num">2</span>보이지 않는 열은, 표면에서 반사합니다.</strong><span class="sub">곡선이 높다 = 그만큼 반사한다. 태양 에너지의 약 절반이 이 구간에 실려 있습니다.</span></div>
-        <div class="rc-cap c3"><strong><span class="num">3</span>파란 선이 높을수록, 차 안은 시원합니다.</strong><span class="sub">반사형 (THE LX) — 열을 반사 · 흡수형 (일반 필름) — 열을 흡수</span></div>
+        <div class="rc-cap c1"><strong><span class="num">1</span>자외선은, 99% 이상 차단합니다.</strong><span class="sub">반사 곡선과 별개로, 필름 층이 막아냅니다. THE LX 전 농도 동일 — PA+++ · SPF 285.</span></div>
+        <div class="rc-cap c2"><strong><span class="num">2</span>눈에 보이는 빛은, 통과시킵니다.</strong><span class="sub">곡선이 낮다 = 반사하지 않는다. 시야는 밝게 유지됩니다.</span></div>
+        <div class="rc-cap c3"><strong><span class="num">3</span>보이지 않는 열은, 표면에서 반사합니다.</strong><span class="sub">곡선이 높다 = 그만큼 반사한다. 태양 에너지의 약 절반이 이 구간에 실려 있습니다.</span></div>
+        <div class="rc-cap c4"><strong><span class="num">4</span>파란 선이 높을수록, 차 안은 시원합니다.</strong><span class="sub">반사형 (THE LX) — 열을 반사 · 흡수형 (일반 필름) — 열을 흡수</span></div>
       </div>
       <div class="rc-dots" role="group" aria-label="그래프 장면 선택">
-        <button type="button" data-step="1" aria-label="장면 1 — 빛은 통과">1</button>
-        <button type="button" data-step="2" aria-label="장면 2 — 열은 반사">2</button>
-        <button type="button" data-step="3" aria-label="장면 3 — 결론">3</button>
+        <button type="button" data-step="1" aria-label="장면 1 — 자외선 차단">1</button>
+        <button type="button" data-step="2" aria-label="장면 2 — 빛은 통과">2</button>
+        <button type="button" data-step="3" aria-label="장면 3 — 열은 반사">3</button>
+        <button type="button" data-step="4" aria-label="장면 4 — 결론">4</button>
       </div>
     </div>
   </div>
@@ -606,14 +610,14 @@
   <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
 </footer>
 <script>
-  /* 스펙트럼 그래프 — 세 장면 순환: 스크롤 진입 → 곡선 드로잉 → ①②③ 자동 진행, 끝나면 처음부터.
+  /* 스펙트럼 그래프 — 네 장면 순환: 스크롤 진입 → 곡선 드로잉 → ①자외선 ②가시광선 ③적외선 ④결론 자동 진행, 끝나면 처음부터.
      번호 버튼은 장면 점프용 (누른 뒤에도 그 지점부터 흐름 계속). */
   (function(){
     var chart = document.querySelector('.rc-chart');
     if (!chart) return;
     var caps = chart.querySelectorAll('.rc-cap');
     var dots = chart.querySelectorAll('.rc-dots button');
-    var DUR = { 1: 3800, 2: 4400, 3: 5200 };
+    var DUR = { 1: 3400, 2: 3600, 3: 4400, 4: 5200 };
     var timers = [];
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function setStep(n){
@@ -627,11 +631,11 @@
     }
     function queueNext(){
       var n = +chart.getAttribute('data-step');
-      timers.push(setTimeout(function(){ setStep(n % 3 + 1); queueNext(); }, DUR[n] || 4000));
+      timers.push(setTimeout(function(){ setStep(n % 4 + 1); queueNext(); }, DUR[n] || 4000));
     }
     function start(){
       chart.classList.add('in');
-      if (reduced) { setStep(3); return; }
+      if (reduced) { setStep(4); return; }
       timers.push(setTimeout(function(){ setStep(1); queueNext(); }, 1200));
     }
     for (var k = 0; k < dots.length; k++) (function(btn){

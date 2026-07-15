@@ -215,10 +215,10 @@
     .rc-chart #chLx  { transition: stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1) .2s; }
     .rc-chart #chAbs { transition: stroke-dashoffset .9s ease .7s; }
     .rc-chart.in #chLx, .rc-chart.in #chAbs { stroke-dashoffset: 0; }
-    /* 장면 덮개 — 해당 장면 구간만 걷힘 */
+    /* 장면 덮개 — 해당 장면 구간만 걷힘 (자외선 구간은 덮지 않음: 보라 틴트 상시 노출) */
     .rc-chart .dim { fill: #0a0a0a; opacity: 0; transition: opacity .7s ease; pointer-events: none; }
-    .rc-chart[data-step="1"] .dim.uv, .rc-chart[data-step="1"] .dim.ir  { opacity: .78; }
-    .rc-chart[data-step="2"] .dim.uv, .rc-chart[data-step="2"] .dim.vis { opacity: .78; }
+    .rc-chart[data-step="1"] .dim.ir  { opacity: .78; }
+    .rc-chart[data-step="2"] .dim.vis { opacity: .78; }
     .rc-chart #chArea { opacity: 0; transition: opacity .8s ease; }
     .rc-chart[data-step="2"] #chArea, .rc-chart[data-step="3"] #chArea { opacity: 1; }
     .rc-chart .czl { opacity: 0; transition: opacity .6s ease; }
@@ -508,8 +508,7 @@
         <text x="686" y="254" text-anchor="end" font-size="11" fill="rgba(255,255,255,.45)" font-weight="600">흡수형 · 일반 필름</text>
       </g>
 
-      <!-- 장면 덮개: 현재 장면 구간만 걷힘 -->
-      <rect class="dim uv"  x="55"  y="14" width="75"  height="276"/>
+      <!-- 장면 덮개: 현재 장면 구간만 걷힘 (자외선 구간은 덮개 없음 — 보라 상시 노출) -->
       <rect class="dim vis" x="130" y="14" width="130" height="276"/>
       <rect class="dim ir"  x="260" y="14" width="435" height="276"/>
 

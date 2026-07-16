@@ -4491,6 +4491,17 @@ document.getElementById('slSearch').addEventListener('keydown', e => {
   });
 }());
 
+/* 뒤로 가기(bfcache) 복원 — Safari가 페이지를 얼린 그대로 되살리며 영상을 멈춰두므로,
+   화면 안 배경 영상만 재개한다. 화면 밖 영상은 스크롤 핸들러·IO가 관리하므로 건드리지 않는다. */
+window.addEventListener('pageshow', function (e) {
+  if (!e.persisted) return;
+  document.querySelectorAll('video[autoplay]').forEach(function (v) {
+    var r = v.getBoundingClientRect();
+    var vis = r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+    if (vis && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  });
+});
+
 </script>
 
 <!-- 배경 음악 (페이지 전역 재생 + 음소거 토글) -->

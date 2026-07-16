@@ -710,6 +710,14 @@
     function kick(){ document.querySelectorAll('video[autoplay]').forEach(function(v){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }); }
     ['touchstart','pointerdown','click'].forEach(function(ev){ document.addEventListener(ev, kick, {once:true, passive:true}); });
   })();
+
+  /* 뒤로 가기(bfcache) 복원 — Safari가 영상을 멈춘 채 되살리므로 배경 영상 재개 */
+  window.addEventListener('pageshow', function(e){
+    if (!e.persisted) return;
+    document.querySelectorAll('video[autoplay]').forEach(function(v){
+      if (v.paused){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+    });
+  });
 </script>
 
 <!-- 배경 음악 (index.html과 이어듣기 — sessionStorage 'thelxBgm'로 위치·상태 왕복) -->

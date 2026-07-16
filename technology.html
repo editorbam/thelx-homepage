@@ -848,23 +848,12 @@
     }
 
     function drawPlane(){
+      /* 필름 평면 — 민면 (격자 없음) */
       var q = planePath();
       var g = ctx.createLinearGradient(0, q.c.y, 0, q.a.y);
       g.addColorStop(0, '#0d0e10');
       g.addColorStop(1, '#17181c');
       ctx.fillStyle = g; ctx.fill();
-
-      ctx.strokeStyle = 'rgba(255,255,255,0.035)'; ctx.lineWidth = 1;
-      for (var i = 1; i < 8; i++){
-        var x = -HALF + (2 * HALF) * i / 8;
-        var p1 = proj(x, 0, ZN), p2 = proj(x, 0, ZF);
-        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-      }
-      for (var j = 1; j < 9; j++){
-        var z = ZN + (ZF - ZN) * j / 9;
-        var l = proj(-HALF, 0, z), r = proj(HALF, 0, z);
-        ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(r.x, r.y); ctx.stroke();
-      }
     }
 
     function drawDeposit(){

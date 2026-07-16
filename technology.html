@@ -726,8 +726,7 @@
       rainDur: 2.8, sweepDur: 2.2, spawnEvery: 15, maxFalling: 130,
       fallV: 195, settleV: 72, meltMs: 320,
       r: [1.9, 1.7],
-      color: { m:['#d9e0e7','#a2abb5','#586069','#2f353c'], glow:'188,208,230' },
-      coat: [0.24, 0.14, 0.11]
+      color: { m:['#d9e0e7','#a2abb5','#586069','#2f353c'], glow:'188,208,230' }
     };
 
     /* 카메라 / 투영 — 고정 카메라 (마우스 무빙 없음) */
@@ -834,7 +833,7 @@
 
     function drawDeposit(){
       /* 코팅 = 라인이 지나간 영역만: 평면 ∩ 코팅 사다리꼴로 클리핑 후
-         ① 베이스 광택 그라데이션(신선한 가장자리일수록 밝게) ② 질감 텍스처 스트립 */
+         ① 라인 바로 뒤 잠깐의 금속광 → 뒤로 갈수록 더 진한 블랙으로 가라앉음 ② 질감 텍스처 스트립 */
       if (coatAlpha <= 0.005) return;
       var xsC = Math.min(xs, HALF);
       if (xsC <= -HALF + 0.5) return;
@@ -851,14 +850,28 @@
       var zMid = (ZN + ZF) / 2;
       var xEdge = proj(xsC, 0, zMid).x, xBack = proj(-HALF, 0, zMid).x;
       if (Math.abs(xEdge - xBack) > 2){
+        /* fk: 라인 뒤 신선한 금속광 — 완성 후 1초에 걸쳐 사라지고 전면 균일한 딥블랙으로 */
+        var fk = state === 'sweep' ? 1 : (state === 'done' ? Math.max(0, 1 - stateT) : 0);
+        /* ① 어두운 층 — 라인 근처는 옅게, 뒤로 갈수록 깊게. fk가 죽으면 전면 0.62 균일 */
         var cg = ctx.createLinearGradient(xEdge, 0, xBack, 0);
-        cg.addColorStop(0, 'rgba(' + P.color.glow + ',' + P.coat[0] + ')');
-        cg.addColorStop(0.28, 'rgba(' + P.color.glow + ',' + P.coat[1] + ')');
-        cg.addColorStop(1, 'rgba(' + P.color.glow + ',' + P.coat[2] + ')');
+        cg.addColorStop(0, 'rgba(0,0,0,' + (0.62 - 0.55 * fk) + ')');
+        cg.addColorStop(0.14, 'rgba(0,0,0,' + (0.62 - 0.27 * fk) + ')');
+        cg.addColorStop(1, 'rgba(0,0,0,0.62)');
         ctx.fillStyle = cg;
         ctx.fillRect(0, 0, W, H);
+        /* ② 라인 바로 뒤 잠깐의 금속광 */
+        if (fk > 0.01){
+          var fg = ctx.createLinearGradient(xEdge, 0, xEdge + (xBack - xEdge) * 0.14, 0);
+          fg.addColorStop(0, 'rgba(' + P.color.glow + ',' + (0.12 * fk) + ')');
+          fg.addColorStop(1, 'rgba(' + P.color.glow + ',0)');
+          ctx.save(); ctx.globalCompositeOperation = 'lighter';
+          ctx.fillStyle = fg;
+          ctx.fillRect(0, 0, W, H);
+          ctx.restore();
+        }
       }
 
+      ctx.globalAlpha = coatAlpha * 0.55;   /* 어두운 면 위 결은 은은하게 */
       var S = 220;
       for (var i = 0; i < S; i++){
         var z0 = ZN + (ZF - ZN) * i / S, z1 = ZN + (ZF - ZN) * (i + 1) / S;

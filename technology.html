@@ -404,6 +404,26 @@
       color: rgba(255,255,255,.82);
     }
     @media (max-width: 768px){ .hero-sound { left: 1.1rem; bottom: 1.1rem; padding: .45rem .7rem .45rem .62rem; } }
+
+    /* SPUTTER LIVE — 증착 과정 시각화 (왜 반사가 가능한가 하단) */
+    .sputter-live { max-width: 880px; margin: clamp(2.4rem, 5vh, 3.6rem) auto 0; padding: 0 clamp(1.25rem, 4vw, 2rem); }
+    .sputter-stage {
+      position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden;
+      background: #0b0c0e; border: .5px solid rgba(255,255,255,.09);
+    }
+    .sputter-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .sputter-meter {
+      position: absolute; right: 18px; bottom: 14px; margin: 0;
+      color: #8e8e93; font-size: 12px; font-weight: 300; letter-spacing: .14em;
+      font-variant-numeric: tabular-nums; text-align: right; pointer-events: none;
+    }
+    .sputter-meter strong { color: #f5f5f7; font-weight: 500; }
+    .sputter-meter.done { color: #f5f5f7; letter-spacing: .08em; }
+    .sputter-cap {
+      margin: .9rem auto 0; max-width: 720px; text-align: center;
+      color: rgba(255,255,255,.42); font-size: .85rem; font-weight: 300; line-height: 1.7;
+    }
+    @media (max-width: 768px){ .sputter-stage { aspect-ratio: 4 / 3; } }
   </style>
 </head>
 <body>
@@ -566,6 +586,15 @@
   </div>
 </section>
 
+<!-- 증착 시각화 — 원자 비 → 스퍼터 존 통과 → 완성 (자동 루프, 화면 안일 때만 구동) -->
+<section class="sputter-live" aria-label="스퍼터링 증착 과정 시각화">
+  <div class="sputter-stage" id="sputterStage">
+    <canvas id="sputterCvs" aria-hidden="true"></canvas>
+    <p class="sputter-meter" id="sputterMeter"></p>
+  </div>
+  <p class="sputter-cap">진공 속, 금속 원자가 먼저 내려앉고 — 라인이 지나가며 겹겹이 증착됩니다. 한 번의 통과로, 한 장이 완성됩니다.</p>
+</section>
+
 <!-- ⚠️특허 번호 수정 시 pd-data.js 헤더의 특허 사본 목록 참조 (총 6곳 동기) -->
 <div class="tech-proof">
   <span class="tech-proof-chip">Saint-Gobain 360년 소재과학</span>
@@ -683,6 +712,434 @@
   (function(){
     function kick(){ document.querySelectorAll('video[autoplay]').forEach(function(v){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }); }
     ['touchstart','pointerdown','click'].forEach(function(ev){ document.addEventListener(ev, kick, {once:true, passive:true}); });
+  })();
+</script>
+<script>
+  /* 증착 시각화 — 원자 비(rain) → 스퍼터 존 통과(sweep) → 완성(done) → 리셋 루프.
+     시안 원본: ~/thelx-workspace/sputter-3d-drafts/sputter-3d.html (B — 겹겹이 프리셋) */
+  (function(){
+    'use strict';
+    var stage = document.getElementById('sputterStage');
+    var cvs = document.getElementById('sputterCvs');
+    var meterEl = document.getElementById('sputterMeter');
+    if (!stage || !cvs) return;
+    var ctx = cvs.getContext('2d');
+
+    var P = {
+      rainDur: 2.8, sweepDur: 2.2, spawnEvery: 15, maxFalling: 130,
+      fallV: 195, settleV: 72, meltMs: 320,
+      r: [1.9, 1.7], blobR: [7, 6],
+      color: { m:['#d9e0e7','#a2abb5','#586069','#2f353c'], glow:'188,208,230' },
+      coat: [0.24, 0.14, 0.11]
+    };
+
+    /* 카메라 / 투영 */
+    var W, H, DPR, f, cx, cy;
+    var HALF = 260, ZN = 240, ZF = 980, CAMH = 150, PITCH = 0.16;
+    var SIN = Math.sin(PITCH), COS = Math.cos(PITCH);
+    var camX = 0, camXT = 0, camDY = 0, camDYT = 0;
+
+    function resize(){
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = stage.clientWidth; H = stage.clientHeight;
+      if (!W || !H) return;
+      cvs.width = W * DPR; cvs.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      f = H * 0.95; cx = W / 2; cy = H * 0.44;
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
+    else window.addEventListener('resize', resize);
+    resize();
+
+    stage.addEventListener('mousemove', function(e){
+      var r = stage.getBoundingClientRect();
+      camXT = ((e.clientX - r.left) / r.width - 0.5) * 26;
+      camDYT = ((e.clientY - r.top) / r.height - 0.5) * 10;
+    });
+    stage.addEventListener('mouseleave', function(){ camXT = 0; camDYT = 0; });
+
+    function proj(x, y, z){
+      var dx = x - camX, dy = y - (CAMH + camDY), dz = z;
+      var yr = dy * COS + dz * SIN;
+      var zr = dz * COS - dy * SIN;
+      return { x: cx + f * dx / zr, y: cy - f * yr / zr, s: f / zr };
+    }
+
+    /* 증착 텍스처 — 라인이 지나간 자리에 코팅 누적 */
+    var tex = document.createElement('canvas'); tex.width = 720; tex.height = 520;
+    var tctx = tex.getContext('2d');
+    function uv(x, z){
+      return { u: (x + HALF) / (2 * HALF) * tex.width, v: (z - ZN) / (ZF - ZN) * tex.height };
+    }
+    function paintBlob(x, z){
+      var p = uv(x, z);
+      var R = P.blobR[0] + Math.random() * P.blobR[1];
+      var g = tctx.createRadialGradient(p.u, p.v, 0, p.u, p.v, R);
+      g.addColorStop(0, 'rgba(' + P.color.glow + ',0.10)');
+      g.addColorStop(0.6, 'rgba(' + P.color.glow + ',0.04)');
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      tctx.globalCompositeOperation = 'lighter';
+      tctx.fillStyle = g;
+      tctx.beginPath(); tctx.arc(p.u, p.v, R, 0, 7); tctx.fill();
+    }
+    function genGrain(){
+      /* 코팅면 질감 — 헤어라인 스트릭 + 미세 글리터 (리셋 시 1회 생성) */
+      tctx.globalCompositeOperation = 'lighter';
+      var i;
+      for (i = 0; i < 70; i++){
+        tctx.fillStyle = 'rgba(255,255,255,' + (0.02 + Math.random() * 0.045) + ')';
+        tctx.fillRect(Math.random() * tex.width, 0, 0.8 + Math.random() * 2.2, tex.height);
+      }
+      for (i = 0; i < 24; i++){
+        var u = Math.random() * tex.width, w = 24 + Math.random() * 60;
+        var g = tctx.createLinearGradient(u - w, 0, u + w, 0);
+        g.addColorStop(0, 'rgba(255,255,255,0)');
+        g.addColorStop(0.5, 'rgba(255,255,255,' + (0.015 + Math.random() * 0.03) + ')');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        tctx.fillStyle = g;
+        tctx.fillRect(u - w, 0, w * 2, tex.height);
+      }
+      for (i = 0; i < 230; i++){
+        tctx.fillStyle = 'rgba(255,255,255,' + (0.03 + Math.random() * 0.06) + ')';
+        tctx.fillRect(Math.random() * tex.width, Math.random() * tex.height, 1.4, 1.4);
+      }
+    }
+
+    /* 상태 */
+    var parts = [], dust = [], landed = [];
+    var spawnAcc = 0, time = 0;
+    var xs = -HALF, state = 'rain', stateT = 0, coatAlpha = 1;
+    var lineSpeed = (2 * HALF) / P.sweepDur, totalLanded = 0, lastFalling = 0;
+
+    for (var i = 0; i < 44; i++){
+      dust.push({ x: -HALF + Math.random() * HALF * 2, y: 20 + Math.random() * 320,
+        z: ZN + Math.random() * (ZF - ZN), a: 0.04 + Math.random() * 0.08,
+        ph: Math.random() * 6.28, sp: 0.2 + Math.random() * 0.5 });
+    }
+
+    function spawn(){
+      /* 1박자: 원자 비 — 필름 전체에 골고루 내려앉는다. 라인은 그 다음. */
+      var r = P.r[0] + Math.random() * P.r[1];
+      parts.push({
+        x: -HALF + 12 + Math.random() * (2 * HALF - 24),
+        z: ZN + 40 + Math.random() * (ZF - ZN - 80),
+        y: 130 + Math.random() * 120, r: r,
+        vy: P.fallV * (0.85 + Math.random() * 0.3),
+        vx: (Math.random() - 0.5) * 6,
+        ph: Math.random() * 6.28,
+        state: 'fall', t: 0
+      });
+    }
+
+    function reset(){
+      parts = []; landed = []; spawnAcc = 0;
+      xs = -HALF; state = 'rain'; stateT = 0; coatAlpha = 1;
+      totalLanded = 0; lastFalling = 0;
+      tctx.globalCompositeOperation = 'source-over';
+      tctx.clearRect(0, 0, tex.width, tex.height);
+      genGrain();
+      meterEl.classList.remove('done');
+    }
+    genGrain();
+
+    /* 그리기 */
+    function planePath(){
+      var a = proj(-HALF, 0, ZN), b = proj(HALF, 0, ZN),
+          c = proj(HALF, 0, ZF), d = proj(-HALF, 0, ZF);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineTo(c.x, c.y); ctx.lineTo(d.x, d.y);
+      ctx.closePath();
+      return { a: a, b: b, c: c, d: d };
+    }
+
+    function drawPlane(){
+      var q = planePath();
+      var g = ctx.createLinearGradient(0, q.c.y, 0, q.a.y);
+      g.addColorStop(0, '#0d0e10');
+      g.addColorStop(1, '#17181c');
+      ctx.fillStyle = g; ctx.fill();
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.035)'; ctx.lineWidth = 1;
+      for (var i = 1; i < 8; i++){
+        var x = -HALF + (2 * HALF) * i / 8;
+        var p1 = proj(x, 0, ZN), p2 = proj(x, 0, ZF);
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+      }
+      for (var j = 1; j < 9; j++){
+        var z = ZN + (ZF - ZN) * j / 9;
+        var l = proj(-HALF, 0, z), r = proj(HALF, 0, z);
+        ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(r.x, r.y); ctx.stroke();
+      }
+    }
+
+    function drawDeposit(){
+      /* 코팅 = 라인이 지나간 영역만: 평면 ∩ 코팅 사다리꼴로 클리핑 후
+         ① 베이스 광택 그라데이션(신선한 가장자리일수록 밝게) ② 질감 텍스처 스트립 */
+      if (coatAlpha <= 0.005) return;
+      var xsC = Math.min(xs, HALF);
+      if (xsC <= -HALF + 0.5) return;
+      ctx.save();
+      ctx.globalAlpha = coatAlpha;
+      planePath(); ctx.clip();
+      var qa = proj(-HALF, 0, ZN), qb = proj(xsC, 0, ZN),
+          qc = proj(xsC, 0, ZF), qd = proj(-HALF, 0, ZF);
+      ctx.beginPath();
+      ctx.moveTo(qa.x, qa.y); ctx.lineTo(qb.x, qb.y);
+      ctx.lineTo(qc.x, qc.y); ctx.lineTo(qd.x, qd.y);
+      ctx.closePath(); ctx.clip();
+
+      var zMid = (ZN + ZF) / 2;
+      var xEdge = proj(xsC, 0, zMid).x, xBack = proj(-HALF, 0, zMid).x;
+      if (Math.abs(xEdge - xBack) > 2){
+        var cg = ctx.createLinearGradient(xEdge, 0, xBack, 0);
+        cg.addColorStop(0, 'rgba(' + P.color.glow + ',' + P.coat[0] + ')');
+        cg.addColorStop(0.28, 'rgba(' + P.color.glow + ',' + P.coat[1] + ')');
+        cg.addColorStop(1, 'rgba(' + P.color.glow + ',' + P.coat[2] + ')');
+        ctx.fillStyle = cg;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      var S = 110;
+      for (var i = 0; i < S; i++){
+        var z0 = ZN + (ZF - ZN) * i / S, z1 = ZN + (ZF - ZN) * (i + 1) / S;
+        var l0 = proj(-HALF, 0, z0), r0 = proj(HALF, 0, z0);
+        var l1 = proj(-HALF, 0, z1), r1 = proj(HALF, 0, z1);
+        var xl = (l0.x + l1.x) / 2, xr = (r0.x + r1.x) / 2;
+        var yT = (l1.y + r1.y) / 2, yB = (l0.y + r0.y) / 2;
+        var sv0 = tex.height * i / S, sv1 = tex.height * (i + 1) / S;
+        if (yB - yT < 0.2) continue;
+        ctx.drawImage(tex, 0, sv0, tex.width, sv1 - sv0, xl, yT, xr - xl, yB - yT);
+      }
+      ctx.restore();
+    }
+
+    function drawLanded(){
+      /* 라인이 아직 지나가지 않은 자리 — 내려앉은 입자의 희미한 자국 */
+      ctx.save();
+      for (var i = landed.length - 1; i >= 0; i--){
+        var L = landed[i];
+        if (L.x <= xs - 18){ landed.splice(i, 1); continue; }
+        if (L.x <= xs) continue;
+        var p = proj(L.x, 0, L.z);
+        ctx.fillStyle = 'rgba(' + P.color.glow + ',' + L.a + ')';
+        var s = Math.max(1.2, 3.2 * p.s);
+        ctx.fillRect(p.x - s / 2, p.y - s * 0.3, s, s * 0.6);
+      }
+      ctx.restore();
+    }
+
+    function drawSweepLine(){
+      /* 스퍼터 존 — 필름 위를 지나가는 증착 라인 + 빛의 커튼 */
+      if (state !== 'sweep') return;
+      var pN = proj(xs, 0, ZN), pF = proj(xs, 0, ZF);
+      var tN = proj(xs, 230, ZN), tF = proj(xs, 230, ZF);
+
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+
+      var topY = Math.min(tN.y, tF.y), botY = Math.max(pN.y, pF.y);
+      var cg = ctx.createLinearGradient(0, botY, 0, topY);
+      cg.addColorStop(0, 'rgba(' + P.color.glow + ',0.10)');
+      cg.addColorStop(0.45, 'rgba(' + P.color.glow + ',0.03)');
+      cg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.moveTo(pN.x, pN.y); ctx.lineTo(pF.x, pF.y);
+      ctx.lineTo(tF.x, tF.y); ctx.lineTo(tN.x, tN.y);
+      ctx.closePath();
+      ctx.fillStyle = cg; ctx.fill();
+
+      ctx.strokeStyle = 'rgba(' + P.color.glow + ',0.14)';
+      ctx.lineWidth = 9;
+      ctx.beginPath(); ctx.moveTo(pN.x, pN.y); ctx.lineTo(pF.x, pF.y); ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(' + P.color.glow + ',0.75)';
+      ctx.lineWidth = 1.6;
+      ctx.shadowColor = 'rgba(' + P.color.glow + ',0.9)';
+      ctx.shadowBlur = 14;
+      ctx.beginPath(); ctx.moveTo(pN.x, pN.y); ctx.lineTo(pF.x, pF.y); ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDoneShimmer(){
+      /* 완성 직후 — 표면 전체를 훑는 광 스윕 한 번 */
+      if (state !== 'done' || stateT > 1.2) return;
+      var k = stateT / 1.2;
+      planePath();
+      ctx.save(); ctx.clip();
+      ctx.globalCompositeOperation = 'lighter';
+      var pos = k * (W + 500) - 250;
+      var g = ctx.createLinearGradient(pos - 190, 0, pos + 190, 0);
+      g.addColorStop(0, 'rgba(255,255,255,0)');
+      g.addColorStop(0.5, 'rgba(255,255,255,0.12)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+    }
+
+    function drawDust(dt){
+      ctx.save();
+      for (var i = 0; i < dust.length; i++){
+        var d = dust[i];
+        d.y += Math.sin(time * d.sp + d.ph) * 4 * dt;
+        d.x += Math.cos(time * d.sp * 0.7 + d.ph) * 3 * dt;
+        var p = proj(d.x, d.y, d.z);
+        ctx.fillStyle = 'rgba(255,255,255,' + d.a + ')';
+        ctx.fillRect(p.x, p.y, 1.4, 1.4);
+      }
+      ctx.restore();
+    }
+
+    function drawParticles(dt){
+      var falling = 0;
+      for (var i = parts.length - 1; i >= 0; i--){
+        var pt = parts[i];
+        if (pt.state === 'fall'){
+          falling++;
+          if (pt.y < 90) pt.vy += (P.settleV - pt.vy) * Math.min(1, dt * 3.2);
+          pt.y -= pt.vy * dt;
+          pt.x += pt.vx * dt + Math.sin(time * 1.6 + pt.ph) * 4 * dt;
+          if (pt.y <= pt.r){
+            pt.state = 'melt'; pt.t = 0; pt.y = pt.r * 0.55;
+            landed.push({ x: pt.x, z: pt.z, a: 0.14 + Math.random() * 0.16 });
+            totalLanded++;
+            paintBlob(pt.x, pt.z);
+          }
+        } else {
+          pt.t += dt * 1000;
+          if (pt.t >= P.meltMs){ parts.splice(i, 1); continue; }
+        }
+      }
+
+      var sorted = parts.slice().sort(function(a, b){ return b.z - a.z; });
+      for (var j = 0; j < sorted.length; j++){
+        var q = sorted[j];
+        var pp = proj(q.x, q.y, q.z);
+        var rs = q.r * pp.s;
+        var k = q.state === 'melt' ? q.t / P.meltMs : 0;
+        var alpha = 1 - k;
+
+        if (q.state === 'fall' && q.y < 240){
+          var gp = proj(q.x, 0, q.z);
+          var near = 1 - q.y / 240;
+          var gr = rs * (1.2 + near * 1.6);
+          var gg = ctx.createRadialGradient(gp.x, gp.y, 0, gp.x, gp.y, gr);
+          gg.addColorStop(0, 'rgba(' + P.color.glow + ',' + (near * 0.15) + ')');
+          gg.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.save(); ctx.globalCompositeOperation = 'lighter';
+          ctx.fillStyle = gg;
+          ctx.beginPath(); ctx.arc(gp.x, gp.y, gr, 0, 7); ctx.fill();
+          ctx.restore();
+        }
+
+        ctx.save();
+        ctx.globalAlpha = alpha;
+
+        ctx.globalCompositeOperation = 'lighter';
+        var hg = ctx.createRadialGradient(pp.x, pp.y, 0, pp.x, pp.y, rs * 2.2);
+        hg.addColorStop(0, 'rgba(' + P.color.glow + ',' + (0.06 * alpha) + ')');
+        hg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = hg;
+        ctx.beginPath(); ctx.arc(pp.x, pp.y, rs * 2.2, 0, 7); ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+
+        /* 금속 구체 — 어두운 몸통 + 작고 날카로운 하이라이트 */
+        ctx.translate(pp.x, pp.y);
+        ctx.scale(1 + k * 0.9, Math.max(0.08, 1 - k * 0.9));
+        var C = P.color.m;
+        var g2 = ctx.createRadialGradient(-rs * 0.34, -rs * 0.4, rs * 0.06, 0, 0, rs);
+        g2.addColorStop(0, '#ffffff');
+        g2.addColorStop(0.16, C[0]);
+        g2.addColorStop(0.42, C[1]);
+        g2.addColorStop(0.75, C[2]);
+        g2.addColorStop(1, C[3]);
+        ctx.fillStyle = g2;
+        ctx.beginPath(); ctx.arc(0, 0, rs, 0, 7); ctx.fill();
+        /* 아래쪽 바닥 반사광 한 점 */
+        var g3 = ctx.createRadialGradient(rs * 0.3, rs * 0.52, 0, rs * 0.3, rs * 0.52, rs * 0.5);
+        g3.addColorStop(0, 'rgba(' + P.color.glow + ',' + (0.28 * alpha) + ')');
+        g3.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g3;
+        ctx.beginPath(); ctx.arc(rs * 0.3, rs * 0.52, rs * 0.5, 0, 7); ctx.fill();
+        ctx.restore();
+      }
+      return falling;
+    }
+
+    function updateMeter(){
+      if (state === 'rain'){
+        meterEl.classList.remove('done');
+        meterEl.innerHTML = '내려앉은 입자 <strong>' + totalLanded.toLocaleString() + '</strong>';
+      } else if (state === 'sweep'){
+        var pct = Math.min(100, Math.round((xs + HALF) / (2 * HALF) * 100));
+        meterEl.classList.remove('done');
+        meterEl.innerHTML = '증착 <strong>' + pct + '</strong>%';
+      } else if (state === 'done'){
+        meterEl.classList.add('done');
+        meterEl.textContent = '한 장, 완성.';
+      }
+    }
+
+    /* 루프 — 화면 안에 있을 때만 구동 */
+    var running = false, rafId = 0, last = 0;
+    function frame(now){
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      time += dt;
+      camX += (camXT - camX) * Math.min(1, dt * 3);
+      camDY += (camDYT - camDY) * Math.min(1, dt * 3);
+
+      /* 상태 진행: rain(원자 비) → sweep(스퍼터 존 통과) → done(여운) → fade(리셋) */
+      if (state === 'rain'){
+        stateT += dt;
+        if (stateT > P.rainDur && lastFalling === 0){ state = 'sweep'; stateT = 0; }
+      } else if (state === 'sweep'){
+        xs = Math.min(HALF, xs + lineSpeed * dt);
+        if (xs >= HALF){ state = 'done'; stateT = 0; }
+      } else if (state === 'done'){
+        stateT += dt;
+        if (stateT > 2.6){ state = 'fade'; stateT = 0; }
+      } else if (state === 'fade'){
+        stateT += dt;
+        coatAlpha = 1 - stateT / 0.9;
+        if (stateT >= 0.9){ reset(); }
+      }
+
+      var bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#0a0a0a');
+      bg.addColorStop(1, '#0c0c0e');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      drawPlane();
+      drawDeposit();
+      drawLanded();
+      drawDoneShimmer();
+      drawSweepLine();
+      var falling = drawParticles(dt);
+      drawDust(dt);
+      updateMeter();
+
+      lastFalling = falling;
+      if (state === 'rain' && stateT < P.rainDur){
+        spawnAcc += dt * 1000;
+        if (spawnAcc > P.spawnEvery * (0.7 + Math.random() * 0.6) && falling < P.maxFalling){
+          spawn(); spawnAcc = 0;
+        }
+      }
+      if (running) rafId = requestAnimationFrame(frame);
+    }
+    function start(){
+      if (running) return; running = true;
+      last = performance.now();
+      rafId = requestAnimationFrame(frame);
+    }
+    function stop(){ running = false; cancelAnimationFrame(rafId); }
+
+    if ('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){ if (e.isIntersecting) start(); else stop(); });
+      }, { threshold: 0.05 }).observe(stage);
+    } else start();
   })();
 </script>
 

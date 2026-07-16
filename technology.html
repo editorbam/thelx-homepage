@@ -725,7 +725,7 @@
     var P = {
       rainDur: 2.8, sweepDur: 2.2, spawnEvery: 15, maxFalling: 130,
       fallV: 195, settleV: 72, meltMs: 320,
-      r: [1.9, 1.7], blobR: [7, 6],
+      r: [1.9, 1.7],
       color: { m:['#d9e0e7','#a2abb5','#586069','#2f353c'], glow:'188,208,230' },
       coat: [0.24, 0.14, 0.11]
     };
@@ -763,26 +763,10 @@
     function uv(x, z){
       return { u: (x + HALF) / (2 * HALF) * tex.width, v: (z - ZN) / (ZF - ZN) * tex.height };
     }
-    function paintBlob(x, z){
-      var p = uv(x, z);
-      var R = (P.blobR[0] + Math.random() * P.blobR[1]) * TS;
-      var g = tctx.createRadialGradient(p.u, p.v, 0, p.u, p.v, R);
-      g.addColorStop(0, 'rgba(' + P.color.glow + ',0.10)');
-      g.addColorStop(0.6, 'rgba(' + P.color.glow + ',0.04)');
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      tctx.globalCompositeOperation = 'lighter';
-      tctx.fillStyle = g;
-      tctx.beginPath(); tctx.arc(p.u, p.v, R, 0, 7); tctx.fill();
-    }
     function genGrain(){
-      /* 코팅면 질감 — 헤어라인 스트릭 + 미세 글리터 (리셋 시 1회 생성, 글리터=부드러운 원) */
+      /* 코팅면 질감 — 넓고 부드러운 헤어라인 스트릭만 (얼룩·글리터·입자 자국 없음) */
       tctx.globalCompositeOperation = 'lighter';
-      var i;
-      for (i = 0; i < 70; i++){
-        tctx.fillStyle = 'rgba(255,255,255,' + (0.015 + Math.random() * 0.035) + ')';
-        tctx.fillRect(Math.random() * tex.width, 0, (0.8 + Math.random() * 2.2) * TS, tex.height);
-      }
-      for (i = 0; i < 24; i++){
+      for (var i = 0; i < 24; i++){
         var u = Math.random() * tex.width, w = (24 + Math.random() * 60) * TS;
         var g = tctx.createLinearGradient(u - w, 0, u + w, 0);
         g.addColorStop(0, 'rgba(255,255,255,0)');
@@ -790,14 +774,6 @@
         g.addColorStop(1, 'rgba(255,255,255,0)');
         tctx.fillStyle = g;
         tctx.fillRect(u - w, 0, w * 2, tex.height);
-      }
-      for (i = 0; i < 230; i++){
-        var gu = Math.random() * tex.width, gv = Math.random() * tex.height, gr = 1.6 * TS;
-        var gg = tctx.createRadialGradient(gu, gv, 0, gu, gv, gr);
-        gg.addColorStop(0, 'rgba(255,255,255,' + (0.03 + Math.random() * 0.05) + ')');
-        gg.addColorStop(1, 'rgba(255,255,255,0)');
-        tctx.fillStyle = gg;
-        tctx.beginPath(); tctx.arc(gu, gv, gr, 0, 7); tctx.fill();
       }
     }
 
@@ -986,7 +962,6 @@
           if (pt.y <= pt.r){
             pt.state = 'melt'; pt.t = 0; pt.y = pt.r * 0.55;
             landed.push({ x: pt.x, z: pt.z, a: 0.14 + Math.random() * 0.16 });
-            paintBlob(pt.x, pt.z);
           }
         } else {
           pt.t += dt * 1000;

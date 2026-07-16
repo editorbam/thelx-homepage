@@ -410,15 +410,18 @@
     .sputter-stage { position: relative; aspect-ratio: 16 / 9; }
     .sputter-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
     .sputter-meter {
-      position: absolute; right: 0; bottom: 0; margin: 0;
+      position: absolute; left: 0; top: 0; margin: 0;
       color: #8e8e93; font-size: 11px; font-weight: 300; letter-spacing: .14em;
-      text-align: right; pointer-events: none;
+      text-align: left; pointer-events: none;
     }
     .sputter-cap {
-      margin: .9rem auto 0; max-width: 560px; text-align: center; word-break: keep-all;
-      color: rgba(255,255,255,.42); font-size: .85rem; font-weight: 300; line-height: 1.7;
+      margin: .9rem auto 0; width: max-content; max-width: 94vw; white-space: nowrap;
+      text-align: center; color: rgba(255,255,255,.42); font-size: .85rem; font-weight: 300; line-height: 1.7;
     }
-    @media (max-width: 768px){ .sputter-stage { aspect-ratio: 4 / 3; } }
+    @media (max-width: 768px){
+      .sputter-stage { aspect-ratio: 4 / 3; }
+      .sputter-cap { white-space: normal; width: auto; max-width: 100%; word-break: keep-all; }
+    }
   </style>
 </head>
 <body>

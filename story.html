@@ -119,6 +119,7 @@
       transition: color .2s;
     }
     .story-nav-back:hover { color: #0a0a0a; }
+    .story-nav-links { display: flex; align-items: center; gap: 1.5rem; }
 
     /* ===========================
        STORY SECTION (light editorial)
@@ -380,7 +381,10 @@
 
 <nav class="story-nav">
   <a href="index.html" class="story-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-b.png" alt="THE LX"></a>
-  <a href="index.html" class="story-nav-back"><span aria-hidden="true">←</span> 홈으로</a>
+  <div class="story-nav-links">
+    <a href="index.html" class="story-nav-back" onclick="if(history.length>1){history.back();return false;}"><span aria-hidden="true">←</span> 뒤로</a>
+    <a href="index.html" class="story-nav-back">홈으로</a>
+  </div>
 </nav>
 
 <section class="story-section">

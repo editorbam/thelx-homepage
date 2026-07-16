@@ -222,6 +222,16 @@ nav.on-dark .nav-logo .nav-logo-w { display: block; }
   transition: color .4s, border-color .4s;
 }
 
+.nav-right { display: flex; align-items: center; gap: 1.6rem; }
+.nav-back {
+  font-size: 12px; font-weight: 500; letter-spacing: .04em;
+  color: rgba(0,0,0,.55); text-decoration: none;
+  display: inline-flex; align-items: center; gap: .4rem; transition: color .2s;
+}
+.nav-back:hover { color: var(--black); }
+nav.on-dark .nav-back { color: rgba(255,255,255,.55); }
+nav.on-dark .nav-back:hover { color: #fff; }
+
 .nav-hamburger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: none;
@@ -2245,10 +2255,13 @@ body.pd-open { overflow: hidden; }
     <li><a href="stores.html">시공점</a></li>
     <li><a href="warranty.html">보증서</a></li>
   </ul>
-  <a href="#booking" class="nav-cta">예약</a>
-  <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" onclick="if(history.length>1){history.back();return false;}"><span aria-hidden="true">←</span> 뒤로</a>
+    <a href="#booking" class="nav-cta">예약</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 

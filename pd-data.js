@@ -17,6 +17,8 @@ const PD_DATA = {
     recommendLabel: '왜 LX인가',
     recommend: '타협 없는 나만의 공간. 맑은 시야, 흔들리지 않는 온도, 변하지 않는 10년. LX는 그 무엇도 포기하지 않습니다.',
     flagship: true,
+    /* 모달 VLT 비주얼 — 공식 비교컷(밀라노 두오모, LX 15~70 라벨 포함). 렌더 규칙=Vogue vltImage 주석 참조 */
+    vltImage: 'lx-vlt-scene.jpg',
     perf: [
       { label: 'UV 차단', pct: 99 },
       { label: '최대 TSER', pct: 71 },

@@ -49,6 +49,8 @@ const PD_DATA = {
     recommendLabel: '왜 Vogue인가',
     recommend: '같은 검정은 거부합니다. 거울처럼 빛나는 그린 골드, 가장 강한 열 차단. 그게 Vogue입니다.',
     flagship: false,
+    /* 모달 VLT 밴드 틴트 — [시작 RGB, 끝 RGB] 그라디언트(그린→골드). 미지정 제품=무채색 기본(6,10,22) */
+    vltTint: ['46,64,26', '104,88,30'],
     perf: [
       { label: 'UV 차단', pct: 99 },
       { label: '최대 TSER', pct: 80 },

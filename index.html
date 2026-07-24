@@ -4099,11 +4099,15 @@ function pdOpen(id) {
       return 0;
     };
     const w = 100 / densRows.length;
+    // 제품 고유 필름 컬러 — pd-data.js vltTint([시작,끝] RGB 그라디언트, 예: Vogue 그린 골드). 미지정=무채색
+    const fillBg = o => p.vltTint
+      ? `linear-gradient(160deg, rgba(${p.vltTint[0]},${o}) 0%, rgba(${p.vltTint[1]},${o}) 100%)`
+      : `rgba(6,10,22,${o})`;
     pdVlt.innerHTML = `<div class="pd-vlt-wrap">
       <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="eager" decoding="async">
       ${densRows.map((r, i) => `
         <div class="pd-vlt-band" style="left:${(w * i).toFixed(4)}%;width:${w.toFixed(4)}%;">
-          <div class="pd-vlt-band-fill" style="background:rgba(6,10,22,${shade(r.vlt).toFixed(2)});"></div>
+          <div class="pd-vlt-band-fill" style="background:${fillBg(shade(r.vlt).toFixed(2))};"></div>
           <div class="pd-vlt-band-label"><span class="lbl-name">${p.name} ${r.d}</span><span class="lbl-pct">VLT ${r.vlt}%</span></div>
         </div>`).join('')}
       ${densRows.slice(1).map((_, i) => `<div class="pd-vlt-divider" style="left:${(w * (i + 1)).toFixed(4)}%;"></div>`).join('')}

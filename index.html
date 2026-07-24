@@ -2053,6 +2053,16 @@ body.pd-open { overflow: hidden; }
   padding: 1.25rem 1.5rem; border: 1px solid rgba(0,0,0,.08);
   border-radius: 12px; line-height: 1.7;
 }
+/* 제품 소개 본문 (pd-data intro — 브로슈어 이식) */
+.pd-intro-block + .pd-intro-block { margin-top: 2.2rem; }
+.pd-intro-h { font-size: 1.05rem; font-weight: 600; color: var(--black); letter-spacing: -.01em; margin-bottom: .6rem; }
+.pd-intro-p { font-size: .95rem; font-weight: 300; color: var(--gray-3); line-height: 1.75; word-break: keep-all; }
+.pd-intro-list { list-style: none; margin: 2.2rem 0 0; padding: 0; }
+.pd-intro-list li {
+  font-size: .92rem; font-weight: 300; color: var(--gray-4); line-height: 1.6;
+  padding: .65rem 0; border-bottom: .5px solid var(--gray-2); word-break: keep-all;
+}
+.pd-intro-list li:first-child { border-top: .5px solid var(--gray-2); }
 .pd-recommend strong {
   display: block; font-size: 10px; letter-spacing: .15em;
   text-transform: uppercase; color: var(--gray-3); margin-bottom: .4rem;
@@ -3522,6 +3532,8 @@ body.pd-open { overflow: hidden; }
         <span class="pd-badge" id="pdBadge">FLAGSHIP</span>
         <h2 class="pd-name" id="pdName"></h2>
         <p class="pd-tagline" id="pdTagline"></p>
+        <!-- 제품 소개 본문 (pd-data intro) — 있으면 tagline·recommend 대신 렌더 -->
+        <div id="pdIntro"></div>
         <div class="pd-recommend">
           <strong id="pdRecommendLabel">이런 분께 추천합니다</strong>
           <span id="pdRecommend"></span>
@@ -4060,6 +4072,15 @@ function pdOpen(id) {
   document.getElementById('pdCtaName').textContent   = p.name;
   const badge = document.getElementById('pdBadge');
   badge.classList.toggle('show', !!p.flagship);
+
+  // 제품 소개 본문 — intro가 있으면 tagline·recommend 박스 대신 렌더 (⚠️ pricing.html 렌더러 사본 동기)
+  const introEl = document.getElementById('pdIntro');
+  introEl.innerHTML = (p.intro || []).map(b => b.list
+    ? `<ul class="pd-intro-list">${b.list.map(li => `<li>${li}</li>`).join('')}</ul>`
+    : `<div class="pd-intro-block"><h3 class="pd-intro-h">${b.h}</h3><p class="pd-intro-p">${b.p}</p></div>`
+  ).join('');
+  document.getElementById('pdTagline').style.display = p.intro ? 'none' : '';
+  pdOverlay.querySelector('.pd-recommend').style.display = p.intro ? 'none' : '';
 
   // 퍼포먼스 링
   document.getElementById('pdRings').innerHTML = p.perf.map(item =>

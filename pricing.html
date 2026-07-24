@@ -1723,8 +1723,15 @@ body.pd-open { overflow: hidden; }
 .pd-is-icon .acf { fill: #3f78d0; }
 .pd-is-h { display: block; font-size: 1.02rem; font-weight: 600; color: var(--black); margin-bottom: .35rem; }
 .pd-is-p { display: block; font-size: .92rem; font-weight: 300; color: var(--gray-3); line-height: 1.65; word-break: keep-all; }
+/* has-intro 레이아웃: Performance 링 확대 + 중앙 정렬 (svg는 viewBox 스케일) */
+.pd-hero.has-intro .pd-rings-label { text-align: center; margin-bottom: 1.6rem; }
+.pd-hero.has-intro .pd-rings { justify-content: center; gap: 4.5rem; }
+.pd-hero.has-intro .pd-ring svg { width: 128px; height: 128px; }
+.pd-hero.has-intro .pd-ring-label { font-size: 12px; }
 @media (max-width: 768px) {
   #pdIntroSide:not(:empty) { grid-template-columns: 1fr; gap: 2rem; }
+  .pd-hero.has-intro .pd-rings { gap: 2rem; }
+  .pd-hero.has-intro .pd-ring svg { width: 96px; height: 96px; }
 }
 .pd-recommend strong {
   display: block; font-size: 10px; letter-spacing: .15em;

@@ -2087,7 +2087,7 @@ body.pd-open { overflow: hidden; }
    (필름 시트 스윕은 노출 타이밍이 늦어 롤백 2026-07-24) */
 .pd-vlt-static { position: relative; overflow: hidden; background: var(--black); }
 .pd-vlt-static img { width: 100%; height: auto; display: block; }
-.pd-vlt-static-cover { position: absolute; inset: 0; background: #0a0a0a; transition: transform 1.1s cubic-bezier(0.4, 0, 0.15, 1); will-change: transform; }
+.pd-vlt-static-cover { position: absolute; inset: 0; background: var(--white); transition: transform 1.1s cubic-bezier(0.4, 0, 0.15, 1); will-change: transform; }
 .pd-vlt-static.on .pd-vlt-static-cover { transform: translateX(102%); }
 @media (max-width: 768px) {
   .pd-vlt-pips { right: 1.5rem; bottom: 1.8rem; }

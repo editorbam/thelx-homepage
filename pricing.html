@@ -1729,6 +1729,11 @@ body.pd-open { overflow: hidden; }
 .pd-vlt-pips { position: absolute; bottom: 2.5rem; right: 2.8rem; display: flex; gap: 8px; pointer-events: none; z-index: 6; }
 .pd-vlt-pip { width: 20px; height: 2px; background: rgba(255,255,255,.18); transition: background .4s, width .4s; }
 .pd-vlt-pip.on { background: rgba(255,255,255,.82); width: 32px; }
+/* 공식 비교 이미지 모드 (pd-data vltImage) — 라벨 박힌 원본이라 크롭 없이 전폭 표시 + 단일 커튼 리빌 */
+.pd-vlt-static { position: relative; overflow: hidden; background: var(--black); }
+.pd-vlt-static img { width: 100%; height: auto; display: block; }
+.pd-vlt-static-cover { position: absolute; inset: 0; background: #0a0a0a; transition: transform 1.1s cubic-bezier(0.4, 0, 0.15, 1); will-change: transform; }
+.pd-vlt-static.on .pd-vlt-static-cover { transform: translateX(102%); }
 @media (max-width: 768px) {
   .pd-vlt-pips { right: 1.5rem; bottom: 1.8rem; }
   .pd-vlt-band-label .lbl-name { font-size: 10px; }
@@ -3341,7 +3346,13 @@ function pdOpen(id) {
   const densRows = (p.specs.find(s => s.title.indexOf('농도별') === 0) || { rows: [] }).rows
     .map(r => { const m = r.label.match(/농도\s*(\d+)\s*—\s*VLT\s*(\d+)%/); return m && { d: m[1], vlt: +m[2] }; })
     .filter(Boolean);
-  if (densRows.length >= 2) {
+  if (p.vltImage) {
+    // 공식 비교 이미지 모드(라벨 포함 원본) — 밴드 시뮬레이션 대신 통짜 이미지 + 단일 커튼 리빌
+    pdVlt.innerHTML = `<div class="pd-vlt-static">
+      <img src="${p.vltImage}" alt="${p.name} 농도별 투과율 비교" loading="eager" decoding="async">
+      <div class="pd-vlt-static-cover"></div>
+    </div>`;
+  } else if (densRows.length >= 2) {
     // 명도 = 홈 #vlt 밴드 앵커(VLT 12/23/42/59/72 → .80/.48/.40/.24/.05)의 구간 보간 — LX는 홈과 동일
     const shade = v => {
       const pts = [[0,.92],[12,.80],[23,.48],[42,.40],[59,.24],[72,.05],[100,0]];
@@ -3396,11 +3407,12 @@ function pdOpen(id) {
   }, { root: pdOverlay, threshold: 0.2 });
   pdOverlay.querySelectorAll('.pd-spec-section').forEach(el => io.observe(el));
 
-  // VLT 커튼 공개 — 홈 #vlt와 동일(진입 시 on, 이탈 시 해제 → 재진입 때 다시 재생)
-  const vltWrap = pdVlt.querySelector('.pd-vlt-wrap');
+  // VLT 커튼 공개 — 홈 #vlt와 동일(진입 시 on, 이탈 시 해제 → 재진입 때 다시 재생). 이미지 모드=단일 커튼
+  const vltWrap = pdVlt.querySelector('.pd-vlt-wrap, .pd-vlt-static');
   if (vltWrap) {
     const vio = new IntersectionObserver(entries => {
       entries.forEach(e => {
+        vltWrap.classList.toggle('on', e.isIntersecting);
         vltWrap.querySelectorAll('.pd-vlt-band, .pd-vlt-pip').forEach(el =>
           el.classList.toggle('on', e.isIntersecting));
       });

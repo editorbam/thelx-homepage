@@ -2018,26 +2018,13 @@ body.pd-open { overflow: hidden; }
 }
 .pd-nav-cta:hover { background: var(--black); color: var(--white); }
 
-/* 상세 hero — 풀블리드 시공 영상 배경 (9개 제품 공통) */
+/* 상세 제품 소개 — 다크 섹션 (배경 영상 제거·VLT 밴드 아래로 이동 2026-07-24) */
 .pd-hero-wrap {
   position: relative; width: 100%;
-  min-height: clamp(560px, 80vh, 800px);
-  display: flex; align-items: flex-end;
-  overflow: hidden; background: #0a0a0a;
-}
-.pd-hero-video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; display: block; z-index: 0;
-}
-.pd-hero-wrap::after {
-  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(10,10,10,.86) 0%, rgba(10,10,10,.7) 20%, rgba(10,10,10,.46) 38%, rgba(10,10,10,.14) 52%, rgba(10,10,10,0) 64%, rgba(10,10,10,.4) 80%, rgba(10,10,10,.85) 100%),
-    linear-gradient(90deg, rgba(10,10,10,.7) 0%, rgba(10,10,10,.25) 48%, rgba(10,10,10,0) 78%);
+  background: #0a0a0a;
 }
 .pd-hero {
-  position: relative; z-index: 2; width: 100%;
+  position: relative; width: 100%;
   padding: 5rem 2rem 4rem;
   max-width: 980px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end;
@@ -2079,10 +2066,6 @@ body.pd-open { overflow: hidden; }
 .pd-ring  { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
 .pd-ring svg { transform: rotate(-90deg); }
 .pd-ring-label { font-size: 11px; color: rgba(255,255,255,.7); letter-spacing: .06em; text-align: center; }
-
-@media (max-width: 768px) {
-  .pd-hero-wrap { min-height: clamp(520px, 78vh, 680px); }
-}
 
 /* ── PD 모달 — 농도별 VLT 하늘 밴드 (#vlt 섹션 커튼 문법의 모달판, pdOpen에서 렌더) ── */
 #pdVlt:empty { display: none; }
@@ -3525,13 +3508,11 @@ body.pd-open { overflow: hidden; }
     <button class="pd-nav-cta" id="pdBookingBtn">예약</button>
   </div>
 
-  <!-- 상세 hero — 풀블리드 시공 영상 배경 (9개 제품 공통) -->
+  <!-- 농도별 VLT 하늘 밴드 — 모달 오프닝 화면 (pdOpen에서 제품별 렌더, 농도 스펙 없는 제품=비표시) -->
+  <div id="pdVlt"></div>
+
+  <!-- 제품 소개 — 다크 섹션 (배경 영상 제거·VLT 아래로 이동 2026-07-24) -->
   <div class="pd-hero-wrap">
-    <video class="pd-hero-video" autoplay muted loop playsinline preload="none"
-           poster="pd-craft-poster.jpg" aria-hidden="true">
-      <source src="pd-craft-mobile.mp4" media="(max-width: 768px)" type="video/mp4">
-      <source src="pd-craft.mp4" type="video/mp4">
-    </video>
     <div class="pd-hero">
       <div>
         <p class="pd-eyebrow">THE LX · Products</p>
@@ -3549,9 +3530,6 @@ body.pd-open { overflow: hidden; }
       </div>
     </div>
   </div>
-
-  <!-- 농도별 VLT 하늘 밴드 — pdOpen에서 제품별 렌더 (농도 스펙 없는 제품=비표시) -->
-  <div id="pdVlt"></div>
 
   <div id="pdSpecs"></div>
 
@@ -4125,7 +4103,7 @@ function pdOpen(id) {
     };
     const w = 100 / densRows.length;
     pdVlt.innerHTML = `<div class="pd-vlt-wrap">
-      <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="lazy" decoding="async">
+      <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="eager" decoding="async">
       ${densRows.map((r, i) => `
         <div class="pd-vlt-band" style="left:${(w * i).toFixed(4)}%;width:${w.toFixed(4)}%;">
           <div class="pd-vlt-band-fill" style="background:rgba(6,10,22,${shade(r.vlt).toFixed(2)});"></div>
@@ -4147,14 +4125,6 @@ function pdOpen(id) {
   pdOverlay.scrollTop = 0;
   pdOverlay.classList.add('open');
   document.body.classList.add('pd-open');
-
-  // hero 영상 즉시 재생 (오버레이가 화면 밖이라 autoplay가 지연되는 것 방지)
-  const heroVid = pdOverlay.querySelector('.pd-hero-video');
-  if (heroVid) {
-    try { heroVid.currentTime = 0; } catch (e) {}
-    const pr = heroVid.play();
-    if (pr && pr.catch) pr.catch(() => {});
-  }
 
   // 브라우저 history에 진입점 추가 → 뒤로가기로 닫을 수 있게
   history.pushState({ pd: id }, '');

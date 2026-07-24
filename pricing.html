@@ -2605,6 +2605,9 @@ body.pd-open { overflow: hidden; }
     <button class="pd-nav-cta" id="pdBookingBtn">예약</button>
   </div>
 
+  <!-- 농도별 VLT 하늘 밴드 — 모달 오프닝 화면 (pdOpen에서 제품별 렌더, 농도 스펙 없는 제품=비표시) -->
+  <div id="pdVlt"></div>
+
   <div class="pd-hero">
     <div>
       <p class="pd-eyebrow">THE LX · Products</p>
@@ -2621,9 +2624,6 @@ body.pd-open { overflow: hidden; }
       <div class="pd-rings" id="pdRings"></div>
     </div>
   </div>
-
-  <!-- 농도별 VLT 하늘 밴드 — pdOpen에서 제품별 렌더 (농도 스펙 없는 제품=비표시) -->
-  <div id="pdVlt"></div>
 
   <div id="pdSpecs"></div>
 
@@ -3357,7 +3357,7 @@ function pdOpen(id) {
     };
     const w = 100 / densRows.length;
     pdVlt.innerHTML = `<div class="pd-vlt-wrap">
-      <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="lazy" decoding="async">
+      <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="eager" decoding="async">
       ${densRows.map((r, i) => `
         <div class="pd-vlt-band" style="left:${(w * i).toFixed(4)}%;width:${w.toFixed(4)}%;">
           <div class="pd-vlt-band-fill" style="background:rgba(6,10,22,${shade(r.vlt).toFixed(2)});"></div>

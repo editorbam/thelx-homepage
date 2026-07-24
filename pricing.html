@@ -1729,11 +1729,17 @@ body.pd-open { overflow: hidden; }
 .pd-vlt-pips { position: absolute; bottom: 2.5rem; right: 2.8rem; display: flex; gap: 8px; pointer-events: none; z-index: 6; }
 .pd-vlt-pip { width: 20px; height: 2px; background: rgba(255,255,255,.18); transition: background .4s, width .4s; }
 .pd-vlt-pip.on { background: rgba(255,255,255,.82); width: 32px; }
-/* 공식 비교 이미지 모드 (pd-data vltImage) — 라벨 박힌 원본이라 크롭 없이 전폭 표시 + 단일 커튼 리빌 */
+/* 공식 비교 이미지 모드 (pd-data vltImage) — 라벨 박힌 원본이라 크롭 없이 전폭 표시.
+   모션 = 필름 한 장(VLT 밴드와 같은 틴트)이 화면 위를 지나가는 스윕 */
 .pd-vlt-static { position: relative; overflow: hidden; background: var(--black); }
 .pd-vlt-static img { width: 100%; height: auto; display: block; }
-.pd-vlt-static-cover { position: absolute; inset: 0; background: #0a0a0a; transition: transform 1.1s cubic-bezier(0.4, 0, 0.15, 1); will-change: transform; }
-.pd-vlt-static.on .pd-vlt-static-cover { transform: translateX(102%); }
+.pd-vlt-static-cover {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 56%; transform: translateX(-102%); will-change: transform;
+  background: rgba(6,10,22,.5);
+  border-left: 1px solid rgba(255,255,255,.18); border-right: 1px solid rgba(255,255,255,.18);
+}
+.pd-vlt-static.on .pd-vlt-static-cover { animation: pdFilmSweep 1.7s cubic-bezier(0.4, 0, 0.15, 1) .45s forwards; }
+@keyframes pdFilmSweep { from { transform: translateX(-102%); } to { transform: translateX(285%); } }
 @media (max-width: 768px) {
   .pd-vlt-pips { right: 1.5rem; bottom: 1.8rem; }
   .pd-vlt-band-label .lbl-name { font-size: 10px; }

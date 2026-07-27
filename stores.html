@@ -488,6 +488,11 @@ let slMap = null, slCluster = null;
   /* 스크롤 하이재킹 방지: 클릭 후에만 휠 줌 */
   slMap.on('click', () => slMap.scrollWheelZoom.enable());
   slMap.on('mouseout', () => slMap.scrollWheelZoom.disable());
+  /* 모바일: 페이지 스크롤 중 지도에 손가락이 닿아도 안 끌리게 — 탭 후에만 드래그 */
+  if (L.Browser.mobile) {
+    slMap.dragging.disable();
+    slMap.on('click', () => slMap.dragging.enable());
+  }
 })();
 
 function slMapUpdate(list) {

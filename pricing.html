@@ -3303,9 +3303,10 @@ hamburger.addEventListener('click', () => {
   }
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeMobileMenu();
-
-
+  if (e.key === 'Escape') {
+    closeMobileMenu();
+    if (pdOverlay.classList.contains('open')) history.back(); // 제품 모달도 ESC로 닫기
+  }
 });
 
 /* ── 카카오 플로팅 (pricing 페이지) ── */
@@ -3497,9 +3498,14 @@ function pdClose() {
   document.body.classList.remove('pd-open');
 }
 
-// 브라우저 뒤로가기 → 오버레이 닫기
+// 브라우저 뒤로가기 → 오버레이 닫기 (+ 오버레이가 닫혀 있으면 잠금 클래스 잔류 정리 — Safari 안전망)
 window.addEventListener('popstate', () => {
   if (pdOverlay.classList.contains('open')) pdClose();
+  else document.body.classList.remove('pd-open');
+});
+// BFCache 복원 등으로 잠금만 남는 경우 정리 (Safari 안전망)
+window.addEventListener('pageshow', () => {
+  if (!pdOverlay.classList.contains('open')) document.body.classList.remove('pd-open');
 });
 
 // 상세 버튼 클릭

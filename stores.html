@@ -241,6 +241,7 @@
   display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
 }
 .sl-card {
+  position:relative;
   background:var(--white); border:.5px solid var(--gray-2);
   border-radius:16px; padding:1.5rem;
   display:flex; flex-direction:column; gap:.6rem;
@@ -257,8 +258,17 @@
 }
 .sl-card-name {
   font-size:.95rem; font-weight:500; color:var(--black);
-  line-height:1.4;
+  line-height:1.4; padding-right:5.6rem;
 }
+/* 카드 우상단 상시 표기 — 클릭하면 위 지도에 위치 표시됨을 알림 */
+.sl-card-pin {
+  position:absolute; top:1.15rem; right:1.25rem;
+  display:flex; align-items:center; gap:.28rem;
+  font-size:.7rem; font-weight:400; color:var(--gray-3);
+  transition:color .25s;
+}
+.sl-card-pin svg { display:block; }
+.sl-card:hover .sl-card-pin { color:var(--black); }
 .sl-card-addr {
   font-size:.82rem; color:var(--gray-3); font-weight:300;
   line-height:1.5; flex:1;
@@ -610,6 +620,7 @@ function slRender() {
     const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(s.a);
     const tel    = slPhone1(s.p);
     return `<div class="sl-card" data-i="${STORE_DATA.indexOf(s)}" title="지도에서 위치 보기">
+      <span class="sl-card-pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>지도에서 보기</span>
       <p class="sl-card-name">${s.n}</p>
       <p class="sl-card-addr">${s.a}</p>
       <p class="sl-card-phone">${s.p}</p>

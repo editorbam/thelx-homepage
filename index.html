@@ -2058,6 +2058,7 @@ body.pd-open { overflow: hidden; }
 .pd-hero.has-intro .pd-intro-block, .pd-hero.has-intro .pd-intro-list { max-width: 680px; }
 .pd-intro-block + .pd-intro-block { margin-top: 3rem; }
 .pd-intro-block.pd-intro-cont { margin-top: 1.4rem; } /* h 없는 이어지는 문단 */
+.pd-intro-img { display: block; width: 100%; max-width: 560px; height: auto; margin-top: 1.2rem; }
 .pd-intro-h { font-size: 1.1rem; font-weight: 600; color: var(--black); letter-spacing: -.01em; margin-bottom: .7rem; }
 .pd-intro-p { font-size: .95rem; font-weight: 300; color: var(--gray-3); line-height: 1.8; word-break: keep-all; }
 .pd-intro-list { list-style: none; margin: 3.2rem 0 0; padding: 0; }
@@ -4137,6 +4138,8 @@ function pdOpen(id) {
   const introEl = document.getElementById('pdIntro');
   introEl.innerHTML = (p.intro || []).map(b => b.list
     ? `<ul class="pd-intro-list">${b.list.map(li => `<li>${li}</li>`).join('')}</ul>`
+    : b.img
+    ? `<div class="pd-intro-block">${b.h ? `<h3 class="pd-intro-h">${b.h}</h3>` : ''}<img class="pd-intro-img" src="${b.img}" alt="${b.alt || ''}"></div>`
     : `<div class="pd-intro-block${b.h ? '' : ' pd-intro-cont'}">${b.h ? `<h3 class="pd-intro-h">${b.h}</h3>` : ''}<p class="pd-intro-p">${b.p}</p></div>`
   ).join('');
   document.getElementById('pdTagline').style.display = p.intro ? 'none' : '';

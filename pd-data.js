@@ -463,6 +463,7 @@ const PD_DATA = {
         '스톤칩 방지 및 얼룩 저항성 탁월',
         '우수한 발수성능',
       ]},
+      { h: '구조소개', img: 'shield-structure.jpg', alt: 'LX SHIELD 필름 구조 — 탑코팅 · 폴리우레탄 · 접착제 · 도장면 4층 다이어그램' },
     ],
     perf: [
       { label: 'UV 차단', pct: 99 },

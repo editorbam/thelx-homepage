@@ -212,17 +212,12 @@
 .sl-lg { width:10px; height:10px; border-radius:50%; border:1.5px solid #0a0a0a; display:inline-block; }
 .sl-lg-lx { background:#0a0a0a; }
 .sl-lg-sg { background:#fff; }
-.sl-cluster {
-  width:34px; height:34px; background:#0a0a0a; color:#fff; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:12px; font-weight:600; border:2px solid #fff;
-  box-shadow:0 3px 12px rgba(0,0,0,.28);
-}
-#slMap .leaflet-popup-content-wrapper {
+#slMap .maplibregl-popup-content {
   border-radius:14px; box-shadow:0 14px 40px rgba(0,0,0,.16);
-  border:.5px solid var(--gray-2);
+  border:.5px solid var(--gray-2); padding:1rem 1.1rem; font-family:inherit;
 }
-#slMap .leaflet-popup-content { margin:1rem 1.1rem; font-family:inherit; }
+#slMap .maplibregl-popup-close-button { font-size:15px; right:6px; top:5px; color:var(--gray-3); }
+#slMap .maplibregl-ctrl-attrib { font-size:10px; background:rgba(255,255,255,.72); }
 .sl-pop { display:flex; flex-direction:column; gap:.3rem; min-width:180px; }
 .sl-pop strong { font-size:.9rem; font-weight:600; color:var(--black); }
 .sl-pop span { font-size:.78rem; color:var(--gray-3); font-weight:300; line-height:1.45; }
@@ -447,11 +442,10 @@
   <p class="story-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
 </footer>
 
-<!-- Leaflet — 시공점 지도 (CARTO 모노톤 타일, API 키 불필요). 로드 실패 시 목록만 표시 -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<!-- MapLibre GL — 시공점 지도 (OpenFreeMap Positron 모노톤 벡터 타일, API 키 불필요, 라벨 한글화 가능).
+     로드 실패 시 목록만 표시 -->
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 
 <script>
 /* ── STORE LOCATOR (index.html에서 이관 — 2026-07-14) ── */
@@ -468,51 +462,91 @@ function slPhone1(p) {
 var SL_PAGE = 12;
 var slShown = SL_PAGE;
 
-/* ── 시공점 지도 (Leaflet · 모노톤) — 필터·검색 결과와 동기 ── */
-let slMap = null, slCluster = null;
+/* ── 시공점 지도 (MapLibre · OpenFreeMap 모노톤) — 필터·검색 결과와 동기, 라벨 한글화 ── */
+let slMap = null, slMapReady = false, slPending = null;
+
+function slGeojson(list) {
+  return { type: 'FeatureCollection', features: list.filter(s => s.y != null).map(s => ({
+    type: 'Feature',
+    geometry: { type: 'Point', coordinates: [s.x, s.y] },
+    properties: { n: s.n, a: s.a, p: s.p, lx: s.n.toUpperCase().indexOf('LX') !== -1 ? 1 : 0 },
+  })) };
+}
+
 (function slInitMap(){
-  if (!window.L || !L.markerClusterGroup) { document.getElementById('slMap').classList.add('no-map'); return; }
-  slMap = L.map('slMap', { scrollWheelZoom: false, center: [36.4, 127.8], zoom: 7 });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd', maxZoom: 19,
-  }).addTo(slMap);
-  slCluster = L.markerClusterGroup({
-    maxClusterRadius: 46, showCoverageOnHover: false,
-    iconCreateFunction: c => L.divIcon({
-      html: '<div class="sl-cluster">' + c.getChildCount() + '</div>',
-      className: '', iconSize: [34, 34],
-    }),
+  if (!window.maplibregl) { document.getElementById('slMap').classList.add('no-map'); return; }
+  slMap = new maplibregl.Map({
+    container: 'slMap',
+    style: 'https://tiles.openfreemap.org/styles/positron',
+    center: [127.8, 36.4], zoom: 6,
   });
-  slMap.addLayer(slCluster);
+  slMap.addControl(new maplibregl.NavigationControl({ showCompass: false }));
   /* 스크롤 하이재킹 방지: 클릭 후에만 휠 줌 */
-  slMap.on('click', () => slMap.scrollWheelZoom.enable());
-  slMap.on('mouseout', () => slMap.scrollWheelZoom.disable());
+  slMap.scrollZoom.disable();
+  slMap.on('click', () => slMap.scrollZoom.enable());
+  slMap.getContainer().addEventListener('mouseleave', () => slMap.scrollZoom.disable());
   /* 모바일: 페이지 스크롤 중 지도에 손가락이 닿아도 안 끌리게 — 탭 후에만 드래그 */
-  if (L.Browser.mobile) {
-    slMap.dragging.disable();
-    slMap.on('click', () => slMap.dragging.enable());
+  if ('ontouchstart' in window) {
+    slMap.dragPan.disable();
+    slMap.on('click', () => slMap.dragPan.enable());
   }
+
+  slMap.on('load', () => {
+    /* 라벨 한글화 — name:ko 우선, 없으면 기본 name(국내 지명 원본=한글) */
+    slMap.getStyle().layers.forEach(l => {
+      if (l.type === 'symbol' && l.layout && l.layout['text-field']) {
+        slMap.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name:ko'], ['get', 'name']]);
+      }
+    });
+
+    slMap.addSource('stores', { type: 'geojson', data: slGeojson([]), cluster: true, clusterRadius: 46, clusterMaxZoom: 13 });
+    slMap.addLayer({ id: 'st-cluster', type: 'circle', source: 'stores', filter: ['has', 'point_count'],
+      paint: { 'circle-color': '#0a0a0a', 'circle-radius': 17, 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' } });
+    slMap.addLayer({ id: 'st-count', type: 'symbol', source: 'stores', filter: ['has', 'point_count'],
+      layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Regular'], 'text-size': 12 },
+      paint: { 'text-color': '#ffffff' } });
+    slMap.addLayer({ id: 'st-pin', type: 'circle', source: 'stores', filter: ['!', ['has', 'point_count']],
+      paint: { 'circle-radius': 6, 'circle-color': ['case', ['==', ['get', 'lx'], 1], '#0a0a0a', '#ffffff'],
+               'circle-stroke-width': 1.5, 'circle-stroke-color': '#0a0a0a' } });
+
+    slMap.on('click', 'st-cluster', e => {
+      const f = slMap.queryRenderedFeatures(e.point, { layers: ['st-cluster'] })[0];
+      const r = slMap.getSource('stores').getClusterExpansionZoom(f.properties.cluster_id);
+      const go = z => slMap.easeTo({ center: f.geometry.coordinates, zoom: z });
+      if (r && r.then) r.then(go); else slMap.getSource('stores').getClusterExpansionZoom(f.properties.cluster_id, (err, z) => { if (!err) go(z); });
+    });
+    slMap.on('click', 'st-pin', e => {
+      const pr = e.features[0].properties;
+      const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(pr.a);
+      new maplibregl.Popup({ offset: 10 }).setLngLat(e.features[0].geometry.coordinates)
+        .setHTML('<div class="sl-pop"><strong>' + pr.n + '</strong><span>' + pr.a + '</span><span>' + pr.p + '</span>' +
+          '<span class="sl-pop-btns"><a href="' + mapUrl + '" target="_blank" rel="noopener">네이버 지도</a><a href="tel:' + slPhone1(pr.p) + '">전화</a></span></div>')
+        .addTo(slMap);
+    });
+    ['st-cluster', 'st-pin'].forEach(id => {
+      slMap.on('mouseenter', id, () => slMap.getCanvas().style.cursor = 'pointer');
+      slMap.on('mouseleave', id, () => slMap.getCanvas().style.cursor = '');
+    });
+
+    slMapReady = true;
+    if (slPending) { slMapApply(slPending); slPending = null; }
+  });
 })();
+
+function slMapApply(list) {
+  slMap.getSource('stores').setData(slGeojson(list));
+  const pts = list.filter(s => s.y != null);
+  if (pts.length) {
+    const b = new maplibregl.LngLatBounds();
+    pts.forEach(s => b.extend([s.x, s.y]));
+    slMap.fitBounds(b, { padding: 48, maxZoom: 12, duration: 600 });
+  }
+}
 
 function slMapUpdate(list) {
   if (!slMap) return;
-  slCluster.clearLayers();
-  const pts = [];
-  list.forEach(s => {
-    if (s.y == null) return;
-    const isLx = s.n.toUpperCase().indexOf('LX') !== -1;
-    const mk = L.circleMarker([s.y, s.x], {
-      radius: 6, weight: 1.5, color: '#0a0a0a',
-      fillColor: isLx ? '#0a0a0a' : '#ffffff', fillOpacity: 1,
-    });
-    const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(s.a);
-    mk.bindPopup('<div class="sl-pop"><strong>' + s.n + '</strong><span>' + s.a + '</span><span>' + s.p + '</span>' +
-      '<span class="sl-pop-btns"><a href="' + mapUrl + '" target="_blank" rel="noopener">네이버 지도</a><a href="tel:' + slPhone1(s.p) + '">전화</a></span></div>');
-    slCluster.addLayer(mk);
-    pts.push([s.y, s.x]);
-  });
-  if (pts.length) slMap.fitBounds(L.latLngBounds(pts).pad(0.12), { maxZoom: 12 });
+  if (!slMapReady) { slPending = list; return; }
+  slMapApply(list);
 }
 
 function slRender() {

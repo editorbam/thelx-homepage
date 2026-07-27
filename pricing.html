@@ -3369,6 +3369,9 @@ function pdOpen(id) {
     signal:   '<path d="M12 24 A 15.5 15.5 0 0 1 36 24"/><path class="ac" d="M17.5 29 A 8.6 8.6 0 0 1 30.5 29"/><circle class="acf" cx="24" cy="34" r="2.4" stroke="none"/>',
     car:      '<path d="M9 30 L10.5 24.5 Q11 22.5 13.5 22 L19 21.5 L23.5 17.5 L31 17.5 Q33 17.5 34 20 L35.5 23.5 Q38.5 24 38.5 26.5 L38.5 30 L9 30 Z"/><circle cx="16.5" cy="32.5" r="2.8"/><circle cx="31.5" cy="32.5" r="2.8"/><path d="M38 9.5 L39 12.1 L41.6 13.1 L39 14.1 L38 16.7 L37 14.1 L34.4 13.1 L37 12.1 Z" fill="#0a0a0a" stroke="#0a0a0a"/>', /* 비크 블랙 표현 — 보디는 라인 유지, 스파클만 솔리드 블랙 (제품색 예외) */
     install:  '<path d="M10 33 L38 33 L33 25 L15 25 Z"/><path class="ac" d="M19 15.5 L23 19.5 L30.5 10.5"/>',
+    gems:     '<path d="M13 15 L17 11 L21 15 L17 21 Z"/><path d="M28 12.5 L32 9.5 L36 12.5 L32 18 Z"/><path class="ac" d="M17.5 30 L24 24.5 L30.5 30 L24 39 Z"/><path class="ac" d="M17.5 30 L30.5 30"/>',
+    warrant:  '<path d="M15 10 L33 10 L33 38 L15 38 Z"/><path d="M19 30.5 L26 30.5 M19 34 L23.5 34"/><circle class="ac" cx="24" cy="19.5" r="5.5"/><path class="ac" d="M21.5 19.5 L23.5 21.5 L26.8 17.3"/>',
+    sun:      '<circle cx="34" cy="11" r="4"/><path d="M34 3.5 L34 5.5 M41.5 11 L39.5 11 M39.3 5.7 L37.9 7.1 M28.7 5.7 L30.1 7.1 M26.5 11 L28.5 11"/><path d="M30.5 15.5 L20 32.5" stroke-dasharray="2.5 3"/><path class="ac" d="M20 33 L30 23"/><path class="ac" d="M30 23 L25.7 23.7 M30 23 L29.3 27.3"/><path d="M10 33 L38 33"/><path d="M13 38 L35 38" stroke-dasharray="2.5 3"/>',
   };
   document.getElementById('pdIntroSide').innerHTML = (p.introSide || []).map(it =>
     `<div class="pd-is-row">

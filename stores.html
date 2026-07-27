@@ -209,9 +209,13 @@
   margin-top:.6rem; font-size:.78rem; color:var(--gray-3); font-weight:300;
 }
 .sl-map-legend span { display:flex; align-items:center; gap:.4rem; }
-.sl-lg { width:10px; height:10px; border-radius:50%; border:1.5px solid #0a0a0a; display:inline-block; }
-.sl-lg-lx { background:#0a0a0a; }
-.sl-lg-sg { background:#fff; }
+.sl-lg {
+  width:17px; height:17px; border-radius:50%; border:1.5px solid #0a0a0a;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:7.5px; font-weight:700; font-style:normal; letter-spacing:0;
+}
+.sl-lg-lx { background:#0a0a0a; color:#fff; }
+.sl-lg-sg { background:#fff; color:#0a0a0a; }
 #slMap .maplibregl-popup-content {
   border-radius:14px; box-shadow:0 14px 40px rgba(0,0,0,.16);
   border:.5px solid var(--gray-2); padding:1rem 1.1rem; font-family:inherit;
@@ -425,8 +429,8 @@
     <div class="sl-map-wrap fi">
       <div id="slMap" role="region" aria-label="전국 시공점 지도"></div>
       <div class="sl-map-legend">
-        <span><i class="sl-lg sl-lg-lx"></i>THE LX</span>
-        <span><i class="sl-lg sl-lg-sg"></i>솔라가드 프리미엄</span>
+        <span><i class="sl-lg sl-lg-lx">LX</i>THE LX</span>
+        <span><i class="sl-lg sl-lg-sg">S</i>솔라가드 프리미엄</span>
       </div>
     </div>
 
@@ -506,8 +510,13 @@ function slGeojson(list) {
       layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Regular'], 'text-size': 12 },
       paint: { 'text-color': '#ffffff' } });
     slMap.addLayer({ id: 'st-pin', type: 'circle', source: 'stores', filter: ['!', ['has', 'point_count']],
-      paint: { 'circle-radius': 6, 'circle-color': ['case', ['==', ['get', 'lx'], 1], '#0a0a0a', '#ffffff'],
+      paint: { 'circle-radius': 10, 'circle-color': ['case', ['==', ['get', 'lx'], 1], '#0a0a0a', '#ffffff'],
                'circle-stroke-width': 1.5, 'circle-stroke-color': '#0a0a0a' } });
+    /* 핀 위 LX / S 글자 — 매장 구분 (LX=검정 바탕 흰 글자, 솔라가드=흰 바탕 검정 글자) */
+    slMap.addLayer({ id: 'st-pin-label', type: 'symbol', source: 'stores', filter: ['!', ['has', 'point_count']],
+      layout: { 'text-field': ['case', ['==', ['get', 'lx'], 1], 'LX', 'S'], 'text-font': ['Noto Sans Regular'],
+                'text-size': 9, 'text-allow-overlap': true, 'text-ignore-placement': true },
+      paint: { 'text-color': ['case', ['==', ['get', 'lx'], 1], '#ffffff', '#0a0a0a'] } });
 
     slMap.on('click', 'st-cluster', e => {
       const f = slMap.queryRenderedFeatures(e.point, { layers: ['st-cluster'] })[0];
@@ -515,18 +524,34 @@ function slGeojson(list) {
       const go = z => slMap.easeTo({ center: f.geometry.coordinates, zoom: z });
       if (r && r.then) r.then(go); else slMap.getSource('stores').getClusterExpansionZoom(f.properties.cluster_id, (err, z) => { if (!err) go(z); });
     });
-    slMap.on('click', 'st-pin', e => {
-      const pr = e.features[0].properties;
+
+    /* 호버 툴팁 — 지점명·주소·전화 (클릭 팝업과 별개, 버튼 없음) */
+    const slHover = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14 });
+    function slPinPopupHtml(pr, withBtns) {
       const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(pr.a);
-      new maplibregl.Popup({ offset: 10 }).setLngLat(e.features[0].geometry.coordinates)
-        .setHTML('<div class="sl-pop"><strong>' + pr.n + '</strong><span>' + pr.a + '</span><span>' + pr.p + '</span>' +
-          '<span class="sl-pop-btns"><a href="' + mapUrl + '" target="_blank" rel="noopener">네이버 지도</a><a href="tel:' + slPhone1(pr.p) + '">전화</a></span></div>')
-        .addTo(slMap);
+      return '<div class="sl-pop"><strong>' + pr.n + '</strong><span>' + pr.a + '</span><span>' + pr.p + '</span>' +
+        (withBtns ? '<span class="sl-pop-btns"><a href="' + mapUrl + '" target="_blank" rel="noopener">네이버 지도</a><a href="tel:' + slPhone1(pr.p) + '">전화</a></span>' : '') +
+        '</div>';
+    }
+    const PIN_LAYERS = ['st-pin', 'st-pin-label'];
+    PIN_LAYERS.forEach(id => {
+      slMap.on('click', id, e => {
+        slHover.remove();
+        new maplibregl.Popup({ offset: 14 }).setLngLat(e.features[0].geometry.coordinates)
+          .setHTML(slPinPopupHtml(e.features[0].properties, true)).addTo(slMap);
+      });
+      slMap.on('mousemove', id, e => {
+        slMap.getCanvas().style.cursor = 'pointer';
+        const f = e.features[0];
+        slHover.setLngLat(f.geometry.coordinates).setHTML(slPinPopupHtml(f.properties, false)).addTo(slMap);
+      });
+      slMap.on('mouseleave', id, () => {
+        slMap.getCanvas().style.cursor = '';
+        slHover.remove();
+      });
     });
-    ['st-cluster', 'st-pin'].forEach(id => {
-      slMap.on('mouseenter', id, () => slMap.getCanvas().style.cursor = 'pointer');
-      slMap.on('mouseleave', id, () => slMap.getCanvas().style.cursor = '');
-    });
+    slMap.on('mouseenter', 'st-cluster', () => slMap.getCanvas().style.cursor = 'pointer');
+    slMap.on('mouseleave', 'st-cluster', () => slMap.getCanvas().style.cursor = '');
 
     slMapReady = true;
     if (slPending) { slMapApply(slPending); slPending = null; }

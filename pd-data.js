@@ -34,7 +34,7 @@ const PD_DATA = {
         '에너지 효율 증진 및 탄소 배출 저감 능력을 인정받은 업계 유일의 친환경 차량용 윈도우 필름',
       ]},
     ],
-    /* 모달 우측 픽토그램 7종(브로슈어 이식) — i=렌더러 PD_ICONS 키(선화 SVG, index·pricing 사본) */
+    /* 모달 우측 픽토그램 7종(브로슈어 이식) — i=PD_ICONS 키(선화 SVG, 본 파일 하단 공용 렌더러) */
     introSide: [
       { i: 'eye',      h: '가시성',            p: '최고의 광학적 투명도와 가시성' },
       { i: 'heat',     h: '열차단',            p: '가시광선 투과율(VLT) 대비 업계 최고의 열 차단 성능(TSER)' },
@@ -455,10 +455,13 @@ const PD_DATA = {
       { h: '상온 셀프 힐링 PPF',
         p: '솔라가드 PPF 연구개발팀은 자가복원성 초고분자 물질에 독자 기술을 접목하여, 가역적 공유결합을 통해 내구성이 뛰어난 LX SHIELD를 개발했습니다.' },
       { h: '상온에서 즉시 자가복원 가능한 셀프 힐링에 특화된 고성능 PPF 필름',
-        imgs: ['shield-heal-before.jpg', 'shield-heal-after.jpg'],
-        alt: 'LX SHIELD 셀프 힐링 — 브러시 스크래치 전(Before)과 상온 자가복원 후(After) 비교' },
+        /* 이미지 항목=경로 문자열 또는 {src, width, height, alt}. width/height=모달 로딩 중 밀림 방지, alt=이미지별 개별 지정(스크린리더 Before/After 구분) */
+        imgs: [
+          { src: 'shield-heal-before.jpg', width: 902, height: 653, alt: 'LX SHIELD 셀프 힐링 Before — 브러시 스크래치 직후의 표면' },
+          { src: 'shield-heal-after.jpg',  width: 906, height: 653, alt: 'LX SHIELD 셀프 힐링 After — 상온 자가복원 후 흔적 없는 표면' },
+        ] },
       { p: 'LX SHIELD는 일상 생활에서 접하는 스크래치 발생 시, 뜨거운 물을 붓거나 드라이기를 사용할 필요 없이 상온에서 즉시 자가 복원되는 혁신적인 PPF입니다. 이 성능은 언제든지 깔끔하게 차를 유지하며 관리하는 분들을 위해 일상의 다양한 환경에서 소중한 차량을 보호해 줍니다.' },
-      { p: '스트레스 없이 차량을 보호하기 위해 강력한 셀프 힐링, 스톤칩 및 오염 방지, 일상 발수 기능까지 더해져 최적화된 LX SHIELD로 즐거운 드라이빙 생활을 즐기세요.' },
+      { p: '스트레스 없이 차량을 보호하기 위해 셀프 힐링, 스톤칩 및 오염 방지, 일상 발수 기능까지 더해져 최적화된 LX SHIELD로 즐거운 드라이빙 생활을 즐기세요.' },
       { list: [
         '상온에서 즉시 셀프 힐링 (스크래치)',
         '오렌지필 최소화로 외관 선명도 향상',
@@ -466,16 +469,16 @@ const PD_DATA = {
         '스톤칩 방지 및 얼룩 저항성 탁월',
         '우수한 발수성능',
       ]},
-      { h: '구조소개', img: 'shield-structure.jpg', alt: 'LX SHIELD 필름 구조 — 탑코팅 · 폴리우레탄 · 접착제 · 도장면 4층 다이어그램' },
+      { h: '구조소개', img: { src: 'shield-structure.jpg', width: 915, height: 746, alt: 'LX SHIELD 필름 구조 — 탑코팅 · 폴리우레탄 · 접착제 · 도장면 4층 다이어그램' } },
     ],
     /* 모달 픽토그램 6종(브로슈어 이식, 2026-07-27 추가) — heal·chem·uv·chip·water 신규, carG 재사용 */
     introSide: [
-      { i: 'heal',  h: '강력한 셀프 힐링',   p: '상온에서의 반영구적 자가복원성능을 통한 손쉬운 유지 관리' },
+      { i: 'heal',  h: '상온 셀프 힐링',    p: '상온에서의 반영구적 자가복원성능을 통한 손쉬운 유지 관리' },
       { i: 'carG',  h: '외관 선명도 향상',   p: '빛의 반사와 굴절을 정밀하게 조절하여 차량 본연의 색상 깊이의 입체감 강화' },
       { i: 'chem',  h: '뛰어난 내화학성',    p: '정교한 설계와 견고한 내구력으로 변질·변형없는 매끈한 표면 유지' },
-      { i: 'uv',    h: '자외선 차단',       p: 'SPF 285+ 의 성능으로 유해한 자외선(UV)을 효과적으로 차단, 도장면 변색을 방지' },
-      { i: 'chip',  h: '탁월한 스톤칩 방지', p: '극한의 환경에서도 강력한 내구성과 표면 보호 성능으로 다발성 자갈·파편으로부터 차량의 손상을 방어' },
-      { i: 'water', h: '우수한 발수 성능',   p: '강력한 발수 기능으로 오염 물질과의 접촉을 줄여 도장면 수명을 연장' },
+      { i: 'uv',    h: '자외선 차단',       p: 'PA+++ SPF 285 성능으로 유해한 자외선(UV)을 효과적으로 차단, 도장면 변색을 방지' },
+      { i: 'chip',  h: '탁월한 스톤칩 방지', p: '극한의 환경에서도 유지되는 내구성과 표면 보호 성능으로 다발성 자갈·파편으로부터 차량의 손상을 방어' },
+      { i: 'water', h: '우수한 발수 성능',   p: '발수 기능으로 오염 물질과의 접촉을 줄여 도장면 수명을 연장' },
     ],
     perf: [
       { label: 'UV 차단', pct: 99 },
@@ -503,3 +506,74 @@ const PD_DATA = {
     ],
   },
 };
+
+/* ─────────────────────────────────────────────────────────────
+   모달 공용 렌더러 — index.html · pricing.html 공용 (2026-07-28 통합).
+   이전엔 PD_ICONS 맵과 intro 렌더 템플릿이 두 HTML에 복붙되어 어긋남 반복
+   (pricing pdRecommendLabel 누락 사례). 아이콘·렌더 수정은 이 파일 한 곳만.
+   ───────────────────────────────────────────────────────────── */
+
+/* 차체 실루엣 공용 패스 — car·carTi·carG·chip 4종의 공통 보디(스파클·장식만 다름) */
+const PD_CAR_BODY = '<path d="M9 30 L10.5 24.5 Q11 22.5 13.5 22 L19 21.5 L23.5 17.5 L31 17.5 Q33 17.5 34 20 L35.5 23.5 Q38.5 24 38.5 26.5 L38.5 30 L9 30 Z"/><circle cx="16.5" cy="32.5" r="2.8"/><circle cx="31.5" cy="32.5" r="2.8"/>';
+
+/* 픽토그램 선화 SVG — KEY POINT 문법: 원형 배지 없이 볼드 선화 44px + LX 블루 액센트(.ac/.acf) */
+const PD_ICONS = {
+  eye:      '<ellipse cx="24" cy="24" rx="16" ry="9.5"/><circle cx="24" cy="24" r="5"/><circle class="acf" cx="24" cy="24" r="1.8" stroke="none"/>',
+  heat:     '<path d="M10 32 L38 32 L33 24 L15 24 Z"/><path d="M14 12 L21.5 24"/><path class="ac" d="M21.5 24 L34 13"/><path class="ac" d="M34 13 L28.8 13.8 M34 13 L33 18"/><path d="M27 32 L30.5 38" stroke-dasharray="2.5 3"/>',
+  spectrum: '<path d="M12 34 L28 26 L36 28.5 L20 36.5 Z"/><path class="ac" d="M21 28 L21 11"/><path class="ac" d="M21 11 L18 15.5 M21 11 L24 15.5"/><path d="M29 22.5 L36.5 18.5" stroke-dasharray="2.5 3"/><path d="M30 28 L38 31" stroke-dasharray="2.5 3"/>',
+  medal:    '<path class="ac" d="M18.5 8 L24 19 L29.5 8"/><circle cx="24" cy="28" r="8.5"/><circle cx="24" cy="28" r="3.5" stroke-dasharray="2 2.4"/>',
+  safety:   '<path d="M9 27 L34 27 L29.5 19.5 L13.5 19.5 Z"/><circle class="ac" cx="30.5" cy="29.5" r="7"/><path d="M27.2 32.3 L33 26.5 M30 34 L35 29 M26.5 29.5 L31 25"/>',
+  orbit:    '<ellipse cx="24" cy="24" rx="15" ry="7" transform="rotate(-28 24 24)"/><ellipse cx="24" cy="24" rx="15" ry="7" transform="rotate(28 24 24)"/><circle class="acf" cx="24" cy="24" r="3" stroke="none"/>',
+  badge:    '<circle cx="24" cy="20.5" r="9.5"/><path class="ac" d="M24 15.5 L25.9 19.4 L30.2 20 L27.1 23 L27.8 27.2 L24 25.2 L20.2 27.2 L20.9 23 L17.8 20 L22.1 19.4 Z"/><path d="M20 30 L18 39 L24 35.2 L30 39 L28 30"/>',
+  reflect:  '<path d="M24 10 L24 18 M24 30 L24 38 M10 24 L18 24 M30 24 L38 24"/><path d="M14.5 14.5 L20 20 M28 28 L33.5 33.5 M33.5 14.5 L28 20 M20 28 L14.5 33.5" stroke-dasharray="2.5 3"/><circle class="acf" cx="24" cy="24" r="2.6" stroke="none"/>',
+  gold:     '<path d="M10 33 L38 33 L33 25 L15 25 Z"/><path d="M29.5 11 L30.8 14.6 L34.4 15.9 L30.8 17.2 L29.5 20.8 L28.2 17.2 L24.6 15.9 L28.2 14.6 Z" stroke="#4a7c59"/><path d="M17 14 L17 19 M14.5 16.5 L19.5 16.5" stroke="#b8963e"/>', /* 그린골드 아이콘만 제품색 투톤(그린+골드) — 블루 액센트 예외 */
+  privacy:  '<ellipse cx="24" cy="24" rx="16" ry="9.5"/><circle cx="24" cy="24" r="5"/><path class="ac" d="M13 36 L35 12"/>',
+  clarity:  '<path d="M26 10 L38 10 L38 22"/><path d="M31 10 L38 17" stroke-dasharray="2.5 3"/><circle class="ac" cx="20" cy="26" r="8"/><path d="M26 32 L33 39"/>',
+  sputter:  '<path d="M13 17 A 13.5 13.5 0 0 1 35 17" stroke-dasharray="1 4.2"/><circle cx="18.5" cy="30" r="6.5"/><circle cx="29.5" cy="30" r="6.5"/><circle class="acf" cx="24" cy="25" r="4.6" stroke="none"/>',
+  signal:   '<path d="M12 24 A 15.5 15.5 0 0 1 36 24"/><path class="ac" d="M17.5 29 A 8.6 8.6 0 0 1 30.5 29"/><circle class="acf" cx="24" cy="34" r="2.4" stroke="none"/>',
+  car:      PD_CAR_BODY + '<path d="M38 9.5 L39 12.1 L41.6 13.1 L39 14.1 L38 16.7 L37 14.1 L34.4 13.1 L37 12.1 Z" fill="#0a0a0a" stroke="#0a0a0a"/>', /* 비크 블랙 표현 — 보디는 라인 유지, 스파클만 솔리드 블랙 (제품색 예외) */
+  install:  '<path d="M10 33 L38 33 L33 25 L15 25 Z"/><path class="ac" d="M19 15.5 L23 19.5 L30.5 10.5"/>',
+  gems:     '<path d="M13 15 L17 11 L21 15 L17 21 Z"/><path d="M28 12.5 L32 9.5 L36 12.5 L32 18 Z"/><path class="ac" d="M17.5 30 L24 24.5 L30.5 30 L24 39 Z"/><path class="ac" d="M17.5 30 L30.5 30"/>',
+  warrant:  '<path d="M15 10 L33 10 L33 38 L15 38 Z"/><path d="M19 30.5 L26 30.5 M19 34 L23.5 34"/><circle class="ac" cx="24" cy="19.5" r="5.5"/><path class="ac" d="M21.5 19.5 L23.5 21.5 L26.8 17.3"/>',
+  sun:      '<circle cx="34" cy="11" r="4"/><path d="M34 3.5 L34 5.5 M41.5 11 L39.5 11 M39.3 5.7 L37.9 7.1 M28.7 5.7 L30.1 7.1 M26.5 11 L28.5 11"/><path d="M30.5 15.5 L20 32.5" stroke-dasharray="2.5 3"/><path class="ac" d="M20 33 L30 23"/><path class="ac" d="M30 23 L25.7 23.7 M30 23 L29.3 27.3"/><path d="M10 33 L38 33"/><path d="M13 38 L35 38" stroke-dasharray="2.5 3"/>',
+  shield:   '<path d="M24 9.5 L35.5 13.5 L35.5 23 Q35.5 32 24 38 Q12.5 32 12.5 23 L12.5 13.5 Z"/><path class="ac" d="M20 20 L28 28 M28 20 L20 28"/><path class="ac" d="M28 28 L28 25.4 M28 28 L25.4 28 M20 20 L20 22.6 M20 20 L22.6 20 M28 20 L25.4 20 M28 20 L28 22.6 M20 28 L22.6 28 M20 28 L20 25.4"/>',
+  podium:   '<path class="ac" d="M24 8 L25.6 11.6 L29.5 12 L26.6 14.6 L27.5 18.4 L24 16.4 L20.5 18.4 L21.4 14.6 L18.5 12 L22.4 11.6 Z"/><path d="M18 27 L30 27 L30 38 L18 38 Z"/><path d="M18 38 L10 38 L10 31 L18 31"/><path d="M30 38 L38 38 L38 33 L30 33"/>',
+  carTi:    PD_CAR_BODY + '<path d="M38 9.5 L39 12.1 L41.6 13.1 L39 14.1 L38 16.7 L37 14.1 L34.4 13.1 L37 12.1 Z" fill="#9aa0a6" stroke="#9aa0a6"/><path d="M31.5 8 L31.5 12 M29.5 10 L33.5 10" stroke="#9aa0a6"/>', /* 티타늄 실버 스파클 — Xenith 비크블랙(car)과 구분 */
+  carG:     PD_CAR_BODY + '<path class="acf" d="M38 9.5 L39 12.1 L41.6 13.1 L39 14.1 L38 16.7 L37 14.1 L34.4 13.1 L37 12.1 Z" stroke="none"/>', /* G-LINE 라미네이티드 블루 스파클 */
+  glasses:  '<path d="M10 24 Q10 21 13 21 L19 21 Q22 21 22 24 L22 27 Q22 30 19 30 L13 30 Q10 30 10 27 Z"/><path d="M26 24 Q26 21 29 21 L35 21 Q38 21 38 24 L38 27 Q38 30 35 30 L29 30 Q26 30 26 27 Z"/><path d="M22 23.5 Q24 22 26 23.5"/><path class="ac" d="M18 15 L19.5 11.5 M24 14.5 L24 11 M30 15 L28.5 11.5"/>',
+  layers:   '<path d="M10 19 L24 12 L38 19 L24 26 Z"/><path class="ac" d="M10 28 L24 21 L38 28 L24 35 Z"/>',
+  hammer:   '<path d="M11 36 L35 36 L30.5 29 L15.5 29 Z"/><path class="ac" d="M34.1 16.8 L29.8 21.1 L19.9 11.2 L24.2 6.9 Z"/><path class="ac" d="M15 26 L24.8 16.2"/><path d="M30 4.5 L31.5 2.5 M34.5 8.5 L37 7.5 M36.5 12.5 L39 13"/>',
+  heal:     '<path d="M21 9.5 L32 13.5 L32 23 Q32 32 21 38 Q10 32 10 23 L10 13.5 Z"/><path class="ac" d="M36 29.5 L36 37.5 M32 33.5 L40 33.5"/>',
+  chem:     '<path d="M19.5 9 L27.5 9 M21.5 9 L21.5 16 L14 30 Q12.5 33.5 16 33.5 L26.5 33.5"/><path d="M16.5 26.5 L22 26.5 M15.5 30 L20.5 30"/><path class="ac" d="M32.5 24.5 L38.5 26.3 L38.5 30.5 Q38.5 34.8 32.5 37.8 Q26.5 34.8 26.5 30.5 L26.5 26.3 Z"/>',
+  uv:       '<path d="M19 10 L21.2 16.8 L28 19 L21.2 21.2 L19 28 L16.8 21.2 L10 19 L16.8 16.8 Z"/><path class="ac" d="M31.5 19 L33 23 L37 24.5 L33 26 L31.5 30 L30 26 L26 24.5 L30 23 Z"/><circle class="acf" cx="25" cy="34.5" r="1.9" stroke="none"/>',
+  chip:     PD_CAR_BODY + '<path class="ac" d="M10.5 7.5 L15 12 M16.5 6 L19 10.5 M22 6.5 L22.8 10.5" stroke-dasharray="2.5 2.5"/>',
+  water:    '<path d="M18 11 Q23.5 18.5 23.5 22.8 A 5.6 5.6 0 0 1 12.4 22.8 Q12.4 18.5 18 11 Z"/><path d="M28.5 14 Q32 18.8 32 21.3 A 3.5 3.5 0 0 1 25 21.3 Q25 18.8 28.5 14 Z" stroke-dasharray="2 2.6"/><path class="ac" d="M21 33.5 L31 24.5 M31 24.5 L26.8 25.1 M31 24.5 L30.4 28.7"/><path d="M10 36.5 L38 36.5"/>',
+};
+
+/* 픽토그램 특장점(introSide) 렌더 */
+function pdRenderIntroSide(p) {
+  return (p.introSide || []).map(it =>
+    `<div class="pd-is-row">
+      <span class="pd-is-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PD_ICONS[it.i] || ''}</svg></span>
+      <span class="pd-is-txt"><span class="pd-is-h">${it.h}</span><span class="pd-is-p">${it.p}</span></span>
+    </div>`).join('');
+}
+
+/* intro 본문 렌더 — h 없는 블록=이어지는 문단(pd-intro-cont).
+   이미지 블록: img(1장)·imgs(여러 장=비교 그리드 pd-intro-img2), 항목=경로 문자열 또는 {src, width, height, alt}.
+   width/height 지정 시 로딩 중 모달 내 레이아웃 밀림 방지(VLT 이미지와 동일하게 eager+async). */
+function pdRenderIntro(p) {
+  return (p.intro || []).map(b => {
+    if (b.list) return `<ul class="pd-intro-list">${b.list.map(li => `<li>${li}</li>`).join('')}</ul>`;
+    const imgs = b.imgs || (b.img ? [b.img] : null);
+    if (imgs) {
+      const tags = imgs.map(im => {
+        const o = typeof im === 'string' ? { src: im } : im;
+        const size = o.width ? ` width="${o.width}" height="${o.height}"` : '';
+        return `<img${imgs.length === 1 ? ' class="pd-intro-img"' : ''} src="${o.src}" alt="${o.alt || b.alt || ''}"${size} loading="eager" decoding="async">`;
+      }).join('');
+      return `<div class="pd-intro-block">${b.h ? `<h3 class="pd-intro-h">${b.h}</h3>` : ''}${imgs.length > 1 ? `<span class="pd-intro-img2">${tags}</span>` : tags}</div>`;
+    }
+    return `<div class="pd-intro-block${b.h ? '' : ' pd-intro-cont'}">${b.h ? `<h3 class="pd-intro-h">${b.h}</h3>` : ''}<p class="pd-intro-p">${b.p}</p></div>`;
+  }).join('');
+}

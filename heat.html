@@ -259,6 +259,7 @@
       font-size: clamp(1.15rem, 1.6vw, 1.45rem); font-weight: 700;
       color: #0a0a0a; margin: 0 0 1.4rem; word-break: keep-all; letter-spacing: -0.015em;
     }
+    .case-title-note { font-size: .72em; font-weight: 500; color: rgba(0,0,0,.45); }
     .case-graph { margin: 0 0 1.6rem; }
     .case-graph img { width: 100%; height: auto; }
     .case-body {
@@ -267,6 +268,8 @@
     }
     .case-body + .case-body { margin-top: 1rem; }
     .case-body strong { color: #0a0a0a; font-weight: 700; }
+    .case-body a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,.35); transition: text-decoration-color .2s; }
+    .case-body a:hover { text-decoration-color: #0a0a0a; }
 
     /* ===========================
        지표 사전 — 4개 카드
@@ -497,7 +500,7 @@
   <!-- 열 반사 필름 -->
   <div class="case-card lx">
     <p class="case-label">CASE 3</p>
-    <p class="case-title">열 반사 필름이 시공 되었을 때</p>
+    <p class="case-title">열 반사 필름이 시공 되었을 때 <span class="case-title-note">— 일반 사례</span></p>
     <div class="case-graph">
       <img src="heat-tser-reflect.png" alt="열 반사 필름 — TSER 72.5%, 유리가 흡수한 태양에너지 15%, 외부반사 65%·외부재방사 7.5%, 내부투과 20%·내부재방사 7.5%, 실내 유입 27.5%" loading="lazy">
     </div>
@@ -513,6 +516,10 @@
     <p class="case-body">
       결과적으로 열 반사 필름이 시공된 유리는 <strong>72%의 태양에너지를 차단</strong>하며,
       나머지 27%만 실내로 유입됩니다.
+    </p>
+    <p class="case-body">
+      위 수치는 열 반사 필름의 일반 사례입니다.
+      THE LX 플래그십(SIGNATURE) 실측 기준(농도 15)은 <a href="technology.html"><strong>TSER 71%</strong></a>입니다.
     </p>
   </div>
 </div>

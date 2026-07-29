@@ -4032,7 +4032,6 @@ document.addEventListener('keydown', e => {
 /* ── NAV on-dark + 히어로 영상 제어 ── */
 const kakaoFloat = document.getElementById('kakaoFloat');
 const heroVideo = document.querySelector('.hero-video');
-let _videoPaused = false;
 
 if (heroVideo) {
   heroVideo.muted = true;
@@ -4058,8 +4057,9 @@ window.addEventListener('scroll', () => {
   updateNavTheme();
   if (kakaoFloat) kakaoFloat.classList.toggle('show', sy > _winH * 0.8);
   if (heroVideo) {
-    if (sy > _heroH && !_videoPaused) { heroVideo.pause(); _videoPaused = true; }
-    else if (sy <= _heroH && _videoPaused) { heroVideo.play(); _videoPaused = false; }
+    /* 실제 paused 상태 기준 — Safari가 임의로 멈춘 경우에도 스크롤만으로 복구된다 */
+    if (sy > _heroH) { if (!heroVideo.paused) heroVideo.pause(); }
+    else if (heroVideo.paused) { const p = heroVideo.play(); if (p && p.catch) p.catch(() => {}); }
   }
 }, { passive: true });
 
@@ -4581,10 +4581,7 @@ document.getElementById('slSearch').addEventListener('keydown', e => {
     }, { rootMargin: '400px 0px' });
     io.observe(v);
   } else { tryPlay(); }
-  // 사용자가 탭으로 돌아오면 재생 복구
-  document.addEventListener('visibilitychange', function () {
-    if (!document.hidden) tryPlay();
-  });
+  // 탭 복귀 시 재생 복구는 아래 resumeVisibleVideos(visibilitychange)가 화면 안 영상만 담당
 }());
 
 /* iOS 저전력 모드 등 자동재생이 원천 차단된 경우 — 첫 사용자 입력(터치·탭)에 화면 안 배경 영상만 재생.
@@ -4607,15 +4604,20 @@ document.getElementById('slSearch').addEventListener('keydown', e => {
   });
 }());
 
-/* 뒤로 가기(bfcache) 복원 — Safari가 페이지를 얼린 그대로 되살리며 영상을 멈춰두므로,
+/* 뒤로 가기(bfcache)·탭 복귀 복원 — Safari가 백그라운드에서 영상을 멈춘 채 두는 경우가 있어,
    화면 안 배경 영상만 재개한다. 화면 밖 영상은 스크롤 핸들러·IO가 관리하므로 건드리지 않는다. */
-window.addEventListener('pageshow', function (e) {
-  if (!e.persisted) return;
+function resumeVisibleVideos() {
   document.querySelectorAll('video[autoplay]').forEach(function (v) {
     var r = v.getBoundingClientRect();
     var vis = r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
     if (vis && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
   });
+}
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) resumeVisibleVideos();
+});
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) resumeVisibleVideos();
 });
 
 </script>

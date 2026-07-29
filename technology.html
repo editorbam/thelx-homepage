@@ -409,7 +409,7 @@
     @media (max-width: 768px){ .hero-sound { left: 1.1rem; bottom: 1.1rem; padding: .45rem .7rem .45rem .62rem; } }
 
     /* SPUTTER LIVE — 증착 과정 영상 (왜 반사가 가능한가 하단, 패널 없이 페이지 배경 위에 바로) */
-    .sputter-live { max-width: 680px; margin: clamp(2.4rem, 5vh, 3.6rem) auto 0; padding: 0 clamp(1.25rem, 4vw, 2rem); }
+    .sputter-live { max-width: 680px; margin: clamp(2.4rem, 5vh, 3.6rem) auto clamp(1.6rem, 3vh, 2.4rem); padding: 0 clamp(1.25rem, 4vw, 2rem); }
     .sputter-stage { position: relative; }
     .sputter-stage video { display: block; width: 100%; height: auto; }
     .sputter-meter {
@@ -417,13 +417,7 @@
       color: #c7c7cc; font-size: clamp(15px, 1.3vw, 17px); font-weight: 500; letter-spacing: .14em;
       text-align: left; pointer-events: none;
     }
-    .sputter-cap {
-      margin: .9rem auto 0; width: max-content; max-width: 94vw; white-space: nowrap;
-      text-align: center; color: rgba(255,255,255,.42); font-size: .85rem; font-weight: 300; line-height: 1.7;
-    }
-    @media (max-width: 768px){
-      .sputter-cap { white-space: normal; width: auto; max-width: 100%; word-break: keep-all; }
-    }
+    /* 캡션(.sputter-cap)은 공정 문장 사실 확인 전까지 제거 — 특허 칩만 유지 (2026-07-29 사용자 결정) */
   </style>
 </head>
 <body>
@@ -596,7 +590,6 @@
     <video src="tech-sputter.mp4?v=3" autoplay muted loop playsinline aria-hidden="true"></video>
     <p class="sputter-meter">스퍼터링 공법</p>
   </div>
-  <p class="sputter-cap">진공 속, 분사된 금속 원자가 닿는 즉시 증착됩니다. 한 번의 분사로, 한 장이 완성됩니다.</p>
 </section>
 
 <!-- ⚠️특허 번호 수정 시 pd-data.js 헤더의 특허 사본 목록 참조 (총 6곳 동기) -->

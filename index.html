@@ -346,6 +346,70 @@ nav.on-dark .nav-logo .nav-logo-w { display: block; }
 }
 .nav-links a:hover { opacity: .7; }
 
+/* 제품소개 드롭다운 (2026-07-30 총판 레퍼런스 반영 — 클릭 토글, 항목=PD_DATA) */
+.nav-drop { position: relative; }
+.nav-drop-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: none; border: none; padding: 0; cursor: none;
+  font-family: inherit; font-size: 14px; font-weight: 400;
+  color: var(--black); letter-spacing: -.01em; transition: color .4s, opacity .2s;
+}
+.nav-drop-btn:hover { opacity: .7; }
+nav.on-dark .nav-drop-btn { color: rgba(255,255,255,.7); }
+.nav-drop-btn svg { width: 9px; height: 9px; transition: transform .25s ease; }
+.nav-drop.open .nav-drop-btn svg { transform: rotate(180deg); }
+.nav-drop-panel {
+  position: absolute; top: calc(100% + 1.15rem); left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  width: 560px; padding: 1.5rem 1.6rem 1.15rem;
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: .5px solid var(--gray-2); border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.10);
+  opacity: 0; pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.nav-drop.open .nav-drop-panel { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.nav-drop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3rem .8rem; }
+.nav-drop-item {
+  display: block; width: 100%; text-align: left;
+  background: none; border: none; cursor: none; font-family: inherit;
+  padding: .55rem .65rem; border-radius: 10px; transition: background .15s;
+}
+.nav-drop-item:hover { background: var(--gray-1); }
+.nav-drop-tier {
+  display: block; font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gray-3); font-weight: 500; margin-bottom: .2rem;
+}
+.nav-drop-name { display: block; font-size: 15px; font-weight: 500; color: var(--black); letter-spacing: -.01em; white-space: nowrap; }
+/* 패널은 항상 흰 배경 — on-dark 네비 링크 색 규칙보다 뒤에 선언해 같은 특이도로 승리 */
+nav .nav-links .nav-drop-panel a.nav-drop-all {
+  display: block; margin-top: .95rem; padding: .8rem .65rem 0;
+  border-top: .5px solid var(--gray-2);
+  font-size: 12.5px; color: var(--gray-3); letter-spacing: .02em;
+}
+nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opacity: 1; }
+
+/* 모바일 메뉴 — 제품소개 아코디언 */
+.mm-drop { display: flex; flex-direction: column; align-items: center; }
+.mm-drop-btn {
+  background: none; border: none; cursor: none; font-family: inherit;
+  font-size: clamp(1.6rem, 8vw, 2.8rem); font-weight: 200;
+  letter-spacing: .06em; color: rgba(255,255,255,.85);
+  display: inline-flex; align-items: center; gap: .55rem; transition: color .2s;
+}
+.mm-drop-btn:hover { color: var(--white); }
+.mm-drop-btn svg { width: 15px; height: 15px; transition: transform .25s ease; }
+.mm-drop.open .mm-drop-btn svg { transform: rotate(180deg); }
+.mm-drop-list { display: none; flex-direction: column; align-items: center; gap: 1.05rem; padding: 1.3rem 0 .3rem; }
+.mm-drop.open .mm-drop-list { display: flex; }
+.mm-drop-list button {
+  background: none; border: none; cursor: none; font-family: inherit;
+  font-size: 1.15rem; font-weight: 300; letter-spacing: .04em;
+  color: rgba(255,255,255,.6); transition: color .2s;
+}
+.mm-drop-list button:hover { color: var(--white); }
+
 .nav-cta {
   font-size: 12px; font-weight: 400; letter-spacing: .12em;
   text-transform: uppercase; text-decoration: none;
@@ -1933,6 +1997,11 @@ footer {
   .trust-grid { grid-template-columns:repeat(3,1fr); }
 }
 
+/* 좁은 데스크탑(769~940px) — '제품소개' 확장으로 8항목이 CTA에 닿지 않게 간격 축소 (2026-07-30) */
+@media (max-width:940px) {
+  .nav-links { gap: 1.3rem; }
+}
+
 @media (max-width:768px) {
   :root { --section-v:4rem; --section-v-sm:3rem; }
   nav { padding:0 1.5rem; }
@@ -2619,7 +2688,14 @@ body.pd-open { overflow: hidden; }
 <div class="mobile-menu" id="mobileMenu">
   <a href="#why-story" onclick="closeMobileMenu()">브랜드</a>
   <a href="technology.html" onclick="closeMobileMenu()">기술</a>
-  <a href="#products"  onclick="closeMobileMenu()">제품</a>
+  <!-- 제품소개 아코디언 (2026-07-30) — 데스크탑 드롭다운과 동일 소스(PD_DATA), 제품명 탭=모달 -->
+  <div class="mm-drop" id="mmDrop">
+    <button type="button" class="mm-drop-btn" id="mmDropBtn" aria-expanded="false">
+      제품소개
+      <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg>
+    </button>
+    <div class="mm-drop-list" id="mmDropList"></div>
+  </div>
   <a href="recommend.html" onclick="closeMobileMenu()">필름추천</a>
   <a href="pricing.html" onclick="closeMobileMenu()">가격</a>
   <a href="stores.html" onclick="closeMobileMenu()">시공점</a>
@@ -2637,7 +2713,17 @@ body.pd-open { overflow: hidden; }
   <ul class="nav-links">
     <li><a href="#why-story">브랜드</a></li>
     <li><a href="technology.html">기술</a></li>
-    <li><a href="#products">제품</a></li>
+    <!-- 제품소개 드롭다운 (2026-07-30) — 클릭=패널 토글, 제품명 클릭=해당 모달(pdOpen). 항목=JS가 PD_DATA에서 생성 -->
+    <li class="nav-drop" id="navDrop">
+      <button type="button" class="nav-drop-btn" id="navDropBtn" aria-expanded="false" aria-controls="navDropPanel">
+        제품소개
+        <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg>
+      </button>
+      <div class="nav-drop-panel" id="navDropPanel" aria-label="제품 목록">
+        <div class="nav-drop-grid" id="navDropGrid"></div>
+        <a href="#products" class="nav-drop-all" id="navDropAll">전체 제품 보기 →</a>
+      </div>
+    </li>
     <li><a href="recommend.html">필름추천</a></li>
     <li><a href="pricing.html">가격</a></li>
     <li><a href="stores.html">시공점</a></li>
@@ -4312,6 +4398,57 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
     var tr = e.target.closest('tr[data-product]');
     if (tr) { e.preventDefault(); pdOpen(tr.dataset.product); }
   });
+}());
+
+// 제품소개 드롭다운 (데스크탑 패널 + 모바일 아코디언) — 항목=PD_DATA 단일 소스, 위계 라벨=마스터 문서 제품 위계 (2026-07-30)
+(function () {
+  if (typeof PD_DATA === 'undefined') return;
+  var TIERS = {
+    lx: 'Flagship', vogue: 'Premium', xenith: 'Premium',
+    quantum: 'Performance', titanium: 'Performance',
+    gline: 'Essential', sline: 'Essential', galaxie: 'Essential', shield: 'Protection · PPF',
+  };
+  var keys = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie', 'shield'];
+
+  // 데스크탑 패널
+  var drop = document.getElementById('navDrop');
+  var btn  = document.getElementById('navDropBtn');
+  var grid = document.getElementById('navDropGrid');
+  if (drop && btn && grid) {
+    grid.innerHTML = keys.map(function (k) {
+      return '<button type="button" class="nav-drop-item" data-product="' + k + '">'
+        + '<span class="nav-drop-tier">' + TIERS[k] + '</span>'
+        + '<span class="nav-drop-name">' + PD_DATA[k].name + '</span></button>';
+    }).join('');
+    function setOpen(v) { drop.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!drop.classList.contains('open')); });
+    document.addEventListener('click', function (e) { if (drop.classList.contains('open') && !drop.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    grid.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-product]');
+      if (b) { setOpen(false); pdOpen(b.dataset.product); }
+    });
+    document.getElementById('navDropAll').addEventListener('click', function () { setOpen(false); });
+  }
+
+  // 모바일 아코디언
+  var mm = document.getElementById('mmDrop');
+  var mmBtn = document.getElementById('mmDropBtn');
+  var mmList = document.getElementById('mmDropList');
+  if (mm && mmBtn && mmList) {
+    mmList.innerHTML = keys.map(function (k) {
+      return '<button type="button" data-product="' + k + '">' + PD_DATA[k].name + '</button>';
+    }).join('');
+    mmBtn.addEventListener('click', function () {
+      var v = !mm.classList.contains('open');
+      mm.classList.toggle('open', v);
+      mmBtn.setAttribute('aria-expanded', v);
+    });
+    mmList.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-product]');
+      if (b) { closeMobileMenu(); pdOpen(b.dataset.product); }
+    });
+  }
 }());
 
 // 버튼 뒤로가기 → history.back()으로 처리 (popstate가 pdClose 호출)

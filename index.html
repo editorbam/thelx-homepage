@@ -1170,6 +1170,11 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .product-panel.has-image { grid-template-columns:0.82fr 1fr 1fr; gap:3rem; }
 .product-image { border-radius:16px; overflow:hidden; aspect-ratio:3/4; background:var(--gray-1); align-self:start; width:100%; }
 .product-image img { width:100%; height:100%; object-fit:cover; display:block; }
+/* 비교컷(vlt-scene) 카드 — 차량 컷 대신 유리 발색·농도가 주인공 (2026-07-30 시안).
+   원본 ~2.1:1 와이드를 상단 전체 폭 배너로, 텍스트·스펙은 아래 2열. 구 has-image 규칙은 롤백 대비 보존 */
+.product-panel.has-scene { grid-template-columns:1fr 1fr; gap:3rem; }
+.product-panel.has-scene .product-image { grid-column:1 / -1; aspect-ratio:auto; }
+.product-panel.has-scene .product-image img { height:auto; }
 .product-name    { font-size:clamp(2rem,3.5vw,3rem); font-weight:600; letter-spacing:-0.04em; color:var(--black); margin-bottom:.5rem; }
 .product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:.9rem; font-weight:300; line-height:1.6; }
 .product-bridge  { font-size:.95rem; color:var(--gray-4); font-weight:400; line-height:1.6; margin-bottom:1.75rem; padding-left:.85rem; border-left:2px solid var(--black); }
@@ -2998,8 +3003,8 @@ body.pd-open { overflow: hidden; }
     <div class="product-panels">
 
       <!-- LX -->
-      <div class="product-panel active has-image" id="panel-lx">
-        <div class="product-image"><img src="product-lx.jpg" alt="THE LX 플래그십 스토어와 시공 차량" loading="lazy"></div>
+      <div class="product-panel active has-scene" id="panel-lx">
+        <div class="product-image"><img src="lx-vlt-scene.jpg" alt="LX 농도별 발색 비교 — 같은 풍경, 15부터 70까지" loading="lazy"></div>
         <div>
           <span class="product-category">Intelligent &amp; Luxury</span>
           <h3 class="product-name">LX</h3>
@@ -3048,8 +3053,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- Vogue -->
-      <div class="product-panel has-image" id="panel-vogue">
-        <div class="product-image"><img src="product-ev6-side.jpg" alt="THE LX 시공 차량 — 검은 고성능 전기차 측면" loading="lazy"></div>
+      <div class="product-panel has-scene" id="panel-vogue">
+        <div class="product-image"><img src="vogue-vlt-scene.jpg" alt="Vogue 농도별 발색 비교 — 그린 골드 발색" loading="lazy"></div>
         <div>
           <span class="product-category">Reflective Series</span>
           <h3 class="product-name">Vogue</h3>
@@ -3080,8 +3085,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- Xenith IR -->
-      <div class="product-panel has-image" id="panel-xenith">
-        <div class="product-image"><img src="product-ev6-front.jpg" alt="THE LX 시공 차량 — 검은 고성능 전기차 정면" loading="lazy"></div>
+      <div class="product-panel has-scene" id="panel-xenith">
+        <div class="product-image"><img src="xenith-vlt-scene.jpg" alt="Xenith IR 농도별 발색 비교 — 비크 블랙 발색" loading="lazy"></div>
         <div>
           <span class="product-category">Ceramic &amp; Top Class</span>
           <h3 class="product-name">Xenith IR</h3>
@@ -3112,8 +3117,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- Quantum -->
-      <div class="product-panel has-image" id="panel-quantum">
-        <div class="product-image"><img src="product-ev6-rear.jpg" alt="THE LX 시공 차량 — 검은 고성능 전기차 후면 주행" loading="lazy"></div>
+      <div class="product-panel has-scene" id="panel-quantum">
+        <div class="product-image"><img src="quantum-vlt-scene.jpg" alt="Quantum 농도별 발색 비교 — 에메랄드 발색" loading="lazy"></div>
         <div>
           <span class="product-category">Full Metal Sputter</span>
           <h3 class="product-name">Quantum</h3>
@@ -3143,7 +3148,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- Titanium -->
-      <div class="product-panel" id="panel-titanium">
+      <div class="product-panel has-scene" id="panel-titanium">
+        <div class="product-image"><img src="titanium-vlt-scene.jpg" alt="Titanium 농도별 발색 비교 — 딥 블랙 발색" loading="lazy"></div>
         <div>
           <span class="product-category">Intelligent &amp; Unique</span>
           <h3 class="product-name">Titanium</h3>
@@ -3173,7 +3179,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- G-LINE -->
-      <div class="product-panel" id="panel-gline">
+      <div class="product-panel has-scene" id="panel-gline">
+        <div class="product-image"><img src="gline-vlt-scene.jpg" alt="G-LINE 농도별 발색 비교 — 라미네이티드 블루 발색" loading="lazy"></div>
         <div>
           <span class="product-category">Balance &amp; Hybrid</span>
           <h3 class="product-name">G-LINE</h3>
@@ -3203,7 +3210,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- S-LINE -->
-      <div class="product-panel" id="panel-sline">
+      <div class="product-panel has-scene" id="panel-sline">
+        <div class="product-image"><img src="sline-vlt-scene.jpg" alt="S-LINE 농도별 발색 비교" loading="lazy"></div>
         <div>
           <span class="product-category">Comfort &amp; Smart</span>
           <h3 class="product-name">S-LINE</h3>
@@ -3233,7 +3241,8 @@ body.pd-open { overflow: hidden; }
       </div>
 
       <!-- Galaxie -->
-      <div class="product-panel" id="panel-galaxie">
+      <div class="product-panel has-scene" id="panel-galaxie">
+        <div class="product-image"><img src="galaxie-vlt-scene.jpg" alt="Galaxie 농도별 발색 비교" loading="lazy"></div>
         <div>
           <span class="product-category">Intelligent &amp; Balance</span>
           <h3 class="product-name">Galaxie</h3>

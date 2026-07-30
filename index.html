@@ -1102,8 +1102,23 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 }
 
 /* 필름 8종 비교표 (2026-07-30 총판·대표 피드백 — 카드 탐색 前 한눈 비교 층. 표 생성=JS, 데이터=PD_DATA 단일 소스) */
-.film-compare { margin: 0 0 4.5rem; }
-.film-compare-title { font-size: 1.05rem; font-weight: 600; letter-spacing: .01em; margin-bottom: 1.2rem; color: var(--black); }
+.film-compare { margin: 0 0 4rem; }
+/* 디스클로저 바 — 기본 접힘, 클릭=펼침 ("표가 복잡" 피드백) */
+.film-compare-toggle {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  background: none; border: none; cursor: none; font-family: inherit; text-align: left;
+  border-top: .5px solid var(--gray-2); border-bottom: .5px solid var(--gray-2);
+  padding: 1.2rem .3rem; transition: background .15s;
+}
+.film-compare-toggle:hover { background: var(--gray-1); }
+.fct-title { font-size: 1rem; font-weight: 600; color: var(--black); letter-spacing: .01em; }
+.fct-title em { font-style: normal; font-weight: 300; color: var(--gray-3); font-size: .88rem; margin-left: .7rem; }
+.film-compare-toggle svg { width: 12px; height: 12px; color: var(--gray-3); flex-shrink: 0; transition: transform .3s ease; }
+.film-compare.open .film-compare-toggle svg { transform: rotate(180deg); }
+.film-compare-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.22,1,.36,1); }
+.film-compare.open .film-compare-body { grid-template-rows: 1fr; }
+.fcb-inner { overflow: hidden; }
+.fcb-inner .film-compare-wrap { margin-top: 1.6rem; }
 .film-compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .film-compare-table { width: 100%; min-width: 820px; border-collapse: collapse; text-align: center; }
 .film-compare-table th { background: var(--black); color: #fff; font-weight: 500; font-size: .85rem; padding: .9rem .5rem; letter-spacing: .02em; border: .5px solid var(--black); }
@@ -2951,13 +2966,21 @@ body.pd-open { overflow: hidden; }
       당신의 공간을 위한<br><em>선택된 제품</em>
     </h2>
 
-    <!-- 필름 8종 비교 (2026-07-30 총판·대표 피드백 "고르기 전에 비교 먼저" — 표 내용=JS가 PD_DATA에서 생성, 수치 단일 소스) -->
-    <div class="film-compare fi">
-      <p class="film-compare-title">고르기 전에, 한눈에.</p>
-      <div class="film-compare-wrap">
-        <table class="film-compare-table" id="filmCompareTable" aria-label="필름 8종 성능 비교"></table>
+    <!-- 필름 8종 비교 (2026-07-30 총판·대표 피드백 "고르기 전에 비교 먼저" — 표 내용=JS가 PD_DATA에서 생성, 수치 단일 소스.
+         기본 접힘(디스클로저) — "표가 복잡" 피드백 반영: 비교하러 온 사람에겐 입구에서 한 클릭, 첫 방문 흐름은 방해 없음 -->
+    <div class="film-compare fi" id="filmCompare">
+      <button type="button" class="film-compare-toggle" id="fcToggle" aria-expanded="false" aria-controls="fcBody">
+        <span class="fct-title">고르기 전에, 한눈에. <em>필름 8종 비교표</em></span>
+        <svg viewBox="0 0 12 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L6 6 L11 1"/></svg>
+      </button>
+      <div class="film-compare-body" id="fcBody">
+        <div class="fcb-inner">
+          <div class="film-compare-wrap">
+            <table class="film-compare-table" id="filmCompareTable" aria-label="필름 8종 성능 비교"></table>
+          </div>
+          <p class="film-compare-note">TSER(총태양에너지 차단율)는 가장 어두운 농도 기준 최대값 · 전 제품 자외선 등급 PA+++ SPF 285 · 행을 선택하면 상세 스펙이 열립니다 · 도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다 · 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.</p>
+        </div>
       </div>
-      <p class="film-compare-note">TSER(총태양에너지 차단율)는 가장 어두운 농도 기준 최대값 · 전 제품 자외선 등급 PA+++ SPF 285 · 행을 선택하면 상세 스펙이 열립니다 · 도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다 · 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.</p>
     </div>
 
     <div class="product-tabs-nav fi">
@@ -4415,6 +4438,16 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
       + '<td class="fc-go">→</td></tr>';
   }).join('');
   el.innerHTML = head + '<tbody>' + rows + '</tbody>';
+  // 디스클로저 토글 — 기본 접힘
+  var fc = document.getElementById('filmCompare');
+  var fcBtn = document.getElementById('fcToggle');
+  if (fc && fcBtn) {
+    fcBtn.addEventListener('click', function () {
+      var v = !fc.classList.contains('open');
+      fc.classList.toggle('open', v);
+      fcBtn.setAttribute('aria-expanded', v);
+    });
+  }
   el.addEventListener('click', function (e) {
     var tr = e.target.closest('tr[data-product]');
     if (tr) pdOpen(tr.dataset.product);

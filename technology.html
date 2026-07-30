@@ -711,12 +711,19 @@
     ['touchstart','pointerdown','click'].forEach(function(ev){ document.addEventListener(ev, kick, {once:true, passive:true}); });
   })();
 
-  /* 뒤로 가기(bfcache) 복원 — Safari가 영상을 멈춘 채 되살리므로 배경 영상 재개 */
-  window.addEventListener('pageshow', function(e){
-    if (!e.persisted) return;
+  /* 뒤로 가기(bfcache)·탭 복귀 복원 — Safari가 백그라운드에서 영상을 멈춘 채 두는 경우가 있어 재개한다.
+     이 페이지 영상 3개는 전부 상시 재생 루프(스크롤 정지 로직 없음)라 화면 밖 것까지 전부 되살린다.
+     (index.html은 스크롤 핸들러가 관리하므로 화면 안만 재개 — 여기와 다름) */
+  function resumeVideos(){
     document.querySelectorAll('video[autoplay]').forEach(function(v){
       if (v.paused){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
     });
+  }
+  window.addEventListener('pageshow', function(e){
+    if (e.persisted) resumeVideos();
+  });
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) resumeVideos();
   });
 </script>
 

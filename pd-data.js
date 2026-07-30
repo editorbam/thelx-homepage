@@ -609,23 +609,25 @@ function pdParseDens(p) {
   return rows.length ? { title: sec.title, model: sec.title.indexOf('모델별') === 0, rows, sec } : null;
 }
 
-/* 리스트형 스펙 섹션 렌더 — 격자 표 이전의 기존 문법(막대 포함), 특성·SHIELD용으로 유지 */
+/* 리스트형 스펙 섹션 렌더 — 격자 표 이전의 기존 문법(막대 포함), 특성·SHIELD용으로 유지.
+   막대(pct) 있는 row가 하나도 없는 섹션은 td-bar 열 자체를 생략 — 빈 30% 여백 방지 */
 function pdRenderSpecList(secs) {
-  return secs.map(sec =>
-    `<div class="pd-spec-section">
+  return secs.map(sec => {
+    const hasBar = sec.rows.some(r => r.pct !== null);
+    return `<div class="pd-spec-section">
       <p class="pd-spec-title">${sec.title}</p>
       <table class="pd-table">
         ${sec.rows.map(row => `
           <tr>
             <td class="td-label">${row.label}</td>
             <td class="td-value">${row.value}</td>
-            <td class="td-bar">${row.pct !== null
+            ${hasBar ? `<td class="td-bar">${row.pct !== null
               ? `<div class="pd-bar-track"><div class="pd-bar-fill" data-w="${row.pct}"></div></div>`
-              : ''}</td>
+              : ''}</td>` : ''}
           </tr>`).join('')}
       </table>
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
 }
 
 function pdRenderSpecs(p) {
@@ -648,7 +650,9 @@ function pdRenderSpecs(p) {
       <td class="g-dens">${dens.model ? r.name : r.name.replace(/^농도\s*/, '')}</td>
       <td>${r.vlt}%</td>
       <td class="g-tser">${r.tser}%</td>
-      ${i === 0 ? `<td class="g-merge" rowspan="${n}">${uvPct ? `<strong>${uvPct}</strong>` : ''}${uvGrade ? `<small>${uvGrade}</small>` : ''}</td>
+      ${i === 0 ? `<td class="g-merge" rowspan="${n}">${uvPct
+        ? `<strong>${uvPct}</strong>${uvGrade ? `<small>${uvGrade}</small>` : ''}`
+        : (uvGrade ? `<strong>${uvGrade}</strong>` : '—')}</td>
       <td class="g-merge" rowspan="${n}">${waCell}</td>` : ''}
     </tr>`).join('');
   const grid = `<div class="pd-spec-section">

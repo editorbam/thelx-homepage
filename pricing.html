@@ -1797,8 +1797,8 @@ body.pd-open { overflow: hidden; }
 .pd-bar-fill  { height: 100%; background: var(--black); border-radius: 2px; width: 0%; transition: width 1s cubic-bezier(.22,1,.36,1); }
 
 /* 농도별 격자 스펙 표 (2026-07-30 총판 피드백 — 구 홈페이지 표 문법. 렌더=pd-data.js pdRenderSpecs, index.html과 동일 CSS) */
-.pd-grid-wrap { overflow-x: auto; }
-.pd-grid { width: 100%; border-collapse: collapse; text-align: center; }
+.pd-grid-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.pd-grid { width: 100%; min-width: 520px; border-collapse: collapse; text-align: center; } /* min-width 없으면 모바일에서 5열이 눌려 헤더가 4~5줄로 깨짐 — wrap이 가로 스크롤 담당 (index.html과 동일) */
 .pd-grid th { background: var(--black); color: #fff; font-weight: 500; font-size: .85rem; padding: .9rem .5rem; letter-spacing: .02em; border: .5px solid var(--black); }
 .pd-grid th small { display: block; font-weight: 300; font-size: .68rem; color: rgba(255,255,255,.55); margin-top: .18rem; letter-spacing: 0; }
 .pd-grid td { border: .5px solid var(--gray-2); padding: .95rem .5rem; font-size: .95rem; font-weight: 500; color: var(--black); }
@@ -2701,7 +2701,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      JAVASCRIPT
 ======================================== -->
-  <script src="pd-data.js"></script>
+  <script src="pd-data.js?v=2"></script> <!-- ?v= 캐시 버스터 — index.html과 동기 -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){

@@ -389,6 +389,10 @@ nav .nav-links .nav-drop-panel a.nav-drop-all {
   font-size: 12.5px; color: var(--gray-3); letter-spacing: .02em;
 }
 nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opacity: 1; }
+/* 769~940px: 트리거(좌측 3번째) 중심 정렬이면 패널 왼쪽이 화면 밖으로 잘림 — 뷰포트 중앙 고정으로 전환 */
+@media (max-width: 940px) {
+  .nav-drop-panel { position: fixed; left: 50%; top: 70px; width: min(560px, calc(100vw - 2rem)); }
+}
 
 /* 모바일 메뉴 — 제품소개 아코디언 */
 .mm-drop { display: flex; flex-direction: column; align-items: center; }
@@ -409,6 +413,13 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   color: rgba(255,255,255,.6); transition: color .2s;
 }
 .mm-drop-list button:hover { color: var(--white); }
+/* 전체 제품 보기 — 데스크탑 패널 nav-drop-all의 모바일 대응. .mobile-menu a 대형 폰트 규칙보다 특이도 높게 */
+.mm-drop-list a.mm-drop-all {
+  font-size: .95rem; font-weight: 300; letter-spacing: .05em;
+  color: rgba(255,255,255,.45); text-decoration: none;
+  padding-top: .4rem; border-top: .5px solid rgba(255,255,255,.14);
+}
+.mm-drop-list a.mm-drop-all:hover { color: var(--white); }
 
 .nav-cta {
   font-size: 12px; font-weight: 400; letter-spacing: .12em;
@@ -1127,6 +1138,8 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .film-compare-table tbody tr { cursor: none; transition: background .15s; }
 .film-compare-table tbody tr:hover { background: var(--gray-1); }
 .film-compare-table .fc-name { text-align: left; font-weight: 600; padding-left: 1.1rem; white-space: nowrap; }
+/* 첫 칸의 제품명 = 키보드·스크린리더용 실제 버튼 (행 전체는 마우스 클릭 전용) */
+.fc-namebtn { background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; letter-spacing: inherit; cursor: none; }
 .film-compare-table .fc-type { font-weight: 300; color: var(--gray-4); font-size: .88rem; }
 .film-compare-table .fc-tser { font-weight: 600; }
 .film-compare-table .fc-go { width: 2.6rem; color: var(--gray-3); font-weight: 300; }
@@ -1138,8 +1151,8 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 }
 .film-compare-table .fc-color small { font-size: .8rem; font-weight: 300; color: var(--gray-4); letter-spacing: .01em; }
 /* 포커스 링 — 마우스 클릭 잔상 제거, 키보드 탐색에만 표시 */
-.film-compare-table tbody tr:focus { outline: none; }
-.film-compare-table tbody tr:focus-visible { outline: 2px solid var(--black); outline-offset: -2px; }
+.fc-namebtn:focus { outline: none; }
+.fc-namebtn:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
 .film-compare-note { margin-top: 1rem; font-size: .8rem; font-weight: 300; color: var(--gray-3); line-height: 1.7; }
 .film-compare-note a { color: var(--gray-4); text-decoration: underline; text-underline-offset: 3px; cursor: none; }
 @media (max-width:768px) {
@@ -2273,8 +2286,8 @@ body.pd-open { overflow: hidden; }
 .pd-bar-fill  { height: 100%; background: var(--black); border-radius: 2px; width: 0%; transition: width 1s cubic-bezier(.22,1,.36,1); }
 
 /* 농도별 격자 스펙 표 (2026-07-30 총판 피드백 — 구 홈페이지 표 문법. 렌더=pd-data.js pdRenderSpecs) */
-.pd-grid-wrap { overflow-x: auto; }
-.pd-grid { width: 100%; border-collapse: collapse; text-align: center; }
+.pd-grid-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.pd-grid { width: 100%; min-width: 520px; border-collapse: collapse; text-align: center; } /* min-width 없으면 모바일에서 5열이 눌려 헤더가 4~5줄로 깨짐 — wrap이 가로 스크롤 담당 */
 .pd-grid th { background: var(--black); color: #fff; font-weight: 500; font-size: .85rem; padding: .9rem .5rem; letter-spacing: .02em; border: .5px solid var(--black); }
 .pd-grid th small { display: block; font-weight: 300; font-size: .68rem; color: rgba(255,255,255,.55); margin-top: .18rem; letter-spacing: 0; }
 .pd-grid td { border: .5px solid var(--gray-2); padding: .95rem .5rem; font-size: .95rem; font-weight: 500; color: var(--black); }
@@ -3004,7 +3017,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- LX -->
       <div class="product-panel active has-scene" id="panel-lx">
-        <div class="product-image"><img src="lx-vlt-scene.jpg" alt="LX 농도별 발색 비교 — 같은 풍경, 15부터 70까지" loading="lazy"></div>
+        <div class="product-image"><img src="lx-vlt-scene.jpg" alt="LX 농도별 발색 비교 — 같은 풍경, 15부터 70까지" width="2036" height="960" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Intelligent &amp; Luxury</span>
           <h3 class="product-name">LX</h3>
@@ -3054,7 +3067,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Vogue -->
       <div class="product-panel has-scene" id="panel-vogue">
-        <div class="product-image"><img src="vogue-vlt-scene.jpg" alt="Vogue 농도별 발색 비교 — 그린 골드 발색" loading="lazy"></div>
+        <div class="product-image"><img src="vogue-vlt-scene.jpg" alt="Vogue 농도별 발색 비교 — 그린 골드 발색" width="2040" height="962" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Reflective Series</span>
           <h3 class="product-name">Vogue</h3>
@@ -3086,7 +3099,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Xenith IR -->
       <div class="product-panel has-scene" id="panel-xenith">
-        <div class="product-image"><img src="xenith-vlt-scene.jpg" alt="Xenith IR 농도별 발색 비교 — 비크 블랙 발색" loading="lazy"></div>
+        <div class="product-image"><img src="xenith-vlt-scene.jpg" alt="Xenith IR 농도별 발색 비교 — 비크 블랙 발색" width="2036" height="964" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Ceramic &amp; Top Class</span>
           <h3 class="product-name">Xenith IR</h3>
@@ -3118,7 +3131,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Quantum -->
       <div class="product-panel has-scene" id="panel-quantum">
-        <div class="product-image"><img src="quantum-vlt-scene.jpg" alt="Quantum 농도별 발색 비교 — 에메랄드 발색" loading="lazy"></div>
+        <div class="product-image"><img src="quantum-vlt-scene.jpg" alt="Quantum 농도별 발색 비교 — 에메랄드 발색" width="2030" height="960" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Full Metal Sputter</span>
           <h3 class="product-name">Quantum</h3>
@@ -3149,7 +3162,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Titanium -->
       <div class="product-panel has-scene" id="panel-titanium">
-        <div class="product-image"><img src="titanium-vlt-scene.jpg" alt="Titanium 농도별 발색 비교 — 딥 블랙 발색" loading="lazy"></div>
+        <div class="product-image"><img src="titanium-vlt-scene.jpg" alt="Titanium 농도별 발색 비교 — 딥 블랙 발색" width="2038" height="958" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Intelligent &amp; Unique</span>
           <h3 class="product-name">Titanium</h3>
@@ -3180,7 +3193,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- G-LINE -->
       <div class="product-panel has-scene" id="panel-gline">
-        <div class="product-image"><img src="gline-vlt-scene.jpg" alt="G-LINE 농도별 발색 비교 — 라미네이티드 블루 발색" loading="lazy"></div>
+        <div class="product-image"><img src="gline-vlt-scene.jpg" alt="G-LINE 농도별 발색 비교 — 라미네이티드 블루 발색" width="2020" height="962" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Balance &amp; Hybrid</span>
           <h3 class="product-name">G-LINE</h3>
@@ -3211,7 +3224,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- S-LINE -->
       <div class="product-panel has-scene" id="panel-sline">
-        <div class="product-image"><img src="sline-vlt-scene.jpg" alt="S-LINE 농도별 발색 비교" loading="lazy"></div>
+        <div class="product-image"><img src="sline-vlt-scene.jpg" alt="S-LINE 농도별 발색 비교" width="2032" height="964" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Comfort &amp; Smart</span>
           <h3 class="product-name">S-LINE</h3>
@@ -3242,7 +3255,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Galaxie -->
       <div class="product-panel has-scene" id="panel-galaxie">
-        <div class="product-image"><img src="galaxie-vlt-scene.jpg" alt="Galaxie 농도별 발색 비교" loading="lazy"></div>
+        <div class="product-image"><img src="galaxie-vlt-scene.jpg" alt="Galaxie 농도별 발색 비교" width="2028" height="966" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Intelligent &amp; Balance</span>
           <h3 class="product-name">Galaxie</h3>
@@ -3768,7 +3781,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      JAVASCRIPT
 ======================================== -->
-  <script src="pd-data.js"></script>
+  <script src="pd-data.js?v=2"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){
@@ -4407,13 +4420,14 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
 // +컬러 칩·위계 그룹 행 (2026-07-30 2차 — 총판 "필름 색감" 피드백. 컬러=pd-data 스펙 명기값만, 미표기 3종=무채색)
 (function () {
   var el = document.getElementById('filmCompareTable');
-  if (!el || typeof PD_DATA === 'undefined') return;
+  /* pd-data.js 구버전 캐시 가드 — PD_DATA만 있고 신규 심볼(pdParseDens 등)이 없으면 조용히 스킵 (ReferenceError로 아래 전체 스크립트가 죽는 것 방지) */
+  if (!el || typeof PD_DATA === 'undefined' || typeof pdParseDens !== 'function' || typeof PD_FILM_TYPE === 'undefined') return;
   /* 위계 그룹 행은 1차 시안에서 "표가 복잡해진다"로 제거(7/30) — 위계는 네비 제품소개 드롭다운이 담당 */
   var order = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie'];
   var COLORS = {
     lx:       { c: 'linear-gradient(135deg,#4a4d52,#1a1b1e)', n: '무채색' },
     vogue:    { c: 'linear-gradient(135deg,#0c3426,#4a541e)', n: '그린 골드' },
-    xenith:   { c: 'linear-gradient(135deg,#1b1b20,#060607)', n: '빅 블랙' },
+    xenith:   { c: 'linear-gradient(135deg,#1b1b20,#060607)', n: '비크 블랙' },
     quantum:  { c: 'linear-gradient(135deg,#0e3b32,#2a6b52)', n: '에메랄드' },
     titanium: { c: 'linear-gradient(135deg,#232629,#0a0b0c)', n: '딥 블랙' },
     gline:    { c: 'linear-gradient(135deg,#16324f,#0b1626)', n: '라미네이티드 블루' },
@@ -4437,34 +4451,34 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
     var waSec = (p.specs || []).find(function (s) { return s.title === '보증'; });
     var waRow = waSec && (waSec.rows.find(function (r) { return r.label === '내구성 보증'; }) || waSec.rows[0]);
     var col = COLORS[k] || { c: 'var(--gray-2)', n: '' };
-    return '<tr data-product="' + k + '" tabindex="0" role="button" aria-label="' + p.name + ' 상세 스펙 보기">'
-      + '<td class="fc-name">' + p.name + (p.flagship ? ' <span class="flagship-badge">FLAGSHIP</span>' : '') + '</td>'
+    /* 행 자체는 마우스 클릭 전용 — 키보드·스크린리더 진입점은 첫 칸의 실제 <button> (tr에 role=button을 주면 AT가 셀 내용을 못 읽음) */
+    return '<tr data-product="' + k + '">'
+      + '<td class="fc-name"><button type="button" class="fc-namebtn" data-product="' + k + '" aria-label="' + p.name + ' 상세 스펙 보기">' + p.name + '</button>' + (p.flagship ? ' <span class="flagship-badge">FLAGSHIP</span>' : '') + '</td>'
       + '<td class="fc-color"><span class="fc-chip" style="background:' + col.c + '"></span><small>' + col.n + '</small></td>'
       + '<td class="fc-type">' + (PD_FILM_TYPE[k] || '') + '</td>'
-      + '<td>' + d.rows.length + '단계 · ' + Math.min.apply(null, vlts) + '~' + Math.max.apply(null, vlts) + '%</td>'
+      /* Quantum은 농도 단계가 아니라 모델명 라인업(model:true) — '단계'로 쓰면 없는 농도를 찾게 만듦 */
+      + '<td>' + (d.model ? '모델 ' + d.rows.length + '종' : d.rows.length + '단계') + ' · ' + Math.min.apply(null, vlts) + '~' + Math.max.apply(null, vlts) + '%</td>'
       + '<td class="fc-tser">' + tser + '%</td>'
       + '<td>' + (waRow ? waRow.value : '—') + '</td>'
       + '<td class="fc-go">→</td></tr>';
   }).join('');
   el.innerHTML = head + '<tbody>' + rows + '</tbody>';
-  // 디스클로저 토글 — 기본 접힘
+  // 디스클로저 토글 — 기본 접힘. 접힌 동안 fcBody=inert(높이 0으로 숨긴 행이 보이지 않는 탭스톱이 되는 것 방지)
   var fc = document.getElementById('filmCompare');
   var fcBtn = document.getElementById('fcToggle');
-  if (fc && fcBtn) {
+  var fcBody = document.getElementById('fcBody');
+  if (fc && fcBtn && fcBody) {
+    fcBody.inert = true;
     fcBtn.addEventListener('click', function () {
       var v = !fc.classList.contains('open');
       fc.classList.toggle('open', v);
       fcBtn.setAttribute('aria-expanded', v);
+      fcBody.inert = !v;
     });
   }
   el.addEventListener('click', function (e) {
     var tr = e.target.closest('tr[data-product]');
     if (tr) pdOpen(tr.dataset.product);
-  });
-  el.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    var tr = e.target.closest('tr[data-product]');
-    if (tr) { e.preventDefault(); pdOpen(tr.dataset.product); }
   });
 }());
 
@@ -4506,7 +4520,7 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
   if (mm && mmBtn && mmList) {
     mmList.innerHTML = keys.map(function (k) {
       return '<button type="button" data-product="' + k + '">' + PD_DATA[k].name + '</button>';
-    }).join('');
+    }).join('') + '<a href="#products" class="mm-drop-all">전체 제품 보기</a>'; /* 데스크탑 패널의 nav-drop-all 대응 — 모바일에서 #products(비교표·탭)로 가는 유일한 경로 */
     mmBtn.addEventListener('click', function () {
       var v = !mm.classList.contains('open');
       mm.classList.toggle('open', v);
@@ -4514,7 +4528,8 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
     });
     mmList.addEventListener('click', function (e) {
       var b = e.target.closest('[data-product]');
-      if (b) { closeMobileMenu(); pdOpen(b.dataset.product); }
+      if (b) { closeMobileMenu(); pdOpen(b.dataset.product); return; }
+      if (e.target.closest('.mm-drop-all')) closeMobileMenu(); /* 앵커 기본 동작이 #products로 이동 */
     });
   }
 }());

@@ -1115,22 +1115,13 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .film-compare-table .fc-type { font-weight: 300; color: var(--gray-4); font-size: .88rem; }
 .film-compare-table .fc-tser { font-weight: 600; }
 .film-compare-table .fc-go { width: 2.6rem; color: var(--gray-3); font-weight: 300; }
-/* 컬러 칩 열 — 필름 발색(pd-data 스펙 명기값), 미표기 제품=무채색 */
+/* 컬러 칩 열 — 필름 발색(pd-data 스펙 명기값), 미표기 제품=무채색. 칩+이름 한 줄(행 높이 유지) */
 .film-compare-table .fc-color { white-space: nowrap; }
 .film-compare-table .fc-chip {
-  display: block; width: 46px; height: 18px; border-radius: 5px;
-  margin: 0 auto .4rem; border: .5px solid rgba(0,0,0,.14);
+  display: inline-block; width: 30px; height: 14px; border-radius: 4px;
+  vertical-align: -2px; margin-right: .5rem; border: .5px solid rgba(0,0,0,.14);
 }
-.film-compare-table .fc-color small { display: block; font-size: .68rem; font-weight: 300; color: var(--gray-3); letter-spacing: .01em; }
-/* 위계 그룹 행 — FLAGSHIP/PREMIUM/PERFORMANCE/ESSENTIAL 구분 (셀이 아닌 섹션 라벨처럼) */
-.film-compare-table .fc-group td {
-  border: none; border-bottom: .5px solid var(--gray-2);
-  text-align: left; padding: 1.5rem .65rem .5rem;
-  font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--gray-3); background: var(--white);
-}
-.film-compare-table tbody tr.fc-group { cursor: default; }
-.film-compare-table tbody tr.fc-group:hover { background: var(--white); }
+.film-compare-table .fc-color small { font-size: .8rem; font-weight: 300; color: var(--gray-4); letter-spacing: .01em; }
 /* 포커스 링 — 마우스 클릭 잔상 제거, 키보드 탐색에만 표시 */
 .film-compare-table tbody tr:focus { outline: none; }
 .film-compare-table tbody tr:focus-visible { outline: 2px solid var(--black); outline-offset: -2px; }
@@ -4385,12 +4376,8 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
 (function () {
   var el = document.getElementById('filmCompareTable');
   if (!el || typeof PD_DATA === 'undefined') return;
-  var GROUPS = [
-    { tier: 'Flagship',    keys: ['lx'] },
-    { tier: 'Premium',     keys: ['vogue', 'xenith'] },
-    { tier: 'Performance', keys: ['quantum', 'titanium'] },
-    { tier: 'Essential',   keys: ['gline', 'sline', 'galaxie'] },
-  ];
+  /* 위계 그룹 행은 1차 시안에서 "표가 복잡해진다"로 제거(7/30) — 위계는 네비 제품소개 드롭다운이 담당 */
+  var order = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie'];
   var COLORS = {
     lx:       { c: 'linear-gradient(135deg,#4a4d52,#1a1b1e)', n: '무채색' },
     vogue:    { c: 'linear-gradient(135deg,#0c3426,#4a541e)', n: '그린 골드' },
@@ -4409,26 +4396,23 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
     + '<th>최대 TSER<small>총태양에너지 차단율</small></th>'
     + '<th>보증<small>내구성 기준</small></th>'
     + '<th class="fc-go" aria-hidden="true"></th></tr></thead>';
-  var rows = GROUPS.map(function (g) {
-    var group = '<tr class="fc-group"><td colspan="7">' + g.tier + '</td></tr>';
-    return group + g.keys.map(function (k) {
-      var p = PD_DATA[k];
-      var d = p && pdParseDens(p);
-      if (!d) return '';
-      var vlts = d.rows.map(function (r) { return r.vlt; });
-      var tser = Math.max.apply(null, d.rows.map(function (r) { return r.tser; }));
-      var waSec = (p.specs || []).find(function (s) { return s.title === '보증'; });
-      var waRow = waSec && (waSec.rows.find(function (r) { return r.label === '내구성 보증'; }) || waSec.rows[0]);
-      var col = COLORS[k] || { c: 'var(--gray-2)', n: '' };
-      return '<tr data-product="' + k + '" tabindex="0" role="button" aria-label="' + p.name + ' 상세 스펙 보기">'
-        + '<td class="fc-name">' + p.name + '</td>'
-        + '<td class="fc-color"><span class="fc-chip" style="background:' + col.c + '"></span><small>' + col.n + '</small></td>'
-        + '<td class="fc-type">' + (PD_FILM_TYPE[k] || '') + '</td>'
-        + '<td>' + d.rows.length + '단계 · ' + Math.min.apply(null, vlts) + '~' + Math.max.apply(null, vlts) + '%</td>'
-        + '<td class="fc-tser">' + tser + '%</td>'
-        + '<td>' + (waRow ? waRow.value : '—') + '</td>'
-        + '<td class="fc-go">→</td></tr>';
-    }).join('');
+  var rows = order.map(function (k) {
+    var p = PD_DATA[k];
+    var d = p && pdParseDens(p);
+    if (!d) return '';
+    var vlts = d.rows.map(function (r) { return r.vlt; });
+    var tser = Math.max.apply(null, d.rows.map(function (r) { return r.tser; }));
+    var waSec = (p.specs || []).find(function (s) { return s.title === '보증'; });
+    var waRow = waSec && (waSec.rows.find(function (r) { return r.label === '내구성 보증'; }) || waSec.rows[0]);
+    var col = COLORS[k] || { c: 'var(--gray-2)', n: '' };
+    return '<tr data-product="' + k + '" tabindex="0" role="button" aria-label="' + p.name + ' 상세 스펙 보기">'
+      + '<td class="fc-name">' + p.name + (p.flagship ? ' <span class="flagship-badge">FLAGSHIP</span>' : '') + '</td>'
+      + '<td class="fc-color"><span class="fc-chip" style="background:' + col.c + '"></span><small>' + col.n + '</small></td>'
+      + '<td class="fc-type">' + (PD_FILM_TYPE[k] || '') + '</td>'
+      + '<td>' + d.rows.length + '단계 · ' + Math.min.apply(null, vlts) + '~' + Math.max.apply(null, vlts) + '%</td>'
+      + '<td class="fc-tser">' + tser + '%</td>'
+      + '<td>' + (waRow ? waRow.value : '—') + '</td>'
+      + '<td class="fc-go">→</td></tr>';
   }).join('');
   el.innerHTML = head + '<tbody>' + rows + '</tbody>';
   el.addEventListener('click', function (e) {

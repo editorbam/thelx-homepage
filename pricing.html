@@ -1796,6 +1796,18 @@ body.pd-open { overflow: hidden; }
 .pd-bar-track { height: 2px; background: var(--gray-2); border-radius: 2px; overflow: hidden; }
 .pd-bar-fill  { height: 100%; background: var(--black); border-radius: 2px; width: 0%; transition: width 1s cubic-bezier(.22,1,.36,1); }
 
+/* 농도별 격자 스펙 표 (2026-07-30 총판 피드백 — 구 홈페이지 표 문법. 렌더=pd-data.js pdRenderSpecs, index.html과 동일 CSS) */
+.pd-grid-wrap { overflow-x: auto; }
+.pd-grid { width: 100%; border-collapse: collapse; text-align: center; }
+.pd-grid th { background: var(--black); color: #fff; font-weight: 500; font-size: .85rem; padding: .9rem .5rem; letter-spacing: .02em; border: .5px solid var(--black); }
+.pd-grid th small { display: block; font-weight: 300; font-size: .68rem; color: rgba(255,255,255,.55); margin-top: .18rem; letter-spacing: 0; }
+.pd-grid td { border: .5px solid var(--gray-2); padding: .95rem .5rem; font-size: .95rem; font-weight: 500; color: var(--black); }
+.pd-grid td small { display: block; font-weight: 300; font-size: .75rem; color: var(--gray-3); margin-top: .25rem; }
+.pd-grid .g-dens { font-weight: 600; }
+.pd-grid .g-merge { background: var(--gray-1); font-weight: 400; }
+.pd-grid .g-merge span { display: block; font-size: .82rem; color: var(--gray-4); padding: .12rem 0; font-weight: 300; }
+.pd-grid .g-merge strong { font-weight: 600; }
+
 .pd-cta {
   background: var(--black); padding: 6rem 2rem; text-align: center; margin-top: 2rem;
 }
@@ -1971,6 +1983,11 @@ body.pd-open { overflow: hidden; }
   .pd-table .td-label { width:55%; }
   .pd-nav { padding:0 1.5rem; }
   .pd-nav-cta { display:none; }
+  .pd-grid th { font-size:.72rem; padding:.7rem .3rem; }
+  .pd-grid th small { font-size:.58rem; }
+  .pd-grid td { font-size:.82rem; padding:.7rem .3rem; }
+  .pd-grid td small { font-size:.62rem; }
+  .pd-grid .g-merge span { font-size:.7rem; }
 }
 
 /* ============================
@@ -3376,22 +3393,8 @@ function pdOpen(id) {
     </div>`
   ).join('');
 
-  // 스펙 테이블
-  document.getElementById('pdSpecs').innerHTML = p.specs.map(sec =>
-    `<div class="pd-spec-section">
-      <p class="pd-spec-title">${sec.title}</p>
-      <table class="pd-table">
-        ${sec.rows.map(row => `
-          <tr>
-            <td class="td-label">${row.label}</td>
-            <td class="td-value">${row.value}</td>
-            <td class="td-bar">${row.pct !== null
-              ? `<div class="pd-bar-track"><div class="pd-bar-fill" data-w="${row.pct}"></div></div>`
-              : ''}</td>
-          </tr>`).join('')}
-      </table>
-    </div>`
-  ).join('');
+  // 스펙 테이블 — 렌더러=pd-data.js 공용 pdRenderSpecs (2026-07-30 격자 표 전환, 이전 사본 렌더는 pdRenderSpecList로 이관)
+  document.getElementById('pdSpecs').innerHTML = pdRenderSpecs(p);
 
   // 농도별 VLT 하늘 밴드 — 홈 #vlt 섹션과 동일한 커튼 모션. 데이터=pd-data.js 농도별 스펙표 파싱
   // (⚠️ 이 블록은 index.html 렌더러 사본 — pdRing과 같은 동기 규칙)

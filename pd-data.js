@@ -577,3 +577,93 @@ function pdRenderIntro(p) {
     return `<div class="pd-intro-block${b.h ? '' : ' pd-intro-cont'}">${b.h ? `<h3 class="pd-intro-h">${b.h}</h3>` : ''}<p class="pd-intro-p">${b.p}</p></div>`;
   }).join('');
 }
+
+/* ─────────────────────────────────────────────────────────────
+   스펙 렌더 공용 (2026-07-30 총판 피드백 — 구 홈페이지 격자 표 문법 복원).
+   pdRenderSpecs: 농도별/모델별 섹션 → 격자 표(농도|VLT|TSER + UV·보증 병합 열),
+   잔여 특성 rows → 기존 리스트 문법(pdRenderSpecList).
+   농도별 섹션이 없는 제품(SHIELD)은 전부 리스트로 폴백.
+   index·pricing 양쪽 #pdSpecs가 이 함수 하나를 호출 — 표 수정은 여기 한 곳만.
+   ───────────────────────────────────────────────────────────── */
+
+/* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 타입' row의 축약.
+   LX만 스펙에 해당 row가 없어 마스터 문서(풀메탈 스퍼터·5-Layer 세계특허) 기준. */
+const PD_FILM_TYPE = {
+  lx: '풀 메탈 스퍼터 (반사형) · 5-Layer', vogue: '풀 메탈 스퍼터 (반사형)', xenith: '세라믹 IR',
+  quantum: '풀 메탈 스퍼터', titanium: '티타늄 증착 (메탈)', gline: '메탈반사 하이브리드',
+  sline: '비반사', galaxie: '기본형',
+};
+
+/* 농도별/모델별 스펙 rows 파싱 — 라벨 '농도 15 — VLT 12%' / 'Quantum Black — VLT 8%' 공통 */
+function pdParseDens(p) {
+  const sec = (p.specs || []).find(s => /^(농도별|모델별)/.test(s.title));
+  if (!sec) return null;
+  const rows = sec.rows.map(r => {
+    const m = r.label.match(/^(.+?)\s*—\s*VLT\s*(\d+)%/);
+    const t = (String(r.value).match(/TSER\s*(\d+)%/) || [])[1];
+    return m && t ? { name: m[1].replace(/\s+/g, ' ').trim(), vlt: +m[2], tser: +t } : null;
+  }).filter(Boolean);
+  return rows.length ? { title: sec.title, model: sec.title.indexOf('모델별') === 0, rows, sec } : null;
+}
+
+/* 리스트형 스펙 섹션 렌더 — 격자 표 이전의 기존 문법(막대 포함), 특성·SHIELD용으로 유지 */
+function pdRenderSpecList(secs) {
+  return secs.map(sec =>
+    `<div class="pd-spec-section">
+      <p class="pd-spec-title">${sec.title}</p>
+      <table class="pd-table">
+        ${sec.rows.map(row => `
+          <tr>
+            <td class="td-label">${row.label}</td>
+            <td class="td-value">${row.value}</td>
+            <td class="td-bar">${row.pct !== null
+              ? `<div class="pd-bar-track"><div class="pd-bar-fill" data-w="${row.pct}"></div></div>`
+              : ''}</td>
+          </tr>`).join('')}
+      </table>
+    </div>`
+  ).join('');
+}
+
+function pdRenderSpecs(p) {
+  const secs = p.specs || [];
+  const dens = pdParseDens(p);
+  if (!dens) return pdRenderSpecList(secs);
+  const uvSec = secs.find(s => s.title.indexOf('UV') === 0);
+  const waSec = secs.find(s => s.title === '보증');
+  const uvRows = uvSec ? uvSec.rows : [];
+  const uvPct   = (uvRows.find(r => r.label === 'UV 차단율') || {}).value || '';
+  const uvGrade = (uvRows.find(r => r.label === 'UV 등급')   || {}).value || '';
+  const waRows = waSec ? waSec.rows : [];
+  const waVals = [...new Set(waRows.map(r => r.value))];
+  const waCell = waVals.length <= 1
+    ? `<strong>${waVals[0] || '—'}</strong>`
+    : waRows.map(r => `<span>${r.label.replace(' 보증', '')} <strong>${r.value}</strong></span>`).join('');
+  const n = dens.rows.length;
+  const body = dens.rows.map((r, i) => `
+    <tr>
+      <td class="g-dens">${dens.model ? r.name : r.name.replace(/^농도\s*/, '')}</td>
+      <td>${r.vlt}%</td>
+      <td class="g-tser">${r.tser}%</td>
+      ${i === 0 ? `<td class="g-merge" rowspan="${n}">${uvPct ? `<strong>${uvPct}</strong>` : ''}${uvGrade ? `<small>${uvGrade}</small>` : ''}</td>
+      <td class="g-merge" rowspan="${n}">${waCell}</td>` : ''}
+    </tr>`).join('');
+  const grid = `<div class="pd-spec-section">
+    <p class="pd-spec-title">${dens.title}</p>
+    <div class="pd-grid-wrap"><table class="pd-grid">
+      <thead><tr>
+        <th>${dens.model ? '모델' : '농도'}</th>
+        <th>VLT<small>가시광선 투과율</small></th>
+        <th>TSER<small>총태양에너지 차단율</small></th>
+        <th>UV<small>자외선 차단</small></th>
+        <th>보증<small>Warranty</small></th>
+      </tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+  </div>`;
+  const rest = [];
+  const restUv = uvRows.filter(r => r.label !== 'UV 차단율' && r.label !== 'UV 등급');
+  if (restUv.length) rest.push({ title: '특성', rows: restUv });
+  secs.forEach(s => { if (s !== dens.sec && s !== uvSec && s !== waSec) rest.push(s); });
+  return grid + pdRenderSpecList(rest);
+}

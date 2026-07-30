@@ -375,7 +375,15 @@
     .cool { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; opacity:0; transition:opacity .8s ease; }
     .cool span { color:#6ab4ff; font-size:24px; font-weight:800; line-height:.7; text-shadow:0 0 10px rgba(90,170,255,.7); animation:heatwave 1.5s ease-out infinite; }
     .cool span:nth-child(2){animation-delay:.5s} .cool span:nth-child(3){animation-delay:1s} .cool span:nth-child(4){animation-delay:.25s}
-    @media (max-width:768px) { .grid { grid-template-columns:1fr; gap:32px; } .vs { display:none; } }
+    @media (max-width:768px) {
+      .grid { grid-template-columns:1fr; gap:32px; }
+      .vs { display:none; }
+      /* 모바일: 그림 안 요소(태양열·화살표·온도계)를 폰 배율로 다시 잡기 — 그림 통째 축소 방지 */
+      .player text { font-size:44px; }
+      .player > line { stroke-width:13; }
+      .player g { stroke-width:6; }
+      .thermo { width:24px; right:4%; }
+    }
 
     /* SOUND TOGGLE — index.html과 동일 문법 (배경 음악 이어듣기) */
     .hero-sound {

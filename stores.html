@@ -52,6 +52,35 @@
   <!-- 지도 타일 서버 연결 선행 — 스타일·타일·글꼴 요청의 DNS/TLS 왕복 절감 (CORS라 crossorigin 판 필수) -->
   <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
   <link rel="preconnect" href="https://tiles.openfreemap.org">
+  <!-- 지도 외부 자원 선행 다운로드 — 스타일은 positron-style.js로 내장돼 사슬이 사라졌고,
+       나머지(타일 목록·스프라이트·글꼴 pbf)는 지도 초기화를 기다리지 않고 HTML 파싱 즉시 병렬로 받는다.
+       글꼴 pbf 목록=초기 전국 뷰에서 실측된 8개(한글 라벨은 MapLibre가 로컬 폰트로 그려 pbf 불필요) -->
+  <script>
+  (function () {
+    var dpr = (window.devicePixelRatio || 1) > 1 ? '@2x' : '';
+    var OFM = 'https://tiles.openfreemap.org';
+    [OFM + '/planet',
+     OFM + '/sprites/ofm_f384/ofm' + dpr + '.json',
+     OFM + '/sprites/ofm_f384/ofm' + dpr + '.png',
+     OFM + '/fonts/Noto%20Sans%20Regular/0-255.pbf',
+     OFM + '/fonts/Noto%20Sans%20Regular/256-511.pbf',
+     OFM + '/fonts/Noto%20Sans%20Regular/1024-1279.pbf',
+     OFM + '/fonts/Noto%20Sans%20Regular/6144-6399.pbf',
+     OFM + '/fonts/Noto%20Sans%20Regular/40960-41215.pbf',
+     OFM + '/fonts/Noto%20Sans%20Regular/41728-41983.pbf',
+     OFM + '/fonts/Noto%20Sans%20Bold/0-255.pbf',
+     OFM + '/fonts/Noto%20Sans%20Bold/1024-1279.pbf',
+     OFM + '/fonts/Noto%20Sans%20Bold/6144-6399.pbf',
+     OFM + '/fonts/Noto%20Sans%20Italic/0-255.pbf',
+     OFM + '/fonts/Noto%20Sans%20Italic/1024-1279.pbf',
+     OFM + '/fonts/Noto%20Sans%20Italic/6144-6399.pbf'
+    ].forEach(function (u) {
+      var l = document.createElement('link');
+      l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'anonymous'; l.href = u;
+      document.head.appendChild(l);
+    });
+  })();
+  </script>
   <style>
   @font-face {
     font-family: 'Noto Sans KR';
@@ -463,6 +492,7 @@
      로드 실패 시 목록만 표시. 라이브러리=자체 호스팅(4.7.1 min — CDN 왕복 제거, 오프라인 프리뷰 가능) -->
 <link rel="stylesheet" href="maplibre-gl.css">
 <script src="maplibre-gl.js"></script>
+<script src="positron-style.js"></script> <!-- 스타일 내장 — 외부 스타일 fetch(~0.5초, 요청 사슬의 첫 고리) 제거. file:// 프리뷰에서도 동작 -->
 
 <script>
 /* ── STORE LOCATOR (index.html에서 이관 — 2026-07-14) ── */
@@ -508,10 +538,15 @@ function slLocate(s) {
 
 (function slInitMap(){
   if (!window.maplibregl) { document.getElementById('slMap').classList.add('no-map'); return; }
+  /* 시작 뷰=전체 시공점 bounds — 예전엔 고정 중심(zoom 6)으로 뜬 뒤 fitBounds 애니메이션이
+     줌아웃하며 타일을 한 번 더 받았음. 처음부터 최종 뷰로 시작해 두 번째 타일 웨이브 제거 */
+  const slAllBounds = new maplibregl.LngLatBounds();
+  STORE_DATA.forEach(s => { if (s.y != null) slAllBounds.extend([s.x, s.y]); });
   slMap = new maplibregl.Map({
     container: 'slMap',
-    style: 'https://tiles.openfreemap.org/styles/positron',
-    center: [127.8, 36.4], zoom: 6,
+    /* 내장 스타일(positron-style.js) 우선, 없으면 원격 폴백 — 파일 누락 시에도 지도 유지 */
+    style: (typeof OFM_POSITRON_STYLE !== 'undefined') ? OFM_POSITRON_STYLE : 'https://tiles.openfreemap.org/styles/positron',
+    bounds: slAllBounds, fitBoundsOptions: { padding: 48, maxZoom: 12 },
     fadeDuration: 0,   /* 라벨 페이드인 생략 — 글꼴 로드 직후 즉시 표시 (체감 딜레이 절감) */
   });
   slMap.addControl(new maplibregl.NavigationControl({ showCompass: false }));

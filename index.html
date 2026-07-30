@@ -4901,6 +4901,25 @@ document.addEventListener('visibilitychange', function () {
   if (!document.hidden) resumeVisibleVideos();
 });
 
+/* 탭 복귀 재동기화 (2026-07-30 — 장기 방치 후 흰 화면·네비 실종 보고).
+   Safari가 오래 잠든 탭을 복원할 때 스크롤 이벤트 없이 화면만 돌아오는 경우가 있어,
+   ①레이아웃 캐시 ②nav 다크/라이트 테마 ③스크롤 잠금 잔류(pd-open·menu-open)를 복귀 시점에 재평가한다.
+   (잠금 정리는 기존 popstate·pageshow 안전망의 탭 복귀판) */
+function resyncAfterReturn() {
+  try {
+    cacheLayout();
+    updateNavTheme();
+    if (!pdOverlay.classList.contains('open')) document.body.classList.remove('pd-open');
+    if (hamburger && !hamburger.classList.contains('open')) document.body.classList.remove('menu-open');
+  } catch (e) {}
+}
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) resyncAfterReturn();
+});
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) resyncAfterReturn();
+});
+
 </script>
 
 <!-- 배경 음악 (페이지 전역 재생 + 음소거 토글) -->

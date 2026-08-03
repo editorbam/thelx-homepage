@@ -635,7 +635,7 @@
     var caps = chart.querySelectorAll('.rc-cap');
     var dots = chart.querySelectorAll('.rc-dots button');
     var N = caps.length; /* 장면 수 = 캡션 수 (마크업이 단일 기준) */
-    var DUR = { 1: 3400, 2: 3600, 3: 4400, 4: 5200 };
+    var DUR = { 1: 2300, 2: 2500, 3: 3100, 4: 3800 };  /* 2026-08-03 사용자 "조금 빠르게" — 구 3400/3600/4400/5200 */
     var timers = [];
     var cur = 0, started = false, manual = false, inView = false;
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -660,7 +660,7 @@
     function pause(){ clearTimers(); }
     function resume(){
       if (!started || manual || reduced || timers.length) return;
-      if (cur === 0) timers.push(setTimeout(function(){ setStep(1); queueNext(1); }, 1200));
+      if (cur === 0) timers.push(setTimeout(function(){ setStep(1); queueNext(1); }, 700));
       else queueNext(cur);
     }
     function start(){

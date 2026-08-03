@@ -321,6 +321,13 @@
 
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
+      /* 표 2종(소재 비교·농도 스펙): 가로 스크롤 폐기 — 화면 폭에 맞춰 수용 (2026-08-03 실기기) */
+      table.rc-table { min-width: 0; table-layout: fixed; font-size: .76rem; }
+      .rc-table th { padding: .6rem .18rem; letter-spacing: 0; word-break: keep-all; }
+      .rc-table th small { font-size: .54rem; margin-top: .12rem; line-height: 1.25; }
+      .rc-table td { padding: .62rem .18rem; word-break: keep-all; line-height: 1.4; }
+      /* 첫 열(항목·농도)은 좁게, 데이터 열에 폭 양보 */
+      .rc-table td.head, .rc-table th:first-child { font-size: .7rem; }
     }
   
 /* SOUND TOGGLE — index.html과 동일 문법 (배경 음악 이어듣기) */

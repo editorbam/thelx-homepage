@@ -19,6 +19,14 @@ const PD_DATA = {
     flagship: true,
     /* 모달 VLT 비주얼 — 공식 비교컷(밀라노 두오모, LX 15~70 라벨 포함). 렌더 규칙=Vogue vltImage 주석 참조 */
     vltImage: 'lx-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03) — 두오모 비교컷이 카드 배너와 중복이라 교체. 차 사진+픽토그램 오버레이(구본사 Key Point 문법).
+       사진=나노바나나 생성(무로고 EV·밝은 하늘)+필름 그레인 로컬 보정. stage가 있으면 vltImage 대신 렌더(vltImage=롤백 폴백) */
+    stage: { img: 'lx-stage-ev.jpg', icons: [
+      { i: 'eye',    t: '가시성' },
+      { i: 'heat',   t: '열차단' },
+      { i: 'safety', t: '세이프티' },
+      { i: 'orbit',  t: '반영구적' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-24) — 있으면 tagline·recommend 박스 대신 렌더.
        ⚠️ 특허번호 경위: 브로슈어 사망 번호(W0961339A1·551304) → 7/14 WO2004042435(구글 특허 404, 실존 확인 불가로 판명)
        → 7/30 본사(solargard.co.kr) 표기 + 구글 특허 원문 확인으로 WO2015102923 확정

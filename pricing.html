@@ -1764,6 +1764,19 @@ body.pd-open { overflow: hidden; }
 .pd-vlt-pips { position: absolute; bottom: 2.5rem; right: 2.8rem; display: flex; gap: 8px; pointer-events: none; z-index: 6; }
 .pd-vlt-pip { width: 20px; height: 2px; background: rgba(255,255,255,.18); transition: background .4s, width .4s; }
 .pd-vlt-pip.on { background: rgba(255,255,255,.82); width: 32px; }
+/* 스테이지 모드 (pd-data stage) — 제품 무대 사진 + 픽토그램 오버레이 (2026-08-03) */
+.pd-stage { position: relative; overflow: hidden; background: var(--black); }
+.pd-stage img { width: 100%; height: auto; display: block; }
+.pd-stage-icons {
+  position: absolute; top: clamp(.9rem, 3.5vw, 2.4rem); left: 0; right: 0;
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: clamp(1.4rem, 6vw, 4.8rem); color: #13293d; pointer-events: none;
+}
+.pd-stage-icons figure { margin: 0; text-align: center; }
+.pd-stage-icons svg { width: clamp(26px, 4.5vw, 36px); height: clamp(26px, 4.5vw, 36px); margin: 0 auto; display: block; }
+.pd-stage-icons .ac { stroke: #2b5f9e; }
+.pd-stage-icons .acf { fill: #2b5f9e; }
+.pd-stage-icons figcaption { margin-top: .45rem; font-size: clamp(10px, 1.4vw, 12.5px); font-weight: 600; letter-spacing: .05em; }
 /* 공식 비교 이미지 모드 (pd-data vltImage) — 라벨 박힌 원본이라 크롭 없이 전폭 표시 + 단일 커튼 리빌
    (필름 시트 스윕은 노출 타이밍이 늦어 롤백 2026-07-24) */
 .pd-vlt-static { position: relative; overflow: hidden; background: var(--black); }
@@ -2701,7 +2714,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      JAVASCRIPT
 ======================================== -->
-  <script src="pd-data.js?v=3"></script> <!-- ?v= 캐시 버스터 — index.html과 동기 -->
+  <script src="pd-data.js?v=4"></script> <!-- ?v= 캐시 버스터 — index.html과 동기 -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){
@@ -3402,7 +3415,13 @@ function pdOpen(id) {
   const densRows = (p.specs.find(s => s.title.indexOf('농도별') === 0) || { rows: [] }).rows
     .map(r => { const m = r.label.match(/농도\s*(\d+)\s*—\s*VLT\s*(\d+)%/); return m && { d: m[1], vlt: +m[2] }; })
     .filter(Boolean);
-  if (p.vltImage) {
+  if (p.stage) {
+    // 스테이지 모드(2026-08-03) — 제품 무대 사진 + PD_ICONS 픽토그램 오버레이
+    pdVlt.innerHTML = `<div class="pd-stage">
+      <img src="${p.stage.img}" alt="${p.name} — 밝은 하늘 아래 짙은 유리의 차량" loading="eager" decoding="async">
+      <div class="pd-stage-icons">${p.stage.icons.map(ic => `<figure><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PD_ICONS[ic.i] || ''}</svg><figcaption>${ic.t}</figcaption></figure>`).join('')}</div>
+    </div>`;
+  } else if (p.vltImage) {
     // 공식 비교 이미지 모드(라벨 포함 원본) — 밴드 시뮬레이션 대신 통짜 이미지 + 단일 커튼 리빌
     pdVlt.innerHTML = `<div class="pd-vlt-static">
       <img src="${p.vltImage}" alt="${p.name} 농도별 투과율 비교" loading="eager" decoding="async">

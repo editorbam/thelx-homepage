@@ -325,16 +325,19 @@
     .cmp-sub { text-align:center; color:rgba(0,0,0,.55); font-size:16px; margin:0 0 46px; word-break:keep-all; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; position:relative; }
     .vs { position:absolute; left:50%; top:42%; transform:translate(-50%,-50%); z-index:5; width:54px; height:54px; border-radius:50%; background:linear-gradient(145deg,#222,#141416); border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.85); font-size:15px; font-weight:800; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.5); }
-    .panel { border:1px solid rgba(0,0,0,.15); border-radius:20px; overflow:hidden; position:relative; background:#0a0a0a; }
+    /* 애플 타일 문법 (2026-08-03): 타이틀·카피=상단 중앙, 비주얼=하단 풀블리드, 남는 높이=숨 쉬는 여백 */
+    .panel { border:1px solid rgba(0,0,0,.15); border-radius:20px; overflow:hidden; position:relative; background:#0a0a0a; display:flex; flex-direction:column; }
     /* 절제 — 분위기 색은 빼고, 색은 장면(온도계·화살표) 안에서만. 이기는 LX에만 희미한 파랑 서명 */
     /* 글로우 폐기(제네릭 발광 문법) — LX 서명은 헤어라인 명도 차+상단 틴트만 2026-08-03 */
     .panel.lx { background-image:linear-gradient(180deg, rgba(80,150,220,.09), rgba(80,150,220,0) 42%); border-color:rgba(43,95,158,.45); }
     .panel.abs { }
-    .ptitle { text-align:center; padding:20px 16px 18px; font-size:20px; font-weight:700; letter-spacing:-.01em; color:#fff; }
+    .ptitle { text-align:center; padding:clamp(28px,3.5vw,40px) 26px 10px; font-size:clamp(22px,2.2vw,28px); font-weight:700; letter-spacing:-.02em; color:#fff; }
     .ptitle .pt-h { display:block; }
-    .ptitle small { display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,.42); margin:0 0 7px; letter-spacing:.14em; text-transform:uppercase; }
+    .ptitle small { display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,.42); margin:0 0 9px; letter-spacing:.14em; text-transform:uppercase; }
+    .pt-copy { max-width:480px; margin:12px auto 0; font-size:14.5px; font-weight:400; line-height:1.65; letter-spacing:0; color:rgba(255,255,255,.72); word-break:keep-all; }
+    .pt-copy b { color:#fff; font-weight:600; }
     .panel.lx .ptitle small { color:rgba(156,198,238,.7); }
-    .scene { position:relative; width:100%; aspect-ratio:1040/492; overflow:hidden; }
+    .scene { position:relative; width:100%; aspect-ratio:1040/492; overflow:hidden; margin-top:auto; }
     .scene img { width:100%; display:block; }
     .scene video { width:100%; height:100%; object-fit:cover; object-position:center 72%; display:block; }
     .panel.abs .scene video { object-position:center 50%; }
@@ -343,9 +346,6 @@
     @keyframes hotPulse { 0%,100%{opacity:.55; transform:scale(.97)} 50%{opacity:1; transform:scale(1.04)} }
     .thermo { position:absolute; right:6%; top:32%; z-index:4; width:32px; }
     .player { position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; }
-    .pcap { padding:18px 22px 24px; display:flex; gap:11px; align-items:flex-start; }
-    .pcap p { color:rgba(255,255,255,.8); font-size:15px; line-height:1.6; word-break:keep-all; }
-    .pcap b { color:#fff; }
     .foot { margin:28px auto 0; max-width:1160px; border:.5px solid rgba(0,0,0,.12); border-radius:14px; padding:20px 24px; display:flex; gap:13px; align-items:center; }
     .foot p { color:rgba(0,0,0,.6); font-size:14.5px; line-height:1.6; word-break:keep-all; }
     .foot b { color:#0a0a0a; font-weight:600; }
@@ -473,7 +473,9 @@
 
     <!-- 반사 (THE LX) -->
     <div class="panel lx">
-      <div class="ptitle"><small>THE LX · 반사</small><span class="pt-h">열을 반사합니다</span></div>
+      <div class="ptitle"><small>THE LX · 반사</small><span class="pt-h">열을 반사합니다</span>
+        <p class="pt-copy">열을 바깥으로 <b>반사해</b> 실내 온도 상승을 막습니다. 시간이 지나도 시원하고 온도가 흔들리지 않습니다.</p>
+      </div>
       <div class="scene">
         <video src="tech-reflect.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
         <div class="cool"><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span></div>
@@ -499,12 +501,13 @@
           <circle cx="550" cy="255" r="8" fill="#fff"><animate attributeName="opacity" values="0;.75;0" dur="1.3s" repeatCount="indefinite"/><animate attributeName="r" values="5;14;5" dur="1.3s" repeatCount="indefinite"/></circle>
         </svg>
       </div>
-      <div class="pcap"><p>열을 바깥으로 <b>반사해</b> 실내 온도 상승을 막습니다. 시간이 지나도 시원하고 온도가 흔들리지 않습니다. 여름철에는 시원함을, 겨울철에는 따뜻함을 유지합니다.</p></div>
     </div>
 
     <!-- 흡수 -->
     <div class="panel abs">
-      <div class="ptitle"><small>일반 필름 · 흡수</small><span class="pt-h">열을 흡수합니다</span></div>
+      <div class="ptitle"><small>일반 필름 · 흡수</small><span class="pt-h">열을 흡수합니다</span>
+        <p class="pt-copy">흡수한 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p>
+      </div>
       <div class="scene">
         <video src="tech-absorb.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
         <div class="heat"><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span><span>&#8779;</span></div>
@@ -529,7 +532,6 @@
           <line x1="548" y1="258" x2="500" y2="330" stroke="#ff4a2c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahTransA)" stroke-dasharray="14 11" opacity="0.5"><animate attributeName="stroke-dashoffset" from="25" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
         </svg>
       </div>
-      <div class="pcap"><p>흡수한 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p></div>
     </div>
   </div>
 

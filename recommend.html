@@ -161,13 +161,15 @@
     }
     .rc-note a { color: #3f78d0; text-decoration: none; }
     .rc-note a:hover { text-decoration: underline; }
-    /* 링크 클릭 가능 표시 — 작은 칩 (사용자 요청 2026-08-03) */
+    /* 링크 클릭 가능 표시 — 링크 글자 아래 작은 칩 (사용자 요청 2026-08-03) */
+    .rc-note a.has-click {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: baseline;
+    }
     .rc-click {
-      display: inline-flex; align-items: center;
-      font-size: 9px; font-weight: 600; letter-spacing: .12em;
+      font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
       color: #3f78d0; border: .5px solid rgba(63,120,208,.45);
-      border-radius: 980px; padding: 1px 7px; margin-left: .4rem;
-      vertical-align: 1px;
+      border-radius: 980px; padding: 2px 7px; margin-top: 3px;
     }
     /* 스크롤 힌트 — 실제로 가로 스크롤이 생길 때만 JS(.show)로 표시 */
     .rc-scroll-hint {
@@ -438,7 +440,7 @@
     </table>
   </div>
   <p class="rc-scroll-hint">표를 옆으로 밀면 흡수형과 비교됩니다 →</p>
-  <p class="rc-note">반사가 왜 가능한지 — 소재의 원리는 <a href="technology.html">기술 페이지<span class="rc-click">클릭</span></a>에서 이어집니다.</p>
+  <p class="rc-note">반사가 왜 가능한지 — 소재의 원리는 <a href="technology.html" class="has-click">기술 페이지<span class="rc-click">클릭</span></a>에서 이어집니다.</p>
 </section>
 
 <!-- 스펙트럼 그래프 -->

@@ -177,7 +177,7 @@
       font-size: clamp(.88rem, 1vw, .98rem);
     }
     .rc-table th {
-      background: rgba(0,0,0,.045); color: #0a0a0a; font-weight: 700;
+      color: #0a0a0a; font-weight: 700;
       padding: .95rem 1rem; text-align: center; letter-spacing: -.01em;
       border-bottom: .5px solid rgba(0,0,0,.12); word-break: keep-all;
     }
@@ -187,11 +187,13 @@
       border-bottom: .5px solid rgba(0,0,0,.07); word-break: keep-all; line-height: 1.55;
     }
     .rc-table tr:last-child td { border-bottom: none; }
+    /* 열 구분=헤어라인 (면 채움 없음 — 사이트 공통 문법, 2026-08-03) */
+    .rc-table th + th, .rc-table td + td { border-left: .5px solid rgba(0,0,0,.07); }
     .rc-table td.head { color: rgba(0,0,0,.5); font-weight: 600; }
     .rc-table td strong { color: #0a0a0a; font-weight: 700; }
-    /* LX(반사형) 열 — 파랑 서명 */
-    .rc-table .col-lx { background: rgba(80,150,220,.08); color: rgba(0,0,0,.85); }
-    .rc-table th.col-lx { color: #2b5f9e; background: rgba(80,150,220,.16); }
+    /* LX(반사형) 열 — 헤더 글자색만 파랑 서명 (면 채움 없음) */
+    .rc-table .col-lx { color: rgba(0,0,0,.85); }
+    .rc-table th.col-lx { color: #2b5f9e; }
     .rc-table td.col-lx strong { color: #0a0a0a; }
 
     /* ===========================
@@ -384,12 +386,16 @@
 <section class="rc-section">
   <p class="rc-kicker">기준 ① 소재</p>
   <h2 class="rc-title">소재가 좋은 필름이란.</h2>
+  <!-- ⚠️ '들어온 열이 없어…' 논리는 technology.html '반사.' 챕터 본문과 동일 문장 동기 (문구 수정 시 양쪽 함께) -->
   <p class="rc-body">
     소재가 좋은 필름, 즉 <strong>반사형 필름</strong>은 열을 흡수하지 않고 표면에서 반사합니다.
-    반사형은 계절을 타지 않습니다. 여름에는 바깥의 열이 들어오지 못하게, 겨울에는 안의 열이 새어 나가지 못하게.
+    들어온 열이 없어 온도가 흔들리지 않습니다.
+    흡수형 필름은 열을 필름에 남기고, 남은 열은 시간이 지나며 실내로 스며듭니다.
+    여름에는 바깥의 열이 들어오지 못하게, 겨울에는 안의 열이 새어 나가지 못하게.
     좋은 소재는 계절이 증명합니다.
   </p>
 
+  <!-- 비교표=팩트만 (설명 문장은 위 본문이 담당 — 2026-08-03 A안) -->
   <div class="rc-table-wrap">
     <table class="rc-table">
       <thead>
@@ -402,19 +408,18 @@
       <tbody>
         <tr>
           <td class="head">열 처리 방식</td>
-          <td class="col-lx"><strong>표면에서 반사</strong> — 열이 들어오기 전에 차단</td>
-          <td>필름이 <strong>흡수</strong> — 열이 필름에 남음</td>
+          <td class="col-lx">표면에서 반사</td>
+          <td>필름에 흡수</td>
         </tr>
-        <!-- ⚠️ '들어온 열이 없어…' 논리는 technology.html '반사.' 챕터 본문과 동일 문장 동기 (문구 수정 시 양쪽 함께) -->
         <tr>
           <td class="head">시간이 지나면</td>
-          <td class="col-lx">들어온 열이 없어 <strong>온도가 흔들리지 않음</strong></td>
-          <td>필름에 남은 열이 실내로 다시 노출됨</td>
+          <td class="col-lx">온도가 흔들리지 않음</td>
+          <td>남은 열이 실내로 방사</td>
         </tr>
         <tr>
           <td class="head">만드는 방법</td>
-          <td class="col-lx">진공에서 금속을 원자 단위로 증착</td>
-          <td>염료·입자를 씌워 어둡게 착색</td>
+          <td class="col-lx">진공 금속 증착</td>
+          <td>염료·입자 착색</td>
         </tr>
         <tr>
           <td class="head">한 줄 요약</td>
@@ -578,7 +583,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td class="head">15</td><td>12%</td><td class="col-lx"><strong>71%</strong></td><td rowspan="5" style="border-left:.5px solid rgba(0,0,0,.07);">99%+<br>PA+++ SPF 285</td><td rowspan="5" style="border-left:.5px solid rgba(0,0,0,.07);">10년</td></tr>
+        <tr><td class="head">15</td><td>12%</td><td class="col-lx"><strong>71%</strong></td><td rowspan="5">99%+<br>PA+++ SPF 285</td><td rowspan="5">10년</td></tr>
         <tr><td class="head">25</td><td>23%</td><td class="col-lx"><strong>67%</strong></td></tr>
         <tr><td class="head">40</td><td>42%</td><td class="col-lx"><strong>63%</strong></td></tr>
         <tr><td class="head">55</td><td>59%</td><td class="col-lx"><strong>57%</strong></td></tr>

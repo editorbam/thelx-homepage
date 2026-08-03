@@ -21,7 +21,7 @@ const PD_DATA = {
     vltImage: 'lx-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03) — 두오모 비교컷이 카드 배너와 중복이라 교체. 차 사진+픽토그램 오버레이(구본사 Key Point 문법).
        사진=나노바나나 생성(무로고 EV·밝은 하늘)+필름 그레인 로컬 보정. stage가 있으면 vltImage 대신 렌더(vltImage=롤백 폴백) */
-    stage: { img: 'lx-stage-ev.jpg', icons: [
+    stage: { img: 'lx-stage.jpg', icons: [
       { i: 'eye',    t: '가시성' },
       { i: 'heat',   t: '열차단' },
       { i: 'safety', t: '세이프티' },

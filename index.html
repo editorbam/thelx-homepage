@@ -686,6 +686,13 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .proof-duo figure { text-align:center; margin:0; }
 .proof-duo img { width:clamp(190px,24vw,310px); height:auto; margin:0 auto; display:block; }
 .proof-duo figcaption { margin-top:1.2rem; font-size:clamp(.85rem,1vw,.95rem); font-weight:400; color:var(--gray-3); letter-spacing:.01em; }
+/* 모바일: 두 배지를 나란히 — '2년 연속'이 한 화면에 (2026-08-03 실기기 확인) */
+@media (max-width: 768px) {
+  .proof-duo { gap: 1rem; flex-wrap: nowrap; padding: 1rem .8rem .5rem; }
+  .proof-duo figure { flex: 1 1 0; min-width: 0; }
+  .proof-duo img { width: 100%; max-width: 165px; }
+  .proof-duo figcaption { margin-top: .8rem; font-size: .72rem; word-break: keep-all; line-height: 1.4; }
+}
 .proof-carousel { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
 .proof-track { display:flex; align-items:flex-start; width:max-content; animation: marquee 50s linear infinite; }
 .proof-carousel:hover .proof-track { animation-play-state:paused; }
@@ -2524,11 +2531,14 @@ body.pd-open { overflow: hidden; }
   .pd-table .td-label { width:55%; }
   .pd-nav { padding:0 1.5rem; }
   .pd-nav-cta { display:none; }
-  .pd-grid th { font-size:.72rem; padding:.7rem .3rem; }
-  .pd-grid th small { font-size:.58rem; }
-  .pd-grid td { font-size:.82rem; padding:.7rem .3rem; }
-  .pd-grid td small { font-size:.62rem; }
-  .pd-grid .g-merge span { font-size:.7rem; }
+  /* 모바일: 가로 스크롤 폐기 — 5열을 화면 폭에 맞춰 수용 (2026-08-03 실기기 확인) */
+  .pd-grid { min-width: 0; table-layout: fixed; }
+  .pd-grid th { font-size:.68rem; padding:.6rem .15rem; letter-spacing:0; word-break:keep-all; }
+  .pd-grid th small { font-size:.52rem; margin-top:.12rem; line-height:1.25; }
+  .pd-grid td { font-size:.78rem; padding:.65rem .15rem; word-break:keep-all; }
+  .pd-grid td small { font-size:.56rem; line-height:1.3; }
+  .pd-grid .g-merge span { font-size:.62rem; padding:.1rem 0; line-height:1.35; }
+  .pd-grid .g-dens { font-size:.82rem; }
 }
 
 

@@ -104,7 +104,7 @@
   }
   body {
     font-family: var(--font);
-    background: #faf9f6;
+    background: linear-gradient(180deg,#fafcfe 0%,#e7eff7 100%);
     color: var(--gray-4);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -163,7 +163,7 @@
 
 
   /* STORE LOCATOR (index.html 이식 — 원본 CSS 그대로) */
-#store-locator { background:#faf9f6; padding:0; }
+#store-locator { background:transparent; padding:0; }  /* 페이지 그라데이션 노출 (2026-08-03 스카이 블루) */
 
 /* Hero banner — 라이트 톤 (매거진 페이드 스타일) */
 .sl-banner {
@@ -368,7 +368,6 @@
     padding: 3rem 2rem 2.5rem;
     text-align: center;
     border-top: .5px solid rgba(0,0,0,.08);
-    background: #faf9f6;
   }
   .story-footer-mark {
     font-size: 13px; font-weight: 700; letter-spacing: .22em;

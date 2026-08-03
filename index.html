@@ -2267,7 +2267,7 @@ body.pd-open { overflow: hidden; }
 /* 좌하단 스크림 — 픽토그램 무대(구본사 다크+백색 문법). 커튼(z3) > 아이콘(z2) > 스크림(z1) > 사진 */
 .pd-stage::after {
   content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(50deg, rgba(8,12,18,.62) 0%, rgba(8,12,18,.34) 24%, rgba(8,12,18,0) 52%);
+  background: linear-gradient(50deg, rgba(8,12,18,.78) 0%, rgba(8,12,18,.48) 30%, rgba(8,12,18,0) 62%);
 }
 /* 파노라마 크롭 — 원본 16:9를 두오모 컷과 같은 납작한 무대로 (차=하단 기준) */
 .pd-stage img { width: 100%; height: clamp(300px, 36vw, 480px); object-fit: cover; object-position: center 72%; display: block; }
@@ -2275,7 +2275,7 @@ body.pd-open { overflow: hidden; }
 .pd-stage.on .pd-vlt-static-cover { transform: translateX(102%); }
 .pd-stage-icons {
   /* 좌하단 2×2 그리드 — 아이콘+라벨 가로 배열 (구본사 Key Point 문법, 2026-08-03 확대) */
-  position: absolute; bottom: clamp(1.2rem, 3.5vw, 2.8rem); left: clamp(1.4rem, 4vw, 3.6rem);
+  position: absolute; bottom: clamp(1.8rem, 4.5vw, 3.8rem); left: clamp(1.4rem, 4vw, 3.6rem);
   display: grid; grid-template-columns: repeat(2, auto);
   gap: clamp(.9rem, 2.6vw, 1.9rem) clamp(1.6rem, 4vw, 3.2rem);
   color: #fff; pointer-events: none; z-index: 2;

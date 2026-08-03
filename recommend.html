@@ -444,14 +444,14 @@
     <svg viewBox="0 0 720 356" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="빛의 종류별로 필름이 반사하는 비율을 나타낸 개념 그래프 — 눈에 보이는 빛 구간에서는 낮아 시야가 밝고, 열을 실어 나르는 적외선 구간에서는 크게 올라가 열을 표면에서 반사합니다. 흡수형 필름은 전 구간에서 낮게 유지됩니다.">
       <defs>
         <linearGradient id="lxLine" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#5aa0e6"/><stop offset="1" stop-color="#3f78d0"/>
+          <stop offset="0" stop-color="#3f78d0"/><stop offset="1" stop-color="#2b5f9e"/>
         </linearGradient>
         <!-- 곡선 아래 채움 — 적외선 구간에서 진해짐: "이만큼 반사한다" -->
         <linearGradient id="lxArea" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0"    stop-color="#5aa0e6" stop-opacity=".03"/>
-          <stop offset=".3"  stop-color="#5aa0e6" stop-opacity=".05"/>
-          <stop offset=".52" stop-color="#5aa0e6" stop-opacity=".22"/>
-          <stop offset="1"    stop-color="#5aa0e6" stop-opacity=".3"/>
+          <stop offset="0"    stop-color="#5aa0e6" stop-opacity=".07"/>
+          <stop offset=".3"  stop-color="#5aa0e6" stop-opacity=".1"/>
+          <stop offset=".52" stop-color="#5aa0e6" stop-opacity=".3"/>
+          <stop offset="1"    stop-color="#5aa0e6" stop-opacity=".38"/>
         </linearGradient>
         <!-- 스펙트럼 띠 -->
         <linearGradient id="uvSpec" x1="0" y1="0" x2="1" y2="0">
@@ -469,32 +469,32 @@
       </defs>
 
       <!-- 구간 배경: 자외선=보라(스펙트럼 띠와 동일 언어) · 적외선=주황(열) — 보라→무채색→주황 온도 배열 -->
-      <rect x="60"  y="20" width="70"  height="260" fill="rgba(124,92,255,.055)"/>
-      <rect x="130" y="20" width="130" height="260" fill="rgba(0,0,0,.025)"/>
-      <rect x="260" y="20" width="430" height="260" fill="rgba(255,110,60,.05)"/>
+      <rect x="60"  y="20" width="70"  height="260" fill="rgba(124,92,255,.1)"/>
+      <rect x="130" y="20" width="130" height="260" fill="rgba(0,0,0,.045)"/>
+      <rect x="260" y="20" width="430" height="260" fill="rgba(255,110,60,.09)"/>
       <!-- 구간 경계 -->
-      <line x1="130" y1="20" x2="130" y2="286" stroke="rgba(0,0,0,.16)" stroke-dasharray="3 4"/>
-      <line x1="260" y1="20" x2="260" y2="286" stroke="rgba(0,0,0,.16)" stroke-dasharray="3 4"/>
+      <line x1="130" y1="20" x2="130" y2="286" stroke="rgba(0,0,0,.24)" stroke-dasharray="3 4"/>
+      <line x1="260" y1="20" x2="260" y2="286" stroke="rgba(0,0,0,.24)" stroke-dasharray="3 4"/>
 
       <!-- 구간 라벨: 장면별 등장 -->
-      <text x="95" y="40" text-anchor="middle" font-size="11.5" fill="rgba(0,0,0,.55)" font-weight="600">자외선</text>
+      <text x="95" y="40" text-anchor="middle" font-size="11.5" fill="rgba(0,0,0,.65)" font-weight="600">자외선</text>
       <g class="czl vis">
         <text x="195" y="40" text-anchor="middle" font-size="12.5" fill="rgba(0,0,0,.8)" font-weight="700">눈에 보이는 빛</text>
       </g>
       <g class="czl ir">
         <text x="475" y="40" text-anchor="middle" font-size="12.5" fill="#c9502c" font-weight="700">보이지 않는 열 — 적외선</text>
-        <text x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(201,80,44,.6)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
+        <text x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(201,80,44,.78)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
       </g>
 
       <!-- Y축: 세 눈금만 -->
-      <g font-size="10" fill="rgba(0,0,0,.4)" text-anchor="end">
+      <g font-size="10" fill="rgba(0,0,0,.55)" text-anchor="end">
         <text x="52" y="284">0</text><text x="52" y="154">50</text><text x="52" y="30">100%</text>
       </g>
-      <g stroke="rgba(0,0,0,.06)">
+      <g stroke="rgba(0,0,0,.1)">
         <line x1="60" y1="150" x2="690" y2="150"/><line x1="60" y1="20" x2="690" y2="20"/>
       </g>
-      <line x1="60" y1="280" x2="690" y2="280" stroke="rgba(0,0,0,.2)"/>
-      <text x="20" y="150" font-size="11" fill="rgba(0,0,0,.5)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">반사율</text>
+      <line x1="60" y1="280" x2="690" y2="280" stroke="rgba(0,0,0,.3)"/>
+      <text x="20" y="150" font-size="11" fill="rgba(0,0,0,.6)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">반사율</text>
 
       <!-- 곡선 아래 채움 (반사로 차단되는 몫) — ISO9050 실측 경향 반영 -->
       <path id="chArea" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118 L690,280 L60,280 Z"
@@ -502,18 +502,18 @@
 
       <!-- 흡수형: 전 구간 낮고 평평 (실측 4~5%) -->
       <path id="chAbs" pathLength="1" d="M60,268 C180,266 420,267 690,266"
-            fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2.5" stroke-linecap="round"/>
+            fill="none" stroke="rgba(0,0,0,.5)" stroke-width="3" stroke-linecap="round"/>
       <!-- 반사형(THE LX): 가시광선 낮음(빛 통과) → 780nm부터 급상승, 1,600nm 부근 정점 후 완만 -->
       <path id="chLx" pathLength="1" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118"
-            fill="none" stroke="url(#lxLine)" stroke-width="3.5" stroke-linecap="round"/>
+            fill="none" stroke="url(#lxLine)" stroke-width="4" stroke-linecap="round"/>
 
       <!-- 선 이름 — LX 로고(ghost 백색판)를 파란 면(반사하는 몫) 한가운데, 장면③부터 등장 -->
       <g class="czl lxname">
-        <image href="thelx-logo-ghost.png" x="410" y="152" width="130" height="46" opacity=".35" style="filter:invert(1)"/>
+        <image href="thelx-logo-nav-b.png" x="410" y="152" width="130" height="46" opacity=".32"/>
         <text x="475" y="222" text-anchor="middle" font-size="12.5" fill="#2b5f9e" font-weight="700" letter-spacing=".14em">반사형</text>
       </g>
       <g class="czl">
-        <text x="686" y="254" text-anchor="end" font-size="11" fill="rgba(0,0,0,.5)" font-weight="600">흡수형 · 일반 필름</text>
+        <text x="686" y="254" text-anchor="end" font-size="11" fill="rgba(0,0,0,.6)" font-weight="600">흡수형 · 일반 필름</text>
       </g>
 
       <!-- 장면 덮개: 현재 장면 구간만 걷힘 (자외선 구간은 덮개 없음 — 보라 상시 노출) -->
@@ -525,13 +525,13 @@
       <rect x="132" y="292" width="126" height="10" rx="2" fill="url(#visSpec)"/>
       <rect x="260" y="292" width="430" height="10" rx="2" fill="url(#irSpec)"/>
       <!-- 경계 파장만 최소 표기 -->
-      <g font-size="9.5" fill="rgba(0,0,0,.4)" text-anchor="middle">
+      <g font-size="9.5" fill="rgba(0,0,0,.55)" text-anchor="middle">
         <text x="130" y="318">380nm</text><text x="260" y="318">780nm</text>
         <text x="676" y="318">2,500nm</text>
       </g>
       <!-- 띠가 뜻하는 것 -->
-      <text x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(0,0,0,.4)">사람 눈이 보는 전부</text>
-      <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(201,80,44,.5)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
+      <text x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(0,0,0,.55)">사람 눈이 보는 전부</text>
+      <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(201,80,44,.7)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
     </svg>
     </div>
     <p class="rc-scroll-hint">그래프를 옆으로 밀면 적외선 구간까지 보입니다 →</p>

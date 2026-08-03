@@ -76,36 +76,36 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans KR', -apple-system, 'Helvetica Neue', sans-serif;
-      background: #0a0a0a;
-      color: #f5f5f7;
+      background: #ffffff;
+      color: #1d1d1f;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     img, svg { display: block; max-width: 100%; }
 
     /* ===========================
-       NAV (dark)
+       NAV (light) — heat.html·story.html 공통 문법
     =========================== */
     .tech-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.1rem clamp(1.4rem, 3vw, 3rem);
-      background: rgba(10,10,10,.72);
+      background: rgba(255,255,255,.82);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: .5px solid rgba(255,255,255,.08);
+      border-bottom: .5px solid rgba(0,0,0,.08);
     }
     .tech-nav-brand {
       font-size: 14px; font-weight: 700; letter-spacing: .2em;
-      color: #fff; text-decoration: none; transition: opacity .2s;
+      color: #0a0a0a; text-decoration: none; transition: opacity .2s;
     }
     .tech-nav-brand:hover { opacity: .65; }
     .tech-nav-brand img { height: 24px; width: auto; display: block; }
     .tech-nav-back {
       font-size: 12px; font-weight: 500; letter-spacing: .04em;
-      color: rgba(255,255,255,.55); text-decoration: none;
+      color: rgba(0,0,0,.55); text-decoration: none;
       display: inline-flex; align-items: center; gap: .4rem; transition: color .2s;
     }
-    .tech-nav-back:hover { color: #fff; }
+    .tech-nav-back:hover { color: #0a0a0a; }
     .tech-nav-links { display: flex; align-items: center; gap: 1.5rem; }
 
     /* ===========================
@@ -117,17 +117,17 @@
     }
     .tech-eyebrow {
       font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); font-weight: 600;
+      color: rgba(0,0,0,.42); font-weight: 600;
       margin: 0 0 clamp(1.4rem, 2.5vh, 2rem);
     }
     .tech-h1 {
       font-size: clamp(2.1rem, 4.6vw, 3.8rem);
       font-weight: 700; line-height: 1.28; letter-spacing: -0.03em;
-      color: #fff; margin: 0; word-break: keep-all;
+      color: #0a0a0a; margin: 0; word-break: keep-all;
     }
     .tech-lead {
       font-size: clamp(1.05rem, 1.25vw, 1.2rem);
-      line-height: 1.85; color: rgba(255,255,255,.62);
+      line-height: 1.85; color: rgba(0,0,0,.62);
       max-width: 600px; margin: clamp(2rem, 4vh, 3rem) auto 0;
       word-break: keep-all; font-weight: 400;
     }
@@ -140,35 +140,35 @@
       max-width: 720px; margin: 0 auto;
     }
     .tech-rule {
-      width: 56px; height: 1px; background: rgba(255,255,255,.22);
+      width: 56px; height: 1px; background: rgba(0,0,0,.22);
       margin: clamp(2.5rem, 5vh, 4rem) auto;
     }
     .tech-chapter { margin: 0 0 clamp(2.6rem, 5vh, 4rem); }
     .tech-chapter:last-child { margin-bottom: 0; }
     .tech-chapter-title {
       font-size: clamp(1.3rem, 1.9vw, 1.75rem);
-      font-weight: 700; color: #fff; letter-spacing: -0.02em;
+      font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em;
       margin: 0 0 1.2rem; line-height: 1.4; word-break: keep-all;
     }
-    .tech-chapter-num { color: rgba(255,255,255,.4); font-weight: 500; margin-right: .35rem; }
+    .tech-chapter-num { color: rgba(0,0,0,.4); font-weight: 500; margin-right: .35rem; }
     .tech-chapter-body {
       font-size: clamp(1.05rem, 1.2vw, 1.18rem);
-      line-height: 1.85; color: rgba(255,255,255,.72);
+      line-height: 1.85; color: rgba(0,0,0,.72);
       margin: 0; word-break: keep-all; letter-spacing: -0.005em; font-weight: 400;
     }
-    .tech-chapter-body strong { color: #fff; font-weight: 700; }
-    .tech-chapter-body a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.35); transition: text-decoration-color .2s; }
-    .tech-chapter-body a:hover { text-decoration-color: #fff; }
+    .tech-chapter-body strong { color: #0a0a0a; font-weight: 700; }
+    .tech-chapter-body a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,.35); transition: text-decoration-color .2s; }
+    .tech-chapter-body a:hover { text-decoration-color: #0a0a0a; }
 
     /* 선언문 — 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰(짧은 헤어라인) 2026-08-03 */
     .tech-declaration {
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
-      font-weight: 700; color: #fff; line-height: 1.55;
+      font-weight: 700; color: #0a0a0a; line-height: 1.55;
       margin: 2rem 0 0; letter-spacing: -0.012em; word-break: keep-all;
     }
     .tech-declaration::before {
       content: ""; display: block; width: 36px;
-      border-top: 1px solid rgba(255,255,255,.5); margin-bottom: 1.1rem;
+      border-top: 1px solid rgba(0,0,0,.55); margin-bottom: 1.1rem;
     }
 
     /* ===========================
@@ -180,15 +180,15 @@
     }
     .tech-heart-label {
       font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); font-weight: 600;
+      color: rgba(0,0,0,.42); font-weight: 600;
       margin: 0 0 clamp(1.2rem, 2.4vh, 1.8rem);
     }
     .tech-heart h2 {
       font-size: clamp(2.4rem, 6vw, 4.4rem);
       font-weight: 700; line-height: 1.18; letter-spacing: -0.035em;
-      color: #fff; margin: 0; word-break: keep-all;
+      color: #0a0a0a; margin: 0; word-break: keep-all;
     }
-    .tech-heart .muted { color: rgba(255,255,255,.32); }
+    .tech-heart .muted { color: rgba(0,0,0,.32); }
 
     /* ===========================
        2단 비교 (무필름 vs 반사)
@@ -203,36 +203,36 @@
     }
     /* 박스+게이지 폐기(대시보드 문법) → 에디토리얼 숫자 2열, 위계=상단 헤어라인·숫자 명도 (하단 tech-stats와 동일 결) 2026-08-03 */
     .tech-compare-card {
-      border-top: .5px solid rgba(255,255,255,.22);
+      border-top: .5px solid rgba(0,0,0,.22);
       padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.2rem) 0;
       text-align: center;
     }
-    .tech-compare-card.lx { border-top-color: rgba(255,255,255,.65); }
+    .tech-compare-card.lx { border-top-color: rgba(0,0,0,.7); }
     .tech-compare-brand {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.32); margin: 0 0 .55rem;
+      color: rgba(0,0,0,.35); margin: 0 0 .55rem;
     }
-    .tech-compare-card.lx .tech-compare-brand { color: rgba(156,198,238,.85); }
+    .tech-compare-card.lx .tech-compare-brand { color: #2b5f9e; }
     .tech-compare-label {
       font-size: clamp(.82rem, 1vw, .95rem); font-weight: 500;
-      color: rgba(255,255,255,.55); letter-spacing: .01em; margin: 0 0 1.2rem;
+      color: rgba(0,0,0,.55); letter-spacing: .01em; margin: 0 0 1.2rem;
       word-break: keep-all;
     }
-    .tech-compare-card.lx .tech-compare-label { color: rgba(255,255,255,.8); }
+    .tech-compare-card.lx .tech-compare-label { color: rgba(0,0,0,.8); }
     .tech-compare-num {
       font-size: clamp(2.8rem, 8vw, 4.6rem); font-weight: 700;
       letter-spacing: -0.04em; line-height: 1; margin: 0;
-      color: rgba(255,255,255,.62);
+      color: rgba(0,0,0,.4);
     }
-    .tech-compare-card.lx .tech-compare-num { color: #fff; }
+    .tech-compare-card.lx .tech-compare-num { color: #0a0a0a; }
     .tech-compare-unit {
       font-size: clamp(.8rem, .95vw, .9rem); font-weight: 500;
-      color: rgba(255,255,255,.45); margin: .7rem 0 0; letter-spacing: .02em;
+      color: rgba(0,0,0,.5); margin: .7rem 0 0; letter-spacing: .02em;
     }
     .tech-compare-note {
       max-width: 880px; margin: clamp(1.5rem,3vh,2.2rem) auto 0;
       font-size: clamp(.8rem, .95vw, .88rem); line-height: 1.7;
-      color: rgba(255,255,255,.4); text-align: center; word-break: keep-all;
+      color: rgba(0,0,0,.5); text-align: center; word-break: keep-all;
     }
 
 /* ===========================
@@ -244,7 +244,7 @@
     }
     .tech-result-line {
       font-size: clamp(1.2rem, 1.6vw, 1.5rem); font-weight: 500;
-      color: #fff; line-height: 1.6; margin: 0 0 clamp(2.5rem,5vh,3.5rem);
+      color: #0a0a0a; line-height: 1.6; margin: 0 0 clamp(2.5rem,5vh,3.5rem);
       word-break: keep-all; letter-spacing: -0.015em;
     }
     .tech-stats {
@@ -253,16 +253,16 @@
     }
     .tech-stat-num {
       font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-      color: #fff; letter-spacing: -0.03em; line-height: 1;
+      color: #0a0a0a; letter-spacing: -0.03em; line-height: 1;
     }
     .tech-stat-label {
-      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(255,255,255,.5);
+      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(0,0,0,.55);
       margin: .7rem 0 0; font-weight: 500; letter-spacing: .02em;
     }
     .tech-stat-src {
       max-width: 600px; margin: clamp(2rem,4vh,3rem) auto 0;
       font-size: clamp(.78rem,.9vw,.85rem); line-height: 1.7;
-      color: rgba(255,255,255,.35); word-break: keep-all;
+      color: rgba(0,0,0,.45); word-break: keep-all;
     }
 
     /* ===========================
@@ -275,8 +275,8 @@
     }
     .tech-proof-chip {
       font-size: clamp(.78rem,.9vw,.86rem); font-weight: 500;
-      color: rgba(255,255,255,.62); letter-spacing: .02em;
-      padding: .6rem 1.2rem; border: .5px solid rgba(255,255,255,.16);
+      color: rgba(0,0,0,.6); letter-spacing: .02em;
+      padding: .6rem 1.2rem; border: .5px solid rgba(0,0,0,.16);
       border-radius: 980px; word-break: keep-all;
     }
 
@@ -288,7 +288,7 @@
     }
     .tech-coda h2 {
       font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
-      color: #fff; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
+      color: #0a0a0a; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
     }
     .tech-cta {
       display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
@@ -300,17 +300,17 @@
       text-decoration: none; padding: .9rem 1.9rem; border-radius: 980px;
       transition: background .3s, border-color .3s, color .3s, opacity .3s;
     }
-    .tech-cta .primary { background: #fff; color: #0a0a0a; }
+    .tech-cta .primary { background: #0a0a0a; color: #fff; }
     .tech-cta .primary:hover { opacity: .85; }
-    .tech-cta .ghost { border: 1px solid rgba(255,255,255,.32); color: #fff; }
-    .tech-cta .ghost:hover { background: rgba(255,255,255,.08); }
+    .tech-cta .ghost { border: 1px solid rgba(0,0,0,.28); color: #0a0a0a; }
+    .tech-cta .ghost:hover { background: rgba(0,0,0,.05); }
 
     .tech-footer {
       padding: 3rem 2rem 2.5rem; text-align: center;
-      border-top: .5px solid rgba(255,255,255,.08);
+      border-top: .5px solid rgba(0,0,0,.08);
     }
-    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #fff; margin: 0 0 .6rem; }
-    .tech-footer-copy { font-size: 11px; color: rgba(255,255,255,.38); letter-spacing: .04em; margin: 0; }
+    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #0a0a0a; margin: 0 0 .6rem; }
+    .tech-footer-copy { font-size: 11px; color: rgba(0,0,0,.45); letter-spacing: .04em; margin: 0; }
 
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
@@ -322,14 +322,14 @@
   
     /* ===== 반사 vs 흡수 비교 ===== */
     .cmp-section { max-width:1160px; margin:0 auto; padding:0 clamp(1.5rem,5vw,4rem); }
-    .cmp-sub { text-align:center; color:rgba(255,255,255,.5); font-size:16px; margin:0 0 46px; word-break:keep-all; }
+    .cmp-sub { text-align:center; color:rgba(0,0,0,.55); font-size:16px; margin:0 0 46px; word-break:keep-all; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; position:relative; }
     .vs { position:absolute; left:50%; top:42%; transform:translate(-50%,-50%); z-index:5; width:54px; height:54px; border-radius:50%; background:linear-gradient(145deg,#222,#141416); border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.85); font-size:15px; font-weight:800; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.5); }
-    .panel { border:1px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden; position:relative; }
+    .panel { border:1px solid rgba(0,0,0,.15); border-radius:20px; overflow:hidden; position:relative; background:#0a0a0a; }
     /* 절제 — 분위기 색은 빼고, 색은 장면(온도계·화살표) 안에서만. 이기는 LX에만 희미한 파랑 서명 */
     /* 글로우 폐기(제네릭 발광 문법) — LX 서명은 헤어라인 명도 차+상단 틴트만 2026-08-03 */
-    .panel.lx { background:linear-gradient(180deg, rgba(80,150,220,.09), transparent 42%); border-color:rgba(120,180,235,.45); }
-    .panel.abs { background:transparent; }
+    .panel.lx { background-image:linear-gradient(180deg, rgba(80,150,220,.09), rgba(80,150,220,0) 42%); border-color:rgba(43,95,158,.45); }
+    .panel.abs { }
     .ptitle { text-align:center; padding:20px 16px 18px; font-size:20px; font-weight:700; letter-spacing:-.01em; color:#fff; }
     .ptitle .pt-h { display:block; }
     .ptitle small { display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,.42); margin:0 0 7px; letter-spacing:.14em; text-transform:uppercase; }
@@ -346,9 +346,9 @@
     .pcap { padding:18px 22px 24px; display:flex; gap:11px; align-items:flex-start; }
     .pcap p { color:rgba(255,255,255,.8); font-size:15px; line-height:1.6; word-break:keep-all; }
     .pcap b { color:#fff; }
-    .foot { margin:28px auto 0; max-width:1160px; border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:20px 24px; display:flex; gap:13px; align-items:center; background:rgba(255,255,255,.015); }
-    .foot p { color:rgba(255,255,255,.55); font-size:14.5px; line-height:1.6; word-break:keep-all; }
-    .foot b { color:#fff; font-weight:600; }
+    .foot { margin:28px auto 0; max-width:1160px; border:.5px solid rgba(0,0,0,.12); border-radius:14px; padding:20px 24px; display:flex; gap:13px; align-items:center; }
+    .foot p { color:rgba(0,0,0,.6); font-size:14.5px; line-height:1.6; word-break:keep-all; }
+    .foot b { color:#0a0a0a; font-weight:600; }
     @keyframes waveReveal { 0%,42%{opacity:0} 54%,92%{opacity:1} 100%{opacity:0} }
     @keyframes heatwave { 0%{transform:translateY(2px) scaleX(.9);opacity:0} 25%{opacity:.95} 100%{transform:translateY(-16px) scaleX(1.15);opacity:0} }
     .heat { position:absolute; z-index:3; display:flex; gap:7px; left:26%; top:50%; opacity:0; transition:opacity .8s ease; }
@@ -405,9 +405,9 @@
     /* SPUTTER LIVE — 증착 과정 영상 (왜 반사가 가능한가 하단, 패널 없이 페이지 배경 위에 바로) */
     .sputter-live { max-width: 680px; margin: clamp(2.4rem, 5vh, 3.6rem) auto clamp(1.6rem, 3vh, 2.4rem); padding: 0 clamp(1.25rem, 4vw, 2rem); }
     .sputter-stage { position: relative; }
-    .sputter-stage video { display: block; width: 100%; height: auto; }
+    .sputter-stage video { display: block; width: 100%; height: auto; border-radius: 18px; }
     .sputter-meter {
-      position: absolute; left: 0; top: 0; margin: 0;
+      position: absolute; left: 1.1rem; top: .95rem; margin: 0;
       color: #c7c7cc; font-size: clamp(15px, 1.3vw, 17px); font-weight: 500; letter-spacing: .14em;
       text-align: left; pointer-events: none;
     }
@@ -417,7 +417,7 @@
 <body>
 
 <nav class="tech-nav">
-  <a href="index.html" class="tech-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-w.png" alt="THE LX"></a>
+  <a href="index.html" class="tech-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-b.png" alt="THE LX"></a>
   <div class="tech-nav-links">
     <a href="index.html" class="tech-nav-back" onclick="if(history.length>1){history.back();return false;}"><span aria-hidden="true">←</span> 뒤로</a>
     <a href="index.html" class="tech-nav-back">홈으로</a>
@@ -534,7 +534,7 @@
   </div>
 
   <div class="foot">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,.5)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
     <p>열을 다루는 방식의 차이는 <b>시간이 지날수록</b> 체감 온도와 유지력에서 벌어집니다.</p>
   </div>
 </section>

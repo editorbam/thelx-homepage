@@ -160,11 +160,15 @@
     .tech-chapter-body a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.35); transition: text-decoration-color .2s; }
     .tech-chapter-body a:hover { text-decoration-color: #fff; }
 
+    /* 선언문 — 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰(짧은 헤어라인) 2026-08-03 */
     .tech-declaration {
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
       font-weight: 700; color: #fff; line-height: 1.55;
-      margin: 1.8rem 0 0; padding: 0 0 0 1.4rem;
-      border-left: 3px solid #fff; letter-spacing: -0.012em; word-break: keep-all;
+      margin: 2rem 0 0; letter-spacing: -0.012em; word-break: keep-all;
+    }
+    .tech-declaration::before {
+      content: ""; display: block; width: 36px;
+      border-top: 1px solid rgba(255,255,255,.5); margin-bottom: 1.1rem;
     }
 
     /* ===========================
@@ -197,12 +201,13 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: clamp(1rem, 2.5vw, 2rem); align-items: stretch;
     }
+    /* 박스+게이지 폐기(대시보드 문법) → 에디토리얼 숫자 2열, 위계=상단 헤어라인·숫자 명도 (하단 tech-stats와 동일 결) 2026-08-03 */
     .tech-compare-card {
-      border: .5px solid rgba(255,255,255,.14); border-radius: 18px;
-      padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1.4rem, 3vw, 2.2rem);
-      text-align: center; background: rgba(255,255,255,.02);
+      border-top: .5px solid rgba(255,255,255,.22);
+      padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.2rem) 0;
+      text-align: center;
     }
-    .tech-compare-card.lx { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.05); }
+    .tech-compare-card.lx { border-top-color: rgba(255,255,255,.65); }
     .tech-compare-brand {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
       color: rgba(255,255,255,.32); margin: 0 0 .55rem;
@@ -220,22 +225,6 @@
       color: rgba(255,255,255,.62);
     }
     .tech-compare-card.lx .tech-compare-num { color: #fff; }
-    .tech-compare-bar {
-      height: 6px; border-radius: 999px; margin: clamp(1rem,2.4vw,1.5rem) 0 0;
-      background: rgba(255,255,255,.08); overflow: hidden;
-    }
-    .tech-compare-bar span {
-      display: block; height: 100%; width: 0; border-radius: 999px;
-      background: rgba(255,255,255,.28);
-      transition: width 1.1s cubic-bezier(.22,1,.36,1);
-    }
-    /* 반사=시원=파랑 — 이 페이지가 정한 색 논리. 이기는 막대에만 의미를 준다 */
-    .tech-compare-card.lx .tech-compare-bar span {
-      background: linear-gradient(90deg, #9fd4ff, #5aa0e6);
-      box-shadow: 0 0 12px rgba(120,180,240,.4);
-    }
-    .tech-compare.in .tech-compare-bar span { width: var(--w); }
-    .tech-compare-card.lx .tech-compare-bar span { transition-delay: .12s; }
     .tech-compare-unit {
       font-size: clamp(.8rem, .95vw, .9rem); font-weight: 500;
       color: rgba(255,255,255,.45); margin: .7rem 0 0; letter-spacing: .02em;
@@ -326,7 +315,7 @@
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
       .tech-compare-grid { gap: .8rem; }
-      .tech-compare-card { padding: 1.6rem 1rem; }
+      .tech-compare-card { padding: 1.4rem 1rem 0; }
       .tech-heart h2 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
       .tech-stats { gap: 2.2rem; }
     }
@@ -338,12 +327,8 @@
     .vs { position:absolute; left:50%; top:42%; transform:translate(-50%,-50%); z-index:5; width:54px; height:54px; border-radius:50%; background:linear-gradient(145deg,#222,#141416); border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.85); font-size:15px; font-weight:800; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.5); }
     .panel { border:1px solid rgba(255,255,255,.1); border-radius:20px; overflow:hidden; position:relative; }
     /* 절제 — 분위기 색은 빼고, 색은 장면(온도계·화살표) 안에서만. 이기는 LX에만 희미한 파랑 서명 */
-    .panel.lx { background:linear-gradient(180deg, rgba(80,150,220,.09), transparent 42%); border-color:rgba(120,180,235,.4); animation:lxGlow 3.6s ease-in-out infinite; }
-    @keyframes lxGlow {
-      0%,100% { box-shadow:0 0 0 1px rgba(110,170,230,.28), 0 0 22px rgba(80,150,220,.20), 0 0 52px rgba(70,140,210,.10); }
-      50%     { box-shadow:0 0 0 1px rgba(125,185,238,.5), 0 0 36px rgba(95,165,228,.36), 0 0 78px rgba(80,150,220,.22); }
-    }
-    @media (prefers-reduced-motion: reduce) { .panel.lx { animation:none; box-shadow:0 0 0 1px rgba(120,180,235,.4), 0 0 30px rgba(85,155,222,.28); } }
+    /* 글로우 폐기(제네릭 발광 문법) — LX 서명은 헤어라인 명도 차+상단 틴트만 2026-08-03 */
+    .panel.lx { background:linear-gradient(180deg, rgba(80,150,220,.09), transparent 42%); border-color:rgba(120,180,235,.45); }
     .panel.abs { background:transparent; }
     .ptitle { text-align:center; padding:20px 16px 18px; font-size:20px; font-weight:700; letter-spacing:-.01em; color:#fff; }
     .ptitle .pt-h { display:block; }
@@ -359,9 +344,6 @@
     .thermo { position:absolute; right:6%; top:32%; z-index:4; width:32px; }
     .player { position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; }
     .pcap { padding:18px 22px 24px; display:flex; gap:11px; align-items:flex-start; }
-    .pcap .dot { flex:0 0 auto; width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; margin-top:1px; font-weight:700; }
-    .panel.lx .dot { background:#3f82c8; }
-    .panel.abs .dot { background:#c8503c; }
     .pcap p { color:rgba(255,255,255,.8); font-size:15px; line-height:1.6; word-break:keep-all; }
     .pcap b { color:#fff; }
     .foot { margin:28px auto 0; max-width:1160px; border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:20px 24px; display:flex; gap:13px; align-items:center; background:rgba(255,255,255,.015); }
@@ -517,7 +499,7 @@
           <circle cx="550" cy="255" r="8" fill="#fff"><animate attributeName="opacity" values="0;.75;0" dur="1.3s" repeatCount="indefinite"/><animate attributeName="r" values="5;14;5" dur="1.3s" repeatCount="indefinite"/></circle>
         </svg>
       </div>
-      <div class="pcap"><span class="dot">&#10003;</span><p>열을 바깥으로 <b>반사해</b> 실내 온도 상승을 막습니다. 시간이 지나도 시원하고 온도가 흔들리지 않습니다. 여름철에는 시원함을, 겨울철에는 따뜻함을 유지합니다.</p></div>
+      <div class="pcap"><p>열을 바깥으로 <b>반사해</b> 실내 온도 상승을 막습니다. 시간이 지나도 시원하고 온도가 흔들리지 않습니다. 여름철에는 시원함을, 겨울철에는 따뜻함을 유지합니다.</p></div>
     </div>
 
     <!-- 흡수 -->
@@ -547,7 +529,7 @@
           <line x1="548" y1="258" x2="500" y2="330" stroke="#ff4a2c" stroke-width="8" stroke-linecap="round" marker-end="url(#ahTransA)" stroke-dasharray="14 11" opacity="0.5"><animate attributeName="stroke-dashoffset" from="25" to="0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/></line>
         </svg>
       </div>
-      <div class="pcap"><span class="dot">!</span><p>흡수한 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p></div>
+      <div class="pcap"><p>흡수한 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p></div>
     </div>
   </div>
 
@@ -564,14 +546,12 @@
       <p class="tech-compare-brand">THE LX</p>
       <p class="tech-compare-label">열 반사 필름</p>
       <p class="tech-compare-num"><span class="cnt" data-to="71">0</span><span style="font-size:.5em">%</span></p>
-      <div class="tech-compare-bar"><span style="--w:71%"></span></div>
       <p class="tech-compare-unit">태양 에너지 차단 (TSER)</p>
     </div>
     <div class="tech-compare-card">
       <p class="tech-compare-brand">일반 필름</p>
       <p class="tech-compare-label">열 흡수 필름</p>
       <p class="tech-compare-num"><span class="cnt" data-to="44">0</span><span style="font-size:.5em">%</span></p>
-      <div class="tech-compare-bar"><span style="--w:44%"></span></div>
       <p class="tech-compare-unit">태양 에너지 차단 (TSER)</p>
     </div>
   </div>

@@ -97,36 +97,36 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans KR', -apple-system, 'Helvetica Neue', sans-serif;
-      background: #0a0a0a;
-      color: #f5f5f7;
+      background: #ffffff;
+      color: #1d1d1f;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     img, svg { display: block; max-width: 100%; }
 
     /* ===========================
-       NAV (dark) — technology.html 공유
+       NAV (light) — heat.html·story.html 공통 문법
     =========================== */
     .tech-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.1rem clamp(1.4rem, 3vw, 3rem);
-      background: rgba(10,10,10,.72);
+      background: rgba(255,255,255,.82);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: .5px solid rgba(255,255,255,.08);
+      border-bottom: .5px solid rgba(0,0,0,.08);
     }
     .tech-nav-brand {
       font-size: 14px; font-weight: 700; letter-spacing: .2em;
-      color: #fff; text-decoration: none; transition: opacity .2s;
+      color: #0a0a0a; text-decoration: none; transition: opacity .2s;
     }
     .tech-nav-brand:hover { opacity: .65; }
     .tech-nav-brand img { height: 24px; width: auto; display: block; }
     .tech-nav-back {
       font-size: 12px; font-weight: 500; letter-spacing: .04em;
-      color: rgba(255,255,255,.55); text-decoration: none;
+      color: rgba(0,0,0,.55); text-decoration: none;
       display: inline-flex; align-items: center; gap: .4rem; transition: color .2s;
     }
-    .tech-nav-back:hover { color: #fff; }
+    .tech-nav-back:hover { color: #0a0a0a; }
     .tech-nav-links { display: flex; align-items: center; gap: 1.5rem; }
 
     /* ===========================
@@ -138,13 +138,13 @@
     }
     .tech-eyebrow {
       font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); font-weight: 600;
+      color: rgba(0,0,0,.42); font-weight: 600;
       margin: 0 0 clamp(1.4rem, 2.5vh, 2rem);
     }
     .tech-h1 {
       font-size: clamp(2.1rem, 4.6vw, 3.8rem);
       font-weight: 700; line-height: 1.28; letter-spacing: -0.03em;
-      color: #fff; margin: 0; word-break: keep-all;
+      color: #0a0a0a; margin: 0; word-break: keep-all;
     }
     .tech-h1-latin {
       font-family: 'Didot', 'Baskerville', 'Times New Roman', Georgia, serif; /* 증서 세리프 — 시스템 폰트(외부 폰트 아님) */
@@ -154,11 +154,11 @@
     }
     .wr-cert-eyebrow {
       font-size: 11px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
-      color: rgba(255,255,255,.45); margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
+      color: rgba(0,0,0,.45); margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
     }
     .tech-lead {
       font-size: clamp(1.05rem, 1.25vw, 1.2rem);
-      line-height: 1.85; color: rgba(255,255,255,.62);
+      line-height: 1.85; color: rgba(0,0,0,.62);
       max-width: 600px; margin: clamp(2rem, 4vh, 3rem) auto 0;
       word-break: keep-all; font-weight: 400;
     }
@@ -172,41 +172,34 @@
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: clamp(1rem, 2vw, 1.5rem);
     }
+    /* 카드 박스·부유 애니메이션 폐기(제네릭 문법) → 상단 헤어라인 3단 칼럼 (2026-08-03) */
     .vf-card {
-      border: .5px solid rgba(255,255,255,.06); border-radius: 18px;
-      padding: clamp(1.8rem, 3vw, 2.4rem) clamp(1.4rem, 2.4vw, 1.9rem);
-      background: #1d1d1f; /* 애플 다크 패널 그레이 */
+      border-top: .5px solid rgba(0,0,0,.22);
+      padding: clamp(1.4rem, 2.6vw, 1.9rem) 0 0;
       display: flex; flex-direction: column;
-      animation: cardFloat 7s ease-in-out infinite;
-    }
-    .vf-card:nth-child(2) { animation-delay: -2.3s; }
-    .vf-card:nth-child(3) { animation-delay: -4.6s; }
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
     }
     .vf-num {
       font-size: 12px; font-weight: 700; letter-spacing: .18em;
-      color: rgba(255,255,255,.45); margin: 0 0 1.6rem;
+      color: rgba(0,0,0,.4); margin: 0 0 1.6rem;
     }
     .vf-title {
       font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700;
-      color: #fff; letter-spacing: -0.015em; margin: 0 0 .9rem;
+      color: #0a0a0a; letter-spacing: -0.015em; margin: 0 0 .9rem;
       line-height: 1.4; word-break: keep-all;
     }
     .vf-body {
       font-size: clamp(.92rem, 1.05vw, 1rem); line-height: 1.8;
-      color: rgba(255,255,255,.62); word-break: keep-all;
+      color: rgba(0,0,0,.66); word-break: keep-all;
       margin: 0 0 1.4rem; flex: 1;
     }
-    .vf-body strong { color: #fff; font-weight: 600; }
+    .vf-body strong { color: #0a0a0a; font-weight: 600; }
     .vf-contact {
-      font-size: clamp(.9rem, 1vw, .98rem); font-weight: 600; color: #fff;
+      font-size: clamp(.9rem, 1vw, .98rem); font-weight: 600; color: #0a0a0a;
       letter-spacing: .02em; line-height: 1.75; margin: 0 0 1.4rem;
     }
     .vf-link {
       font-size: .9rem; font-weight: 600; letter-spacing: .02em;
-      color: #fff; text-decoration: none;
+      color: #0a0a0a; text-decoration: none;
       display: inline-flex; align-items: center; gap: .4rem;
       transition: opacity .2s;
     }
@@ -217,7 +210,7 @@
     =========================== */
     .tech-heart-label {
       font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); font-weight: 600;
+      color: rgba(0,0,0,.42); font-weight: 600;
       margin: 0 0 clamp(1.2rem, 2.4vh, 1.8rem);
     }
 
@@ -235,16 +228,16 @@
     }
     .tech-stat-num {
       font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-      color: #fff; letter-spacing: -0.03em; line-height: 1;
+      color: #0a0a0a; letter-spacing: -0.03em; line-height: 1;
     }
     .tech-stat-label {
-      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(255,255,255,.5);
+      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(0,0,0,.55);
       margin: .7rem 0 0; font-weight: 500; letter-spacing: .02em;
     }
     .tech-stat-src {
       max-width: 600px; margin: clamp(2rem,4vh,3rem) auto 0;
       font-size: clamp(.78rem,.9vw,.85rem); line-height: 1.7;
-      color: rgba(255,255,255,.35); word-break: keep-all;
+      color: rgba(0,0,0,.45); word-break: keep-all;
     }
 
     /* 제품별 보증 칩 */
@@ -255,11 +248,11 @@
     }
     .tech-proof-chip {
       font-size: clamp(.78rem,.9vw,.86rem); font-weight: 500;
-      color: rgba(255,255,255,.62); letter-spacing: .02em;
-      padding: .6rem 1.2rem; border: .5px solid rgba(255,255,255,.16);
+      color: rgba(0,0,0,.6); letter-spacing: .02em;
+      padding: .6rem 1.2rem; border: .5px solid rgba(0,0,0,.16);
       border-radius: 980px; word-break: keep-all;
     }
-    .tech-proof-chip b { color: #fff; font-weight: 700; }
+    .tech-proof-chip b { color: #0a0a0a; font-weight: 700; }
 
     /* ===========================
        보증 범위 (포함 / 제외)
@@ -270,39 +263,32 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: clamp(1rem, 2.5vw, 2rem);
     }
+    /* 카드 박스·부유 폐기 → 헤어라인 2단. 위계=선 명도와 글자 굵기 (2026-08-03) */
     .wr-scope-card {
-      border: .5px solid rgba(255,255,255,.06); border-radius: 18px;
-      padding: clamp(1.8rem, 3.4vw, 2.4rem) clamp(1.4rem, 2.6vw, 2rem);
-      background: #1d1d1f; /* 애플 다크 패널 그레이 */
-      animation: cardFloat 8s ease-in-out infinite;
+      border-top: .5px solid rgba(0,0,0,.14);
+      padding: clamp(1.4rem, 2.8vw, 1.9rem) 0 0;
     }
-    .wr-scope-card.excl { animation-delay: -3.5s; }
-    @media (prefers-reduced-motion: reduce) {
-      .vf-card, .wr-scope-card { animation: none; }
-    }
-    .wr-scope-card.incl { border-color: rgba(255,255,255,.18); background: #232326; }
+    .wr-scope-card.incl { border-top-color: rgba(0,0,0,.7); }
     .wr-scope-label {
       font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.42); margin: 0 0 1.2rem;
+      color: rgba(0,0,0,.42); margin: 0 0 1.2rem;
     }
-    .wr-scope-card.incl .wr-scope-label { color: rgba(255,255,255,.65); }
+    .wr-scope-card.incl .wr-scope-label { color: #0a0a0a; font-weight: 700; }
     .wr-scope-card ul { list-style: none; }
+    /* ✓ 문자 불릿 폐기 — 항목 구분=행간 헤어라인, 포함/제외 위계=글자 명도 (2026-08-03) */
     .wr-scope-card li {
-      font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.75;
-      color: rgba(255,255,255,.72); word-break: keep-all;
-      padding: .45rem 0 .45rem 1.5rem; position: relative;
+      font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.7;
+      word-break: keep-all; padding: .85rem 0;
+      border-bottom: .5px solid rgba(0,0,0,.07);
     }
-    .wr-scope-card.incl li::before {
-      content: "✓"; position: absolute; left: 0; color: #fff; font-weight: 700;
-    }
-    .wr-scope-card.excl li::before {
-      content: "—"; position: absolute; left: 0; color: rgba(255,255,255,.35); font-weight: 700;
-    }
+    .wr-scope-card li:last-child { border-bottom: none; }
+    .wr-scope-card.incl li { color: #0a0a0a; }
+    .wr-scope-card.excl li { color: rgba(0,0,0,.45); }
     .wr-scope-note {
       max-width: 880px; margin: 0 auto;
       padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
       font-size: clamp(.8rem, .95vw, .88rem); line-height: 1.7;
-      color: rgba(255,255,255,.4); text-align: center; word-break: keep-all;
+      color: rgba(0,0,0,.5); text-align: center; word-break: keep-all;
     }
 
     /* ===========================
@@ -314,20 +300,24 @@
     }
     .tech-chapter-title {
       font-size: clamp(1.3rem, 1.9vw, 1.75rem);
-      font-weight: 700; color: #fff; letter-spacing: -0.02em;
+      font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em;
       margin: 0 0 1.2rem; line-height: 1.4; word-break: keep-all;
     }
     .tech-chapter-body {
       font-size: clamp(1.05rem, 1.2vw, 1.18rem);
-      line-height: 1.85; color: rgba(255,255,255,.72);
+      line-height: 1.85; color: rgba(0,0,0,.72);
       margin: 0; word-break: keep-all; letter-spacing: -0.005em; font-weight: 400;
     }
-    .tech-chapter-body strong { color: #fff; font-weight: 700; }
+    .tech-chapter-body strong { color: #0a0a0a; font-weight: 700; }
+    /* 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰 (2026-08-03) */
     .tech-declaration {
       font-size: clamp(1.15rem, 1.45vw, 1.4rem);
-      font-weight: 700; color: #fff; line-height: 1.55;
-      margin: 1.8rem 0 0; padding: 0 0 0 1.4rem;
-      border-left: 3px solid #fff; letter-spacing: -0.012em; word-break: keep-all;
+      font-weight: 700; color: #0a0a0a; line-height: 1.55;
+      margin: 2rem 0 0; letter-spacing: -0.012em; word-break: keep-all;
+    }
+    .tech-declaration::before {
+      content: ""; display: block; width: 36px;
+      border-top: 1px solid rgba(0,0,0,.55); margin-bottom: 1.1rem;
     }
 
     /* ===========================
@@ -338,7 +328,7 @@
     }
     .tech-coda h2 {
       font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
-      color: #fff; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
+      color: #0a0a0a; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
     }
     .tech-cta {
       display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
@@ -350,17 +340,17 @@
       text-decoration: none; padding: .9rem 1.9rem; border-radius: 980px;
       transition: background .3s, border-color .3s, color .3s, opacity .3s;
     }
-    .tech-cta .primary { background: #fff; color: #0a0a0a; }
+    .tech-cta .primary { background: #0a0a0a; color: #fff; }
     .tech-cta .primary:hover { opacity: .85; }
-    .tech-cta .ghost { border: 1px solid rgba(255,255,255,.32); color: #fff; }
-    .tech-cta .ghost:hover { background: rgba(255,255,255,.08); }
+    .tech-cta .ghost { border: 1px solid rgba(0,0,0,.28); color: #0a0a0a; }
+    .tech-cta .ghost:hover { background: rgba(0,0,0,.05); }
 
     .tech-footer {
       padding: 3rem 2rem 2.5rem; text-align: center;
-      border-top: .5px solid rgba(255,255,255,.08);
+      border-top: .5px solid rgba(0,0,0,.08);
     }
-    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #fff; margin: 0 0 .6rem; }
-    .tech-footer-copy { font-size: 11px; color: rgba(255,255,255,.38); letter-spacing: .04em; margin: 0; }
+    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #0a0a0a; margin: 0 0 .6rem; }
+    .tech-footer-copy { font-size: 11px; color: rgba(0,0,0,.45); letter-spacing: .04em; margin: 0; }
 
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
@@ -412,7 +402,7 @@
 <body>
 
 <nav class="tech-nav">
-  <a href="index.html" class="tech-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-w.png" alt="THE LX"></a>
+  <a href="index.html" class="tech-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-b.png" alt="THE LX"></a>
   <div class="tech-nav-links">
     <a href="index.html" class="tech-nav-back" onclick="if(history.length>1){history.back();return false;}"><span aria-hidden="true">←</span> 뒤로</a>
     <a href="index.html" class="tech-nav-back">홈으로</a>

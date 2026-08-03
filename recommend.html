@@ -248,20 +248,17 @@
     }
     .rc-cap.c3 strong, .rc-cap.c4 strong { color: #2b5f9e; }
     .rc-cap .sub { display: block; margin-top: .45rem; font-size: clamp(.78rem, .9vw, .86rem); color: rgba(0,0,0,.55); word-break: keep-all; }
-    .rc-cap .num {
-      flex: 0 0 auto; width: 21px; height: 21px; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; color: #2b5f9e;
-      border: 1px solid rgba(63,120,208,.5); background: rgba(90,160,230,.12);
-    }
-    .rc-dots { display: flex; justify-content: center; gap: .55rem; margin-top: 1.1rem; }
+    /* 장면 선택 = 단어 탭 (에디토리얼 — 원형 숫자 칩 폐기, 2026-08-03 A안) */
+    .rc-dots { display: flex; justify-content: center; gap: clamp(1.2rem, 3vw, 2rem); margin-top: 1.2rem; }
     .rc-dots button {
-      width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-family: inherit;
-      border: 1px solid rgba(0,0,0,.25); background: none;
-      color: rgba(0,0,0,.45); font-size: 12px; font-weight: 700;
-      transition: border-color .3s ease, background .3s ease, color .3s ease;
+      cursor: pointer; font-family: inherit; border: none; background: none;
+      padding: .3rem .1rem .35rem; color: rgba(0,0,0,.38);
+      font-size: 11px; font-weight: 600; letter-spacing: .18em;
+      border-bottom: .5px solid transparent;
+      transition: color .3s ease, border-color .3s ease;
     }
-    .rc-dots button[aria-current="true"] { border-color: rgba(63,120,208,.6); background: rgba(90,160,230,.14); color: #2b5f9e; }
+    .rc-dots button:hover { color: rgba(0,0,0,.65); }
+    .rc-dots button[aria-current="true"] { color: #0a0a0a; border-bottom-color: #0a0a0a; }
     /* ⚠️ 아래 완성 상태 규칙은 <noscript> 블록(그래프 no-JS 폴백)과 쌍 — 애니메이션 레이어 추가 시 양쪽 동기 */
     @media (prefers-reduced-motion: reduce) {
       .rc-chart #chLx, .rc-chart #chAbs { transition: none; stroke-dashoffset: 0; }
@@ -552,16 +549,16 @@
     <p class="rc-scroll-hint">그래프를 옆으로 밀면 적외선 구간까지 보입니다 →</p>
     <div class="rc-caption">
       <div class="rc-caps">
-        <div class="rc-cap c1"><strong><span class="num">1</span>자외선은, 99% 이상 차단합니다.</strong><span class="sub">반사 곡선과 별개로, 필름 층이 막아냅니다. THE LX 전 농도 동일 — PA+++ SPF 285.</span></div>
-        <div class="rc-cap c2"><strong><span class="num">2</span>눈에 보이는 빛은, 통과시킵니다.</strong><span class="sub">곡선이 낮다 = 반사하지 않는다. 시야는 밝게 유지됩니다.</span></div>
-        <div class="rc-cap c3"><strong><span class="num">3</span>보이지 않는 열은, 표면에서 반사합니다.</strong><span class="sub">곡선이 높다 = 그만큼 반사한다. 태양 에너지의 약 절반이 이 구간에 실려 있습니다.</span></div>
-        <div class="rc-cap c4"><strong><span class="num">4</span>파란 선이 높을수록, 차 안은 시원합니다.</strong><span class="sub">반사형 (THE LX) — 열을 반사 · 흡수형 (일반 필름) — 열을 흡수</span></div>
+        <div class="rc-cap c1"><strong>자외선은, 99% 이상 차단합니다.</strong><span class="sub">반사 곡선과 별개로, 필름 층이 막아냅니다. THE LX 전 농도 동일 — PA+++ SPF 285.</span></div>
+        <div class="rc-cap c2"><strong>눈에 보이는 빛은, 통과시킵니다.</strong><span class="sub">곡선이 낮다 = 반사하지 않는다. 시야는 밝게 유지됩니다.</span></div>
+        <div class="rc-cap c3"><strong>보이지 않는 열은, 표면에서 반사합니다.</strong><span class="sub">곡선이 높다 = 그만큼 반사한다. 태양 에너지의 약 절반이 이 구간에 실려 있습니다.</span></div>
+        <div class="rc-cap c4"><strong>파란 선이 높을수록, 차 안은 시원합니다.</strong><span class="sub">반사형 (THE LX) — 열을 반사 · 흡수형 (일반 필름) — 열을 흡수</span></div>
       </div>
       <div class="rc-dots" role="group" aria-label="그래프 장면 선택">
-        <button type="button" data-step="1" aria-label="장면 1 — 자외선 차단">1</button>
-        <button type="button" data-step="2" aria-label="장면 2 — 빛은 통과">2</button>
-        <button type="button" data-step="3" aria-label="장면 3 — 열은 반사">3</button>
-        <button type="button" data-step="4" aria-label="장면 4 — 결론">4</button>
+        <button type="button" data-step="1" aria-label="장면 1 — 자외선 차단">자외선</button>
+        <button type="button" data-step="2" aria-label="장면 2 — 빛은 통과">빛</button>
+        <button type="button" data-step="3" aria-label="장면 3 — 열은 반사">열</button>
+        <button type="button" data-step="4" aria-label="장면 4 — 결론">결론</button>
       </div>
     </div>
   </div>

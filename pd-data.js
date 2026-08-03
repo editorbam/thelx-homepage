@@ -91,6 +91,13 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — vltImage가 있으면 하늘 밴드 시뮬레이션 대신 이 이미지(라벨 포함 공식 비교컷)를 사용.
        vltTint는 이미지 제거 시 폴백용 보관. ⚠️ 틴트 교훈: 노랑 비중 크면 하늘 파랑과 섞여 카키로 탁해짐(1차 46,64,26/104,88,30 폐기) */
     vltImage: 'vogue-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'vogue-stage.jpg', icons: [
+      { i: 'reflect', t: '내부 반사 저감' },
+      { i: 'gold', t: '그린골드 색상' },
+      { i: 'privacy', t: '프라이버시' },
+      { i: 'clarity', t: '광학적 선명도' },
+    ]},
     vltTint: ['12,52,38', '74,84,30'],
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) — h 없는 블록=이어지는 문단(렌더러 pd-intro-cont) */
     intro: [
@@ -146,6 +153,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(팔마 대성당, XENITH IR 15/30 라벨 포함) */
     vltImage: 'xenith-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'xenith-stage.jpg', icons: [
+      { i: 'heat', t: '열 차단' },
+      { i: 'signal', t: '전파 친화적' },
+      { i: 'reflect', t: '내부 반사율' },
+      { i: 'car', t: '조화로운 컬러' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) */
     intro: [
       { h: '차세대 세라믹 기술로 탄생한 업계 최정상급 IR 필름',
@@ -201,6 +215,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(토론토, QUANTUM BLACK 8~37 라벨 포함) */
     vltImage: 'quantum-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'quantum-stage.jpg', icons: [
+      { i: 'spectrum', t: '스펙트럼 차단' },
+      { i: 'sun', t: '태양 에너지 차단' },
+      { i: 'orbit', t: '반영구적' },
+      { i: 'warrant', t: '보증된 색상과 성능' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) */
     intro: [
       { h: '우수한 성능, 내구성, 인상적인 스타일을 위한 풀 메탈 스퍼터 필름',
@@ -257,6 +278,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(하바나 거리, TITANIUM 6/16/26 라벨 포함) */
     vltImage: 'titanium-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'titanium-stage.jpg', icons: [
+      { i: 'shield', t: '성능과 내구성' },
+      { i: 'podium', t: '고성능 제품' },
+      { i: 'heat', t: '태양열 차단' },
+      { i: 'carTi', t: '미려한 외관' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) */
     intro: [
       { h: '모든 차량에 잘 어울리는 티타늄 계열의 필름',
@@ -309,6 +337,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(베네치아 골목, G-LINE 10/30 라벨 포함) */
     vltImage: 'gline-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'gline-stage.jpg', icons: [
+      { i: 'heat', t: '열 차단' },
+      { i: 'carG', t: '다층 컬러 구현' },
+      { i: 'clarity', t: '광학적 선명도' },
+      { i: 'orbit', t: '최첨단 기술력' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) */
     intro: [
       { h: '라미네이티드 블루 컬러의 종합적 균형이 잘 잡힌 메탈반사 하이브리드 필름',
@@ -361,6 +396,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(산토리니, S-LINE 10/30 라벨 포함) */
     vltImage: 'sline-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'sline-stage.jpg', icons: [
+      { i: 'eye', t: '맑은 시야' },
+      { i: 'signal', t: '전파 방해 최소화' },
+      { i: 'shield', t: '뛰어난 내구성' },
+      { i: 'orbit', t: '나노 세라믹' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) — 브로슈어 오타 2건 교정: '선명한시야를'→'선명한 시야를', 'Non-matal'→'Non-metal' */
     intro: [
       { h: '우수한 성능과 합리적인 가격을 갖춘 비반사 필름',
@@ -412,6 +454,13 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(뮌헨 마리엔광장, GALAXIE 12/35/50 라벨 포함) */
     vltImage: 'galaxie-vlt-scene.jpg',
+    /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
+    stage: { img: 'galaxie-stage.jpg', icons: [
+      { i: 'signal', t: '전파&신호 친화적' },
+      { i: 'glasses', t: '눈부심 감소' },
+      { i: 'layers', t: '광학적 투명도' },
+      { i: 'hammer', t: '스크래치 방지' },
+    ]},
     /* 모달 제품 소개 본문(브로슈어 이식, 2026-07-27) */
     intro: [
       { h: '세련된 색상과 준수한 성능의 합리적인 제안',

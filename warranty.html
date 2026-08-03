@@ -132,10 +132,15 @@
     /* ===========================
        HERO
     =========================== */
+    /* 히어로 = 스카이 블루 그라데이션 밴드 (2026-08-03, index #trust·시공점과 동일 계열) */
     .tech-hero {
-      padding: clamp(8rem, 18vh, 13rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
-      max-width: 760px; margin: 0 auto; text-align: center;
+      padding: clamp(8rem, 18vh, 13rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vh, 6rem);
+      max-width: none; margin: 0; text-align: center;
+      background: linear-gradient(180deg,#fafcfe 0%,#e7eff7 100%);
+      /* flex 중앙 정렬 — 자식의 margin:0 선언과 충돌하지 않게(margin auto 방식 대체) */
+      display: flex; flex-direction: column; align-items: center;
     }
+    .tech-hero > * { max-width: 760px; width: 100%; }
     .tech-eyebrow {
       font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
       color: rgba(0,0,0,.42); font-weight: 600;

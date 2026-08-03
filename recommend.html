@@ -110,10 +110,14 @@
     /* ===========================
        HERO
     =========================== */
+    /* 히어로 = 스카이 블루 그라데이션 밴드 (2026-08-03, technology·warranty와 동일 계열) */
     .tech-hero {
-      padding: clamp(8rem, 18vh, 13rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
-      max-width: 760px; margin: 0 auto; text-align: center;
+      padding: clamp(7rem, 16vh, 11rem) clamp(1.5rem, 5vw, 4rem) clamp(5rem, 10vh, 8rem);
+      max-width: none; margin: 0; text-align: center;
+      background: linear-gradient(180deg,#fafcfe 0%,#e7eff7 100%);
+      display: flex; flex-direction: column; align-items: center;
     }
+    .tech-hero > * { max-width: 760px; width: 100%; }
     .tech-eyebrow {
       font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
       color: rgba(0,0,0,.42); font-weight: 600;
@@ -181,7 +185,8 @@
     /* ===========================
        표 공통 (모바일 가로 스크롤)
     =========================== */
-    .rc-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 16px; border: .5px solid rgba(0,0,0,.12); }
+    /* 박스 폐기 → 상단 헤어라인만 (2026-08-03 부품 문법) */
+    .rc-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-top: .5px solid rgba(0,0,0,.22); }
     table.rc-table {
       width: 100%; border-collapse: collapse; min-width: 520px;
       font-size: clamp(.88rem, 1vw, .98rem);
@@ -414,7 +419,7 @@
 
 <!-- 기준 ① 소재 -->
 <section class="rc-section">
-  <p class="rc-kicker">기준 ① 소재</p>
+  <p class="rc-kicker">01 — 소재</p>
   <h2 class="rc-title">소재가 좋은 필름이란.</h2>
   <!-- ⚠️ '들어온 열이 없어…' 논리는 technology.html '반사.' 챕터 본문과 동일 문장 동기 (문구 수정 시 양쪽 함께) -->
   <p class="rc-body">
@@ -592,7 +597,7 @@
 
 <!-- 기준 ② 농도 -->
 <section class="rc-section">
-  <p class="rc-kicker">기준 ② 농도</p>
+  <p class="rc-kicker">02 — 농도</p>
   <h2 class="rc-title">농도는 밝기의 선택입니다. 열차단이 아니라.</h2>
   <p class="rc-body">
     농도는 들어오는 <strong>빛의 양</strong>을 정하는 숫자입니다.

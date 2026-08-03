@@ -216,7 +216,16 @@
     .rc-chart svg { width: 100%; height: auto; }
     /* 모바일 — 그래프를 축소해 라벨이 깨알이 되는 대신, 표와 같은 가로 스크롤 패턴 */
     .rc-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    @media (max-width: 768px) { .rc-chart-scroll svg { min-width: 640px; } }
+    /* 모바일: 가로 스크롤 폐기 — 보조 문장 숨기고 핵심 라벨만 확대해 화면 폭 수용 (2026-08-03 실기기) */
+    .rc-chart .m-only { display: none; }
+    @media (max-width: 768px) {
+      .rc-chart-scroll svg { min-width: 0; }
+      .rc-chart .m-hide { display: none; }
+      .rc-chart .m-only { display: block; }
+      .rc-chart svg text { font-size: 19px; }
+      .rc-chart svg text[y="318"] { font-size: 16px; }      /* 파장(780nm) */
+      .rc-chart svg text[x="52"] { font-size: 16px; }        /* Y축 눈금 */
+    }
     /* ── 모션: 네 장면 순환 (파장 순서대로 누적 공개) ─────────────────
        스크롤 진입 → 곡선 드로잉 → 장면 ①자외선(보라만) → ②+가시광선 → ③+적외선(THE LX 면·라벨) → ④전체+결론
        클릭 없이 저절로 흐르고, 끝나면 처음부터 다시 순환. 번호 버튼 = 장면 점프 + 그 장면에 정지.
@@ -505,11 +514,13 @@
       <!-- 구간 라벨: 장면별 등장 -->
       <text x="95" y="40" text-anchor="middle" font-size="11.5" fill="rgba(0,0,0,.65)" font-weight="600">자외선</text>
       <g class="czl vis">
-        <text x="195" y="40" text-anchor="middle" font-size="12.5" fill="rgba(0,0,0,.8)" font-weight="700">눈에 보이는 빛</text>
+        <text class="m-hide" x="195" y="40" text-anchor="middle" font-size="12.5" fill="rgba(0,0,0,.8)" font-weight="700">눈에 보이는 빛</text>
+        <text class="m-only" x="195" y="42" text-anchor="middle" font-size="20" fill="rgba(0,0,0,.8)" font-weight="700">보이는 빛</text>
       </g>
       <g class="czl ir">
-        <text x="475" y="40" text-anchor="middle" font-size="12.5" fill="#c9502c" font-weight="700">보이지 않는 열 — 적외선</text>
-        <text x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(201,80,44,.78)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
+        <text class="m-hide" x="475" y="40" text-anchor="middle" font-size="12.5" fill="#c9502c" font-weight="700">보이지 않는 열 — 적외선</text>
+        <text class="m-only" x="475" y="42" text-anchor="middle" font-size="20" fill="#c9502c" font-weight="700">적외선 — 열</text>
+        <text class="m-hide" x="475" y="58" text-anchor="middle" font-size="10.5" fill="rgba(201,80,44,.78)">태양 에너지의 약 절반이 여기 실려 있습니다</text>
       </g>
 
       <!-- Y축: 세 눈금만 -->
@@ -520,7 +531,7 @@
         <line x1="60" y1="150" x2="690" y2="150"/><line x1="60" y1="20" x2="690" y2="20"/>
       </g>
       <line x1="60" y1="280" x2="690" y2="280" stroke="rgba(0,0,0,.3)"/>
-      <text x="20" y="150" font-size="11" fill="rgba(0,0,0,.6)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">반사율</text>
+      <text class="m-hide" x="20" y="150" font-size="11" fill="rgba(0,0,0,.6)" transform="rotate(-90 20 150)" text-anchor="middle" letter-spacing="1">반사율</text>
 
       <!-- 곡선 아래 채움 (반사로 차단되는 몫) — ISO9050 실측 경향 반영 -->
       <path id="chArea" d="M60,256 C100,252 160,258 252,253 C272,250 283,196 305,150 C330,115 390,100 465,95 C520,92 560,93 600,99 C640,106 670,114 690,118 L690,280 L60,280 Z"
@@ -552,12 +563,12 @@
       <rect x="260" y="292" width="430" height="10" rx="2" fill="url(#irSpec)"/>
       <!-- 경계 파장만 최소 표기 -->
       <g font-size="9.5" fill="rgba(0,0,0,.55)" text-anchor="middle">
-        <text x="130" y="318">380nm</text><text x="260" y="318">780nm</text>
-        <text x="676" y="318">2,500nm</text>
+        <text class="m-hide" x="130" y="318">380nm</text><text x="260" y="318">780nm</text>
+        <text class="m-hide" x="676" y="318">2,500nm</text>
       </g>
       <!-- 띠가 뜻하는 것 -->
-      <text x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(0,0,0,.55)">사람 눈이 보는 전부</text>
-      <text x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(201,80,44,.7)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
+      <text class="m-hide" x="195" y="336" text-anchor="middle" font-size="9.5" fill="rgba(0,0,0,.55)">사람 눈이 보는 전부</text>
+      <text class="m-hide" x="475" y="336" text-anchor="middle" font-size="9.5" fill="rgba(201,80,44,.7)">눈에는 안 보이지만, 뜨거움은 여기서 옵니다</text>
     </svg>
     </div>
     <p class="rc-scroll-hint">그래프를 옆으로 밀면 적외선 구간까지 보입니다 →</p>

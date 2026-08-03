@@ -418,14 +418,32 @@
   body.pd-open .hero-sound { opacity: 0; pointer-events: none; }
 }
 
-    /* SPUTTER LIVE — 증착 과정 영상 (왜 반사가 가능한가 하단, 패널 없이 페이지 배경 위에 바로) */
-    .sputter-live { max-width: 680px; margin: clamp(2.4rem, 5vh, 3.6rem) auto clamp(1.6rem, 3vh, 2.4rem); padding: 0 clamp(1.25rem, 4vw, 2rem); }
+    /* SPUTTER LIVE — 증착 영상 = 풀블리드 블랙 밴드 (2026-08-03, 차 밴드 .cmp-band와 동일 문법)
+       좌측 카피 + 우측 영상 2단. 영상이 검정이라 밴드와 이음새 없이 이어진다 */
+    .sputter-live {
+      max-width: none; margin: clamp(3rem, 6vh, 4.5rem) 0 clamp(2rem, 4vh, 3rem); padding: 0;
+      background: linear-gradient(180deg, #131318 0%, #000 58%);
+    }
+    .sputter-band {
+      max-width: 1360px; margin: 0 auto;
+      padding: clamp(2.6rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+      display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 2.2fr);
+      gap: clamp(1.6rem, 4vw, 3.5rem); align-items: center;
+    }
+    .sputter-label {
+      margin: 0; color: #fff; word-break: keep-all;
+      font-size: clamp(1.15rem, 1.9vw, 1.6rem); font-weight: 700;
+      line-height: 1.4; letter-spacing: -.02em;
+    }
+    .sputter-label small {
+      display: block; margin-top: .9rem;
+      font-size: clamp(11px, .9vw, 12px); font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+    }
     .sputter-stage { position: relative; }
-    .sputter-stage video { display: block; width: 100%; height: auto; border-radius: 18px; }
-    .sputter-meter {
-      position: absolute; left: 1.1rem; top: .95rem; margin: 0;
-      color: #c7c7cc; font-size: clamp(15px, 1.3vw, 17px); font-weight: 500; letter-spacing: .14em;
-      text-align: left; pointer-events: none;
+    .sputter-stage video { display: block; width: 100%; height: auto; }
+    @media (max-width: 768px) {
+      .sputter-band { grid-template-columns: 1fr; gap: 1.4rem; }
     }
     /* 캡션(.sputter-cap)은 공정 문장 사실 확인 전까지 제거 — 특허 칩만 유지 (2026-07-29 사용자 결정) */
   </style>
@@ -598,9 +616,11 @@
 
 <!-- 증착 시각화 — 미세 알갱이 일자 낙하 → 라인 통과 융해 → 딥 블랙 완성 (v13 알갱이판·2x 압축, ?v=5, 자동 루프) -->
 <section class="sputter-live" aria-label="스퍼터링 증착 과정 시각화">
-  <div class="sputter-stage">
-    <video src="tech-sputter.mp4?v=5" autoplay muted loop playsinline aria-hidden="true"></video>
-    <p class="sputter-meter">스퍼터링 공법</p>
+  <div class="sputter-band">
+    <p class="sputter-label">최첨단<br>스퍼터링 공법<small>Magnetron Sputtering</small></p>
+    <div class="sputter-stage">
+      <video src="tech-sputter.mp4?v=5" autoplay muted loop playsinline aria-hidden="true"></video>
+    </div>
   </div>
 </section>
 

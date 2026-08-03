@@ -1766,11 +1766,15 @@ body.pd-open { overflow: hidden; }
 .pd-vlt-pip.on { background: rgba(255,255,255,.82); width: 32px; }
 /* 스테이지 모드 (pd-data stage) — 제품 무대 사진 + 픽토그램 오버레이 (2026-08-03) */
 .pd-stage { position: relative; overflow: hidden; background: var(--black); }
-.pd-stage img { width: 100%; height: auto; display: block; }
+/* 파노라마 크롭 — 원본 16:9를 두오모 컷과 같은 납작한 무대로 (차=하단 기준) */
+.pd-stage img { width: 100%; height: clamp(300px, 36vw, 480px); object-fit: cover; object-position: center 72%; display: block; }
+.pd-stage .pd-vlt-static-cover { position: absolute; inset: 0; background: var(--white); transition: transform 1.1s cubic-bezier(0.4, 0, 0.15, 1); will-change: transform; }
+.pd-stage.on .pd-vlt-static-cover { transform: translateX(102%); }
 .pd-stage-icons {
-  position: absolute; top: clamp(.9rem, 3.5vw, 2.4rem); left: 0; right: 0;
-  display: flex; justify-content: center; flex-wrap: wrap;
-  gap: clamp(1.4rem, 6vw, 4.8rem); color: #13293d; pointer-events: none;
+  /* 좌측 정렬 — 차 루프라인과 겹치지 않는 좌상단 하늘 여백에 (구본사 Key Point 좌측 문법) */
+  position: absolute; top: clamp(1rem, 3.5vw, 2.6rem); left: clamp(1.4rem, 4vw, 3.6rem);
+  display: flex; justify-content: flex-start; flex-wrap: wrap;
+  gap: clamp(1.1rem, 3.2vw, 2.6rem); color: #13293d; pointer-events: none;
 }
 .pd-stage-icons figure { margin: 0; text-align: center; }
 .pd-stage-icons svg { width: clamp(26px, 4.5vw, 36px); height: clamp(26px, 4.5vw, 36px); margin: 0 auto; display: block; }
@@ -3420,6 +3424,7 @@ function pdOpen(id) {
     pdVlt.innerHTML = `<div class="pd-stage">
       <img src="${p.stage.img}" alt="${p.name} — 밝은 하늘 아래 짙은 유리의 차량" loading="eager" decoding="async">
       <div class="pd-stage-icons">${p.stage.icons.map(ic => `<figure><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PD_ICONS[ic.i] || ''}</svg><figcaption>${ic.t}</figcaption></figure>`).join('')}</div>
+      <div class="pd-vlt-static-cover"></div>
     </div>`;
   } else if (p.vltImage) {
     // 공식 비교 이미지 모드(라벨 포함 원본) — 밴드 시뮬레이션 대신 통짜 이미지 + 단일 커튼 리빌
@@ -3483,7 +3488,7 @@ function pdOpen(id) {
   pdOverlay.querySelectorAll('.pd-spec-section').forEach(el => io.observe(el));
 
   // VLT 커튼 공개 — 홈 #vlt와 동일(진입 시 on, 이탈 시 해제 → 재진입 때 다시 재생). 이미지 모드=단일 커튼
-  const vltWrap = pdVlt.querySelector('.pd-vlt-wrap, .pd-vlt-static');
+  const vltWrap = pdVlt.querySelector('.pd-vlt-wrap, .pd-vlt-static, .pd-stage');
   if (vltWrap) {
     const vio = new IntersectionObserver(entries => {
       entries.forEach(e => {

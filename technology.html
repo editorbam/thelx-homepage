@@ -556,6 +556,9 @@
       .mobile-menu { display: flex; }
       body.menu-open { overflow: hidden; }
       body.menu-open .hero-sound { opacity: 0; pointer-events: none; } /* 사운드 알약이 메뉴 위로 뜨는 것 방지 */
+      /* 메뉴가 열리면 네비 바는 투명 — 흰 바(z:500)가 검정 메뉴(z:490) 위에 남으면
+         흰색으로 변한 햄버거 X가 흰 배경에 묻혀 닫기 버튼이 안 보인다 (2026-08-04 코드리뷰) */
+      body.menu-open nav#mainNav { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; }
     }
 </style>
 </head>
@@ -895,11 +898,17 @@
       if (!v.paused) return;
       var p = v.play();
       if (p && p.catch) p.catch(function(){
-        if (isLast){ try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function(){}); } catch(e){} }
+        /* 자동재생 차단 환경에서 load()를 반복하지 않도록, 한 번이라도 재생된 영상만 소스를 다시 문다 */
+        if (isLast && v.dataset.everPlayed === '1'){
+          try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function(){}); } catch(e){}
+        }
       });
     });
   }
   /* index와 동일 — 복원 직후 Safari가 한동안 재생을 거부하므로 살아날 때까지 짧게 되물어본다 */
+  document.addEventListener('playing', function(e){
+    if (e.target && e.target.tagName === 'VIDEO') e.target.dataset.everPlayed = '1';
+  }, true);
   var _kickTimer = null;
   function kickVideos(){
     var tries = 0;

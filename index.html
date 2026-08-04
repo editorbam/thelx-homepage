@@ -4214,6 +4214,15 @@ tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab
     var open = !tabsNav.classList.contains('show-more');
     tabsNav.classList.toggle('show-more', open);
     moreBtn.setAttribute('aria-expanded', open);
+    if (open) {
+      /* 좁은 화면에서는 새로 나온 탭이 가로 스크롤 바깥에 생겨 변화가 안 보인다 */
+      var first = tabsNav.querySelector('.tab-btn.is-more');
+      if (first && first.scrollIntoView) first.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+    } else {
+      /* 접을 때 활성 탭이 숨겨지면 탭 줄엔 활성 표시가 없는데 패널만 남는다 → 첫 탭으로 되돌린다 */
+      var active = tabsNav.querySelector('.tab-btn.active');
+      if (active && active.classList.contains('is-more')) activateTab('lx');
+    }
   });
 }());
 
@@ -5051,11 +5060,19 @@ function resumeVisibleVideos(isLast) {
     var p = v.play();
     if (p && p.catch) p.catch(function () {
       /* 마지막 시도에서도 거절되면 소스를 다시 물려 본다 (복원 직후 디코더가 풀린 경우) */
-      if (isLast) { try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function () {}); } catch (e) {} }
+      /* 자동재생이 원천 차단된 환경(iOS 저전력 등)에서는 아무리 눌러도 안 되므로 load()를 반복하지 않는다.
+         한 번이라도 재생된 적 있는 영상 = 복원 때문에 멈춘 것이 확실한 경우에만 소스를 다시 문다. */
+      if (isLast && v.dataset.everPlayed === '1') {
+        try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function () {}); } catch (e) {}
+      }
     });
   });
 }
 /* 화면 안에 있는데 멈춰 있는 영상이 남았는가 */
+/* 재생에 한 번이라도 성공한 영상 표시 — load() 재시도 게이트 */
+document.addEventListener('playing', function (e) {
+  if (e.target && e.target.tagName === 'VIDEO') e.target.dataset.everPlayed = '1';
+}, true);
 function _hasStalledVideo() {
   var stalled = false;
   document.querySelectorAll('video[autoplay]').forEach(function (v) {

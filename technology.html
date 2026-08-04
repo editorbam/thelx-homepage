@@ -264,9 +264,16 @@
       color: rgba(0,0,0,.5); margin: .7rem 0 0; letter-spacing: .02em;
     }
     .tech-compare-note {
-      max-width: 880px; margin: clamp(1.5rem,3vh,2.2rem) auto 0;
-      font-size: clamp(.8rem, .95vw, .88rem); line-height: 1.7;
-      color: rgba(0,0,0,.5); text-align: center; word-break: keep-all;
+      /* 폭을 좁혀야 가운데 정렬에서 줄 끝이 너덜거리지 않는다 (2026-08-04) */
+      max-width: 620px; margin: clamp(1.5rem,3vh,2.2rem) auto 0;
+      font-size: clamp(.85rem, 1vw, .95rem); line-height: 1.75;
+      color: rgba(0,0,0,.58); text-align: center; word-break: keep-all;
+    }
+    /* 측정 근거 = 한 단 더 작고 흐리게 — 본문과 각주를 위계로 분리 */
+    .tech-compare-src {
+      max-width: 620px; margin: .7rem auto 0;
+      font-size: clamp(.72rem, .85vw, .8rem); line-height: 1.65;
+      color: rgba(0,0,0,.38); text-align: center; word-break: keep-all;
     }
 
 /* ===========================
@@ -366,6 +373,8 @@
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
       .tech-compare-grid { gap: .8rem; }
+      /* 좁은 화면에서는 강제 줄바꿈을 풀어 자연스럽게 흐르게 (2026-08-04) */
+      .tech-compare-note br { display: none; }
       .tech-compare-card { padding: 1.4rem 1rem 0; }
       .tech-heart h2 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
       .tech-stats { gap: 2.2rem; }
@@ -728,10 +737,12 @@
     </div>
   </div>
   <p class="tech-compare-note">
-    열 흡수 방식은 받은 열의 일부가 다시 실내로 방사되어, 총량 기준 차단이 44% 수준입니다.
-    열 반사 구조의 THE LX는 71%입니다. 두 방식의 일반값 비교이며, 제품별 수치는 스펙표가 따로 말합니다.
-    (필름 없는 유리는 10.5%.
-    THE LX 플래그십 SIGNATURE 실측 · 농도 15 · Solar Gard TSER 기준)
+    열 흡수 방식은 받은 열의 일부가 다시 실내로 방사되어,<br>
+    총량 기준 차단이 <strong>44%</strong> 수준입니다. 열 반사 구조의 THE LX는 <strong>71%</strong>입니다.
+  </p>
+  <p class="tech-compare-src">
+    두 방식의 일반값 비교 · 제품별 수치는 스펙표 기준 · 필름 없는 유리 10.5%<br>
+    THE LX 플래그십 SIGNATURE 실측 · 농도 15 · Solar Gard TSER 기준
   </p>
 </section>
 

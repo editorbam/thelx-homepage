@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>필름을 선택하는 두 가지 기준 — THE LX 솔라가드 프리미엄 | 소재와 농도로 고르는 윈도우 필름</title>
-  <meta name="description" content="윈도우 필름은 TSER 숫자 하나로 고르는 품목이 아닙니다. 열을 다루는 소재(반사·흡수)와 빛의 양을 정하는 농도 — 두 가지 기준으로 고릅니다. 솔라가드 프리미엄 THE LX 농도별 VLT·TSER 공식 스펙표.">
+  <title>필름을 선택하는 두 가지 기준 — THE LX 솔라가드 프리미엄 | 조건과 농도로 고르는 윈도우 필름</title>
+  <meta name="description" content="윈도우 필름은 TSER 숫자 하나로 고르는 품목이 아닙니다. 어떤 유리에 무엇이 맞는지, 그리고 빛의 양을 정하는 농도 — 두 가지 기준으로 고릅니다. 솔라가드 프리미엄 THE LX 농도별 VLT·TSER 공식 스펙표.">
   <meta name="keywords" content="윈도우 필름 추천, 필름 고르는 법, 농도 선택, VLT, TSER, 반사형 필름, 흡수형 필름, 솔라가드 프리미엄, 솔라가드프리미엄, Solar Gard Premium, THE LX, 썬팅 농도 추천, 자동차 썬팅 종류">
   <!-- 프리뷰 모드 — 정식 배포 시 "noindex, nofollow" → "index, follow" 로 변경 -->
   <meta name="robots" content="noindex, nofollow">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="THE LX">
   <meta property="og:title" content="필름을 선택하는 두 가지 기준 — THE LX">
-  <meta property="og:description" content="숫자 하나가 아니라, 소재와 농도. 필름을 선택하는 두 가지 기준을 정리했습니다.">
+  <meta property="og:description" content="숫자 하나가 아니라, 조건과 농도. 필름을 선택하는 두 가지 기준을 정리했습니다.">
   <meta property="og:url" content="https://isolargard.com/recommend.html">
   <meta property="og:image" content="https://isolargard.com/og-recommend.jpg">
   <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="필름을 선택하는 두 가지 기준 — THE LX">
-  <meta name="twitter:description" content="숫자 하나가 아니라, 소재와 농도. 필름을 선택하는 두 가지 기준을 정리했습니다.">
+  <meta name="twitter:description" content="숫자 하나가 아니라, 조건과 농도. 필름을 선택하는 두 가지 기준을 정리했습니다.">
   <meta name="twitter:image" content="https://isolargard.com/og-recommend.jpg">
   <meta name="twitter:image:alt" content="THE LX — ‘선택의 두 가지 기준’ 공유 카드">
 
@@ -35,8 +35,8 @@
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "필름을 선택하는 두 가지 기준 — 소재와 농도",
-    "description": "윈도우 필름은 열을 다루는 소재(반사·흡수)와 빛의 양을 정하는 농도, 두 가지 기준으로 고릅니다. THE LX 농도별 VLT·TSER 공식 스펙 정리.",
+    "headline": "필름을 선택하는 두 가지 기준 — 조건과 농도",
+    "description": "윈도우 필름은 어떤 유리에 무엇이 맞는지와 빛의 양을 정하는 농도, 두 가지 기준으로 고릅니다. THE LX 농도별 VLT·TSER 공식 스펙 정리.",
     "image": "https://isolargard.com/og-recommend.jpg",
     "author": { "@type": "Organization", "name": "THE LX" },
     "publisher": {
@@ -211,6 +211,14 @@
     .rc-table .col-lx { color: rgba(0,0,0,.85); }
     .rc-table th.col-lx { color: #2b5f9e; }
     .rc-table td.col-lx strong { color: #0a0a0a; }
+    /* 조건표(01) — 손님의 경우가 왼쪽. 문장이 들어가는 표라 좌측 정렬 (2026-08-04) */
+    .rc-table-cond th, .rc-table-cond td { text-align: left; }
+    .rc-table-cond td.cond  { color: #0a0a0a; font-weight: 600; }
+    .rc-table-cond td.pname { color: #0a0a0a; font-weight: 700; white-space: nowrap; }
+    .rc-table-cond td.why   { font-size: .92em; color: rgba(0,0,0,.58); }
+    .rc-table-cond th:nth-child(1) { width: 34%; }
+    .rc-table-cond th:nth-child(2) { width: 16%; }
+    .rc-table-cond th:nth-child(3) { width: 50%; }
 
     /* ===========================
        스펙트럼 그래프
@@ -336,13 +344,18 @@
 
     @media (max-width: 768px) {
       .tech-nav { padding: .9rem 1.2rem; }
-      /* 표 2종(소재 비교·농도 스펙): 가로 스크롤 폐기 — 화면 폭에 맞춰 수용 (2026-08-03 실기기) */
+      /* 표 2종(조건표·농도 스펙): 가로 스크롤 폐기 — 화면 폭에 맞춰 수용 (2026-08-03 실기기) */
       table.rc-table { min-width: 0; table-layout: fixed; font-size: .76rem; }
       .rc-table th { padding: .6rem .18rem; letter-spacing: 0; word-break: keep-all; }
       .rc-table th small { font-size: .54rem; margin-top: .12rem; line-height: 1.25; }
       .rc-table td { padding: .62rem .18rem; word-break: keep-all; line-height: 1.4; }
       /* 첫 열(항목·농도)은 좁게, 데이터 열에 폭 양보 */
       .rc-table td.head, .rc-table th:first-child { font-size: .7rem; }
+      /* 조건표 — 제품명이 옆 칸을 침범하지 않게 폭 재배분 + 줄바꿈 허용 (2026-08-04) */
+      .rc-table-cond th:nth-child(1) { width: 36%; }
+      .rc-table-cond th:nth-child(2) { width: 24%; }
+      .rc-table-cond th:nth-child(3) { width: 40%; }
+      .rc-table-cond td.pname { white-space: normal; }
     }
   
 /* SOUND TOGGLE — index.html과 동일 문법 (배경 음악 이어듣기) */
@@ -414,58 +427,59 @@
   <p class="tech-eyebrow">Film Selection Guide</p>
   <h1 class="tech-h1">필름을 선택하는<br>두 가지 기준.</h1>
   <p class="tech-lead">
-    <strong>소재</strong>와 <strong>농도</strong>.
+    <strong>조건</strong>과 <strong>농도</strong>.
   </p>
 </header>
 
-<!-- 기준 ① 소재 -->
+<!-- 기준 ① 조건 -->
 <section class="rc-section">
-  <p class="rc-kicker">01 — 소재</p>
-  <h2 class="rc-title">소재가 좋은 필름이란.</h2>
-  <!-- ⚠️ '들어온 열이 없어…' 논리는 technology.html '반사.' 챕터 본문과 동일 문장 동기 (문구 수정 시 양쪽 함께) -->
+  <p class="rc-kicker">01 — 조건</p>
+  <h2 class="rc-title">무엇에 맞는가.</h2>
+  <!-- 2026-08-04 축 전환: 소재 우열표(반사형↔흡수형) → 조건표.
+       우열 서술은 기술 페이지(우리가 왜 반사를 택했나)가 담당하고, 여기는 고르는 층이라 조건만 묻는다.
+       구 소재 비교표는 git 이력(21dab83 이전)에 보존. -->
   <p class="rc-body">
-    소재가 좋은 필름, 즉 <strong>반사형 필름</strong>은 열을 흡수하지 않고 표면에서 반사합니다.
-    들어온 열이 없어 온도가 흔들리지 않습니다.
-    흡수형 필름은 열을 필름에 남기고, 남은 열은 시간이 지나며 실내로 스며듭니다.
-    여름에는 바깥의 열이 들어오지 못하게, 겨울에는 안의 열이 새어 나가지 못하게.
-    좋은 소재는 계절이 증명합니다.
+    필름은 좋고 나쁨으로 나뉘지 않습니다. 다루는 유리가 다르고, 원하는 것이 다릅니다.
+    시야를 가장 맑게 둘 것인지, 천장으로 들어오는 빛까지 다룰 것인지,
+    밖에서 보이는 색까지 고를 것인지.
+    <strong>우리는 모든 유리에 같은 필름을 권하지 않습니다.</strong>
   </p>
 
-  <!-- 비교표=팩트만 (설명 문장은 위 본문이 담당 — 2026-08-03 A안) -->
+  <!-- 조건표 = 팩트만. 열 수치는 아래 02 농도 표가 담당(여기 숫자를 넣으면 다시 열로 줄을 세우게 됨) -->
   <div class="rc-table-wrap">
-    <table class="rc-table">
+    <table class="rc-table rc-table-cond">
       <thead>
         <tr>
-          <th>항목</th>
-          <th class="col-lx">반사형<small>Full Metal Sputter · THE LX</small></th>
-          <th>흡수형<small>Carbon · Ceramic</small></th>
+          <th>이런 경우</th>
+          <th>제품</th>
+          <th>근거</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="head">열 처리 방식</td>
-          <td class="col-lx">표면에서 반사</td>
-          <td>필름에 흡수</td>
+          <td class="cond">시야를 하나도 포기하고 싶지 않다면</td>
+          <td class="pname">LX</td>
+          <td class="why">유리처럼 맑은 투명도를 유지하면서 유해 태양 스펙트럼만 선별 차단. 5-Layer 풀 메탈 스퍼터, 보증 10년.</td>
         </tr>
         <tr>
-          <td class="head">시간이 지나면</td>
-          <td class="col-lx">온도가 흔들리지 않음</td>
-          <td>남은 열이 실내로 방사</td>
+          <td class="cond">천장으로도 빛이 들어온다면</td>
+          <td class="pname">Xenith IR</td>
+          <td class="why">넓은 곡면을 매끄럽게 마감하는 세라믹 다층 구조. 신호 장비가 많은 차에도 부담이 적습니다.</td>
         </tr>
         <tr>
-          <td class="head">만드는 방법</td>
-          <td class="col-lx">진공 금속 증착</td>
-          <td>염료·입자 착색</td>
+          <td class="cond">밖에서 보이는 색까지 고르고 싶다면</td>
+          <td class="pname">Vogue</td>
+          <td class="why">풀 메탈 스퍼터의 그린 골드 발색. 외관과 열을 함께 고르는 선택.</td>
         </tr>
         <tr>
-          <td class="head">한 줄 요약</td>
-          <td class="col-lx"><strong>열을 튕겨냅니다</strong></td>
-          <td>열을 흡수합니다</td>
+          <td class="cond">검증된 쪽으로 무난하게 가고 싶다면</td>
+          <td class="pname">Quantum</td>
+          <td class="why">금·은·티타늄 스퍼터. 프리미엄 라인에서 가장 많이 선택된 제품.</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="rc-scroll-hint">표를 옆으로 밀면 흡수형과 비교됩니다 →</p>
+  <p class="rc-scroll-hint">표를 옆으로 밀면 근거까지 보입니다 →</p>
   <p class="rc-note">반사가 왜 가능한지 — 소재의 원리는 <a href="technology.html" class="has-click">기술 페이지<span class="rc-click">클릭</span></a>에서 이어집니다.</p>
 </section>
 
@@ -602,7 +616,7 @@
   <h2 class="rc-title">농도는 밝기의 선택입니다. 열차단이 아니라.</h2>
   <p class="rc-body">
     농도는 들어오는 <strong>빛의 양</strong>을 정하는 숫자입니다.
-    진할수록 시원해지는 것이 아니라, 열차단은 소재가 결정합니다.
+    진할수록 시원해지는 것이 아니라, 열차단은 필름의 구조가 결정합니다.
     그래서 THE LX는 가장 밝은 농도 70에서도 태양 에너지의 절반 이상을 차단합니다.
     시야는 밝게, 열은 바깥에.
   </p>
@@ -639,8 +653,8 @@
 <!-- 핵심 문장 -->
 <section class="tech-heart">
   <p class="tech-heart-label">고르는 순서</p>
-  <h2><span class="muted">먼저 필름의 소재를&nbsp;고르고,</span><br>그다음 농도를 고릅니다.</h2>
-  <p class="tech-heart-sub">소재가 온도 및 내구성을 결정하고, 농도가 밝기를 결정합니다.</p>
+  <h2><span class="muted">먼저 무엇에 맞는지&nbsp;고르고,</span><br>그다음 농도를 고릅니다.</h2>
+  <p class="tech-heart-sub">조건이 제품을 정하고, 농도가 밝기를 정합니다.</p>
 </section>
 
 <!-- CTA -->

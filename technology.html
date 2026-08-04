@@ -167,6 +167,18 @@
     .tech-chapter-body strong { color: #0a0a0a; font-weight: 700; }
     .tech-chapter-body a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,.35); transition: text-decoration-color .2s; }
     .tech-chapter-body a:hover { text-decoration-color: #0a0a0a; }
+    /* 링크 클릭 가능 표시 — 링크 글자 아래 작은 칩 (recommend.html .rc-click 문법 이식, 2026-08-04)
+       inline-flex 세로 정렬이라 링크 덩어리가 통째로 다음 줄로 넘어감 = 문장 중간에서 쪼개지지 않음 */
+    .tech-chapter-body a.has-click {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: baseline;
+    }
+    .tc-click {
+      font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+      color: #3f78d0; border: .5px solid rgba(63,120,208,.45);
+      border-radius: 980px; padding: 2px 7px; margin-top: 3px;
+      text-decoration: none; white-space: nowrap;
+    }
 
     /* 선언문 — 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰(짧은 헤어라인) 2026-08-03 */
     .tech-declaration {
@@ -609,7 +621,7 @@
       THE LX 대표 라인업은 <strong>진공에서 금속을 원자 단위로 입힌 풀 메탈 스퍼터</strong> 구조입니다.
       금속의 분광 특성이 태양 에너지를 표면에서 반사합니다.
       색을 씌워 어둡게 만드는 일이 아니라, 빛의 물리를 다루는 일입니다.
-      반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.
+      반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html" class="has-click">열차단의 원리<span class="tc-click">클릭</span></a>에서 이어집니다.
     </p>
     <blockquote class="tech-declaration">색이 아니라, 구조입니다.</blockquote>
   </div>

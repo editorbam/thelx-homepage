@@ -331,9 +331,11 @@
       text-align: center;
     }
     .tech-bridge .tb-sub {
-      font-size: clamp(.92rem, 1.05vw, 1.02rem); font-weight: 400; color: rgba(0,0,0,.55);
+      font-size: clamp(.98rem, 1.15vw, 1.1rem); font-weight: 500;
       line-height: 1.7; word-break: keep-all; margin: 0;
     }
+    .tech-bridge .tb-sub a span { display: inline-block; transition: transform .25s ease; }
+    .tech-bridge .tb-sub a:hover span { transform: translateX(3px); }
     .tech-bridge .tb-sub a { color: #3f78d0; text-decoration: none; }
     .tech-bridge .tb-sub a:hover { text-decoration: underline; }
     .tech-coda {
@@ -795,7 +797,7 @@
 
 <!-- 다리 — 기술(믿음 층) → 필름추천(선택 층) -->
 <section class="tech-bridge">
-  <p class="tb-sub">차에 따라 답이 다릅니다 — <a href="recommend.html">고르는 기준</a></p>
+  <p class="tb-sub"><a href="recommend.html">내 차에 맞는 필름 찾기 <span aria-hidden="true">→</span></a></p>
 </section>
 
 <div class="tech-cta">

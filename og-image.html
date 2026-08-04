@@ -131,5 +131,36 @@ body { background:#000; }
     <span class="bottom-item">퍼스트브랜드 2026<span class="sep">·</span>UV 99% 차단<span class="sep">·</span>최대 10년 보증<span class="sep">·</span>전국 437개 시공점</span>
   </div>
 </div>
+
+<!-- ===========================================================
+     페이지별 공유 카드 (2026-08-04)
+     이 파일 하나가 9종 카드의 단일 소스다. 파라미터 없이 열면 홈 카드,
+     ?page=heat 처럼 열면 그 페이지 카드가 렌더된다.
+
+     재생성 방법(로컬 렌더, 유료 생성 아님):
+       Playwright로 og-image.html?page=<키> 를 1200×630으로 열고
+       .card 요소를 JPEG(q88)로 저장 → og-<키>.jpg
+       홈 카드는 파라미터 없이 열어 og-home.jpg 로 저장
+     문구를 고칠 때는 아래 OG_CARDS만 고치고 해당 카드를 다시 뽑는다.
+=========================================================== -->
+<script>
+const OG_CARDS = {
+  technology: { eyebrow: 'Technology',      headline: '열을 막는 <em>두 가지 방법</em>.', sub: '흡수하지 않고, 반사합니다' },
+  heat:       { eyebrow: 'Heat Rejection',  headline: '필름의 <em>열차단 원리</em>.',     sub: 'TSER, 총태양에너지차단율에 대한 이해' },
+  recommend:  { eyebrow: 'Choosing a Film', headline: '선택의 <em>두 가지 기준</em>.',     sub: '숫자 하나가 아니라, 소재와 농도' },
+  warranty:   { eyebrow: 'Authenticity',    headline: '<em>정품</em> 확인과 보증.',       sub: '공식 인증 시공점 · 정품 보증서 · 최대 10년' },
+  stores:     { eyebrow: 'Find a Store',    headline: '내 근처 <em>시공점</em> 찾기.',     sub: '전국 437개 공식 인증 시공점' },
+  pricing:    { eyebrow: 'Estimate',        headline: '<em>시공 견적</em>.',              sub: '승용차 기준 30만원부터, 즉시 계산' },
+  story:      { eyebrow: 'Manifesto',       headline: '우리의 <em>이야기</em>.',          sub: '차 안에서 보내는 시간은 인생의 일부다' }
+};
+(function () {
+  const key = new URLSearchParams(location.search).get('page');
+  const c = key && OG_CARDS[key];
+  if (!c) return;                       // 파라미터 없음·모르는 키 = 홈 카드 그대로
+  document.querySelector('.eyebrow').textContent = c.eyebrow;
+  document.querySelector('.headline').innerHTML = c.headline;
+  document.querySelector('.sub').textContent = c.sub;
+})();
+</script>
 </body>
 </html>

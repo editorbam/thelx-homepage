@@ -862,17 +862,29 @@
   /* 뒤로 가기(bfcache)·탭 복귀 복원 — Safari가 백그라운드에서 영상을 멈춘 채 두는 경우가 있어 재개한다.
      이 페이지 영상 3개는 전부 상시 재생 루프(스크롤 정지 로직 없음)라 화면 밖 것까지 전부 되살린다.
      (index.html은 스크롤 핸들러가 관리하므로 화면 안만 재개 — 여기와 다름) */
-  function resumeVideos(){
+  /* ⚠️ 2026-08-04 — 한 번만 시도하면 놓친다(index와 같은 수정).
+     bfcache 복원 직후엔 디코더가 아직 안 붙어 play()가 거절될 수 있고, 그 뒤 재시도가 없었다.
+     이 페이지 영상 3개는 상시 재생이라 화면 안/밖을 따지지 않고 전부 재개한다. */
+  function resumeVideos(isLast){
     document.querySelectorAll('video[autoplay]').forEach(function(v){
-      if (v.paused){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+      if (!v.paused) return;
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){
+        if (isLast){ try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function(){}); } catch(e){} }
+      });
     });
   }
+  function kickVideos(){
+    requestAnimationFrame(function(){ resumeVideos(false); });
+    [200, 600, 1200].forEach(function(d, i){ setTimeout(function(){ resumeVideos(i === 2); }, d); });
+  }
   window.addEventListener('pageshow', function(e){
-    if (e.persisted) resumeVideos();
+    if (e.persisted) kickVideos();
   });
   document.addEventListener('visibilitychange', function(){
-    if (!document.hidden) resumeVideos();
+    if (!document.hidden) kickVideos();
   });
+  window.addEventListener('focus', kickVideos);
 </script>
 
 <!-- 배경 음악 (index.html과 이어듣기 — sessionStorage 'thelxBgm'로 위치·상태 왕복) -->

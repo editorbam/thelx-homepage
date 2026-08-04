@@ -874,13 +874,22 @@
       });
     });
   }
+  /* index와 동일 — 복원 직후 Safari가 한동안 재생을 거부하므로 살아날 때까지 짧게 되물어본다 */
+  var _kickTimer = null;
   function kickVideos(){
-    requestAnimationFrame(function(){ resumeVideos(false); });
-    [200, 600, 1200].forEach(function(d, i){ setTimeout(function(){ resumeVideos(i === 2); }, d); });
+    var tries = 0;
+    if (_kickTimer){ clearInterval(_kickTimer); _kickTimer = null; }
+    var tick = function(){
+      tries++;
+      resumeVideos(tries >= 8);
+      var stalled = [...document.querySelectorAll('video[autoplay]')].some(function(v){ return v.paused; });
+      if (!stalled || tries >= 16){ clearInterval(_kickTimer); _kickTimer = null; }
+    };
+    requestAnimationFrame(tick);
+    _kickTimer = setInterval(tick, 300);
   }
-  window.addEventListener('pageshow', function(e){
-    if (e.persisted) kickVideos();
-  });
+  window.addEventListener('pageshow', kickVideos);
+  window.addEventListener('popstate', kickVideos);
   document.addEventListener('visibilitychange', function(){
     if (!document.hidden) kickVideos();
   });

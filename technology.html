@@ -473,21 +473,106 @@
       .sputter-band { grid-template-columns: 1fr; gap: 1.4rem; }
     }
     /* 캡션(.sputter-cap)은 공정 문장 사실 확인 전까지 제거 — 특허 칩만 유지 (2026-07-29 사용자 결정) */
-  </style>
+  
+    /* ===========================
+       NAV — index·pricing과 동일 문법으로 통일 (2026-08-04 사용자 요청)
+       이 페이지들은 라이트 전용이라 on-dark 규칙은 가져오지 않는다.
+    =========================== */
+    nav#mainNav {
+      position: fixed; top:0; left:0; right:0; z-index: 500; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: .5px solid rgba(0,0,0,.08);
+    }
+    #mainNav a, #mainNav button, .mobile-menu a { cursor: pointer !important; } /* stores의 전역 커서 리셋 대응 */
+    .nav-logo { display: flex; align-items: center; transition: opacity .2s; }
+    .nav-logo:hover { opacity: .65; }
+    .nav-logo img { height: 26px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 400; color: #0a0a0a;
+      text-decoration: none; transition: opacity .2s; letter-spacing: -.01em; white-space: nowrap;
+    }
+    .nav-links a:hover { opacity: .7; }
+    .nav-links a.is-here { font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 1.6rem; }
+    .nav-cta {
+      font-size: 12px; font-weight: 400; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none;
+      color: #0a0a0a; border: .5px solid rgba(0,0,0,.25);
+      padding: .5rem 1.2rem; border-radius: 980px; white-space: nowrap;
+      transition: color .4s, border-color .4s;
+    }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 6px; z-index: 600; position: relative;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: #0a0a0a;
+      transition: background .4s, transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background:#fff; }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background:#fff; }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: #0a0a0a;
+      z-index: 490; flex-direction: column; align-items: center; gap: 2.4rem;
+      opacity: 0; pointer-events: none; transition: opacity .35s ease;
+      overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+      padding: 2rem 1rem;
+    }
+    /* 항목이 화면보다 길면 중앙정렬 대신 스크롤 (index 주석과 동일 이유 — justify-content:center 금지) */
+    .mobile-menu a:first-child { margin-top: auto; }
+    .mobile-menu a:last-child { margin-bottom: auto; }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a {
+      font-size: clamp(1.6rem, 8vw, 2.8rem); font-weight: 200;
+      letter-spacing: .06em; color: rgba(255,255,255,.85); text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      nav#mainNav { padding: 0 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      body.menu-open { overflow: hidden; }
+      body.menu-open .hero-sound { opacity: 0; pointer-events: none; } /* 사운드 알약이 메뉴 위로 뜨는 것 방지 */
+    }
+</style>
 </head>
 <body>
 
-<nav class="tech-nav">
-  <a href="index.html" class="tech-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-b.png" alt="THE LX"></a>
-  <div class="tech-nav-links">
-    <a href="technology.html" class="tech-nav-back is-here">기술</a>
-    <a href="recommend.html" class="tech-nav-back">필름추천</a>
-    <a href="heat.html" class="tech-nav-back">열차단의 원리</a>
-    <a href="pricing.html" class="tech-nav-back">가격</a>
-    <a href="stores.html" class="tech-nav-back">시공점</a>
-    <a href="warranty.html" class="tech-nav-back">보증서</a>
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo" aria-label="THE LX 홈">
+    <img src="thelx-logo-nav-b.png" alt="THE LX">
+  </a>
+  <ul class="nav-links">
+      <li><a href="index.html#why-story">브랜드</a></li>
+      <li><a href="technology.html" class="is-here">기술</a></li>
+      <li><a href="index.html#products">제품</a></li>
+      <li><a href="recommend.html">필름추천</a></li>
+      <li><a href="heat.html">열차단의 원리</a></li>
+      <li><a href="pricing.html">가격</a></li>
+      <li><a href="stores.html">시공점</a></li>
+      <li><a href="warranty.html">보증서</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#booking" class="nav-cta">예약</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="closeMobileMenu()">홈</a>
+    <a href="index.html#why-story" onclick="closeMobileMenu()">브랜드</a>
+    <a href="technology.html" onclick="closeMobileMenu()" style="font-weight:600;">기술</a>
+    <a href="index.html#products" onclick="closeMobileMenu()">제품</a>
+    <a href="recommend.html" onclick="closeMobileMenu()">필름추천</a>
+    <a href="heat.html" onclick="closeMobileMenu()">열차단의 원리</a>
+    <a href="pricing.html" onclick="closeMobileMenu()">가격</a>
+    <a href="stores.html" onclick="closeMobileMenu()">시공점</a>
+    <a href="warranty.html" onclick="closeMobileMenu()">보증서</a>
+    <a href="index.html#booking" onclick="closeMobileMenu()">예약하기</a>
+</div>
 
 <main>
 <!-- HERO -->
@@ -874,6 +959,27 @@
     // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 제스처에서 재개)
     if(resume && resume.on){ startPlayback(); }
   })();
+</script>
+
+<script>
+/* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */
+(function () {
+  var hamburger  = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  window.closeMobileMenu = function () {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  };
+  hamburger.addEventListener('click', function () {
+    if (hamburger.classList.contains('open')) { window.closeMobileMenu(); return; }
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.classList.add('menu-open');
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') window.closeMobileMenu(); });
+}());
 </script>
 </body>
 </html>

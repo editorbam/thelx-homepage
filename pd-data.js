@@ -21,7 +21,7 @@ const PD_DATA = {
     vltImage: 'lx-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03) — 두오모 비교컷이 카드 배너와 중복이라 교체. 차 사진+픽토그램 오버레이(구본사 Key Point 문법).
        사진=나노바나나 생성(무로고 EV·밝은 하늘)+필름 그레인 로컬 보정. stage가 있으면 vltImage 대신 렌더(vltImage=롤백 폴백) */
-    stage: { img: 'lx-stage.jpg', icons: [
+    stage: { img: 'lx-stage.jpg', alt: 'THE LX — 해안 도로에 선 흰 스포츠카, 짙게 마감된 창유리', icons: [
       { i: 'eye',    t: '가시성' },
       { i: 'heat',   t: '열차단' },
       { i: 'safety', t: '세이프티' },
@@ -92,7 +92,7 @@ const PD_DATA = {
        vltTint는 이미지 제거 시 폴백용 보관. ⚠️ 틴트 교훈: 노랑 비중 크면 하늘 파랑과 섞여 카키로 탁해짐(1차 46,64,26/104,88,30 폐기) */
     vltImage: 'vogue-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'vogue-stage.jpg', icons: [
+    stage: { img: 'vogue-stage.jpg', alt: 'Vogue — 유리 빌딩 사이 광장에 선 검정 세단, 빛을 반사하는 창유리', icons: [
       { i: 'reflect', t: '내부 반사 저감' },
       { i: 'gold', t: '그린골드 색상' },
       { i: 'privacy', t: '프라이버시' },
@@ -154,7 +154,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(팔마 대성당, XENITH IR 15/30 라벨 포함) */
     vltImage: 'xenith-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'xenith-stage.jpg', icons: [
+    stage: { img: 'xenith-stage.jpg', alt: 'Xenith IR — 도심 건물 사이에 선 검정 전기 SUV, 짙은 창유리', icons: [
       { i: 'heat', t: '열 차단' },
       { i: 'signal', t: '전파 친화적' },
       { i: 'reflect', t: '내부 반사율' },
@@ -216,7 +216,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(토론토, QUANTUM BLACK 8~37 라벨 포함) */
     vltImage: 'quantum-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'quantum-stage.jpg', icons: [
+    stage: { img: 'quantum-stage.jpg', alt: 'Quantum — 바다 옆 고속도로를 달리는 은색 세단', icons: [
       { i: 'spectrum', t: '스펙트럼 차단' },
       { i: 'sun', t: '태양 에너지 차단' },
       { i: 'orbit', t: '반영구적' },
@@ -279,7 +279,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(하바나 거리, TITANIUM 6/16/26 라벨 포함) */
     vltImage: 'titanium-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'titanium-stage.jpg', icons: [
+    stage: { img: 'titanium-stage.jpg', alt: 'Titanium — 흰 단층 주택 앞에 선 은색 세단', icons: [
       { i: 'shield', t: '성능과 내구성' },
       { i: 'podium', t: '고성능 제품' },
       { i: 'heat', t: '태양열 차단' },
@@ -338,7 +338,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(베네치아 골목, G-LINE 10/30 라벨 포함) */
     vltImage: 'gline-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'gline-stage.jpg', icons: [
+    stage: { img: 'gline-stage.jpg', alt: 'G-LINE — 강변 공원 길에 선 흰 세단', icons: [
       { i: 'heat', t: '열 차단' },
       { i: 'carG', t: '다층 컬러 구현' },
       { i: 'clarity', t: '광학적 선명도' },
@@ -397,7 +397,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(산토리니, S-LINE 10/30 라벨 포함) */
     vltImage: 'sline-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'sline-stage.jpg', icons: [
+    stage: { img: 'sline-stage.jpg', alt: 'S-LINE — 가로수 그늘이 드리운 주택가에 선 세단', icons: [
       { i: 'eye', t: '맑은 시야' },
       { i: 'signal', t: '전파 방해 최소화' },
       { i: 'shield', t: '뛰어난 내구성' },
@@ -455,7 +455,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(뮌헨 마리엔광장, GALAXIE 12/35/50 라벨 포함) */
     vltImage: 'galaxie-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'galaxie-stage.jpg', icons: [
+    stage: { img: 'galaxie-stage.jpg', alt: 'Galaxie — 야외 주차장에 선 흰 해치백', icons: [
       { i: 'signal', t: '전파&신호 친화적' },
       { i: 'glasses', t: '눈부심 감소' },
       { i: 'layers', t: '광학적 투명도' },

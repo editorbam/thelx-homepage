@@ -3864,7 +3864,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      JAVASCRIPT
 ======================================== -->
-  <script src="pd-data.js?v=6"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
+  <script src="pd-data.js?v=7"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){
@@ -4416,7 +4416,7 @@ function pdOpen(id) {
   if (p.stage) {
     // 스테이지 모드(2026-08-03) — 제품 무대 사진 + PD_ICONS 픽토그램 오버레이
     pdVlt.innerHTML = `<div class="pd-stage">
-      <img src="${p.stage.img}" alt="${p.name} — 밝은 하늘 아래 짙은 유리의 차량" loading="eager" decoding="async">
+      <img src="${p.stage.img}" alt="${p.stage.alt || (p.name + ' — 밝은 하늘 아래 짙은 유리의 차량')}" loading="eager" decoding="async">
       <div class="pd-stage-icons">${p.stage.icons.map(ic => `<figure><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PD_ICONS[ic.i] || ''}</svg><figcaption>${ic.t}</figcaption></figure>`).join('')}</div>
       <div class="pd-vlt-static-cover"></div>
     </div>`;

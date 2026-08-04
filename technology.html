@@ -317,6 +317,23 @@
     /* ===========================
        CODA + CTA + FOOTER
     =========================== */
+    /* 선택 층으로 넘기는 다리 (2026-08-04) — 기술 페이지는 '우리가 택한 방법'까지만 말하고,
+       '그래서 당신은 무엇을 고를 것인가'는 필름추천이 받는다. */
+    .tech-bridge {
+      max-width: 720px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .tech-bridge .tb-rule { width: 56px; height: 1px; background: rgba(0,0,0,.22); margin: 0 auto clamp(2rem, 4vh, 3rem); }
+    .tech-bridge p {
+      font-size: clamp(1.15rem, 1.7vw, 1.4rem); font-weight: 600; color: #0a0a0a;
+      letter-spacing: -.02em; line-height: 1.6; word-break: keep-all; margin: 0;
+    }
+    .tech-bridge .tb-sub {
+      font-size: clamp(.9rem, 1vw, .98rem); font-weight: 400; color: rgba(0,0,0,.55);
+      margin-top: .9rem; letter-spacing: 0;
+    }
+    .tech-bridge .tb-sub a { color: #3f78d0; text-decoration: none; }
+    .tech-bridge .tb-sub a:hover { text-decoration: underline; }
     .tech-coda {
       text-align: center; padding: clamp(4rem,8vh,6rem) clamp(1.5rem,5vw,4rem) 0;
     }
@@ -588,19 +605,20 @@
 <!-- 두 길 -->
 <section class="tech-section">
   <div class="tech-chapter">
-    <h2 class="tech-chapter-title"><span class="tech-chapter-num">대부분의 필름 —</span>흡수.</h2>
+    <h2 class="tech-chapter-title"><span class="tech-chapter-num">하나의 방법 —</span>흡수.</h2>
     <p class="tech-chapter-body">
-      오래전부터 써온 방식입니다. 들어온 태양 에너지를 필름 안으로 흡수해 막습니다.
-      하지만 흡수한 열은 사라지지 않습니다. 한계에 다다르면 다시 풀려나 시간이 지날수록 실내로 스며듭니다.
+      오래전부터 널리 쓰인 방식입니다. 들어온 태양 에너지를 필름 안으로 흡수해 막습니다.
+      흡수한 열은 필름에 남고, 그중 일부는 시간이 지나며 실내로도 방사됩니다.
     </p>
-    <blockquote class="tech-declaration">흡수하지만, 결국 새어나옵니다.</blockquote>
+    <blockquote class="tech-declaration">열을 필름이 받아내는 방법입니다.</blockquote>
   </div>
 
   <div class="tech-rule"></div>
 
   <div class="tech-chapter">
-    <h2 class="tech-chapter-title"><span class="tech-chapter-num">THE LX —</span>반사.</h2>
-    <!-- ⚠️ '들어온 열이 없으니…' 논리는 recommend.html 비교표 '시간이 지나면' 행과 동일 문장 동기 (문구 수정 시 양쪽 함께) -->
+    <h2 class="tech-chapter-title"><span class="tech-chapter-num">THE LX가 택한 방법 —</span>반사.</h2>
+    <!-- 2026-08-04: recommend 비교표(반사형↔흡수형)가 조건표로 바뀌면서 '시간이 지나면' 행과의 동기 주의는 해제됨.
+         이 페이지는 '우리가 택한 방법'까지만 말하고, 무엇을 고를지는 recommend가 받는다(맨 아래 다리 문장). -->
     <p class="tech-chapter-body">
       스퍼터링 필름 THE LX가 택한 길입니다. 열을 흡수하지 않습니다.
       유리에 닿은 태양 에너지를 <strong>차단하고 반사합니다.</strong>
@@ -612,7 +630,7 @@
 
 <!-- 핵심 문장 -->
 <section class="tech-heart">
-  <p class="tech-heart-label">THE LX의 답</p>
+  <p class="tech-heart-label">플래그십 LX의 답</p>
   <h2><span class="muted">흡수하지 않습니다.</span><br>반사합니다.</h2>
 </section>
 
@@ -656,8 +674,8 @@
 
     <!-- 흡수 -->
     <div class="panel abs">
-      <div class="ptitle"><small>일반 필름 · 흡수</small><span class="pt-h">열을 흡수합니다</span>
-        <p class="pt-copy">흡수한 열이 <b>시간이 지나 실내로</b> 퍼집니다. 한계에 다다르면 차 안이 더워집니다.</p>
+      <div class="ptitle"><small>흡수형 필름</small><span class="pt-h">열을 흡수합니다</span>
+        <p class="pt-copy">흡수한 열의 일부가 <b>시간이 지나 실내로</b> 방사됩니다. 그만큼 온도가 서서히 올라갑니다.</p>
       </div>
       <div class="scene">
         <video src="tech-absorb.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
@@ -703,15 +721,16 @@
       <p class="tech-compare-unit">태양 에너지 차단 (TSER)</p>
     </div>
     <div class="tech-compare-card">
-      <p class="tech-compare-brand">일반 필름</p>
+      <p class="tech-compare-brand">흡수 방식</p>
       <p class="tech-compare-label">열 흡수 필름</p>
       <p class="tech-compare-num"><span class="cnt" data-to="44">0</span><span style="font-size:.5em">%</span></p>
       <p class="tech-compare-unit">태양 에너지 차단 (TSER)</p>
     </div>
   </div>
   <p class="tech-compare-note">
-    흔히 쓰는 열 흡수 필름은 받은 열의 절반가량이 다시 실내로 스며들어, 실제 차단은 44%에 그칩니다.
-    열 반사 구조의 THE LX는 71%를 차단합니다. (필름 없는 유리는 10.5%.
+    열 흡수 방식은 받은 열의 일부가 다시 실내로 방사되어, 총량 기준 차단이 44% 수준입니다.
+    열 반사 구조의 THE LX는 71%입니다. 두 방식의 일반값 비교이며, 제품별 수치는 스펙표가 따로 말합니다.
+    (필름 없는 유리는 10.5%.
     THE LX 플래그십 SIGNATURE 실측 · 농도 15 · Solar Gard TSER 기준)
   </p>
 </section>
@@ -773,6 +792,13 @@
 <!-- CODA -->
 <section class="tech-coda">
   <h2>보이지 않는 정밀함.</h2>
+</section>
+
+<!-- 다리 — 기술(믿음 층) → 필름추천(선택 층) -->
+<section class="tech-bridge">
+  <div class="tb-rule"></div>
+  <p>우리는 모든 유리에 같은 필름을 권하지 않습니다.</p>
+  <p class="tb-sub">차와 조건에 따라 답이 달라집니다 — <a href="recommend.html">무엇에 맞는가</a>에서 이어집니다.</p>
 </section>
 
 <div class="tech-cta">

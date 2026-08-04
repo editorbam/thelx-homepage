@@ -160,7 +160,21 @@
       transition: color .2s;
     }
     .story-nav-back:hover { color: #0a0a0a; }
-    .story-nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .story-nav-links {
+      display: flex; align-items: center; gap: clamp(.85rem, 2vw, 1.4rem);
+      min-width: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    /* 전 페이지 이동 네비(2026-08-04) — 서브페이지에서도 다른 페이지로 바로 간다.
+       링크가 화면보다 길면 가로 스크롤 + 우측 페이드(제품 탭과 같은 문법) */
+    .story-nav-links::-webkit-scrollbar { display: none; }
+    .story-nav-back { white-space: nowrap; }
+    .story-nav-back.is-here { color: #0a0a0a; font-weight: 600; }
+    @media (max-width: 768px) {
+      .story-nav-links {
+        -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+                mask-image: linear-gradient(90deg, #000 88%, transparent);
+      }
+    }
 
 
   /* STORE LOCATOR (index.html 이식 — 원본 CSS 그대로) */
@@ -428,8 +442,12 @@
 <nav class="story-nav">
   <a href="index.html" class="story-nav-brand" aria-label="THE LX 홈"><img src="thelx-logo-nav-b.png" alt="THE LX"></a>
   <div class="story-nav-links">
-    <a href="index.html" class="story-nav-back" onclick="if(history.length>1){history.back();return false;}"><span aria-hidden="true">←</span> 뒤로</a>
-    <a href="index.html" class="story-nav-back">홈으로</a>
+    <a href="technology.html" class="story-nav-back">기술</a>
+    <a href="recommend.html" class="story-nav-back">필름추천</a>
+    <a href="heat.html" class="story-nav-back">열차단의 원리</a>
+    <a href="pricing.html" class="story-nav-back">가격</a>
+    <a href="stores.html" class="story-nav-back is-here">시공점</a>
+    <a href="warranty.html" class="story-nav-back">보증서</a>
   </div>
 </nav>
 

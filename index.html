@@ -381,6 +381,7 @@ nav.on-dark .nav-drop-btn { color: rgba(255,255,255,.7); }
   display: block; font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--gray-3); font-weight: 500; margin-bottom: .2rem;
 }
+.nav-drop-tier:empty::before { content: '\00a0'; } /* 라벨 없는 항목(그 외)도 같은 높이 — 이름 줄 맞춤 (2026-08-04) */
 .nav-drop-name { display: block; font-size: 15px; font-weight: 500; color: var(--black); letter-spacing: -.01em; white-space: nowrap; }
 /* 패널은 항상 흰 배경 — on-dark 네비 링크 색 규칙보다 뒤에 선언해 같은 특이도로 승리 */
 nav .nav-links .nav-drop-panel a.nav-drop-all {
@@ -4616,7 +4617,7 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
      등급 언어는 없앤 게 아니라 견적 쪽으로 내렸다. 주력 넷만 고유 조건, 나머지는 '그 외'. */
   var TIERS = {
     lx: '맑은 시야', vogue: '외관의 색', xenith: '천장의 빛', quantum: '가장 많은 선택',
-    titanium: '그 외', gline: '그 외', sline: '그 외', galaxie: '그 외', shield: '보호 필름 · PPF',
+    titanium: '', gline: '', sline: '', galaxie: '', shield: '보호 필름 · PPF',
   };
   var keys = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie', 'shield'];
 

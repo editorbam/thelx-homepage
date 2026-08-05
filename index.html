@@ -4393,13 +4393,15 @@ if (prodSec) prodIO.observe(prodSec);
   section.querySelectorAll('.vlt-band').forEach(function(band){
     const n = band.querySelector('.lbl-name');
     const p = band.querySelector('.lbl-pct');
+    /* lbl-name 안에 '→ 클릭하세요' 스팬이 중첩돼 있어 textContent 통째로 쓰면 딸려온다 — 이름 텍스트 노드만 */
+    const nameText = n && n.firstChild ? n.firstChild.textContent.trim() : '농도';
     band.setAttribute('role', 'button');
     band.setAttribute('tabindex', '0');
-    band.setAttribute('aria-label', (n ? n.textContent : '농도') + ' — 하늘 전체를 이 농도로 보기');
+    band.setAttribute('aria-label', nameText + ' — 하늘 전체를 이 농도로 보기');
     function focusBand(){
       const fill = band.querySelector('.vlt-band-fill');
       if (fill) full.style.background = getComputedStyle(fill).backgroundColor;
-      if (vfName) vfName.textContent = n ? n.textContent : '';
+      if (vfName) vfName.textContent = nameText;
       if (vfPct)  vfPct.textContent  = p ? p.textContent : '';
       section.classList.add('vlt-focused');
     }

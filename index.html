@@ -1089,6 +1089,21 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   font-size: 22px; font-weight: 500; color: rgba(255,255,255,.92);
   letter-spacing: .06em; text-transform: uppercase;
 }
+.lbl-click {
+  font-size: 11px; font-weight: 400; letter-spacing: .04em; text-transform: none;
+  color: rgba(255,255,255,.55); margin-left: .55rem; white-space: nowrap;
+}
+/* 안내 위치 분기 — 넓은 화면=농도 라벨 옆, 좁은 화면=상단 한 줄 (밴드 폭 78~160px에선 라벨 옆이 잘림) */
+.vlt-hint {
+  display: none; color: rgba(255,255,255,.42); font-size: 12px; font-weight: 400;
+  margin: .7rem 0 0; letter-spacing: .03em; word-break: keep-all;
+  transition: opacity .35s ease;
+}
+#vlt.vlt-focused .vlt-hint { opacity: 0; }
+@media (max-width: 1024px) {
+  .lbl-click { display: none; }
+  .vlt-hint { display: block; }
+}
 .vlt-band-label .lbl-pct {
   font-size: 13px; font-weight: 300; color: rgba(255,255,255,.55);
   letter-spacing: .1em;
@@ -1126,6 +1141,7 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   .vlt-counter { top: 1.5rem; right: 1.5rem; }
   .vlt-pips { right: 1.5rem; bottom: 1.8rem; }
   .vlt-band-label .lbl-name { font-size: 10px; }
+  .lbl-click { font-size: 8px; margin-left: .3rem; }
   .vlt-band-label .lbl-pct { display: none; }
 }
 
@@ -3036,7 +3052,7 @@ body.pd-open { overflow: hidden; }
     <p class="section-eyebrow" style="color:rgba(255,255,255,.45);">Visible Light Transmittance</p>
     <h2 style="color:#fff;font-size:clamp(1.6rem,3.6vw,2.8rem);font-weight:600;letter-spacing:-0.03em;margin:.5rem 0 .6rem;text-shadow:0 2px 18px rgba(0,0,0,.5);">빛의 양을 고르는 일.</h2>
     <p style="color:rgba(255,255,255,.65);font-size:clamp(.85rem,1.05vw,1rem);font-weight:400;margin:0;letter-spacing:.02em;word-break:keep-all;">숫자가 낮을수록 어둡고, 높을수록 밝습니다. 같은 하늘, 다른 시야.</p>
-    <p class="vlt-hint" style="color:rgba(255,255,255,.42);font-size:12px;font-weight:400;margin:.7rem 0 0;letter-spacing:.03em;word-break:keep-all;">농도를 클릭하세요</p>
+    <p class="vlt-hint">농도를 클릭하세요</p>
   </div>
   <div class="vlt-wrap" id="vltWrap">
     <img src="vlt-sky.jpg" alt="THE LX 필름 투과율 시각화" class="vlt-img" loading="eager" decoding="sync" fetchpriority="high">
@@ -3045,23 +3061,23 @@ body.pd-open { overflow: hidden; }
          공식값 12/23/42/59/72 (2026-07-03 확정). 수정 시 세 곳을 항상 함께 고칠 것. -->
     <div class="vlt-band" id="vb0" style="left:0%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.80);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 15</span><span class="lbl-pct">VLT 12%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 15<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 12%</span></div>
     </div>
     <div class="vlt-band" id="vb1" style="left:20%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.48);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 25</span><span class="lbl-pct">VLT 23%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 25<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 23%</span></div>
     </div>
     <div class="vlt-band" id="vb2" style="left:40%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.40);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 40</span><span class="lbl-pct">VLT 42%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 40<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 42%</span></div>
     </div>
     <div class="vlt-band" id="vb3" style="left:60%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.24);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 55</span><span class="lbl-pct">VLT 59%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 55<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 59%</span></div>
     </div>
     <div class="vlt-band" id="vb4" style="left:80%;">
       <div class="vlt-band-fill" style="background:rgba(6,10,22,.05);"></div>
-      <div class="vlt-band-label"><span class="lbl-name">LX 70</span><span class="lbl-pct">VLT 72%</span></div>
+      <div class="vlt-band-label"><span class="lbl-name">LX 70<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 72%</span></div>
     </div>
     <div class="vlt-divider" style="left:20%;"></div>
     <div class="vlt-divider" style="left:40%;"></div>

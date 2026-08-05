@@ -109,10 +109,10 @@
     },
     {
       "@type": "Question",
-      "name": "THE LX는 왜 열을 흡수하지 않고 반사하나요?",
+      "name": "반사와 흡수는 어떻게 다른가요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "THE LX 대표 라인업(LX·Vogue·Quantum)은 진공에서 금속을 원자 단위로 증착한 풀 메탈 스퍼터 구조로, 태양 에너지를 유리 바깥으로 반사해 차단합니다. 반사 방식은 열을 필름 안에 남기지 않아, 장시간 주행이나 한여름 정차처럼 열 노출이 길어질수록 성능이 안정적으로 유지됩니다. 그래서 순간 수치보다 시간이 지날수록 체감 차이가 커집니다."
+        "text": "태양 에너지를 유리 바깥으로 밀어내는 방식(반사)과, 필름이 받아 서서히 내보내는 방식(흡수)입니다. 반사 타입(LX·Vogue·Quantum)은 진공에서 금속을 원자 단위로 증착한 풀 메탈 스퍼터 구조로, 열 노출이 길어질수록 안정적입니다. 흡수 타입(Xenith IR)은 세라믹 소재로 전파를 막지 않아 전기차·ADAS 차량에 적합합니다. 어느 쪽이 맞는지는 차와 주행 조건이 정합니다."
       }
     },
     {
@@ -120,7 +120,7 @@
       "name": "THE LX 라인업은 어떻게 다른가요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "용도와 농도에 따라 선택합니다. LX는 풀 메탈 스퍼터(열반사) 타입으로 내구성 보증 10년·최대 TSER 71%, Vogue는 풀 메탈 스퍼터 반사 타입 7년·80%, Xenith IR은 세라믹 IR 타입으로 전파 방해가 없고 5년·68%, Quantum은 풀 메탈 스퍼터 타입 7년·72%입니다. 같은 제품도 농도에 따라 투과율과 차단율이 달라지며, 표기 수치는 농도 기준값입니다."
+        "text": "무엇을 먼저 두느냐로 갈립니다. 맑은 시야가 먼저면 LX(내구성 보증 10년·최대 TSER 71%), 밖에서 보이는 색까지 고르려면 Vogue(7년·80%), 천장으로 들어오는 빛이 문제면 Xenith IR(5년·68%), 가장 많은 선택을 따르면 Quantum(7년·72%)입니다. 같은 제품도 농도에 따라 투과율과 차단율이 달라지며, 표기 수치는 가장 어두운 농도 기준 최대값입니다."
       }
     },
     {
@@ -1183,6 +1183,8 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .fc-namebtn:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
 .film-compare-note { margin-top: 1rem; font-size: .8rem; font-weight: 300; color: var(--gray-3); line-height: 1.7; }
 .film-compare-note a { color: var(--gray-4); text-decoration: underline; text-underline-offset: 3px; cursor: none; }
+.film-compare-note.above { margin-top: 0; margin-bottom: .9rem; }
+.film-compare-note + .film-compare-note { margin-top: .45rem; }
 @media (max-width:768px) {
   .film-compare { margin-bottom: 3.5rem; }
   .film-compare-table { min-width: 740px; }
@@ -3032,7 +3034,7 @@ body.pd-open { overflow: hidden; }
 <section id="products">
   <div class="section-inner">
     <h2 class="section-title fi">
-      당신의 공간을 위한<br><em>선택된 제품</em>
+      모든 유리에<br><em>같은 필름을 <span style="white-space:nowrap">권하지 않습니다</span></em>
     </h2>
 
     <!-- 필름 8종 비교 (2026-07-30 총판·대표 피드백 "고르기 전에 비교 먼저" — 표 내용=JS가 PD_DATA에서 생성, 수치 단일 소스.
@@ -3044,10 +3046,13 @@ body.pd-open { overflow: hidden; }
       </button>
       <div class="film-compare-body" id="fcBody">
         <div class="fcb-inner">
+          <!-- 각주 3분할 2026-08-05 — 조작 안내(표 위) / 수치 기준(각주) / 이어지는 곳(링크 줄). 한 줄에 정보 5개가 뭉쳐 있던 상태 해소 -->
+          <p class="film-compare-note above">행을 선택하면 상세 스펙이 열립니다.</p>
           <div class="film-compare-wrap">
             <table class="film-compare-table" id="filmCompareTable" aria-label="필름 8종 성능 비교"></table>
           </div>
-          <p class="film-compare-note">TSER(총태양에너지 차단율)는 가장 어두운 농도 기준 최대값 · 전 제품 자외선 등급 PA+++ SPF 285 · 행을 선택하면 상세 스펙이 열립니다 · 도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다 · 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.</p>
+          <p class="film-compare-note">TSER(총태양에너지 차단율)는 가장 어두운 농도 기준 최대값 · 전 제품 자외선 등급 PA+++ SPF 285</p>
+          <p class="film-compare-note">도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다. 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.</p>
         </div>
       </div>
     </div>
@@ -3602,8 +3607,8 @@ body.pd-open { overflow: hidden; }
         <div class="faq-answer"><p>국내 도로교통법상 앞면 창유리는 가시광선 투과율(VLT) 70% 이상, 운전석·조수석 옆유리는 40% 이상을 유지해야 합니다. 뒷좌석 유리는 법적 제한이 없습니다. THE LX는 시공 전 차량별로 합법 기준에 맞는 농도를 안내합니다.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question"><span class="faq-question-text">THE LX는 왜 열을 흡수하지 않고 반사하나요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>THE LX 대표 라인업(LX·Vogue·Quantum)은 진공에서 금속을 원자 단위로 증착한 풀 메탈 스퍼터 구조로, 태양 에너지를 유리 바깥으로 반사해 차단합니다. 반사 방식은 열을 필름 안에 남기지 않아, 장시간 주행이나 한여름 정차처럼 열 노출이 길어질수록 성능이 안정적으로 유지됩니다. 그래서 순간 수치보다 시간이 지날수록 체감 차이가 커집니다.</p></div>
+        <button class="faq-question"><span class="faq-question-text">반사와 흡수는 어떻게 다른가요?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>태양 에너지를 유리 바깥으로 밀어내는 방식(반사)과, 필름이 받아 서서히 내보내는 방식(흡수)입니다. 반사 타입(LX·Vogue·Quantum)은 진공에서 금속을 원자 단위로 증착한 풀 메탈 스퍼터 구조로, 열 노출이 길어질수록 안정적입니다. 흡수 타입(Xenith IR)은 세라믹 소재로 전파를 막지 않아 전기차·ADAS 차량에 적합합니다. 어느 쪽이 맞는지는 차와 주행 조건이 정합니다.</p></div>
       </div>
       <div class="faq-morebar">
         <button type="button" id="faqMoreBtn" aria-expanded="false" aria-controls="faqMore" aria-label="가격·보증·시공점·관리 질문 펼치기"><span class="fm-t">가격 · 보증 · 시공점 · 관리</span><span class="fm-tg" aria-hidden="true">+</span></button>
@@ -3611,7 +3616,7 @@ body.pd-open { overflow: hidden; }
       <div class="faq-more" id="faqMore">
       <div class="faq-item">
         <button class="faq-question"><span class="faq-question-text">THE LX 라인업은 어떻게 다른가요?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer"><p>용도와 농도에 따라 선택합니다. LX는 풀 메탈 스퍼터(열반사) 타입으로 내구성 보증 10년·최대 TSER 71%, Vogue는 풀 메탈 스퍼터 반사 타입 7년·80%, Xenith IR은 세라믹 IR 타입으로 전파 방해가 없고 5년·68%, Quantum은 풀 메탈 스퍼터 타입 7년·72%입니다. 같은 제품도 농도에 따라 투과율과 차단율이 달라지며, 표기 수치는 농도 기준값입니다.</p></div>
+        <div class="faq-answer"><p>무엇을 먼저 두느냐로 갈립니다. 맑은 시야가 먼저면 LX(내구성 보증 10년·최대 TSER 71%), 밖에서 보이는 색까지 고르려면 Vogue(7년·80%), 천장으로 들어오는 빛이 문제면 Xenith IR(5년·68%), 가장 많은 선택을 따르면 Quantum(7년·72%)입니다. 같은 제품도 농도에 따라 투과율과 차단율이 달라지며, 표기 수치는 가장 어두운 농도 기준 최대값입니다.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question"><span class="faq-question-text">Solar Gard는 어떤 브랜드이고, THE LX와는 어떤 관계인가요?</span><span class="faq-toggle">+</span></button>

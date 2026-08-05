@@ -3052,8 +3052,9 @@ body.pd-open { overflow: hidden; }
       당신의 공간을 위한<br><em>선택된 제품</em>
     </h2>
 
-    <!-- 필름 8종 비교 (2026-07-30 총판·대표 피드백 "고르기 전에 비교 먼저" — 표 내용=JS가 PD_DATA에서 생성, 수치 단일 소스.
-         기본 접힘(디스클로저) — "표가 복잡" 피드백 반영: 비교하러 온 사람에겐 입구에서 한 클릭, 첫 방문 흐름은 방해 없음 -->
+    <!-- 필름 8종 비교 — 2026-08-05 사용자 결정으로 비노출 (template=비렌더 보존, 복원=template 태그 제거)
+         이력: 2026-07-30 총판·대표 피드백 "고르기 전에 비교 먼저"로 신설 → 8/5 제거. JS(빌드·토글)는 널 가드로 자동 스킵 -->
+    <template id="filmCompareBackup">
     <div class="film-compare fi" id="filmCompare">
       <button type="button" class="film-compare-toggle" id="fcToggle" aria-expanded="false" aria-controls="fcBody">
         <span class="fct-title">고르기 전에, 한눈에. <em>필름 8종 비교표</em></span>
@@ -3071,6 +3072,7 @@ body.pd-open { overflow: hidden; }
         </div>
       </div>
     </div>
+    </template>
 
     <div class="product-tabs-nav fi">
       <!-- 주력 넷 = 서열 없이 나란히 (FLAGSHIP 배지 제거 2026-08-04 — 넷을 옆으로 세우는 구조와 충돌) -->

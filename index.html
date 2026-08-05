@@ -1080,8 +1080,6 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   margin-top: .45rem; font-size: 11px; font-weight: 400; letter-spacing: .04em;
   color: rgba(255,255,255,.5); text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
-.vlt-hint { transition: opacity .4s; }
-#vlt.vlt-focused .vlt-hint { opacity: 0; }
 @media (max-width: 768px) {
   .vlt-full-hint { font-size: 10px; }
 }
@@ -1141,7 +1139,6 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   .vlt-counter { top: 1.5rem; right: 1.5rem; }
   .vlt-pips { right: 1.5rem; bottom: 1.8rem; }
   .vlt-band-label .lbl-name { font-size: 10px; }
-  .lbl-click { font-size: 8px; margin-left: .3rem; }
   .vlt-band-label .lbl-pct { display: none; }
 }
 
@@ -3504,6 +3501,8 @@ body.pd-open { overflow: hidden; }
 
   <!-- 드라마 제작지원 — 타이틀 로고 월 (2026-08-05 사용자 확정: 로고 PNG 방식)
        [대기: ①협찬 계약서의 타이틀 로고 사용 조항 회사 확인 ②로고 PNG 4종 입수 — 둘 다 되면 주석 해제]
+       ⚠️ credit-*.png 4종은 로컬에만 있고 git 미커밋(권리 확인 전 공개 리포 게시 금지) — 해제 시 git add 필수.
+       백업=~/thelx-workspace/drama-credit-logos-대기/
        로고 파일 스펙: credit-<작품>.png · 투명 배경 · 높이 160px 이상(@2x) · 원본색 그대로
        (단색 통일은 CSS filter가 처리 — grayscale+brightness. 파일을 미리 단색화하지 말 것)
        캡션 채널 표기는 라틴 통일(SBS·tvN·MBC·Netflix) — '넷' 글자가 서브셋 폰트에 없음(2026-08-05 확인)
@@ -4404,15 +4403,32 @@ if (prodSec) prodIO.observe(prodSec);
       if (vfName) vfName.textContent = nameText;
       if (vfPct)  vfPct.textContent  = p ? p.textContent : '';
       section.classList.add('vlt-focused');
+      _lastBand = band;
+      /* 키보드 사용자용: 해제 버튼(오버레이)으로 초점 이동 — Enter/Space로 복귀 가능 */
+      full.setAttribute('tabindex', '0');
+      full.focus({ preventScroll: true });
     }
     band.addEventListener('click', focusBand);
     band.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); focusBand(); }
+      if (e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        if (section.classList.contains('vlt-focused')) release(); else focusBand();
+      }
     });
   });
-  function release(){ section.classList.remove('vlt-focused'); }
+  var _lastBand = null;
+  function release(){
+    section.classList.remove('vlt-focused');
+    full.removeAttribute('tabindex');
+    if (_lastBand) _lastBand.focus({ preventScroll: true }); /* 초점을 선택했던 밴드로 반환 */
+  }
   full.addEventListener('click', release);
+  full.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); release(); }
+  });
   document.addEventListener('keydown', function(e){
+    /* 위층(제품 모달·모바일 메뉴)이 열려 있으면 그쪽 Escape에 양보 — 이중 발화 방지 */
+    if (document.body.classList.contains('pd-open') || document.body.classList.contains('menu-open')) return;
     if (e.key === 'Escape' && section.classList.contains('vlt-focused')) release();
   });
 }());

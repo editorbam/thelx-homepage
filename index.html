@@ -1060,23 +1060,24 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 }
 .vlt-band.on .vlt-band-label { opacity: 1; }
 
-/* 농도 전체 보기 (2026-08-05 대표 아이디어) — 밴드 선택=전체 덮기, 다시 선택=복귀 */
+/* 농도 전체 보기 (2026-08-05 대표 아이디어) — 밴드 선택=커튼 슬라이드로 전체 덮기, 다시 선택=복귀 */
 .vlt-band { pointer-events: auto; }  /* 밴드를 터치·클릭 대상으로 (기존 none) */
 .vlt-full {
-  position: absolute; inset: 0; z-index: 5;
-  opacity: 0; pointer-events: none;
-  transition: opacity .7s ease, background-color .7s ease;
+  position: absolute; inset: 0; z-index: 5; overflow: hidden;
+  transform: translateX(-102%);
+  transition: transform .95s cubic-bezier(0.4, 0, 0.15, 1); /* 밴드 커튼과 같은 곡선 */
+  pointer-events: none; will-change: transform;
 }
-#vlt.vlt-focused .vlt-full { opacity: 1; pointer-events: auto; cursor: pointer; }
-#vlt.vlt-focused .vlt-band-fill { opacity: 0; }   /* 반투명 오버레이 밑으로 5분할 명암이 비치지 않게 */
-#vlt.vlt-focused .vlt-band .vlt-band-label { opacity: 0; transition-delay: 0s; } /* 밴드 라벨만 — 오버레이 라벨(.vlt-full-label)은 유지 */
-.vlt-full-label { opacity: 1; transition: none; bottom: 5.4rem; } /* 좌하단 음소거 버튼(≈4rem 높이) 위로 */
+#vlt.vlt-focused .vlt-full { transform: translateX(0); pointer-events: auto; cursor: pointer; }
+.vlt-full-fill { position: absolute; inset: 0; }
+.vlt-full-label { bottom: 5.4rem; opacity: 0; transition: opacity .4s ease; } /* 좌하단 음소거 버튼 위 · 커튼 도착 후 표시 */
+#vlt.vlt-focused .vlt-full-label { opacity: 1; transition-delay: .6s; }
 .vlt-full-hint {
   margin-top: .45rem; font-size: 11px; font-weight: 400; letter-spacing: .04em;
   color: rgba(255,255,255,.5); text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
-.vlt-divider, .vlt-pips, .vlt-hint { transition: opacity .4s; }
-#vlt.vlt-focused .vlt-divider, #vlt.vlt-focused .vlt-hint { opacity: 0; }
+.vlt-hint { transition: opacity .4s; }
+#vlt.vlt-focused .vlt-hint { opacity: 0; }
 @media (max-width: 768px) {
   .vlt-full-hint { font-size: 10px; }
 }
@@ -3063,8 +3064,11 @@ body.pd-open { overflow: hidden; }
     <div class="vlt-divider" style="left:60%;"></div>
     <div class="vlt-divider" style="left:80%;"></div>
 
-    <!-- 농도 전체 보기 (2026-08-05 대표 아이디어) — 밴드를 선택하면 그 농도가 하늘 전체를 덮고, 다시 선택하면 5분할 비교로 복귀 -->
+    <!-- 농도 전체 보기 (2026-08-05 대표 아이디어) — 밴드 선택 시 그 농도 커튼이 왼쪽에서 슬라이드해 전체를 덮고, 다시 선택하면 복귀.
+         오버레이=하늘 이미지+틴트의 불투명 커튼 (반투명이면 밑의 5분할이 비쳐 보임) -->
     <div class="vlt-full" id="vltFull" role="button" aria-label="비교 화면으로 돌아가기">
+      <img src="vlt-sky.jpg" alt="" class="vlt-img" aria-hidden="true">
+      <div class="vlt-full-fill" id="vltFullFill"></div>
       <div class="vlt-band-label vlt-full-label">
         <span class="lbl-name" id="vfName"></span>
         <span class="lbl-pct" id="vfPct"></span>
@@ -4376,7 +4380,8 @@ if (prodSec) prodIO.observe(prodSec);
     band.setAttribute('aria-label', (n ? n.textContent : '농도') + ' — 하늘 전체를 이 농도로 보기');
     function focusBand(){
       const fill = band.querySelector('.vlt-band-fill');
-      if (fill) full.style.background = getComputedStyle(fill).backgroundColor;
+      const fullFill = document.getElementById('vltFullFill');
+      if (fill && fullFill) fullFill.style.background = getComputedStyle(fill).backgroundColor;
       if (vfName) vfName.textContent = n ? n.textContent : '';
       if (vfPct)  vfPct.textContent  = p ? p.textContent : '';
       section.classList.add('vlt-focused');

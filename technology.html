@@ -914,7 +914,8 @@
      Safari가 백그라운드 탭에서 디코더를 회수하면 paused=false인 채 화면만 멈춘다.
      → currentTime이 두 틱(0.6초) 연속 제자리면 '언 것'으로 판정, 소스를 다시 물려 되살린다. */
   function _detectFrozen(v){
-    if (v.paused) { v.dataset.frozenTicks = '0'; return false; }
+    /* readyState<3 = 데이터가 없어 멈춘 것(버퍼링) — 냉동 아님. load()로 버퍼를 버리면 역효과 */
+    if (v.paused || v.readyState < 3) { v.dataset.frozenTicks = '0'; return false; }
     var t = v.currentTime.toFixed(3);
     if (v.dataset.lastT === t) {
       v.dataset.frozenTicks = String((parseInt(v.dataset.frozenTicks||'0',10)) + 1);
@@ -924,19 +925,26 @@
     v.dataset.lastT = t;
     return parseInt(v.dataset.frozenTicks,10) >= 2;
   }
-  var _kickTimer = null;
+  function _vVisible(v){
+    var r = v.getBoundingClientRect();
+    return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+  }
+  var _kickTimer = null, _kickRaf = null;
   function kickVideos(){
     var tries = 0;
     if (_kickTimer){ clearInterval(_kickTimer); _kickTimer = null; }
-    document.querySelectorAll('video[autoplay]').forEach(function(v){ delete v.dataset.lastT; v.dataset.frozenTicks = '0'; });
+    if (_kickRaf){ cancelAnimationFrame(_kickRaf); _kickRaf = null; } /* 킥 중첩 시 같은 프레임 이중 틱 방지(리뷰 지적) */
+    document.querySelectorAll('video[autoplay]').forEach(function(v){ delete v.dataset.lastT; v.dataset.frozenTicks = '0'; v.dataset.kickReloaded = '0'; });
     var tick = function(){
       tries++;
       resumeVideos(tries >= 8);
       var anyFrozen = false;
       document.querySelectorAll('video[autoplay]').forEach(function(v){
-        if (_detectFrozen(v)){
+        if (_detectFrozen(v) && v.dataset.everPlayed === '1'){ /* 재생 이력 없는 영상은 래치 금지 — 루프가 공회전으로 16틱을 다 돌지 않게 */
           anyFrozen = true;
-          if (v.dataset.everPlayed === '1'){
+          /* 화면 밖은 파괴적 load() 금지 — 보이는 것만 소생 (index와 동일 기준) */
+          if (_vVisible(v) && v.dataset.kickReloaded !== '1'){
+            v.dataset.kickReloaded = '1'; /* 킥 1회당 재장전 1번 — 반복 리셋 방지 */
             try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function(){}); } catch(e){}
             v.dataset.frozenTicks = '0'; delete v.dataset.lastT;
           }
@@ -946,7 +954,7 @@
       /* 언 상태는 2틱 지나야 확정되므로 최소 4틱은 돌고 나서 종료 판단 */
       if ((!stalled && !anyFrozen && tries >= 4) || tries >= 16){ clearInterval(_kickTimer); _kickTimer = null; }
     };
-    requestAnimationFrame(tick);
+    _kickRaf = requestAnimationFrame(function(){ _kickRaf = null; tick(); });
     _kickTimer = setInterval(tick, 300);
   }
   window.addEventListener('pageshow', kickVideos);

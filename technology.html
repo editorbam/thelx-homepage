@@ -910,15 +910,41 @@
   document.addEventListener('playing', function(e){
     if (e.target && e.target.tagName === 'VIDEO') e.target.dataset.everPlayed = '1';
   }, true);
+  /* ⚠️ 2026-08-05 — paused만 보면 놓치는 경우가 있다(사용자 실기기 확인).
+     Safari가 백그라운드 탭에서 디코더를 회수하면 paused=false인 채 화면만 멈춘다.
+     → currentTime이 두 틱(0.6초) 연속 제자리면 '언 것'으로 판정, 소스를 다시 물려 되살린다. */
+  function _detectFrozen(v){
+    if (v.paused) { v.dataset.frozenTicks = '0'; return false; }
+    var t = v.currentTime.toFixed(3);
+    if (v.dataset.lastT === t) {
+      v.dataset.frozenTicks = String((parseInt(v.dataset.frozenTicks||'0',10)) + 1);
+    } else {
+      v.dataset.frozenTicks = '0';
+    }
+    v.dataset.lastT = t;
+    return parseInt(v.dataset.frozenTicks,10) >= 2;
+  }
   var _kickTimer = null;
   function kickVideos(){
     var tries = 0;
     if (_kickTimer){ clearInterval(_kickTimer); _kickTimer = null; }
+    document.querySelectorAll('video[autoplay]').forEach(function(v){ delete v.dataset.lastT; v.dataset.frozenTicks = '0'; });
     var tick = function(){
       tries++;
       resumeVideos(tries >= 8);
+      var anyFrozen = false;
+      document.querySelectorAll('video[autoplay]').forEach(function(v){
+        if (_detectFrozen(v)){
+          anyFrozen = true;
+          if (v.dataset.everPlayed === '1'){
+            try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function(){}); } catch(e){}
+            v.dataset.frozenTicks = '0'; delete v.dataset.lastT;
+          }
+        }
+      });
       var stalled = [...document.querySelectorAll('video[autoplay]')].some(function(v){ return v.paused; });
-      if (!stalled || tries >= 16){ clearInterval(_kickTimer); _kickTimer = null; }
+      /* 언 상태는 2틱 지나야 확정되므로 최소 4틱은 돌고 나서 종료 판단 */
+      if ((!stalled && !anyFrozen && tries >= 4) || tries >= 16){ clearInterval(_kickTimer); _kickTimer = null; }
     };
     requestAnimationFrame(tick);
     _kickTimer = setInterval(tick, 300);

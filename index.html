@@ -5147,14 +5147,45 @@ function _hasStalledVideo() {
 /* 복원 직후엔 ①스크롤 위치가 아직 비동기로 되돌아오는 중이고 ②Safari가 한동안 재생을 거부한다.
    그래서 몇 번 시도하고 끝내면 놓친다(2026-08-04 실기기 확인: ⌘Tab으로 앱 전환하면 살아남 =
    재생 명령 자체는 정상, 복원 시점의 거부가 원인). 재생이 실제로 시작될 때까지 짧게 되물어본다. */
+/* ⚠️ 2026-08-05 — paused만 보면 놓치는 경우가 있다(technology 사용자 실기기 확인).
+   Safari가 백그라운드 탭에서 디코더를 회수하면 paused=false인 채 화면만 멈춘다.
+   → 화면 안 영상의 currentTime이 두 틱(0.6초) 연속 제자리면 '언 것'으로 판정, 소스를 다시 물린다. */
+function _vVisible(v) {
+  var r = v.getBoundingClientRect();
+  return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+}
+function _detectFrozen(v) {
+  if (v.paused) { v.dataset.frozenTicks = '0'; return false; }
+  var t = v.currentTime.toFixed(3);
+  if (v.dataset.lastT === t) {
+    v.dataset.frozenTicks = String((parseInt(v.dataset.frozenTicks || '0', 10)) + 1);
+  } else {
+    v.dataset.frozenTicks = '0';
+  }
+  v.dataset.lastT = t;
+  return parseInt(v.dataset.frozenTicks, 10) >= 2;
+}
 var _kickTimer = null;
 function kickVideos() {
   var tries = 0;
   if (_kickTimer) { clearInterval(_kickTimer); _kickTimer = null; }
+  document.querySelectorAll('video[autoplay]').forEach(function (v) { delete v.dataset.lastT; v.dataset.frozenTicks = '0'; });
   var tick = function () {
     tries++;
     resumeVisibleVideos(tries >= 8);          /* 8회째부터는 load() 후 재생까지 시도 */
-    if (!_hasStalledVideo() || tries >= 16) { /* 다 살아났거나 ~5초 지나면 중단 */
+    var anyFrozen = false;
+    document.querySelectorAll('video[autoplay]').forEach(function (v) {
+      if (!_vVisible(v)) return;              /* 화면 밖은 스크롤 핸들러 소관 — 건드리지 않는다 */
+      if (_detectFrozen(v)) {
+        anyFrozen = true;
+        if (v.dataset.everPlayed === '1') {
+          try { v.load(); var q = v.play(); if (q && q.catch) q.catch(function () {}); } catch (e) {}
+          v.dataset.frozenTicks = '0'; delete v.dataset.lastT;
+        }
+      }
+    });
+    /* 언 상태는 2틱 지나야 확정되므로 최소 4틱은 돌고 나서 종료 판단 */
+    if ((!_hasStalledVideo() && !anyFrozen && tries >= 4) || tries >= 16) {
       clearInterval(_kickTimer); _kickTimer = null;
     }
   };

@@ -2337,6 +2337,15 @@ body.pd-open { overflow: hidden; }
   body.pd-open .hero-sound { opacity: 0; pointer-events: none; }
 }
 </style>
+<style>
+/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
+.lx-click {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
+  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
+}
+.lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
+</style>
 </head>
 <body>
 
@@ -2511,7 +2520,7 @@ body.pd-open { overflow: hidden; }
 
 
         <div class="cf-cta">
-          <a href="#booking">예약 상담 받기 →</a>
+          <a href="#booking">예약 상담 받기 → <span class="lx-click" aria-hidden="true">클릭</span></a>
         </div>
       </div>
     </div>
@@ -2569,7 +2578,7 @@ body.pd-open { overflow: hidden; }
         <p class="pf-total-note">권장 소비자가 · 시공점에 따라 차이 있음</p>
 
         <div class="pf-cta">
-          <a href="#booking">PPF 상담 받기 →</a>
+          <a href="#booking">PPF 상담 받기 → <span class="lx-click" aria-hidden="true">클릭</span></a>
         </div>
       </div>
     </div>
@@ -2730,8 +2739,8 @@ body.pd-open { overflow: hidden; }
     <p class="pd-cta-eyebrow">다음 단계</p>
     <h2 class="pd-cta-title">지금 <em id="pdCtaName"></em>으로<br>공간을 설계하세요</h2>
     <div class="pd-cta-btns">
-      <button class="pd-btn-primary" id="pdCtaBooking">시공 예약하기</button>
-      <button class="pd-btn-ghost"   id="pdCtaBack">다른 제품 보기</button>
+      <button class="pd-btn-primary" id="pdCtaBooking">시공 예약하기 <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+      <button class="pd-btn-ghost"   id="pdCtaBack">다른 제품 보기 <span class="lx-click" aria-hidden="true">클릭</span></button>
     </div>
   </div>
 

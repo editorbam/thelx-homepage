@@ -561,6 +561,15 @@
       body.menu-open nav#mainNav { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; }
     }
 </style>
+<style>
+/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
+.lx-click {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
+  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
+}
+.lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
+</style>
 </head>
 <body>
 
@@ -748,7 +757,7 @@
       THE LX 대표 라인업은 <strong>진공에서 금속을 원자 단위로 입힌 풀 메탈 스퍼터</strong> 구조입니다.
       금속의 분광 특성이 태양 에너지를 표면에서 반사합니다.
       색을 씌워 어둡게 만드는 일이 아니라, 빛의 물리를 다루는 일입니다.
-      반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html" class="has-click">열차단의 원리<span class="tc-click">클릭</span></a>에서 이어집니다.
+      반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리 <span class="lx-click" aria-hidden="true">클릭</span></a>에서 이어집니다.
     </p>
     <blockquote class="tech-declaration">색이 아니라, 구조입니다.</blockquote>
   </div>
@@ -801,12 +810,12 @@
 
 <!-- 다리 — 기술(믿음 층) → 필름추천(선택 층) -->
 <section class="tech-bridge">
-  <p class="tb-sub"><a href="recommend.html">내 차에 맞는 필름 찾기 <span aria-hidden="true">→</span></a></p>
+  <p class="tb-sub"><a href="recommend.html">내 차에 맞는 필름 찾기 <span aria-hidden="true">→</span> <span class="lx-click" aria-hidden="true">클릭</span></a></p>
 </section>
 
 <div class="tech-cta">
-  <a href="index.html#products" class="primary">제품 보기</a>
-  <a href="stores.html" class="ghost">내 근처 시공점 찾기</a>
+  <a href="index.html#products" class="primary">제품 보기 <span class="lx-click on-dark" aria-hidden="true">클릭</span></a>
+  <a href="stores.html" class="ghost">내 근처 시공점 찾기 <span class="lx-click" aria-hidden="true">클릭</span></a>
   <a href="index.html" class="ghost"><span aria-hidden="true">←</span> 홈으로</a>
 </div>
 </main>

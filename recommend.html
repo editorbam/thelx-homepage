@@ -492,6 +492,15 @@
 
 </style>
   </noscript>
+<style>
+/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
+.lx-click {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
+  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
+}
+.lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
+</style>
 </head>
 <body>
 
@@ -588,7 +597,7 @@
     </table>
   </div>
   <p class="rc-scroll-hint">표를 옆으로 밀면 근거까지 보입니다 →</p>
-  <p class="rc-note">반사가 왜 가능한지 — 소재의 원리는 <a href="technology.html" class="has-click">기술 페이지<span class="rc-click">클릭</span></a>에서 이어집니다.</p>
+  <p class="rc-note">반사가 왜 가능한지 — 소재의 원리는 <a href="technology.html">기술 페이지 <span class="lx-click" aria-hidden="true">클릭</span></a>에서 이어집니다.</p>
 </section>
 
 <!-- 스펙트럼 그래프 -->
@@ -767,9 +776,9 @@
 
 <!-- CTA -->
 <div class="tech-cta">
-  <a href="index.html#products" class="primary">제품 보기</a>
-  <a href="stores.html" class="ghost">내 근처 시공점 찾기</a>
-  <a href="pricing.html" class="ghost">시공 가격 확인</a>
+  <a href="index.html#products" class="primary">제품 보기 <span class="lx-click on-dark" aria-hidden="true">클릭</span></a>
+  <a href="stores.html" class="ghost">내 근처 시공점 찾기 <span class="lx-click" aria-hidden="true">클릭</span></a>
+  <a href="pricing.html" class="ghost">시공 가격 확인 <span class="lx-click" aria-hidden="true">클릭</span></a>
   <a href="index.html" class="ghost"><span aria-hidden="true">←</span> 홈으로</a>
 </div>
 </main>

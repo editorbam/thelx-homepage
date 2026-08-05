@@ -455,6 +455,15 @@
       body.menu-open nav#mainNav { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; }
     }
 </style>
+<style>
+/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
+.lx-click {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
+  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
+}
+.lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
+</style>
 </head>
 <body>
 
@@ -511,7 +520,7 @@
       THE LX는 <strong>전국 437개 공식 인증 시공점</strong>을 통해서만 시공됩니다.
       견적을 받은 곳이 공식 인증 시공점인지 먼저 확인하세요.
     </p>
-    <a class="vf-link" href="stores.html">내 근처 시공점 찾기 <span aria-hidden="true">→</span></a>
+    <a class="vf-link" href="stores.html">내 근처 시공점 찾기 <span aria-hidden="true">→</span> <span class="lx-click" aria-hidden="true">클릭</span></a>
   </div>
   <div class="vf-card">
     <p class="vf-num">02</p>
@@ -603,8 +612,8 @@
 </section>
 
 <div class="tech-cta">
-  <a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener" class="primary">보증서 등록·발급</a>
-  <a href="stores.html" class="ghost">내 근처 시공점 찾기</a>
+  <a href="http://sgp.isolargard.com/warranty_order/warranty_order.php" target="_blank" rel="noopener" class="primary">보증서 등록·발급 <span class="lx-click on-dark" aria-hidden="true">클릭</span></a>
+  <a href="stores.html" class="ghost">내 근처 시공점 찾기 <span class="lx-click" aria-hidden="true">클릭</span></a>
 </div>
 </main>
 

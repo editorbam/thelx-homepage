@@ -90,7 +90,7 @@ const PD_DATA = {
     flagship: false,
     /* 모달 VLT 비주얼 — vltImage가 있으면 하늘 밴드 시뮬레이션 대신 이 이미지(라벨 포함 공식 비교컷)를 사용.
        vltTint는 이미지 제거 시 폴백용 보관. ⚠️ 틴트 교훈: 노랑 비중 크면 하늘 파랑과 섞여 카키로 탁해짐(1차 46,64,26/104,88,30 폐기) */
-    vltImage: 'vogue-vlt-scene.jpg',
+    vltImage: 'vogue-vlt-scene-2.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
     stage: { img: 'vogue-stage-2.jpg', alt: 'Vogue — 유리 빌딩 사이 광장에 선 검정 세단, 빛을 반사하는 창유리', icons: [
       { i: 'reflect', t: '내부 반사 저감' },

@@ -216,7 +216,7 @@ const PD_DATA = {
     /* 모달 VLT 비주얼 — 공식 비교컷(토론토, QUANTUM BLACK 8~37 라벨 포함) */
     vltImage: 'quantum-vlt-scene.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
-    stage: { img: 'quantum-stage.jpg', alt: 'Quantum — 바다 옆 고속도로를 달리는 은색 세단', icons: [
+    stage: { img: 'quantum-stage-2.jpg', alt: 'Quantum — 바다 옆 고속도로를 달리는 은색 세단', icons: [
       { i: 'spectrum', t: '스펙트럼 차단' },
       { i: 'sun', t: '태양 에너지 차단' },
       { i: 'orbit', t: '반영구적' },

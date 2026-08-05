@@ -1196,6 +1196,14 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .fc-namebtn:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
 .film-compare-note { margin-top: 1rem; font-size: .8rem; font-weight: 300; color: var(--gray-3); line-height: 1.7; }
 .film-compare-note a { color: var(--gray-4); text-decoration: underline; text-underline-offset: 3px; cursor: none; }
+/* '클릭' 칩 — recommend(.rc-click)·technology(.tc-click)와 동일 문법 */
+.film-compare-note a.has-click { display: inline-flex; flex-direction: column; align-items: center; vertical-align: baseline; }
+.fc-click {
+  font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45);
+  border-radius: 980px; padding: 2px 7px; margin-top: 3px;
+  text-decoration: none; white-space: nowrap;
+}
 .film-compare-note.above { margin: 1.6rem 0 0; }
 .film-compare-note.above + .film-compare-wrap { margin-top: .6rem; } /* 안내문은 설명 대상(표)에 붙인다 */
 .film-compare-note + .film-compare-note { margin-top: .45rem; }
@@ -3068,7 +3076,7 @@ body.pd-open { overflow: hidden; }
             <table class="film-compare-table" id="filmCompareTable" aria-label="필름 8종 성능 비교"></table>
           </div>
           <p class="film-compare-note">TSER(총태양에너지 차단율)는 가장 어두운 농도 기준 최대값 · 전 제품 자외선 등급 PA+++ SPF 285</p>
-          <p class="film-compare-note">도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다. 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html">열차단의 원리</a>에서 이어집니다.</p>
+          <p class="film-compare-note">도장 보호 필름 LX SHIELD(PPF)는 아래 카드에서 확인할 수 있습니다. 반사와 흡수가 총량에서 왜 갈리는지는 <a href="heat.html" class="has-click">열차단의 원리<span class="fc-click">클릭</span></a>에서 이어집니다.</p>
         </div>
       </div>
     </div>

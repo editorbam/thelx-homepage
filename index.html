@@ -695,6 +695,18 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   .proof-duo img { width: 100%; max-width: 165px; }
   .proof-duo figcaption { margin-top: .8rem; font-size: .72rem; word-break: keep-all; line-height: 1.4; }
 }
+/* 드라마 제작지원 타이틀 로고 월 — 대기 블록용 (2026-08-05). 로고 원본색 → filter로 무채색 통일 */
+.proof-credits { max-width: 980px; margin: 3.5rem auto 0; text-align: center; }
+.proof-credits-lead { font-size: .95rem; font-weight: 300; color: var(--gray-3); margin-bottom: 2.4rem; }
+.proof-credits-grid { display: flex; justify-content: center; align-items: center; gap: clamp(2rem, 5vw, 4.5rem); flex-wrap: wrap; }
+.proof-credits-grid figure { margin: 0; }
+.proof-credits-grid img { height: clamp(34px, 4.5vw, 52px); width: auto; margin: 0 auto; display: block; filter: grayscale(1) brightness(.2); opacity: .85; }
+.proof-credits-grid figcaption { margin-top: .9rem; font-size: .72rem; color: var(--gray-3); letter-spacing: .04em; }
+@media (max-width: 768px) {
+  .proof-credits { margin-top: 2.5rem; }
+  .proof-credits-grid { gap: 1.6rem 2rem; }
+  .proof-credits-grid img { height: 30px; }
+}
 .proof-carousel { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
 .proof-track { display:flex; align-items:flex-start; width:max-content; animation: marquee 50s linear infinite; }
 .proof-carousel:hover .proof-track { animation-play-state:paused; }
@@ -3425,6 +3437,35 @@ body.pd-open { overflow: hidden; }
       <figcaption>대한민국 퍼스트브랜드 대상 2026 · 2년 연속</figcaption>
     </figure>
   </div>
+
+  <!-- 드라마 제작지원 — 타이틀 로고 월 (2026-08-05 사용자 확정: 로고 PNG 방식)
+       [대기: ①협찬 계약서의 타이틀 로고 사용 조항 회사 확인 ②로고 PNG 4종 입수 — 둘 다 되면 주석 해제]
+       로고 파일 스펙: credit-<작품>.png · 투명 배경 · 높이 160px 이상(@2x) · 원본색 그대로
+       (단색 통일은 CSS filter가 처리 — grayscale+brightness. 파일을 미리 단색화하지 말 것)
+       캡션 채널 표기는 라틴 통일(SBS·tvN·MBC·Netflix) — '넷' 글자가 서브셋 폰트에 없음(2026-08-05 확인)
+  [대기 2026-08-05: 위 두 조건 충족 전까지 비노출 — 복원=주석 해제]
+  <div class="proof-credits fi">
+    <p class="proof-credits-lead">카메라가 담은 차 위에, THE LX가 있었습니다.</p>
+    <div class="proof-credits-grid">
+      <figure>
+        <img src="credit-mobeomtaxi.png" alt="SBS 드라마 모범택시 — THE LX 제작지원 (2021·2026)">
+        <figcaption>SBS · 2021 · 2026 제작지원</figcaption>
+      </figure>
+      <figure>
+        <img src="credit-jinni.png" alt="Netflix 드라마 다 이루어질지니 — THE LX 제작지원 (2025)">
+        <figcaption>Netflix · 2025 제작지원</figcaption>
+      </figure>
+      <figure>
+        <img src="credit-michiji.png" alt="MBC 드라마 미치지 않고서야 — THE LX 제작지원 (2021)">
+        <figcaption>MBC · 2021 제작지원</figcaption>
+      </figure>
+      <figure>
+        <img src="credit-natgwabam.png" alt="tvN 드라마 낮과 밤 — THE LX 제작지원 (2020)">
+        <figcaption>tvN · 2020 제작지원</figcaption>
+      </figure>
+    </div>
+  </div>
+-->
 
   <!-- 구 마퀴 캐러셀 — template=비렌더·비로딩 보존 (복원=template 태그 제거) -->
   <template id="proofCarouselBackup">

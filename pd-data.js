@@ -214,7 +214,7 @@ const PD_DATA = {
     recommend: '햇빛에 피어나는 에메랄드 그린, 안에선 맑은 시야, 차의 수명까지 가는 색과 성능. 글로벌 베스트셀러 Quantum.',
     flagship: false,
     /* 모달 VLT 비주얼 — 공식 비교컷(토론토, QUANTUM BLACK 8~37 라벨 포함) */
-    vltImage: 'quantum-vlt-scene.jpg',
+    vltImage: 'quantum-vlt-scene-2.jpg',
     /* 모달 히어로 무대(2026-08-03 확장) — LX와 동일 문법: 나노바나나 무로고 차+필름 그레인, stage 우선·vltImage=폴백 */
     stage: { img: 'quantum-stage-4.jpg', alt: 'Quantum — 바다 옆 고속도로를 달리는 은색 세단', icons: [
       { i: 'spectrum', t: '스펙트럼 차단' },

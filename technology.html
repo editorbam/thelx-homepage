@@ -181,18 +181,6 @@
     .tech-chapter-body strong { color: #0a0a0a; font-weight: 700; }
     .tech-chapter-body a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,.35); transition: text-decoration-color .2s; }
     .tech-chapter-body a:hover { text-decoration-color: #0a0a0a; }
-    /* 링크 클릭 가능 표시 — 링크 글자 아래 작은 칩 (recommend.html .rc-click 문법 이식, 2026-08-04)
-       inline-flex 세로 정렬이라 링크 덩어리가 통째로 다음 줄로 넘어감 = 문장 중간에서 쪼개지지 않음 */
-    .tech-chapter-body a.has-click {
-      display: inline-flex; flex-direction: column; align-items: center;
-      vertical-align: baseline;
-    }
-    .tc-click {
-      font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
-      color: #3f78d0; border: .5px solid rgba(63,120,208,.45);
-      border-radius: 980px; padding: 2px 7px; margin-top: 3px;
-      text-decoration: none; white-space: nowrap;
-    }
 
     /* 선언문 — 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰(짧은 헤어라인) 2026-08-03 */
     .tech-declaration {
@@ -334,8 +322,8 @@
       font-size: clamp(.98rem, 1.15vw, 1.1rem); font-weight: 500;
       line-height: 1.7; word-break: keep-all; margin: 0;
     }
-    .tech-bridge .tb-sub a span { display: inline-block; transition: transform .25s ease; }
-    .tech-bridge .tb-sub a:hover span { transform: translateX(3px); }
+    .tech-bridge .tb-sub a span:not(.lx-click) { display: inline-block; transition: transform .25s ease; }
+    .tech-bridge .tb-sub a:hover span:not(.lx-click) { transform: translateX(3px); }
     .tech-bridge .tb-sub a { color: #3f78d0; text-decoration: none; }
     .tech-bridge .tb-sub a:hover { text-decoration: underline; }
     .tech-coda {

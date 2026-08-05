@@ -508,6 +508,28 @@
 }
 .lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
 </style>
+<style>
+/* ── 모바일 최적화 (2026-08-05) — 터치 타깃 44px 권장 대응·최소 글자 크기 ──
+   문제였던 것: 패딩 없는 텍스트 링크(높이 17~24px)·차트 장면 탭(폭 15px)·지역 칩(35px).
+   본문 산문 속 인라인 링크는 글 흐름을 깨므로 제외하고, 독립 링크·버튼만 키운다. */
+@media (max-width: 768px) {
+  /* 독립 링크 — 위아래 여백으로 누를 면적 확보 */
+  .vf-link, .tech-bridge .tb-sub a, .faq-answer p.faq-deepread a, .sl-cta-btn {
+    padding-top: .7rem; padding-bottom: .7rem;
+  }
+  /* 지역 칩 — 35px → 44px */
+  .sl-rtab { padding-top: .72rem; padding-bottom: .72rem; }
+  /* 그래프 장면 탭 — 폭 15px는 손끝보다 좁다 */
+  .rc-dots button { padding: .55rem .7rem; min-width: 44px; }
+  .rc-dots { gap: .5rem; }
+  /* 표 헤더 부제 8.64px → 10px */
+  .rc-table th small { font-size: .62rem; }
+  /* 나머지 독립 링크 — 상단 네비 뒤로가기·푸터·본문 딥리드 */
+  .nav-back { padding: .6rem .2rem; }
+  .footer-links a { display: inline-block; padding: .5rem 0; }
+  .story-deepread a { display: inline-block; padding: .6rem 0; }
+}
+</style>
 </head>
 <body>
 

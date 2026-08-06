@@ -828,7 +828,7 @@ function slRender() {
   }).join('');
 
   if (remaining > 0) {
-    grid.innerHTML += `<div class="sl-more-wrap"><button class="sl-more-btn" id="slMoreBtn">나머지 ${remaining}곳 보기 <span class="lx-click" aria-hidden="true">클릭</span></button></div>`;
+    grid.innerHTML += `<div class="sl-more-wrap"><button class="sl-more-btn" id="slMoreBtn">나머지 ${remaining}곳 보기</button></div>`;
     document.getElementById('slMoreBtn').addEventListener('click', function() {
       slShown += SL_PAGE;
       slRender();

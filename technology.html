@@ -501,8 +501,12 @@
       color: rgba(255,255,255,.34); word-break: keep-all;
     }
     @media (max-width: 768px) {
-      .sp-co-line { width: 18px; }
+      /* 층 간격이 11px대로 좁아져 위아래 라벨이 붙어 보인다. 위치는 그대로 두고
+         지시선 길이를 번갈아 달리해 가로로 어긋나게 — 시각적 분리만 만든다 */
+      .sp-co-line { width: 14px; }
+      .sp-co:nth-child(even) .sp-co-line { width: 46px; }
       .sp-co-txt { font-size: 8.5px; }
+      .sp-co-src { font-size: 9.5px; line-height: 1.5; margin-top: .7rem; }
     }
     @media (max-width: 768px) {
       .sputter-band { grid-template-columns: 1fr; gap: 1.4rem; }

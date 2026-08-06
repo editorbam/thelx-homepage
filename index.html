@@ -2837,15 +2837,15 @@ body.pd-open { overflow: hidden; }
   color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
   padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
 }
-.lx-click.on-dark { color: #9db9e8; border-color: rgba(157,185,232,.5); }
+.lx-click.on-dark { color: #fff; border-color: rgba(255,255,255,.45); }
 /* 알약 버튼 — 칩을 버튼 안이 아니라 아래에 (버튼 폭이 늘어나 답답해 보이던 문제, 2026-08-06 사용자 요청).
    본문 산문 속 인라인 링크는 기존대로 글자 옆에 둔다. */
-.why-cta, .tech-cta a, .pricing-cta-btn, .sl-cta-btn, .product-detail-btn,
+.why-cta, .tech-cta a, .story-back-cta a, .pricing-cta-btn, .sl-cta-btn, .product-detail-btn,
 .pd-btn-primary, .pd-btn-ghost, .cf-cta a, .pf-cta a, .sl-more-btn {
   position: relative;
   margin-bottom: 1.6rem;
 }
-.why-cta > .lx-click, .tech-cta a > .lx-click, .pricing-cta-btn > .lx-click,
+.why-cta > .lx-click, .tech-cta a > .lx-click, .story-back-cta a > .lx-click, .pricing-cta-btn > .lx-click,
 .sl-cta-btn > .lx-click, .product-detail-btn > .lx-click,
 .pd-btn-primary > .lx-click, .pd-btn-ghost > .lx-click,
 .cf-cta a > .lx-click, .pf-cta a > .lx-click, .sl-more-btn > .lx-click {
@@ -2853,7 +2853,7 @@ body.pd-open { overflow: hidden; }
   transform: translateX(-50%); margin-left: 0;
 }
 /* 화살표용 span 규칙(.tech-entry a span 등)이 칩까지 덮는 것 차단 — 코드리뷰 2026-08-05 */
-.tech-entry a .lx-click { font-size: 9px; color: #9db9e8; }
+.tech-entry a .lx-click { font-size: 9px; color: #fff; border-color: rgba(255,255,255,.45); }
 </style>
 <style>
 /* ── 모바일 최적화 (2026-08-05) — 터치 타깃 44px 권장 대응·최소 글자 크기 ──
@@ -3208,7 +3208,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">12 ~ 72%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="72"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">10년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">* 농도 15 기준 최대 TSER · 농도 라인업: 15–70</p>
-          <button class="product-detail-btn" data-product="lx">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="lx">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3256,7 +3256,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 43%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="43"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · 농도 라인업: 10–40</p>
-          <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="vogue">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3288,7 +3288,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 56%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="56"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 5 기준 최대 TSER · 농도 라인업: 5–50</p>
-          <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="xenith">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3319,7 +3319,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">8 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">7년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="70"></div></div></div>
           <p class="spec-note">* Quantum Black 기준 최대 TSER · 농도 라인업: Black–52</p>
-          <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="quantum">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3350,7 +3350,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">6 ~ 50%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 6 기준 최대 TSER · 농도 라인업: 6–50</p>
-          <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="titanium">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3381,7 +3381,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 27%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="27"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · 농도 라인업: 10–30</p>
-          <button class="product-detail-btn" data-product="gline">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="gline">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3412,7 +3412,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">10 ~ 31%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="31"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 10 기준 최대 TSER · 농도 라인업: 10–30</p>
-          <button class="product-detail-btn" data-product="sline">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="sline">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3444,7 +3444,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">가시광선 투과율 (VLT)</span><span class="spec-value">13 ~ 54%</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="54"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내구성 보증</span><span class="spec-value">5년</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="50"></div></div></div>
           <p class="spec-note">* 농도 12 기준 최대 TSER · 농도 라인업: 12–50</p>
-          <button class="product-detail-btn" data-product="galaxie">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="galaxie">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3474,7 +3474,7 @@ body.pd-open { overflow: hidden; }
           <div class="spec-item"><div class="spec-header"><span class="spec-label">셀프힐링</span><span class="spec-value">상온 1분 이내</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <div class="spec-item"><div class="spec-header"><span class="spec-label">내후성 인증</span><span class="spec-value">ASTM G155 · 3,000hrs</span></div><div class="spec-bar-track"><div class="spec-bar-fill" data-width="100"></div></div></div>
           <p class="spec-note">두께 8 mil (200μm) · 파단 강도 &gt;45 lbs/in</p>
-          <button class="product-detail-btn" data-product="shield">상세 스펙 보기 → <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
+          <button class="product-detail-btn" data-product="shield">상세 스펙 보기 → <span class="lx-click" aria-hidden="true">클릭</span></button>
         </div>
         <div class="product-keypoints">
           <p class="product-keypoints-label">Key Point</p>
@@ -3514,7 +3514,7 @@ body.pd-open { overflow: hidden; }
   <div class="pricing-cta-wrap fi">
     <p class="pricing-cta-hint">승용차 기준 <strong>30만원</strong>부터 · 풀패키지까지 단계별 견적</p>
     <a href="pricing.html" class="pricing-cta-btn">
-      가격 계산기 열기 <span aria-hidden="true">→</span> <span class="lx-click on-dark" aria-hidden="true">클릭</span>
+      가격 계산기 열기 <span aria-hidden="true">→</span> <span class="lx-click" aria-hidden="true">클릭</span>
     </a>
   </div>
 </section>
@@ -3851,7 +3851,7 @@ body.pd-open { overflow: hidden; }
 
     
         <div class="sl-cta-wrap fi">
-          <a class="sl-cta-btn" href="stores.html">437개 시공점 전체 보기 <span aria-hidden="true">→</span> <span class="lx-click on-dark" aria-hidden="true">클릭</span></a>
+          <a class="sl-cta-btn" href="stores.html">437개 시공점 전체 보기 <span aria-hidden="true">→</span> <span class="lx-click" aria-hidden="true">클릭</span></a>
         </div>
       </div>
     </div>
@@ -4023,7 +4023,7 @@ body.pd-open { overflow: hidden; }
     <p class="pd-cta-eyebrow">다음 단계</p>
     <h2 class="pd-cta-title">지금 <em id="pdCtaName"></em>으로<br>공간을 설계하세요</h2>
     <div class="pd-cta-btns">
-      <button class="pd-btn-primary" id="pdCtaBooking">시공 예약하기 <span class="lx-click" aria-hidden="true">클릭</span></button>
+      <button class="pd-btn-primary" id="pdCtaBooking">시공 예약하기 <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
       <button class="pd-btn-ghost"   id="pdCtaBack">다른 제품 보기 <span class="lx-click on-dark" aria-hidden="true">클릭</span></button>
     </div>
   </div>

@@ -2418,7 +2418,7 @@ body.pd-open { overflow: hidden; }
 ======================================== -->
 <section id="pricing">
   <div class="cf-banner fi">
-    <img src="vlt-cabin.jpg" alt="THE LX 시공 차량 — 운전자 시점" loading="eager" fetchpriority="high" style="object-position:center 40%;">
+    <img src="vlt-cabin.jpg" srcset="vlt-cabin-m.jpg 800w, vlt-cabin.jpg 1600w" sizes="100vw" alt="THE LX 시공 차량 — 운전자 시점" loading="eager" fetchpriority="high" style="object-position:center 40%;">
     <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,transparent 0%,transparent 35%,rgba(0,0,0,.45) 65%,rgba(0,0,0,.72) 100%),linear-gradient(180deg,rgba(0,0,0,.18) 0%,transparent 30%,rgba(0,0,0,.35) 100%);pointer-events:none;"></div>
     <div class="cf-banner-text">
       <p class="cf-banner-eyebrow">Pricing</p>
@@ -3503,7 +3503,7 @@ function pdOpen(id) {
       ? `linear-gradient(160deg, rgba(${p.vltTint[0]},${o}) 0%, rgba(${p.vltTint[1]},${o}) 100%)`
       : `rgba(6,10,22,${o})`;
     pdVlt.innerHTML = `<div class="pd-vlt-wrap">
-      <img src="vlt-sky.jpg" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="eager" decoding="async">
+      <img src="vlt-sky.jpg" srcset="vlt-sky-m.jpg 800w, vlt-sky.jpg 1920w" sizes="100vw" alt="${p.name} 농도별 투과율 시각화" class="pd-vlt-img" loading="eager" decoding="async">
       ${densRows.map((r, i) => `
         <div class="pd-vlt-band" style="left:${(w * i).toFixed(4)}%;width:${w.toFixed(4)}%;">
           <div class="pd-vlt-band-fill" style="background:${fillBg(shade(r.vlt).toFixed(2))};"></div>

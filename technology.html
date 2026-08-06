@@ -465,6 +465,12 @@
       display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 2.2fr);
       gap: clamp(1.6rem, 4vw, 3.5rem); align-items: center;
     }
+    .sputter-copy { display: flex; flex-direction: column; gap: 1.15rem; }
+    .sputter-body {
+      margin: 0; color: rgba(255,255,255,.62); word-break: keep-all;
+      font-size: clamp(.88rem, 1.02vw, 1rem); font-weight: 300; line-height: 1.85;
+      letter-spacing: -.005em; max-width: 30ch;
+    }
     .sputter-label {
       margin: 0; color: #fff; word-break: keep-all;
       font-size: clamp(1.15rem, 1.9vw, 1.6rem); font-weight: 700;
@@ -840,7 +846,14 @@
      구판 tech-sputter.mp4(증착까지만)는 보존. 신판=캔버스 v31 재질판 + 파이널컷 대비 보정 -->
 <section class="sputter-live" aria-label="스퍼터링 증착 과정 시각화">
   <div class="sputter-band">
-    <p class="sputter-label">최첨단<br>스퍼터링 공법<small>Magnetron Sputtering</small></p>
+    <div class="sputter-copy">
+      <p class="sputter-label">최첨단<br>스퍼터링 공법<small>Magnetron Sputtering</small></p>
+      <!-- 근거: Solar Gard EPD 2023 제조 원문 "metal deposition by ionization under vacuum, called sputtering"
+           / "One of the films is coated with a metal ... The films are then laminated together".
+           ⚠️앞 섹션 '왜 반사가 가능한가'(반사 원리)·영상 카피(진공·원자 단위)와 겹치지 않게 공정 설명만 둔다 -->
+      <p class="sputter-body">진공 속에서 금속을 원자 단위로 떼어내, 필름 위에 하나씩 내려앉히는 공정입니다.</p>
+      <p class="sputter-body">금속을 입힌 한 장에 여러 장의 필름을 겹쳐 합지하면, 비로소 한 장이 됩니다.</p>
+    </div>
     <div class="sputter-stage">
       <video src="tech-sputter-lam.mp4?v=6" autoplay muted loop playsinline aria-hidden="true"></video>
       <!-- 층 콜아웃 (2026-08-06) — 명칭 근거=Solar Gard EPD 2023 공식 구조도(유리면부터):

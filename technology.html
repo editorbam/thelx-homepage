@@ -478,6 +478,21 @@
     .sputter-stage { position: relative; }
     .sputter-stage video { display: block; width: 100%; height: auto; }
     /* 층 콜아웃 — 헤어라인 + 라벨. 면 채움·컬러 박스 없이 선과 여백으로만(LX 부품 문법) */
+    /* 장면 카피 — 층 이름표(작은 라벨)와 위계를 벌린다. 이건 한 문장으로 읽히는 선언 */
+    .sp-beats { position: absolute; inset: 0; pointer-events: none; }
+    .sp-beat {
+      position: absolute; left: 0; right: 0; top: 17%;
+      margin: 0; text-align: center;
+      font-size: clamp(13px, 1.35vw, 17px); font-weight: 500;
+      letter-spacing: -.01em; color: rgba(255,255,255,.94);
+      text-shadow: 0 1px 10px rgba(0,0,0,.7);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .sp-beat.on { opacity: 1; transform: none; }
+    @media (max-width: 768px) {
+      .sp-beat { font-size: 11px; top: 14%; }
+    }
     .sp-callouts { position: absolute; inset: 0; pointer-events: none; }
     .sp-co {
       position: absolute; left: 0; top: var(--y);
@@ -832,6 +847,15 @@
            Transparent optically clear adhesive / Combination of clear·metallized(sputtered) Polyester films 50-100µm
            / Special protective hardcoat. ⚠️'4장'은 연출 수치이고 공식 문서엔 개수 없음("one or more layers of PET")
            → 화면에 개수를 쓰지 않는다. 시각(data-at)은 캔버스 착지 프레임 실측을 영상 시간으로 환산한 값 -->
+      <!-- 장면 카피 (2026-08-06) — 이 영상의 메시지는 부품 목록이 아니라 '왜 열을 막는가'다.
+           앞부분(입자·스윕)이 가장 긴데 침묵하고 있어 공법을 얹고, 완성 컷에서 결과로 받는다.
+           확정 스토리라인 "입자가 층이 되고, 층이 한 장이 된다"와 어휘를 맞춤.
+           열 표현은 확정 어휘 '반사'(마스터 문서 금지어: 되-계열·머금다) -->
+      <div class="sp-beats" aria-hidden="true">
+        <p class="sp-beat" data-in="0.35" data-out="1.50">진공 속에서, 원자 단위로</p>
+        <p class="sp-beat" data-in="1.62" data-out="2.72">원자가 층이 됩니다</p>
+        <p class="sp-beat" data-in="4.78" data-out="5.90">빛은 통과시키고, 열은 반사합니다</p>
+      </div>
       <div class="sp-callouts" aria-hidden="true">
         <div class="sp-co" data-at="3.14" style="--y:79.2%"><span class="sp-co-line"></span><span class="sp-co-txt">보호 하드코트</span></div>
         <div class="sp-co" data-at="3.37" style="--y:74.5%"><span class="sp-co-line"></span><span class="sp-co-txt">폴리에스터 필름</span></div>
@@ -1168,10 +1192,23 @@
       cos[i].classList.toggle('on', t >= at && t < MERGED);
     }
   }
+  var beats = [].slice.call(stage.querySelectorAll('.sp-beat'));
+  function syncBeats() {
+    var t = v.currentTime;
+    for (var i = 0; i < beats.length; i++) {
+      var a = parseFloat(beats[i].dataset.in), b = parseFloat(beats[i].dataset.out);
+      beats[i].classList.toggle('on', t >= a && t < b);
+    }
+  }
+  var _sync = sync;
+  sync = function () { _sync(); syncBeats(); };
   v.addEventListener('timeupdate', sync);
   v.addEventListener('seeked', sync);
   /* 루프 복귀 시 즉시 초기화 — timeupdate만 기다리면 한 박자 늦게 꺼진다 */
-  v.addEventListener('ended', function () { cos.forEach(function (c) { c.classList.remove('on'); }); });
+  v.addEventListener('ended', function () {
+    cos.forEach(function (c) { c.classList.remove('on'); });
+    beats.forEach(function (bt) { bt.classList.remove('on'); });
+  });
   sync();
 }());
 </script>

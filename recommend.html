@@ -493,8 +493,11 @@
 .lx-click.on-dark { color: #fff; border-color: rgba(255,255,255,.45); }
 /* 알약 버튼 — 칩을 버튼 안이 아니라 아래에 (버튼 폭이 늘어나 답답해 보이던 문제, 2026-08-06 사용자 요청).
    본문 산문 속 인라인 링크는 기존대로 글자 옆에 둔다. */
-.why-cta, .tech-cta a, .story-back-cta a, .pricing-cta-btn, .sl-cta-btn, .product-detail-btn,
-.pd-btn-primary, .pd-btn-ghost, .cf-cta a, .pf-cta a, .sl-more-btn {
+/* :has로 칩이 실제로 있을 때만 자리를 비운다 — 칩을 빼면 빈 여백이 남던 문제(코드리뷰 2026-08-06) */
+.why-cta:has(> .lx-click), .tech-cta a:has(> .lx-click), .story-back-cta a:has(> .lx-click),
+.pricing-cta-btn:has(> .lx-click), .sl-cta-btn:has(> .lx-click), .product-detail-btn:has(> .lx-click),
+.pd-btn-primary:has(> .lx-click), .pd-btn-ghost:has(> .lx-click),
+.cf-cta a:has(> .lx-click), .pf-cta a:has(> .lx-click), .sl-more-btn:has(> .lx-click) {
   position: relative;
   margin-bottom: 1.6rem;
 }

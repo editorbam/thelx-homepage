@@ -481,6 +481,7 @@
       font-size: clamp(11px, .9vw, 12px); font-weight: 600; letter-spacing: .22em;
       text-transform: uppercase; color: rgba(255,255,255,.4);
     }
+    .sputter-right { min-width: 0; }
     .sputter-stage { position: relative; }
     .sputter-stage video { display: block; width: 100%; height: auto; }
     /* 층 콜아웃 — 헤어라인 + 라벨. 면 채움·컬러 박스 없이 선과 여백으로만(LX 부품 문법) */
@@ -854,6 +855,7 @@
       <p class="sputter-body">진공 속에서 금속을 원자 단위로 떼어내, 필름 위에 하나씩 내려앉히는 공정입니다.</p>
       <p class="sputter-body">금속을 입힌 한 장에 여러 장의 필름을 겹쳐 합지하면, 비로소 한 장이 됩니다.</p>
     </div>
+    <div class="sputter-right">
     <div class="sputter-stage">
       <video src="tech-sputter-lam.mp4?v=6" autoplay muted loop playsinline aria-hidden="true"></video>
       <!-- 층 콜아웃 (2026-08-06) — 명칭 근거=Solar Gard EPD 2023 공식 구조도(유리면부터):
@@ -864,7 +866,7 @@
            앞부분(입자·스윕)이 가장 긴데 침묵하고 있어 공법을 얹고, 완성 컷에서 결과로 받는다.
            확정 스토리라인 "입자가 층이 되고, 층이 한 장이 된다"와 어휘를 맞춤.
            열 표현은 확정 어휘 '반사'(마스터 문서 금지어: 되-계열·머금다) -->
-      <div class="sp-beats" aria-hidden="true">
+      <div class="sp-beats">
         <p class="sp-beat" data-in="0.35" data-out="1.50">진공 속에서, 원자 단위로</p>
         <p class="sp-beat" data-in="1.62" data-out="2.72">원자가 층이 됩니다</p>
         <p class="sp-beat" data-in="4.78" data-out="5.90">빛은 통과시키고, 열은 반사합니다</p>
@@ -875,7 +877,11 @@
         <div class="sp-co" data-at="3.58" style="--y:67.9%"><span class="sp-co-line"></span><span class="sp-co-txt">폴리에스터 필름</span></div>
         <div class="sp-co" data-at="3.82" style="--y:63.1%"><span class="sp-co-line"></span><span class="sp-co-txt">투명 접착층</span></div>
       </div>
-      <p class="sp-co-src">Optically clear adhesive · Polyester film · Protective hardcoat — Saint-Gobain Solar Gard 환경성적표지(EPD, 2023) 공식 구조 기준</p>
+    </div>
+    <!-- ⚠️ 이 캡션은 .sputter-stage 밖에 둔다 — 안에 있으면 inset:0 오버레이(.sp-co/.sp-beat)의
+         퍼센트 기준이 '영상+캡션' 높이가 되어 층 지시선이 아래로 밀린다(코드리뷰 2026-08-06 실측:
+         모바일에서 79.2% → 95.5%). 스테이지에는 영상과 오버레이만 둘 것 -->
+    <p class="sp-co-src">투명 접착층 Optically clear adhesive · 폴리에스터 필름 Polyester film · 보호 하드코트 Protective hardcoat — Saint-Gobain Solar Gard 환경성적표지(EPD, 2023) 공식 구조 기준</p>
     </div>
   </div>
 </section>
@@ -1196,32 +1202,41 @@
   if (!stage) return;
   var v = stage.querySelector('video');
   var cos = [].slice.call(stage.querySelectorAll('.sp-co'));
+  var beats = [].slice.call(stage.querySelectorAll('.sp-beat'));
   if (!v || !cos.length) return;
-  var MERGED = 4.62;   /* 압착으로 경계가 사라지는 시점 — 이후엔 층이 없으므로 라벨도 없다 */
+
+  /* 압착이 시작돼 층 경계가 무너지는 시점(실측 lampress 4.08s). 이후엔 가리킬 층이 없다 —
+     끝(4.64s)까지 두면 마지막 0.4초 동안 위쪽 라벨이 빈 검정을 가리킨다 */
+  var MERGED = 4.20;
+
   function sync() {
-    var t = v.currentTime;
-    for (var i = 0; i < cos.length; i++) {
+    var t = v.currentTime, i;
+    for (i = 0; i < cos.length; i++) {
       var at = parseFloat(cos[i].dataset.at);
       cos[i].classList.toggle('on', t >= at && t < MERGED);
     }
-  }
-  var beats = [].slice.call(stage.querySelectorAll('.sp-beat'));
-  function syncBeats() {
-    var t = v.currentTime;
-    for (var i = 0; i < beats.length; i++) {
+    for (i = 0; i < beats.length; i++) {
       var a = parseFloat(beats[i].dataset.in), b = parseFloat(beats[i].dataset.out);
       beats[i].classList.toggle('on', t >= a && t < b);
     }
   }
-  var _sync = sync;
-  sync = function () { _sync(); syncBeats(); };
-  v.addEventListener('timeupdate', sync);
-  v.addEventListener('seeked', sync);
-  /* 루프 복귀 시 즉시 초기화 — timeupdate만 기다리면 한 박자 늦게 꺼진다 */
-  v.addEventListener('ended', function () {
-    cos.forEach(function (c) { c.classList.remove('on'); });
-    beats.forEach(function (bt) { bt.classList.remove('on'); });
-  });
+
+  /* timeupdate는 브라우저마다 0.25초 안팎으로만 발화한다(실측 ~0.266s).
+     층 착지 간격이 0.21~0.24초라 그 위에 얹으면 라벨이 한 장씩 건너뛰어 켜진다.
+     화면 갱신 주기(rAF)에 맞춰 읽고, 화면 밖일 땐 루프를 멈춰 비용을 두지 않는다 */
+  var raf = 0, inView = true;
+  function tick() { sync(); raf = requestAnimationFrame(tick); }
+  function apply() {
+    if (inView && !document.hidden) { if (!raf) tick(); }
+    else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      inView = es[0].isIntersecting; apply();
+    }, { threshold: 0.01 }).observe(stage);
+  }
+  document.addEventListener('visibilitychange', apply);
+  apply();
   sync();
 }());
 </script>

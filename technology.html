@@ -201,7 +201,6 @@
       font-weight: 700; line-height: 1.18; letter-spacing: -0.035em;
       color: #0a0a0a; margin: 0; word-break: keep-all;
     }
-    .tech-heart .muted { color: rgba(0,0,0,.32); }
 
     /* ===========================
        2단 비교 (무필름 vs 반사)
@@ -360,7 +359,6 @@
     /* 애플 타일 그리드 (2026-08-03): 흰 바탕 위 풀블리드 블랙 밴드 — 두 차가 한 무대, 좌우 흰 사이드 제거 */
     .cmp-section { margin:0 auto; padding:0; }
     .cmp-band { background:linear-gradient(180deg, #131318 0%, #000 58%); }
-    .cmp-sub { text-align:center; color:rgba(0,0,0,.55); font-size:16px; margin:0 auto 46px; padding:0 clamp(1.5rem,5vw,4rem); max-width:1160px; word-break:keep-all; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:0; position:relative; max-width:1760px; margin:0 auto; }
     .vs { position:absolute; left:50%; top:42%; transform:translate(-50%,-50%); z-index:5; width:54px; height:54px; border-radius:50%; background:linear-gradient(145deg,#222,#141416); border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.85); font-size:15px; font-weight:800; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,.5); }
     /* 타이틀·카피=상단 중앙, 비주얼=하단, 남는 높이=숨 쉬는 여백. 무대는 .cmp-band가 담당 */
@@ -720,15 +718,14 @@
   </div>
 </section>
 
-<!-- 핵심 문장 -->
+<!-- 핵심 문장 — 2026-08-10 균형 작업: 'LX의 답 / 흡수하지 않습니다' 우열 선언 → 아래 비교 밴드의 중립 안내판으로 전환 -->
 <section class="tech-heart">
-  <p class="tech-heart-label">플래그십 LX의 답</p>
-  <h2><span class="muted">흡수하지 않습니다.</span><br>반사합니다.</h2>
+  <p class="tech-heart-label">두 방식의 차이</p>
+  <h2>같은 열, 다른 방식.</h2>
 </section>
 
 <!-- 반사 vs 흡수 비교 (차 비주얼) -->
 <section class="cmp-section">
-  <p class="cmp-sub">같은 햇빛 아래, 두 대의 차.</p>
   <div class="cmp-band">
   <div class="grid">
 

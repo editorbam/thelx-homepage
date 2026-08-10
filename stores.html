@@ -687,13 +687,20 @@ function slPinPopupHtml(pr, withBtns) {
 /* 카드 클릭 → 지도가 해당 지점으로 바로 이동 + 팝업 (클릭 여러 번 없이 위치 확인) */
 function slLocate(s) {
   if (!slMap || !slMapReady || s.y == null) return;
-  document.getElementById('slMap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  /* 페이지가 맨 위로 튀던 문제 (2026-08-10):
+     scrollIntoView 스무스 스크롤 중에 팝업의 자동 초점(닫기 버튼 focus)이 두 번째 스크롤을
+     일으켜 Safari가 위치를 놓침. → 목표 위치를 직접 계산해 window.scrollTo 한 번만 쓰고,
+     팝업 자동 초점은 끈다(focusAfterOpen:false) */
+  const el = document.getElementById('slMap');
+  const r = el.getBoundingClientRect();
+  const top = r.top + window.scrollY - Math.max(0, (window.innerHeight - r.height) / 2);
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   slMap.flyTo({ center: [s.x, s.y], zoom: 15, duration: 900 });
-  new maplibregl.Popup({ offset: 14 }).setLngLat([s.x, s.y])
+  new maplibregl.Popup({ offset: 14, focusAfterOpen: false }).setLngLat([s.x, s.y])
     .setHTML(slPinPopupHtml({ n: s.n, a: s.a, p: s.p }, true)).addTo(slMap);
 }
 
-(function slInitMap(){
+function slInitMap(){
   if (!window.maplibregl) { document.getElementById('slMap').classList.add('no-map'); return; }
   /* 시작 뷰=전체 시공점 bounds — 예전엔 고정 중심(zoom 6)으로 뜬 뒤 fitBounds 애니메이션이
      줌아웃하며 타일을 한 번 더 받았음. 처음부터 최종 뷰로 시작해 두 번째 타일 웨이브 제거 */
@@ -754,7 +761,7 @@ function slLocate(s) {
     PIN_LAYERS.forEach(id => {
       slMap.on('click', id, e => {
         slHover.remove();
-        new maplibregl.Popup({ offset: 14 }).setLngLat(e.features[0].geometry.coordinates)
+        new maplibregl.Popup({ offset: 14, focusAfterOpen: false }).setLngLat(e.features[0].geometry.coordinates)
           .setHTML(slPinPopupHtml(e.features[0].properties, true)).addTo(slMap);
       });
       slMap.on('mousemove', id, e => {
@@ -773,7 +780,42 @@ function slLocate(s) {
     slMapReady = true;
     if (slPending) { slMapApply(slPending); slPending = null; }
   });
-})();
+
+  /* WebGL 컨텍스트가 죽고 브라우저가 복구 이벤트를 안 주는 경우(iOS Safari에서 흔함) —
+     0.7초 기다려도 죽어 있으면 지도를 새로 만든다 (2026-08-10) */
+  slMap.getCanvas().addEventListener('webglcontextlost', () => {
+    setTimeout(() => { if (slMapContextLost()) slMapRebuild(); }, 700);
+  });
+}
+slInitMap();
+
+/* ── 지도 되살리기 안전망 (2026-08-10) ──
+   증상: 뒤로가기(bfcache 복원)·탭 전환 뒤 지도가 하얗게 비거나 페이지가 무거워짐.
+   원인: Safari가 백그라운드 페이지의 WebGL 컨텍스트를 회수하는데, 복원 이벤트 없이
+   캔버스만 남는 경우가 있음 — index.html 영상 냉동(8/5)과 같은 계열.
+   대응: 돌아온 시점에 컨텍스트 생사 확인 → 죽었으면 지도만 다시 생성(타일은 브라우저 캐시 재사용) */
+function slMapContextLost() {
+  if (!slMap) return false;
+  try {
+    const c = slMap.getCanvas();
+    const gl = c.getContext('webgl2') || c.getContext('webgl');
+    return !gl || gl.isContextLost();
+  } catch (e) { return true; }
+}
+
+function slMapRebuild() {
+  try { slMap.remove(); } catch (e) {}
+  slMap = null; slMapReady = false; slPending = null;
+  slInitMap();
+  slRender(); /* 현재 지역·검색 필터를 새 지도에 다시 적용 (load 후 slPending 경유) */
+}
+
+window.addEventListener('pageshow', e => {
+  if (e.persisted && slMapContextLost()) slMapRebuild();
+});
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && slMapContextLost()) slMapRebuild();
+});
 
 function slMapApply(list) {
   slMap.getSource('stores').setData(slGeojson(list));

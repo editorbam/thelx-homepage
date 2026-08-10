@@ -438,6 +438,7 @@
   /* 모바일: 라벨 복원 (2026-08-10 사용자 결정) — 원형 아이콘만으론 음소거 위치를 못 찾음.
      8/3의 본문 가림 문제는 크기 축소가 아니라 위치·투명도로만 관리 */
   .hero-sound { left: .9rem; bottom: .9rem; padding: .42rem .72rem .42rem .62rem; }
+  .hero-sound::after { inset: -9px; } /* 축소 패딩에서도 44px 확보 — 44.44px 턱걸이 여유(코드리뷰 8/10) */
   .hero-sound.scrolling { opacity: .18; }
   /* 제품 모달 열림 중에는 비노출 — 모달 본문을 가리지 않도록 */
   body.pd-open .hero-sound { opacity: 0; pointer-events: none; }
@@ -549,7 +550,6 @@
     }
     #mainNav a, #mainNav button, .mobile-menu a { cursor: pointer !important; } /* stores의 전역 커서 리셋 대응 */
     .nav-logo { display: flex; align-items: center; transition: opacity .2s; position: relative; }
-    .nav-logo::after { content: ''; position: absolute; inset: -9px; } /* 터치 타깃 44px — 시각 불변, 히트 영역만 */
     .nav-logo:hover { opacity: .65; }
     .nav-logo img { height: 26px; width: auto; display: block; }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
@@ -596,6 +596,8 @@
       nav#mainNav { padding: 0 1.5rem; }
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: flex; }
+      /* 터치 타깃 44px — 모바일 한정: 데스크탑·태블릿에선 로고 히트 링이 첫 네비 링크를 가로챔(코드리뷰 8/10) */
+      .nav-logo::after { content: ''; position: absolute; inset: -9px; }
       .mobile-menu { display: flex; }
       body.menu-open { overflow: hidden; }
       body.menu-open .hero-sound { opacity: 0; pointer-events: none; } /* 사운드 알약이 메뉴 위로 뜨는 것 방지 */

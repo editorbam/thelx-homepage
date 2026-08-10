@@ -466,30 +466,6 @@
     }
 </style>
 <style>
-/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
-.lx-click {
-  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
-  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
-  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
-}
-.lx-click.on-dark { color: #fff; border-color: rgba(255,255,255,.45); }
-/* 알약 버튼 — 칩을 버튼 안이 아니라 아래에 (버튼 폭이 늘어나 답답해 보이던 문제, 2026-08-06 사용자 요청).
-   본문 산문 속 인라인 링크는 기존대로 글자 옆에 둔다. */
-/* :has로 칩이 실제로 있을 때만 자리를 비운다 — 칩을 빼면 빈 여백이 남던 문제(코드리뷰 2026-08-06) */
-.why-cta:has(> .lx-click), .tech-cta a:has(> .lx-click), .story-back-cta a:has(> .lx-click),
-.pricing-cta-btn:has(> .lx-click), .sl-cta-btn:has(> .lx-click), .product-detail-btn:has(> .lx-click),
-.pd-btn-primary:has(> .lx-click), .pd-btn-ghost:has(> .lx-click),
-.cf-cta a:has(> .lx-click), .pf-cta a:has(> .lx-click), .sl-more-btn:has(> .lx-click) {
-  position: relative;
-  margin-bottom: 1.6rem;
-}
-.why-cta > .lx-click, .tech-cta a > .lx-click, .story-back-cta a > .lx-click, .pricing-cta-btn > .lx-click,
-.sl-cta-btn > .lx-click, .product-detail-btn > .lx-click,
-.pd-btn-primary > .lx-click, .pd-btn-ghost > .lx-click,
-.cf-cta a > .lx-click, .pf-cta a > .lx-click, .sl-more-btn > .lx-click {
-  position: absolute; left: 50%; top: calc(100% + 7px);
-  transform: translateX(-50%); margin-left: 0;
-}
 </style>
 <style>
 /* ── 모바일 최적화 (2026-08-05) — 터치 타깃 44px 권장 대응·최소 글자 크기 ──

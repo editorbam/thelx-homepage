@@ -422,9 +422,9 @@
   color: rgba(255,255,255,.82);
 }
 @media (max-width: 768px){
-  /* 모바일: 라벨 숨겨 40px 원형 아이콘만 — 본문(지역 칩·모달 텍스트) 가림 해소 (2026-08-03) */
-  .hero-sound { left: .9rem; bottom: .9rem; width: 40px; height: 40px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; }
-  .hero-sound .label { display: none; }
+  /* 모바일: 라벨 복원 (2026-08-10 사용자 결정) — 원형 아이콘만으론 음소거 위치를 못 찾음.
+     8/3의 본문 가림 문제는 크기 축소가 아니라 위치·투명도로만 관리 */
+  .hero-sound { left: .9rem; bottom: .9rem; padding: .42rem .72rem .42rem .62rem; }
   .hero-sound.scrolling { opacity: .18; }
   /* 제품 모달 열림 중에는 비노출 — 모달 본문을 가리지 않도록 */
   body.pd-open .hero-sound { opacity: 0; pointer-events: none; }

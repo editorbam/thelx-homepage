@@ -416,6 +416,7 @@
       opacity: 0; transform: translateY(10px); pointer-events: none;
       transition: opacity .55s ease, transform .55s ease, background .3s, border-color .3s;
     }
+    .hero-sound::after { content: ''; position: absolute; inset: -8px; border-radius: 980px; } /* 터치 타깃 44px — 시각 불변, 히트 영역만 */
     .hero-sound.show { opacity: 1; transform: none; pointer-events: auto; }
     .hero-sound:hover { background: rgba(15,15,17,.5); border-color: rgba(255,255,255,.28); }
     .hero-sound .eq { display: flex; align-items: flex-end; gap: 2px; height: 13px; }
@@ -547,7 +548,8 @@
       border-bottom: .5px solid rgba(0,0,0,.08);
     }
     #mainNav a, #mainNav button, .mobile-menu a { cursor: pointer !important; } /* stores의 전역 커서 리셋 대응 */
-    .nav-logo { display: flex; align-items: center; transition: opacity .2s; }
+    .nav-logo { display: flex; align-items: center; transition: opacity .2s; position: relative; }
+    .nav-logo::after { content: ''; position: absolute; inset: -9px; } /* 터치 타깃 44px — 시각 불변, 히트 영역만 */
     .nav-logo:hover { opacity: .65; }
     .nav-logo img { height: 26px; width: auto; display: block; }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
@@ -569,6 +571,7 @@
       display: none; flex-direction: column; gap: 5px;
       background: none; border: none; padding: 6px; z-index: 600; position: relative;
     }
+    .nav-hamburger::after { content: ''; position: absolute; inset: -9px; } /* 터치 타깃 44px — 시각 불변, 히트 영역만 */
     .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: #0a0a0a;
       transition: background .4s, transform .3s, opacity .3s; }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background:#fff; }

@@ -3929,7 +3929,7 @@ body.pd-open { overflow: hidden; }
       <div class="form-group full">
         <label class="form-label" for="bProduct">관심 제품</label>
         <select id="bProduct" name="product" class="field-underline">
-          <option value="">추천을 받고 싶습니다</option>
+          <option value="">아직 정하지 않았습니다</option>
           <option value="LX">LX</option>
           <option value="Vogue">Vogue</option>
           <option value="Xenith IR">Xenith IR</option>
@@ -4524,7 +4524,7 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
     phone:   document.getElementById('bPhone').value,
     car:     document.getElementById('bCar').value,
     date:    document.getElementById('bDate').value,
-    product: document.getElementById('bProduct').value || '추천 요청'
+    product: document.getElementById('bProduct').value || '미정'
   };
 
   try {

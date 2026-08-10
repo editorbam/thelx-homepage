@@ -684,6 +684,14 @@ function slPinPopupHtml(pr, withBtns) {
     '</div>';
 }
 
+/* 클릭 팝업은 항상 하나만 — 카드·핀을 연달아 클릭해도 이전 팝업을 지우고 연다 (2026-08-10 코드리뷰) */
+let slClickPopup = null;
+function slOpenPopup(lngLat, html) {
+  if (slClickPopup) slClickPopup.remove();
+  slClickPopup = new maplibregl.Popup({ offset: 14, focusAfterOpen: false })
+    .setLngLat(lngLat).setHTML(html).addTo(slMap);
+}
+
 /* 카드 클릭 → 지도가 해당 지점으로 바로 이동 + 팝업 (클릭 여러 번 없이 위치 확인) */
 function slLocate(s) {
   if (!slMap || !slMapReady || s.y == null) return;
@@ -696,8 +704,7 @@ function slLocate(s) {
   const top = r.top + window.scrollY - Math.max(0, (window.innerHeight - r.height) / 2);
   window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   slMap.flyTo({ center: [s.x, s.y], zoom: 15, duration: 900 });
-  new maplibregl.Popup({ offset: 14, focusAfterOpen: false }).setLngLat([s.x, s.y])
-    .setHTML(slPinPopupHtml({ n: s.n, a: s.a, p: s.p }, true)).addTo(slMap);
+  slOpenPopup([s.x, s.y], slPinPopupHtml({ n: s.n, a: s.a, p: s.p }, true));
 }
 
 function slInitMap(){
@@ -761,8 +768,7 @@ function slInitMap(){
     PIN_LAYERS.forEach(id => {
       slMap.on('click', id, e => {
         slHover.remove();
-        new maplibregl.Popup({ offset: 14, focusAfterOpen: false }).setLngLat(e.features[0].geometry.coordinates)
-          .setHTML(slPinPopupHtml(e.features[0].properties, true)).addTo(slMap);
+        slOpenPopup(e.features[0].geometry.coordinates, slPinPopupHtml(e.features[0].properties, true));
       });
       slMap.on('mousemove', id, e => {
         slMap.getCanvas().style.cursor = 'pointer';

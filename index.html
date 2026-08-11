@@ -294,6 +294,7 @@ button { cursor: none; font-family: var(--font); border: none; background: none;
 #cursor { display: none !important; }
 *, *::before, *::after { cursor: auto !important; }
 a, button, [role="button"], .nav-cta, .nav-hamburger, .product-tab, .vlt-band,
+.vlt-band *, /* 밴드 안 라벨·칩 글자 위에서도 손가락 유지 — * 규칙의 auto가 텍스트 커서로 덮던 문제 (2026-08-11) */
 .faq-question, [onclick], [data-action], summary { cursor: pointer !important; }
 input, textarea, select { cursor: text !important; }
 input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"] { cursor: pointer !important; }

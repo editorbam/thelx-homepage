@@ -5182,10 +5182,11 @@ document.getElementById('slSearch').addEventListener('keydown', e => {
     els.forEach(function (el) { el._body.style.opacity = ''; });
 
     /* 헤더: 레이어 소멸 후 등장(78%) → 피크 유지 → 92% 페이드아웃 시작 → 98% 완전 소멸 */
-    /* 문구가 머물도록 (2026-08-11 대표 피드백 2회) — 등장 후 페이드아웃 없이 유지,
-       섹션 고정이 풀리며 화면과 함께 밀려 올라가는 것으로 퇴장을 대신한다 */
+    /* 문구 머무름+느린 여운 (2026-08-11 대표 피드백 3회차 확정) —
+       0.83까지 등장 → 0.90까지 완전 유지 → 이후 완만하게 옅어지며(끝에서도 절반 남음)
+       화면과 함께 퇴장. 급한 페이드아웃(×16)은 끊기는 느낌이라 기울기 ×5로 */
     var headerOp = inSection
-      ? clamp01((progress - 0.74) * 12)
+      ? clamp01((progress - 0.74) * 12) * clamp01(1 - (progress - 0.90) * 5)
       : 0;
     if (header) header.style.opacity = headerOp;
 

@@ -94,7 +94,7 @@ def build_schema(stores: list[dict]) -> dict:
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "THE LX 공식 인증 시공점 네트워크",
-        "description": f"전국 {len(stores)}개 공식 인증 시공점. 자동차 윈도우 필름 시공.",
+        "description": f"자동차 윈도우 필름 전국 {len(stores)}개 공식 인증 시공점.",  # '필름 시공'은 마스터 금지어 — 표기 변경 금지
         "numberOfItems": len(stores),
         "itemListOrder": "Unordered",
         "itemListElement": items,

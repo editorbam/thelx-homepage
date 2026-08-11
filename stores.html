@@ -707,8 +707,13 @@ function slLocate(s) {
   slOpenPopup([s.x, s.y], slPinPopupHtml({ n: s.n, a: s.a, p: s.p }, true));
 }
 
+/* 초기 생성 재시도 (2026-08-11) — Safari가 메모리 사정으로 WebGL 컨텍스트 생성을
+   거부하는 순간이 있음(가끔 지도가 처음부터 안 뜨는 증상). 즉시 포기하지 않고
+   간격을 늘려가며 3회까지 다시 시도, 최종 실패 시에만 목록 전용으로 전환 */
+let slInitTries = 0;
 function slInitMap(){
   if (!window.maplibregl) { document.getElementById('slMap').classList.add('no-map'); return; }
+  try {
   /* 시작 뷰=전체 시공점 bounds — 예전엔 고정 중심(zoom 6)으로 뜬 뒤 fitBounds 애니메이션이
      줌아웃하며 타일을 한 번 더 받았음. 처음부터 최종 뷰로 시작해 두 번째 타일 웨이브 제거 */
   const slAllBounds = new maplibregl.LngLatBounds();
@@ -792,6 +797,13 @@ function slInitMap(){
   slMap.getCanvas().addEventListener('webglcontextlost', () => {
     setTimeout(() => { if (slMapContextLost()) slMapRebuild(); }, 700);
   });
+  slInitTries = 0;
+  document.getElementById('slMap').classList.remove('no-map');
+  } catch (e) {
+    slMap = null;
+    if (slInitTries < 3) { slInitTries++; setTimeout(slInitMap, slInitTries * 1200); }
+    else document.getElementById('slMap').classList.add('no-map');
+  }
 }
 slInitMap();
 

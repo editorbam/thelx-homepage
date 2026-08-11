@@ -1,7 +1,9 @@
-# THE LX — robots.txt
-# 정식 배포 2026-08-11 — 색인 개방
+# THE LX — robots.txt (2026-08-11 정식 배포판)
+# 도메인 루트에서만 작동. 실서버 업로드 시 이 파일이 최종본 —
+# 구 사이트 규칙(/adm/ 차단, Googlebot·Yeti 대상)을 전 봇 대상으로 승계 병합함.
 
 User-agent: *
 Allow: /
+Disallow: /adm/
 
 Sitemap: https://isolargard.com/sitemap.xml

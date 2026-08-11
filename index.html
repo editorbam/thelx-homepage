@@ -1109,7 +1109,14 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
   text-shadow: 0 1px 14px rgba(0,0,0,.55);
   z-index: 5; pointer-events: none;
   transition: opacity .35s ease;
+  animation: vltHintBreath 2.8s ease-in-out infinite; /* 숨쉬기 — 정지 화면 속 유일한 움직임으로 시선 유도 */
 }
+@keyframes vltHintBreath {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+/* 밴드 클릭(집중 모드) 시엔 숨쉬기 멈추고 기존 로직대로 사라짐 */
+#vlt.vlt-focused .vlt-hint { animation: none; }
 #vlt.vlt-focused .vlt-hint { opacity: 0; }
 
 .vlt-band-label .lbl-pct {

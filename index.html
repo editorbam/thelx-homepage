@@ -1102,8 +1102,8 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .lbl-click { display: none; } /* 알약 폐기(2026-08-11 대표 피드백) — 안내는 상단 vlt-hint 한 줄로 통일 */
 /* 안내 위치 분기 — 넓은 화면=농도 라벨 옆, 좁은 화면=상단 한 줄 (밴드 폭 78~160px에선 라벨 옆이 잘림) */
 .vlt-hint {
-  display: block; color: rgba(255,255,255,.42); font-size: 12px; font-weight: 400;
-  margin: .7rem 0 0; letter-spacing: .03em; word-break: keep-all;
+  display: block; color: rgba(255,255,255,.8); font-size: 15px; font-weight: 500;
+  margin: .9rem 0 0; letter-spacing: .04em; word-break: keep-all;
   transition: opacity .35s ease;
 }
 #vlt.vlt-focused .vlt-hint { opacity: 0; }
@@ -3103,7 +3103,7 @@ body.pd-open { overflow: hidden; }
     <!-- ⚠️ 아래 VLT 라벨은 pd-data.js(스펙 단일 소스)·recommend.html 농도별 스펙표의 정적 사본 —
          공식값 12/23/42/59/72 (2026-07-03 확정). 수정 시 세 곳을 항상 함께 고칠 것. -->
     <div class="vlt-band" id="vb0" style="left:0%;">
-      <div class="vlt-band-fill" style="background:rgba(6,10,22,.70);"></div>
+      <div class="vlt-band-fill" style="background:rgba(6,10,22,.60);"></div>
       <div class="vlt-band-label"><span class="lbl-name">LX 15<span class="lbl-click" aria-hidden="true">→ 클릭하세요</span></span><span class="lbl-pct">VLT 12%</span></div>
     </div>
     <div class="vlt-band" id="vb1" style="left:20%;">

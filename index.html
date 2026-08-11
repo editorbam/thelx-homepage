@@ -1102,8 +1102,12 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .lbl-click { display: none; } /* 알약 폐기(2026-08-11 대표 피드백) — 안내는 상단 vlt-hint 한 줄로 통일 */
 /* 안내 위치 분기 — 넓은 화면=농도 라벨 옆, 좁은 화면=상단 한 줄 (밴드 폭 78~160px에선 라벨 옆이 잘림) */
 .vlt-hint {
-  display: block; color: rgba(255,255,255,.8); font-size: 15px; font-weight: 500;
-  margin: .9rem 0 0; letter-spacing: .04em; word-break: keep-all;
+  /* 화면 정중앙 배치 (2026-08-11 대표 피드백) — 시선 기본 지점. 밴드 클릭 시 기존 로직으로 사라짐 */
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  display: block; color: rgba(255,255,255,.9); font-size: 15px; font-weight: 500;
+  margin: 0; letter-spacing: .04em; word-break: keep-all; white-space: nowrap;
+  text-shadow: 0 1px 14px rgba(0,0,0,.55);
+  z-index: 5; pointer-events: none;
   transition: opacity .35s ease;
 }
 #vlt.vlt-focused .vlt-hint { opacity: 0; }
@@ -3095,8 +3099,8 @@ body.pd-open { overflow: hidden; }
     <p class="section-eyebrow" style="color:rgba(255,255,255,.45);">Visible Light Transmittance</p>
     <h2 style="color:#fff;font-size:clamp(1.6rem,3.6vw,2.8rem);font-weight:600;letter-spacing:-0.03em;margin:.5rem 0 .6rem;text-shadow:0 2px 18px rgba(0,0,0,.5);">빛의 양을 고르는 일.</h2>
     <p style="color:rgba(255,255,255,.65);font-size:clamp(.85rem,1.05vw,1rem);font-weight:400;margin:0;letter-spacing:.02em;word-break:keep-all;">숫자가 낮을수록 어둡고, 높을수록 밝습니다. 같은 하늘, 다른 시야.</p>
-    <p class="vlt-hint">농도를 클릭하세요</p>
   </div>
+  <p class="vlt-hint">농도를 클릭하세요</p>
   <div class="vlt-wrap" id="vltWrap">
     <img src="vlt-sky.jpg" srcset="vlt-sky-m.jpg 800w, vlt-sky.jpg 1920w" sizes="100vw" alt="THE LX 필름 투과율 시각화" class="vlt-img" loading="eager" decoding="sync" fetchpriority="high">
 

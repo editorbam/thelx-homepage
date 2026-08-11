@@ -2199,7 +2199,7 @@ footer {
   .footer-inner { flex-direction:column; align-items:flex-start; }
   .cta-actions { flex-direction:column; gap:1rem; }
   /* FILM LAYERS — 모바일 타이틀 임팩트 */
-  #film-layers .fl-title { font-size: 1.55rem; line-height: 1.4; letter-spacing: -.01em; }
+  #film-layers .fl-title { font-size: 1.9rem; line-height: 1.4; letter-spacing: -.01em; }
   #film-layers .fl-header { padding: 0 1.5rem; }
 }
 @media (max-width:480px) {
@@ -2667,7 +2667,7 @@ body.pd-open { overflow: hidden; }
   color: rgba(200,169,110,0.55); text-transform: uppercase; margin-bottom: 18px;
 }
 .fl-title {
-  font-size: clamp(1.2rem, 2.4vw, 1.8rem); font-weight: 300;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 300;
   color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
   line-height: 1.6;
 }
@@ -5182,8 +5182,9 @@ document.getElementById('slSearch').addEventListener('keydown', e => {
     els.forEach(function (el) { el._body.style.opacity = ''; });
 
     /* 헤더: 레이어 소멸 후 등장(78%) → 피크 유지 → 92% 페이드아웃 시작 → 98% 완전 소멸 */
+    /* 문구가 스크롤에서 잠깐 '걸리도록' 창 확대 (2026-08-11 대표 피드백) — 완전 노출 구간 약 7%→13% */
     var headerOp = inSection
-      ? clamp01((progress - 0.78) * 14) * clamp01(1 - (progress - 0.92) * 16)
+      ? clamp01((progress - 0.74) * 12) * clamp01(1 - (progress - 0.95) * 16)
       : 0;
     if (header) header.style.opacity = headerOp;
 

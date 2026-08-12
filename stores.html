@@ -225,8 +225,10 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 중간 크기 확대판. 2026-08-12 시안 2 최종) */
-.sl-brand-wrap { display:flex; align-items:center; gap:1.4rem; margin-bottom:1.1rem; }
+/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 중간 크기·중앙 정렬. 2026-08-12 시안 2 최종) */
+.sl-brand-wrap { display:flex; align-items:center; margin-bottom:1.1rem; }
+.sl-brand-side { flex:1; }
+.sl-brand-side.right { display:flex; justify-content:flex-start; padding-left:1.4rem; }
 .sl-seg {
   display:flex; border:.5px solid var(--gray-2); border-radius:980px;
   overflow:hidden; background:var(--white);
@@ -251,7 +253,9 @@
 }
 .sl-brand-wrap.on .sl-seg-all { visibility:visible; }
 @media (max-width:768px) {
-  .sl-brand-wrap { gap:1rem; flex-wrap:wrap; }
+  .sl-brand-wrap { flex-wrap:wrap; row-gap:.7rem; }
+  .sl-brand-side { display:none; }
+  .sl-brand-side.right { display:flex; min-width:100%; justify-content:center; padding-left:0; }
   .sl-seg { flex:1; min-width:100%; }
   .sl-seg-btn { flex:1; justify-content:center; padding:.9rem .5rem; font-size:.98rem; }
 }
@@ -637,11 +641,12 @@
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
     <div class="sl-brand-wrap fi" id="slBrandWrap">
+      <span class="sl-brand-side" aria-hidden="true"></span>
       <div class="sl-seg" role="group" aria-label="브랜드 선택">
         <button class="sl-seg-btn" data-b="lx" type="button">THE LX <span class="sl-cnt">138</span></button>
         <button class="sl-seg-btn" data-b="sg" type="button">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
       </div>
-      <button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button>
+      <span class="sl-brand-side right"><button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button></span>
     </div>
 
     <div class="sl-region-wrap fi">

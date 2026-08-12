@@ -794,28 +794,18 @@ function slInitMap(){
       }
     });
 
-    slMap.addSource('stores', { type: 'geojson', data: slGeojson([]), cluster: true, clusterRadius: 40, clusterMaxZoom: 11 });
-    slMap.addLayer({ id: 'st-cluster', type: 'circle', source: 'stores', filter: ['has', 'point_count'],
-      paint: { 'circle-color': '#0a0a0a', 'circle-radius': 17, 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' } });
-    slMap.addLayer({ id: 'st-count', type: 'symbol', source: 'stores', filter: ['has', 'point_count'],
-      layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Regular'], 'text-size': 12 },
-      paint: { 'text-color': '#ffffff' } });
-    slMap.addLayer({ id: 'st-pin', type: 'circle', source: 'stores', filter: ['!', ['has', 'point_count']],
-      paint: { 'circle-radius': 10, 'circle-color': ['case', ['==', ['get', 'lx'], 1], '#0a0a0a', '#ffffff'],
+    /* 클러스터 없음 (2026-08-12 사용자 확정) — 숫자 묶음 대신 전 구간 LX/S 핀으로 통일.
+       전국 뷰에서 436개가 겹치므로 핀 크기는 줌에 따라 줄이고, 겹치는 글자는 충돌 규칙으로 솎아 표시 */
+    slMap.addSource('stores', { type: 'geojson', data: slGeojson([]) });
+    slMap.addLayer({ id: 'st-pin', type: 'circle', source: 'stores',
+      paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 5, 8, 8, 11, 10],
+               'circle-color': ['case', ['==', ['get', 'lx'], 1], '#0a0a0a', '#ffffff'],
                'circle-stroke-width': 1.5, 'circle-stroke-color': '#0a0a0a' } });
     /* 핀 위 LX / S 글자 — 매장 구분 (LX=검정 바탕 흰 글자, 솔라가드=흰 바탕 검정 글자) */
-    slMap.addLayer({ id: 'st-pin-label', type: 'symbol', source: 'stores', filter: ['!', ['has', 'point_count']],
+    slMap.addLayer({ id: 'st-pin-label', type: 'symbol', source: 'stores',
       layout: { 'text-field': ['case', ['==', ['get', 'lx'], 1], 'LX', 'S'], 'text-font': ['Noto Sans Regular'],
-                'text-size': 9, 'text-allow-overlap': true, 'text-ignore-placement': true },
+                'text-size': ['interpolate', ['linear'], ['zoom'], 5, 7, 8, 8, 11, 9] },
       paint: { 'text-color': ['case', ['==', ['get', 'lx'], 1], '#ffffff', '#0a0a0a'] } });
-
-    slMap.on('click', 'st-cluster', e => {
-      const f = slMap.queryRenderedFeatures(e.point, { layers: ['st-cluster'] })[0];
-      const r = slMap.getSource('stores').getClusterExpansionZoom(f.properties.cluster_id);
-      /* 클릭 횟수 절감: 클러스터가 갈라지는 줌보다 한 단계 더 들어감 */
-      const go = z => slMap.easeTo({ center: f.geometry.coordinates, zoom: z + 1 });
-      if (r && r.then) r.then(go); else slMap.getSource('stores').getClusterExpansionZoom(f.properties.cluster_id, (err, z) => { if (!err) go(z); });
-    });
 
     /* 호버 툴팁 — 지점명·주소·전화 (클릭 팝업과 별개, 버튼 없음) */
     const slHover = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14 });
@@ -835,9 +825,6 @@ function slInitMap(){
         slHover.remove();
       });
     });
-    slMap.on('mouseenter', 'st-cluster', () => slMap.getCanvas().style.cursor = 'pointer');
-    slMap.on('mouseleave', 'st-cluster', () => slMap.getCanvas().style.cursor = '');
-
     slMapReady = true;
     if (slPending) { slMapApply(slPending); slPending = null; }
   });

@@ -225,39 +225,40 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 중간 크기·중앙 정렬. 2026-08-12 시안 2 최종) */
-.sl-brand-wrap { display:flex; align-items:center; margin-bottom:1.1rem; }
-.sl-brand-side { flex:1; }
-.sl-brand-side.right { display:flex; justify-content:flex-start; padding-left:1.4rem; }
-.sl-seg {
-  display:flex; border:.5px solid var(--gray-2); border-radius:980px;
-  overflow:hidden; background:var(--white);
-}
-.sl-seg-btn {
-  appearance:none; border:0; background:transparent;
-  padding:1.05rem 3.2rem; font-family:var(--font);
-  font-size:1.1rem; font-weight:400; color:var(--gray-3);
-  cursor:none; display:flex; align-items:baseline; gap:.5rem;
-  transition:all .2s; white-space:nowrap;
-}
-.sl-seg-btn + .sl-seg-btn { border-left:.5px solid var(--gray-2); }
-.sl-seg-btn:hover { color:var(--black); }
-.sl-seg-btn.active { background:var(--black); color:var(--white); font-weight:500; }
-.sl-seg-btn.active .sl-cnt { color:rgba(255,255,255,.5); }
-.sl-seg-btn .sl-cnt { font-size:12px; }
+/* 브랜드 필터 — 핀 배지 리스트 행 (지도 핀·범례와 같은 얼굴. 2026-08-12 시안 6 최종) */
+.sl-brand-block { margin-bottom:1.5rem; }
+.sl-brand-all-row { text-align:right; margin-bottom:.5rem; min-height:1.3em; }
 .sl-seg-all {
   appearance:none; border:0; background:none; font-family:var(--font);
   font-size:.95rem; color:var(--gray-3);
   border-bottom:.5px solid var(--gray-3); padding:0 0 2px;
   cursor:none; visibility:hidden; white-space:nowrap;
 }
-.sl-brand-wrap.on .sl-seg-all { visibility:visible; }
+.sl-brand-block.on .sl-seg-all { visibility:visible; }
+.sl-brand-list { border-top:.5px solid var(--gray-2); }
+.sl-plrow {
+  appearance:none; border:0; background:none; font-family:var(--font);
+  display:flex; align-items:center; gap:1.1rem; width:100%;
+  padding:1.25rem .6rem; border-bottom:.5px solid var(--gray-2);
+  cursor:none; transition:background .2s; text-align:left;
+}
+.sl-plpin {
+  width:26px; height:26px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; letter-spacing:.02em;
+}
+.sl-plrow[data-b="lx"] .sl-plpin { background:var(--black); color:var(--white); }
+.sl-plrow[data-b="sg"] .sl-plpin { background:var(--white); color:var(--black); border:.5px solid var(--black); }
+.sl-plname { font-size:1.15rem; font-weight:400; color:var(--black); }
+.sl-plc { font-size:12px; color:var(--gray-3); letter-spacing:.06em; margin-left:auto; white-space:nowrap; }
+.sl-plrow:hover { background:var(--gray-1); }
+.sl-plrow.active { background:var(--black); }
+.sl-plrow.active .sl-plname { color:var(--white); font-weight:500; }
+.sl-plrow.active .sl-plc { color:rgba(255,255,255,.55); }
+.sl-plrow.active[data-b="lx"] .sl-plpin { background:var(--white); color:var(--black); }
 @media (max-width:768px) {
-  .sl-brand-wrap { flex-wrap:wrap; row-gap:.7rem; }
-  .sl-brand-side { display:none; }
-  .sl-brand-side.right { display:flex; min-width:100%; justify-content:center; padding-left:0; }
-  .sl-seg { flex:1; min-width:100%; }
-  .sl-seg-btn { flex:1; justify-content:center; padding:.9rem .5rem; font-size:.98rem; }
+  .sl-plrow { padding:1.05rem .4rem; gap:.85rem; }
+  .sl-plname { font-size:1.02rem; }
 }
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
@@ -640,13 +641,12 @@
     </div>
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
-    <div class="sl-brand-wrap fi" id="slBrandWrap">
-      <span class="sl-brand-side" aria-hidden="true"></span>
-      <div class="sl-seg" role="group" aria-label="브랜드 선택">
-        <button class="sl-seg-btn" data-b="lx" type="button">THE LX <span class="sl-cnt">138</span></button>
-        <button class="sl-seg-btn" data-b="sg" type="button">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
+    <div class="sl-brand-block fi" id="slBrandWrap">
+      <p class="sl-brand-all-row"><button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button></p>
+      <div class="sl-brand-list" role="group" aria-label="브랜드 선택">
+        <button class="sl-plrow" data-b="lx" type="button"><span class="sl-plpin" aria-hidden="true">LX</span><span class="sl-plname">THE LX</span><span class="sl-plc">138개 시공점</span></button>
+        <button class="sl-plrow" data-b="sg" type="button"><span class="sl-plpin" aria-hidden="true">S</span><span class="sl-plname">솔라가드 프리미엄</span><span class="sl-plc">298개 시공점</span></button>
       </div>
-      <span class="sl-brand-side right"><button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button></span>
     </div>
 
     <div class="sl-region-wrap fi">
@@ -965,7 +965,7 @@ document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
 });
 
 /* 브랜드 세그먼트 스위치 — 재클릭=해제(전체), '전체 보기'는 선택 중에만 표시 */
-const slPanels = document.querySelectorAll('.sl-seg-btn');
+const slPanels = document.querySelectorAll('.sl-plrow');
 function slSetBrand(b) {
   slBrand = b;
   slPanels.forEach(x => x.classList.toggle('active', x.dataset.b === b));

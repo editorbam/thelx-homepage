@@ -225,9 +225,36 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 줄 — 지역 칩과 같은 부품, 줄만 분리 (지도 범례와 같은 구분 기준) */
+/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 지도 핀·범례와 같은 구분 기준. 2026-08-12 시안 2 확정) */
 .sl-brand-wrap {
-  display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.6rem;
+  display:flex; align-items:center; gap:1.2rem; margin-bottom:.9rem;
+}
+.sl-seg {
+  display:flex; border:.5px solid var(--gray-2); border-radius:980px;
+  overflow:hidden; background:var(--white);
+}
+.sl-seg-btn {
+  appearance:none; border:0; background:transparent;
+  padding:.85rem 2.2rem; font-family:var(--font);
+  font-size:1rem; font-weight:400; color:var(--gray-3);
+  cursor:none; display:flex; align-items:baseline; gap:.45rem;
+  transition:all .2s; white-space:nowrap;
+}
+.sl-seg-btn + .sl-seg-btn { border-left:.5px solid var(--gray-2); }
+.sl-seg-btn:hover { color:var(--black); }
+.sl-seg-btn.active { background:var(--black); color:var(--white); font-weight:500; }
+.sl-seg-btn.active .sl-cnt { color:rgba(255,255,255,.5); }
+.sl-seg-all {
+  appearance:none; border:0; background:none; font-family:var(--font);
+  font-size:.9rem; color:var(--gray-3);
+  border-bottom:.5px solid var(--gray-3); padding:0 0 2px;
+  cursor:none; visibility:hidden;
+}
+.sl-brand-wrap.on .sl-seg-all { visibility:visible; }
+@media (max-width:768px) {
+  .sl-brand-wrap { gap:.9rem; }
+  .sl-seg { flex:1; }
+  .sl-seg-btn { flex:1; justify-content:center; padding:.8rem .5rem; font-size:.92rem; }
 }
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
@@ -610,10 +637,12 @@
     </div>
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
-    <div class="sl-brand-wrap fi">
-      <button class="sl-rtab active" data-b="all">전체</button>
-      <button class="sl-rtab" data-b="lx">THE LX <span class="sl-cnt">138</span></button>
-      <button class="sl-rtab" data-b="sg">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
+    <div class="sl-brand-wrap fi" id="slBrandWrap">
+      <div class="sl-seg" role="group" aria-label="브랜드 선택">
+        <button class="sl-seg-btn" data-b="lx">THE LX <span class="sl-cnt">138</span></button>
+        <button class="sl-seg-btn" data-b="sg">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
+      </div>
+      <button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button>
     </div>
 
     <div class="sl-region-wrap fi">
@@ -931,15 +960,19 @@ document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
   });
 });
 
-document.querySelectorAll('.sl-rtab[data-b]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sl-rtab[data-b]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    slBrand = btn.dataset.b;
-    slShown = SL_PAGE;
-    slRender();
-  });
+/* 브랜드 스위치 — 같은 칸 재클릭 = 해제(전체), '전체 보기' = 초기화 */
+const slSegBtns = document.querySelectorAll('.sl-seg-btn');
+function slSetBrand(b) {
+  slBrand = b;
+  slSegBtns.forEach(x => x.classList.toggle('active', x.dataset.b === b));
+  document.getElementById('slBrandWrap').classList.toggle('on', b !== 'all');
+  slShown = SL_PAGE;
+  slRender();
+}
+slSegBtns.forEach(btn => {
+  btn.addEventListener('click', () => slSetBrand(btn.dataset.b === slBrand ? 'all' : btn.dataset.b));
 });
+document.getElementById('slSegAll').addEventListener('click', () => slSetBrand('all'));
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
@@ -953,12 +986,9 @@ document.getElementById('slSearch').addEventListener('input', e => {
   const pr = params.get('r'), pq = params.get('q');
   const pb = params.get('b');
   if (pb === 'lx' || pb === 'sg') {
-    const btab = document.querySelector(`.sl-rtab[data-b="${pb}"]`);
-    if (btab) {
-      document.querySelectorAll('.sl-rtab[data-b]').forEach(b => b.classList.remove('active'));
-      btab.classList.add('active');
-      slBrand = pb;
-    }
+    slBrand = pb;
+    slSegBtns.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
+    document.getElementById('slBrandWrap').classList.add('on');
   }
   if (pr) {
     const tab = document.querySelector(`.sl-rtab[data-r="${CSS.escape(pr)}"]`);

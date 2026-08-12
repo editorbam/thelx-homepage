@@ -225,41 +225,35 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 — 에디토리얼 숫자 분할 (01/02, 활성=상단 2px 선+굵기. 2026-08-12 시안 4 최종) */
-.sl-brand-block { margin-bottom:1.4rem; }
-.sl-brand-all-row { text-align:right; margin-bottom:.6rem; min-height:1.3em; }
-.sl-brand-all {
+/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 중간 크기 확대판. 2026-08-12 시안 2 최종) */
+.sl-brand-wrap { display:flex; align-items:center; gap:1.4rem; margin-bottom:1.1rem; }
+.sl-seg {
+  display:flex; border:.5px solid var(--gray-2); border-radius:980px;
+  overflow:hidden; background:var(--white);
+}
+.sl-seg-btn {
+  appearance:none; border:0; background:transparent;
+  padding:1.05rem 3.2rem; font-family:var(--font);
+  font-size:1.1rem; font-weight:400; color:var(--gray-3);
+  cursor:none; display:flex; align-items:baseline; gap:.5rem;
+  transition:all .2s; white-space:nowrap;
+}
+.sl-seg-btn + .sl-seg-btn { border-left:.5px solid var(--gray-2); }
+.sl-seg-btn:hover { color:var(--black); }
+.sl-seg-btn.active { background:var(--black); color:var(--white); font-weight:500; }
+.sl-seg-btn.active .sl-cnt { color:rgba(255,255,255,.5); }
+.sl-seg-btn .sl-cnt { font-size:12px; }
+.sl-seg-all {
   appearance:none; border:0; background:none; font-family:var(--font);
-  font-size:.9rem; color:var(--gray-3);
+  font-size:.95rem; color:var(--gray-3);
   border-bottom:.5px solid var(--gray-3); padding:0 0 2px;
-  cursor:none; visibility:hidden;
+  cursor:none; visibility:hidden; white-space:nowrap;
 }
-.sl-brand-block.on .sl-brand-all { visibility:visible; }
-.sl-brand-wrap { display:grid; grid-template-columns:1fr 1fr; }
-.sl-ed {
-  appearance:none; background:none; border:0; font-family:var(--font);
-  text-align:left; border-top:.5px solid var(--gray-2);
-  padding:1.6rem 2.2rem 1.5rem; position:relative; cursor:none;
-}
-.sl-ed + .sl-ed { border-left:.5px solid var(--gray-2); }
-.sl-ed::before {
-  content:''; position:absolute; top:-.5px; left:0; right:0;
-  height:2px; background:transparent; transition:background .2s;
-}
-.sl-ed:hover .sl-ed-no { color:var(--black); }
-.sl-ed.active::before { background:var(--black); }
-.sl-ed-no {
-  display:block; font-size:11px; letter-spacing:.24em;
-  color:var(--gray-3); margin-bottom:.7rem;
-}
-.sl-ed.active .sl-ed-no { color:var(--black); }
-.sl-ed-nm { font-size:1.55rem; font-weight:300; color:var(--black); letter-spacing:.01em; }
-.sl-ed.active .sl-ed-nm { font-weight:600; }
-.sl-ed-c { font-size:12px; color:var(--gray-3); letter-spacing:.06em; margin-left:.7rem; white-space:nowrap; }
+.sl-brand-wrap.on .sl-seg-all { visibility:visible; }
 @media (max-width:768px) {
-  .sl-ed { padding:1.1rem 1rem 1rem; }
-  .sl-ed-nm { font-size:1.12rem; }
-  .sl-ed-c { display:block; margin:.35rem 0 0; }
+  .sl-brand-wrap { gap:1rem; flex-wrap:wrap; }
+  .sl-seg { flex:1; min-width:100%; }
+  .sl-seg-btn { flex:1; justify-content:center; padding:.9rem .5rem; font-size:.98rem; }
 }
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
@@ -642,12 +636,12 @@
     </div>
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
-    <div class="sl-brand-block fi" id="slBrandBlock">
-      <p class="sl-brand-all-row"><button class="sl-brand-all" id="slBrandAll" type="button">전체 보기</button></p>
-      <div class="sl-brand-wrap" role="group" aria-label="브랜드 선택">
-        <button class="sl-ed" data-b="lx" type="button"><span class="sl-ed-no">01</span><span class="sl-ed-nm">THE LX</span><span class="sl-ed-c">138개 시공점</span></button>
-        <button class="sl-ed" data-b="sg" type="button"><span class="sl-ed-no">02</span><span class="sl-ed-nm">솔라가드 프리미엄</span><span class="sl-ed-c">298개 시공점</span></button>
+    <div class="sl-brand-wrap fi" id="slBrandWrap">
+      <div class="sl-seg" role="group" aria-label="브랜드 선택">
+        <button class="sl-seg-btn" data-b="lx" type="button">THE LX <span class="sl-cnt">138</span></button>
+        <button class="sl-seg-btn" data-b="sg" type="button">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
       </div>
+      <button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button>
     </div>
 
     <div class="sl-region-wrap fi">
@@ -965,19 +959,19 @@ document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
   });
 });
 
-/* 브랜드 에디토리얼 분할(01/02) — 재클릭=해제(전체), '전체 보기'는 선택 중에만 표시 */
-const slPanels = document.querySelectorAll('.sl-ed');
+/* 브랜드 세그먼트 스위치 — 재클릭=해제(전체), '전체 보기'는 선택 중에만 표시 */
+const slPanels = document.querySelectorAll('.sl-seg-btn');
 function slSetBrand(b) {
   slBrand = b;
   slPanels.forEach(x => x.classList.toggle('active', x.dataset.b === b));
-  document.getElementById('slBrandBlock').classList.toggle('on', b !== 'all');
+  document.getElementById('slBrandWrap').classList.toggle('on', b !== 'all');
   slShown = SL_PAGE;
   slRender();
 }
 slPanels.forEach(btn => {
   btn.addEventListener('click', () => slSetBrand(btn.dataset.b === slBrand ? 'all' : btn.dataset.b));
 });
-document.getElementById('slBrandAll').addEventListener('click', () => slSetBrand('all'));
+document.getElementById('slSegAll').addEventListener('click', () => slSetBrand('all'));
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
@@ -993,7 +987,7 @@ document.getElementById('slSearch').addEventListener('input', e => {
   if (pb === 'lx' || pb === 'sg') {
     slBrand = pb;
     slPanels.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
-    document.getElementById('slBrandBlock').classList.add('on');
+    document.getElementById('slBrandWrap').classList.add('on');
   }
   if (pr) {
     const tab = document.querySelector(`.sl-rtab[data-r="${CSS.escape(pr)}"]`);

@@ -72,7 +72,7 @@ const PD_DATA = {
       { title: 'UV 성능', rows: [
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
         { label: '세계특허',   value: 'WO2015102923 / 미국특허 US7709095', pct: null },
       ]},
       { title: '보증', rows: [
@@ -137,7 +137,7 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형)', pct: null },
         { label: '컬러',       value: '그린 골드',         pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
@@ -199,7 +199,7 @@ const PD_DATA = {
         { label: '필름 타입',  value: '세라믹 IR',         pct: null },
         { label: '컬러',       value: 'Vic Black',         pct: null },
         { label: '전파 방해',  value: '없음 (GPS·셀룰러 정상)', pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -250,7 +250,7 @@ const PD_DATA = {
     specs: [
       { title: '모델별 성능 (VLT · TSER)', rows: [
         { label: 'Quantum Black — VLT 8%',  value: 'TSER 72%', pct: 72 },
-        { label: 'Quantum 8    — VLT 9%',   value: 'TSER 72%', pct: 72 },
+        { label: 'Quantum Plus 8 — VLT 9%', value: 'TSER 72%', pct: 72 },
         { label: 'Quantum 14   — VLT 13%',  value: 'TSER 61%', pct: 61 },
         { label: 'Quantum 19   — VLT 19%',  value: 'TSER 57%', pct: 57 },
         { label: 'Quantum 28   — VLT 32%',  value: 'TSER 50%', pct: 50 },
@@ -261,7 +261,7 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '풀 메탈 스퍼터',    pct: null },
         { label: '소재',       value: '금 · 은 · 니켈 희귀 금속 합금', pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
@@ -320,7 +320,7 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',          pct: null },
         { label: '필름 타입',  value: '티타늄 증착 (메탈)',    pct: null },
         { label: '컬러',       value: '딥 블랙 (세계 유일 티타늄 증착)', pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)',     pct: null },
+        { label: '제조원',     value: 'USA 생고뱅',     pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -379,7 +379,7 @@ const PD_DATA = {
         { label: '필름 타입',  value: '메탈반사 하이브리드 (Balance & Hybrid)', pct: null },
         { label: '컬러',       value: '라미네이티드 블루',  pct: null },
         { label: '기술',       value: '스퍼터링 + 나노 카본 세라믹 융합', pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -437,7 +437,7 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '비반사 (Comfort & Smart)', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -496,7 +496,7 @@ const PD_DATA = {
         { label: '필름 타입',  value: '기본형 (Intelligent & Balance)', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
         { label: '표면 코팅',  value: '스크래치 방지 특허 코팅', pct: null },
-        { label: '원산지',     value: 'USA (Saint-Gobain)', pct: null },
+        { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },

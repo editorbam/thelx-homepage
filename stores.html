@@ -225,6 +225,10 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
+/* 브랜드 필터 줄 — 지역 칩과 같은 부품, 줄만 분리 (지도 범례와 같은 구분 기준) */
+.sl-brand-wrap {
+  display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.6rem;
+}
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
   padding:.45rem 1rem; border-radius:980px;
@@ -605,6 +609,13 @@
       </div>
     </div>
 
+    <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
+    <div class="sl-brand-wrap fi">
+      <button class="sl-rtab active" data-b="all">전체</button>
+      <button class="sl-rtab" data-b="lx">THE LX <span class="sl-cnt">138</span></button>
+      <button class="sl-rtab" data-b="sg">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
+    </div>
+
     <div class="sl-region-wrap fi">
       <button class="sl-rtab active" data-r="all">전체 <span class="sl-cnt">436</span></button>
       <button class="sl-rtab" data-r="서울특별시">서울 <span class="sl-cnt">66</span></button>
@@ -659,6 +670,10 @@ const STORE_DATA = [{"r":"서울특별시","n":"THE LX 강남점","a":"서울 �
 
 let slRegion = 'all';
 let slQuery  = '';
+let slBrand  = 'all';
+
+/* 브랜드 판별 — 지도 핀(slGeojson의 lx 속성)과 동일 기준 */
+const slIsLX = s => s.n.toUpperCase().indexOf('LX') !== -1;
 
 function slPhone1(p) {
   const m = p.match(/[\d]{2,3}-[\d]{3,4}-[\d]{4}/);
@@ -856,9 +871,10 @@ function slMapUpdate(list) {
 function slRender() {
   const q   = slQuery.toLowerCase();
   const filtered = STORE_DATA.filter(s => {
+    const matchB = slBrand === 'all' || (slBrand === 'lx') === slIsLX(s);
     const matchR = slRegion === 'all' || s.r === slRegion;
     const matchQ = !q || s.n.toLowerCase().includes(q) || s.a.toLowerCase().includes(q);
-    return matchR && matchQ;
+    return matchB && matchR && matchQ;
   });
 
   const grid  = document.getElementById('slGrid');
@@ -905,11 +921,21 @@ document.getElementById('slGrid').addEventListener('click', e => {
   if (card) slLocate(STORE_DATA[+card.dataset.i]);
 });
 
-document.querySelectorAll('.sl-rtab').forEach(btn => {
+document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.sl-rtab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.sl-rtab[data-r]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     slRegion = btn.dataset.r;
+    slShown = SL_PAGE;
+    slRender();
+  });
+});
+
+document.querySelectorAll('.sl-rtab[data-b]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sl-rtab[data-b]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    slBrand = btn.dataset.b;
     slShown = SL_PAGE;
     slRender();
   });
@@ -921,10 +947,19 @@ document.getElementById('slSearch').addEventListener('input', e => {
   slRender();
 });
 
-/* URL 파라미터로 초기 필터 적용 — index 요약 블록에서 진입 (?r=지역 / ?q=검색어) */
+/* URL 파라미터로 초기 필터 적용 — index 요약 블록에서 진입 (?r=지역 / ?q=검색어 / ?b=lx|sg) */
 (function(){
   const params = new URLSearchParams(location.search);
   const pr = params.get('r'), pq = params.get('q');
+  const pb = params.get('b');
+  if (pb === 'lx' || pb === 'sg') {
+    const btab = document.querySelector(`.sl-rtab[data-b="${pb}"]`);
+    if (btab) {
+      document.querySelectorAll('.sl-rtab[data-b]').forEach(b => b.classList.remove('active'));
+      btab.classList.add('active');
+      slBrand = pb;
+    }
+  }
   if (pr) {
     const tab = document.querySelector(`.sl-rtab[data-r="${CSS.escape(pr)}"]`);
     if (tab) {

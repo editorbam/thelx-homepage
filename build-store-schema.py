@@ -3,7 +3,7 @@
 THE LX 시공점 LocalBusiness 스키마 빌더
 ─────────────────────────────────────────
 stores.html 안의 STORE_DATA(JS 변수)를 단일 진실 소스로 읽어
-schema.org ItemList(AutomotiveBusiness 437건) JSON-LD를 생성하고
+schema.org ItemList(AutomotiveBusiness, 건수=STORE_DATA 실측) JSON-LD를 생성하고
 stores.html의 BUILD 마커 사이에 삽입한다.
 
 실행:
@@ -33,7 +33,7 @@ def extract_store_data(html: str) -> list[dict]:
     """stores.html에서 STORE_DATA JS 배열 추출 → Python list."""
     m = re.search(r"const\s+STORE_DATA\s*=\s*(\[.*?\]);", html, re.DOTALL)
     if not m:
-        sys.exit("ERROR: STORE_DATA를 index.html에서 찾을 수 없습니다.")
+        sys.exit("ERROR: STORE_DATA를 stores.html에서 찾을 수 없습니다.")
     return json.loads(m.group(1))
 
 
@@ -62,7 +62,7 @@ def extract_locality(address: str) -> str:
 
 
 def build_schema(stores: list[dict]) -> dict:
-    """437개 지점을 ItemList + AutomotiveBusiness로 변환."""
+    """전체 지점을 ItemList + AutomotiveBusiness로 변환 (건수=데이터 실측)."""
     items = []
     for i, s in enumerate(stores, start=1):
         locality = extract_locality(s["a"])

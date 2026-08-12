@@ -255,7 +255,6 @@ const PD_DATA = {
         { label: 'Quantum 19   — VLT 19%',  value: 'TSER 57%', pct: 57 },
         { label: 'Quantum 28   — VLT 32%',  value: 'TSER 50%', pct: 50 },
         { label: 'Quantum 37   — VLT 37%',  value: 'TSER 48%', pct: 48 },
-        { label: 'Quantum 52   — VLT 50%',  value: 'TSER 41%', pct: 41 },
       ]},
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },

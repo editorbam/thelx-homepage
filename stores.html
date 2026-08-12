@@ -225,36 +225,30 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 — 세그먼트 스위치 (한 몸의 두 칸, 지도 핀·범례와 같은 구분 기준. 2026-08-12 시안 2 확정) */
+/* 브랜드 필터 — 워드 탭 (제품 탭 문법: 활성=검정+밑줄, 타이포로 가르기. 2026-08-12 시안 1 확정) */
 .sl-brand-wrap {
-  display:flex; align-items:center; gap:1.2rem; margin-bottom:.9rem;
+  display:flex; align-items:baseline; gap:2.4rem;
+  border-bottom:.5px solid var(--gray-2); margin-bottom:1.4rem;
 }
-.sl-seg {
-  display:flex; border:.5px solid var(--gray-2); border-radius:980px;
-  overflow:hidden; background:var(--white);
-}
-.sl-seg-btn {
-  appearance:none; border:0; background:transparent;
-  padding:.85rem 2.2rem; font-family:var(--font);
-  font-size:1rem; font-weight:400; color:var(--gray-3);
-  cursor:none; display:flex; align-items:baseline; gap:.45rem;
-  transition:all .2s; white-space:nowrap;
-}
-.sl-seg-btn + .sl-seg-btn { border-left:.5px solid var(--gray-2); }
-.sl-seg-btn:hover { color:var(--black); }
-.sl-seg-btn.active { background:var(--black); color:var(--white); font-weight:500; }
-.sl-seg-btn.active .sl-cnt { color:rgba(255,255,255,.5); }
-.sl-seg-all {
+.sl-btab {
   appearance:none; border:0; background:none; font-family:var(--font);
-  font-size:.9rem; color:var(--gray-3);
-  border-bottom:.5px solid var(--gray-3); padding:0 0 2px;
-  cursor:none; visibility:hidden;
+  font-size:1.35rem; font-weight:300; color:var(--gray-3);
+  padding:0 0 .85rem; position:relative; cursor:none;
+  display:flex; align-items:baseline; gap:.45rem;
+  transition:color .2s; white-space:nowrap;
 }
-.sl-brand-wrap.on .sl-seg-all { visibility:visible; }
+.sl-btab .sl-cnt { font-size:12px; }
+.sl-btab:hover { color:var(--black); }
+.sl-btab.active { font-weight:600; color:var(--black); }
+.sl-btab.active::after {
+  content:''; position:absolute; left:0; right:0; bottom:-0.5px;
+  height:2px; background:var(--black);
+}
+.sl-btab-all { font-size:.95rem; }
 @media (max-width:768px) {
-  .sl-brand-wrap { gap:.9rem; }
-  .sl-seg { flex:1; }
-  .sl-seg-btn { flex:1; justify-content:center; padding:.8rem .5rem; font-size:.92rem; }
+  .sl-brand-wrap { gap:1.5rem; }
+  .sl-btab { font-size:1.08rem; padding-bottom:.7rem; }
+  .sl-btab-all { font-size:.88rem; }
 }
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
@@ -637,12 +631,10 @@
     </div>
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
-    <div class="sl-brand-wrap fi" id="slBrandWrap">
-      <div class="sl-seg" role="group" aria-label="브랜드 선택">
-        <button class="sl-seg-btn" data-b="lx">THE LX <span class="sl-cnt">138</span></button>
-        <button class="sl-seg-btn" data-b="sg">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
-      </div>
-      <button class="sl-seg-all" id="slSegAll" type="button">전체 보기</button>
+    <div class="sl-brand-wrap fi" role="group" aria-label="브랜드 선택">
+      <button class="sl-btab sl-btab-all active" data-b="all" type="button">전체</button>
+      <button class="sl-btab" data-b="lx" type="button">THE LX <span class="sl-cnt">138</span></button>
+      <button class="sl-btab" data-b="sg" type="button">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
     </div>
 
     <div class="sl-region-wrap fi">
@@ -960,19 +952,17 @@ document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
   });
 });
 
-/* 브랜드 스위치 — 같은 칸 재클릭 = 해제(전체), '전체 보기' = 초기화 */
-const slSegBtns = document.querySelectorAll('.sl-seg-btn');
+/* 브랜드 워드 탭 — 지역 칩과 같은 단일 선택 */
+const slBTabs = document.querySelectorAll('.sl-btab');
 function slSetBrand(b) {
   slBrand = b;
-  slSegBtns.forEach(x => x.classList.toggle('active', x.dataset.b === b));
-  document.getElementById('slBrandWrap').classList.toggle('on', b !== 'all');
+  slBTabs.forEach(x => x.classList.toggle('active', x.dataset.b === b));
   slShown = SL_PAGE;
   slRender();
 }
-slSegBtns.forEach(btn => {
-  btn.addEventListener('click', () => slSetBrand(btn.dataset.b === slBrand ? 'all' : btn.dataset.b));
+slBTabs.forEach(btn => {
+  btn.addEventListener('click', () => slSetBrand(btn.dataset.b));
 });
-document.getElementById('slSegAll').addEventListener('click', () => slSetBrand('all'));
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
@@ -987,8 +977,7 @@ document.getElementById('slSearch').addEventListener('input', e => {
   const pb = params.get('b');
   if (pb === 'lx' || pb === 'sg') {
     slBrand = pb;
-    slSegBtns.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
-    document.getElementById('slBrandWrap').classList.add('on');
+    slBTabs.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
   }
   if (pr) {
     const tab = document.querySelector(`.sl-rtab[data-r="${CSS.escape(pr)}"]`);

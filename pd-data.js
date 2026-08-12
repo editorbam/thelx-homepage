@@ -250,7 +250,7 @@ const PD_DATA = {
     specs: [
       { title: '모델별 성능 (VLT · TSER)', rows: [
         { label: 'Quantum Black — VLT 8%',  value: 'TSER 72%', pct: 72 },
-        { label: 'Quantum      — VLT 9%',   value: 'TSER 72%', pct: 72 },
+        { label: 'Quantum 8    — VLT 9%',   value: 'TSER 72%', pct: 72 },
         { label: 'Quantum 14   — VLT 13%',  value: 'TSER 61%', pct: 61 },
         { label: 'Quantum 19   — VLT 19%',  value: 'TSER 57%', pct: 57 },
         { label: 'Quantum 28   — VLT 32%',  value: 'TSER 50%', pct: 50 },

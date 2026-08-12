@@ -225,30 +225,34 @@
 .sl-region-wrap {
   display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2rem;
 }
-/* 브랜드 필터 — 워드 탭 (제품 탭 문법: 활성=검정+밑줄, 타이포로 가르기. 2026-08-12 시안 1 확정) */
-.sl-brand-wrap {
-  display:flex; align-items:baseline; gap:2.4rem;
-  border-bottom:.5px solid var(--gray-2); margin-bottom:1.4rem;
-}
-.sl-btab {
+/* 브랜드 필터 — 2분할 패널 (카드 문법: 헤어라인+18px, 활성=검정. 2026-08-12 시안 3 확정) */
+.sl-brand-block { margin-bottom:1.4rem; }
+.sl-brand-all-row { text-align:right; margin-bottom:.6rem; min-height:1.3em; }
+.sl-brand-all {
   appearance:none; border:0; background:none; font-family:var(--font);
-  font-size:1.35rem; font-weight:300; color:var(--gray-3);
-  padding:0 0 .85rem; position:relative; cursor:none;
-  display:flex; align-items:baseline; gap:.45rem;
-  transition:color .2s; white-space:nowrap;
+  font-size:.9rem; color:var(--gray-3);
+  border-bottom:.5px solid var(--gray-3); padding:0 0 2px;
+  cursor:none; visibility:hidden;
 }
-.sl-btab .sl-cnt { font-size:12px; }
-.sl-btab:hover { color:var(--black); }
-.sl-btab.active { font-weight:600; color:var(--black); }
-.sl-btab.active::after {
-  content:''; position:absolute; left:0; right:0; bottom:-0.5px;
-  height:2px; background:var(--black);
+.sl-brand-block.on .sl-brand-all { visibility:visible; }
+.sl-brand-wrap { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+.sl-pn {
+  appearance:none; font-family:var(--font); background:var(--white);
+  border:.5px solid var(--gray-2); border-radius:18px;
+  padding:1.5rem 2rem; cursor:none; text-align:left;
+  display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+  transition:all .2s;
 }
-.sl-btab-all { font-size:.95rem; }
+.sl-pn-name { font-size:1.3rem; font-weight:500; color:var(--black); letter-spacing:.01em; }
+.sl-pn-c { font-size:12px; color:var(--gray-3); letter-spacing:.06em; white-space:nowrap; }
+.sl-pn:hover { border-color:var(--black); }
+.sl-pn.active { background:var(--black); border-color:var(--black); }
+.sl-pn.active .sl-pn-name { color:var(--white); }
+.sl-pn.active .sl-pn-c { color:rgba(255,255,255,.55); }
 @media (max-width:768px) {
-  .sl-brand-wrap { gap:1.5rem; }
-  .sl-btab { font-size:1.08rem; padding-bottom:.7rem; }
-  .sl-btab-all { font-size:.88rem; }
+  .sl-brand-wrap { grid-template-columns:1fr; gap:.6rem; }
+  .sl-pn { padding:1.05rem 1.3rem; }
+  .sl-pn-name { font-size:1.1rem; }
 }
 .sl-rtab {
   display:flex; align-items:center; gap:.35rem;
@@ -631,10 +635,12 @@
     </div>
 
     <!-- 브랜드 필터 — 매장명 접두(THE LX / 솔라가드 프리미엄) 기준, 지도 핀·범례와 동일 구분 -->
-    <div class="sl-brand-wrap fi" role="group" aria-label="브랜드 선택">
-      <button class="sl-btab sl-btab-all active" data-b="all" type="button">전체</button>
-      <button class="sl-btab" data-b="lx" type="button">THE LX <span class="sl-cnt">138</span></button>
-      <button class="sl-btab" data-b="sg" type="button">솔라가드 프리미엄 <span class="sl-cnt">298</span></button>
+    <div class="sl-brand-block fi" id="slBrandBlock">
+      <p class="sl-brand-all-row"><button class="sl-brand-all" id="slBrandAll" type="button">전체 보기</button></p>
+      <div class="sl-brand-wrap" role="group" aria-label="브랜드 선택">
+        <button class="sl-pn" data-b="lx" type="button"><span class="sl-pn-name">THE LX</span><span class="sl-pn-c">138개 시공점</span></button>
+        <button class="sl-pn" data-b="sg" type="button"><span class="sl-pn-name">솔라가드 프리미엄</span><span class="sl-pn-c">298개 시공점</span></button>
+      </div>
     </div>
 
     <div class="sl-region-wrap fi">
@@ -952,17 +958,19 @@ document.querySelectorAll('.sl-rtab[data-r]').forEach(btn => {
   });
 });
 
-/* 브랜드 워드 탭 — 지역 칩과 같은 단일 선택 */
-const slBTabs = document.querySelectorAll('.sl-btab');
+/* 브랜드 2분할 패널 — 재클릭=해제(전체), '전체 보기'는 선택 중에만 표시 */
+const slPanels = document.querySelectorAll('.sl-pn');
 function slSetBrand(b) {
   slBrand = b;
-  slBTabs.forEach(x => x.classList.toggle('active', x.dataset.b === b));
+  slPanels.forEach(x => x.classList.toggle('active', x.dataset.b === b));
+  document.getElementById('slBrandBlock').classList.toggle('on', b !== 'all');
   slShown = SL_PAGE;
   slRender();
 }
-slBTabs.forEach(btn => {
-  btn.addEventListener('click', () => slSetBrand(btn.dataset.b));
+slPanels.forEach(btn => {
+  btn.addEventListener('click', () => slSetBrand(btn.dataset.b === slBrand ? 'all' : btn.dataset.b));
 });
+document.getElementById('slBrandAll').addEventListener('click', () => slSetBrand('all'));
 
 document.getElementById('slSearch').addEventListener('input', e => {
   slQuery = e.target.value;
@@ -977,7 +985,8 @@ document.getElementById('slSearch').addEventListener('input', e => {
   const pb = params.get('b');
   if (pb === 'lx' || pb === 'sg') {
     slBrand = pb;
-    slBTabs.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
+    slPanels.forEach(x => x.classList.toggle('active', x.dataset.b === pb));
+    document.getElementById('slBrandBlock').classList.add('on');
   }
   if (pr) {
     const tab = document.querySelector(`.sl-rtab[data-r="${CSS.escape(pr)}"]`);

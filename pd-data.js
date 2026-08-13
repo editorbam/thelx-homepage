@@ -77,8 +77,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '10년', pct: null },
-        { label: '변색 보증',      value: '7년',  pct: null },
-        { label: '기포·박리 보증', value: '10년', pct: null },
       ]},
     ],
   },
@@ -141,7 +139,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
-        { label: '기포·박리 보증', value: '7년', pct: null },
       ]},
     ],
   },
@@ -203,7 +200,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
       ]},
     ],
   },
@@ -265,7 +261,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
-        { label: '기포·박리 보증', value: '7년', pct: null },
       ]},
     ],
   },
@@ -324,7 +319,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
       ]},
     ],
   },
@@ -383,7 +377,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
       ]},
     ],
   },
@@ -441,7 +434,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
       ]},
     ],
   },
@@ -500,7 +492,6 @@ const PD_DATA = {
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
-        { label: '기포·박리 보증', value: '5년', pct: null },
       ]},
     ],
   },

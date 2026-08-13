@@ -4574,7 +4574,14 @@ if (prodSec) prodIO.observe(prodSec);
     });
   }
   wraps.forEach(scnSize);
-  window.addEventListener('resize', () => wraps.forEach(scnSize));
+  /* 크기 추적=ResizeObserver — 탭 표시(0→실크기)·줌·스크롤바·이미지 로드 등 모든 크기 변화에 재계산.
+     window resize 이벤트만으론 Safari에서 낡은 픽셀값이 남아 필름 그림이 좁게 그려지는 실측 버그 있었음 */
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(entries => entries.forEach(e => scnSize(e.target)));
+    wraps.forEach(w => ro.observe(w));
+  } else {
+    window.addEventListener('resize', () => wraps.forEach(scnSize));
+  }
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => e.target.classList.toggle('scn-on', e.isIntersecting));
   }, { threshold: 0.35 });

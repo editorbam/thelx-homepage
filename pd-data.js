@@ -197,7 +197,6 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '세라믹 IR (열흡수 타입)', pct: null },
         { label: '컬러',       value: '비크 블랙',         pct: null },
-        { label: '전파 방해',  value: '없음 (GPS·셀룰러 정상)', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [

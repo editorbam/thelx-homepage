@@ -196,7 +196,7 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '세라믹 IR (열흡수 타입)', pct: null },
-        { label: '컬러',       value: 'Vic Black',         pct: null },
+        { label: '컬러',       value: '비크 블랙',         pct: null },
         { label: '전파 방해',  value: '없음 (GPS·셀룰러 정상)', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
@@ -259,7 +259,7 @@ const PD_DATA = {
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형)', pct: null },
         { label: '소재',       value: '금 · 은 · 니켈 희귀 금속 합금', pct: null },
-        { label: '컬러',       value: '에메랄드 (유리 결합 시 발색)', pct: null },
+        { label: '컬러',       value: '에메랄드', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [

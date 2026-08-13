@@ -1311,6 +1311,7 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .product-image .scn-hit { position:absolute; top:0; bottom:0; z-index:6; cursor:pointer; }
 .product-image .scn-full {
   position:absolute; inset:0; z-index:5; pointer-events:none;
+  mix-blend-mode:multiply;
   transform:translateX(-102%);
   transition:transform 1.1s cubic-bezier(0.4,0,0.15,1); will-change:transform;
 }
@@ -4556,17 +4557,31 @@ if (prodSec) prodIO.observe(prodSec);
   if (!('IntersectionObserver' in window)) return;
   /* 제품별: 복원 바탕 + 실측 밴드 경계(원본 px, 전 행 중앙값 스텝 측정) */
   const SCN = {
+    /* tints=경계 하늘 행 비율 연쇄 실측(곱셈 투과율), names/vlts=공식 스펙. 맑음 밴드는 names에서 제외=클릭존 없음 */
     'lx-vlt-scene.jpg':       { base: 'lx-vlt-scene-base.jpg?v=3', w: 2036, edges: [0, 303, 610, 918, 1226, 2036],
-      /* 농도 전체 보기 — 틴트=바탕 역산 알파(자기일관), 라벨=공식 VLT */
-      tints: [0.527, 0.43, 0.286, 0.218, 0.05].map(a => 'rgba(6,10,22,' + a + ')'),
-      names: ['LX 15', 'LX 25', 'LX 40', 'LX 55', 'LX 70'], vlts: [12, 23, 42, 59, 72] },
-    'vogue-vlt-scene-2.jpg':  { base: 'vogue-vlt-scene-2-base.jpg', w: 2040, edges: [0, 360, 729, 1099, 1468, 2040] },
-    'xenith-vlt-scene.jpg?v=2':   { base: 'xenith-vlt-scene-base.jpg?v=2', w: 2036, edges: [0, 608, 2036] },
-    'quantum-vlt-scene-4.jpg':{ base: 'quantum-vlt-scene-4-base.jpg', w: 2030, edges: [0, 239, 504, 769, 1031, 1295, 1560, 2030] },
-    'titanium-vlt-scene.jpg?v=2': { base: 'titanium-vlt-scene-base.jpg?v=2', w: 2038, edges: [0, 453, 913, 2038] }, /* 26 틴트를 끝까지 연장한 v2 컷 (2026-08-13) */
-    'gline-vlt-scene.jpg?v=2':    { base: 'gline-vlt-scene-base.jpg?v=2', w: 2020, edges: [0, 540, 2020] },
-    'sline-vlt-scene.jpg?v=2':    { base: 'sline-vlt-scene-base.jpg?v=2', w: 2032, edges: [0, 546, 2032] },
-    'galaxie-vlt-scene.jpg?v=2':  { base: 'galaxie-vlt-scene-base.jpg?v=2', w: 2028, edges: [0, 449, 911, 2028] },
+      tints: ['rgb(117,128,131)','rgb(146,151,152)','rgb(184,185,185)','rgb(202,204,204)','rgb(242,242,242)'],
+      names: ['LX 15','LX 25','LX 40','LX 55','LX 70'], vlts: [12,23,42,59,72] },
+    'vogue-vlt-scene-2.jpg':  { base: 'vogue-vlt-scene-2-base.jpg', w: 2040, edges: [0, 360, 729, 1099, 1468, 2040],
+      tints: ['rgb(78,80,80)','rgb(103,95,99)','rgb(116,113,128)','rgb(130,124,148)'],
+      names: ['Vogue 10','Vogue 20','Vogue 30','Vogue 40'], vlts: [10,21,31,43] },
+    'xenith-vlt-scene.jpg?v=2':   { base: 'xenith-vlt-scene-base.jpg?v=2', w: 2036, edges: [0, 608, 2036],
+      tints: ['rgb(137,139,140)','rgb(189,191,192)'],
+      names: ['Xenith IR 15','Xenith IR 30'], vlts: [16,31] },
+    'quantum-vlt-scene-4.jpg':{ base: 'quantum-vlt-scene-4-base.jpg', w: 2030, edges: [0, 239, 504, 769, 1031, 1295, 1560, 2030],
+      tints: ['rgb(123,124,128)','rgb(104,121,128)','rgb(116,134,141)','rgb(119,139,147)','rgb(145,157,161)','rgb(168,177,180)'],
+      names: ['Quantum Black 8','Quantum 8','Quantum 14','Quantum 19','Quantum 28','Quantum 37'], vlts: [8,9,13,19,32,37] },
+    'titanium-vlt-scene.jpg?v=2': { base: 'titanium-vlt-scene-base.jpg?v=2', w: 2038, edges: [0, 453, 913, 2038],
+      tints: ['rgb(100,101,111)','rgb(130,126,105)','rgb(153,151,155)'],
+      names: ['Titanium 6','Titanium 16','Titanium 26'], vlts: [6,16,26] },
+    'gline-vlt-scene.jpg?v=2':    { base: 'gline-vlt-scene-base.jpg?v=2', w: 2020, edges: [0, 540, 2020],
+      tints: ['rgb(109,107,103)','rgb(135,131,127)'],
+      names: ['G-LINE 10','G-LINE 30'], vlts: [10,27] },
+    'sline-vlt-scene.jpg?v=2':    { base: 'sline-vlt-scene-base.jpg?v=2', w: 2032, edges: [0, 546, 2032],
+      tints: ['rgb(103,96,97)','rgb(138,142,151)'],
+      names: ['S-LINE 10','S-LINE 30'], vlts: [10,31] },
+    'galaxie-vlt-scene.jpg?v=2':  { base: 'galaxie-vlt-scene-base.jpg?v=2', w: 2028, edges: [0, 449, 911, 2028],
+      tints: ['rgb(138,138,139)','rgb(172,173,173)','rgb(203,202,204)'],
+      names: ['Galaxie 12','Galaxie 35','Galaxie 50'], vlts: [13,39,54] },
   };
   const wraps = [];
   document.querySelectorAll('.product-panel.has-scene .product-image').forEach(w => {
@@ -4598,7 +4613,7 @@ if (prodSec) prodIO.observe(prodSec);
       w.appendChild(label);
       const hint = document.createElement('p'); hint.className = 'scn-hint'; hint.textContent = '농도를 클릭하세요'; w.appendChild(hint);
       const unfocus = () => { w.classList.remove('scn-focused'); };
-      for (let i = 0; i < conf.edges.length - 1; i++) {
+      for (let i = 0; i < conf.names.length; i++) {
         const hit = document.createElement('div');
         hit.className = 'scn-hit';
         hit.style.left = (conf.edges[i] / conf.w * 100) + '%';

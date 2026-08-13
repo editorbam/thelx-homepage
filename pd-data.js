@@ -72,6 +72,7 @@ const PD_DATA = {
       { title: 'UV 성능', rows: [
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
+        { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형) · 5-Layer', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
         { label: '세계특허',   value: 'WO2015102923 / 미국특허 US7709095', pct: null },
       ]},
@@ -193,7 +194,7 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '세라믹 IR',         pct: null },
+        { label: '필름 타입',  value: '세라믹 IR (열흡수 타입)', pct: null },
         { label: '컬러',       value: 'Vic Black',         pct: null },
         { label: '전파 방해',  value: '없음 (GPS·셀룰러 정상)', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
@@ -255,8 +256,9 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '풀 메탈 스퍼터',    pct: null },
+        { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형)', pct: null },
         { label: '소재',       value: '금 · 은 · 니켈 희귀 금속 합금', pct: null },
+        { label: '컬러',       value: '에메랄드 (유리 결합 시 발색)', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
       { title: '보증', rows: [
@@ -313,7 +315,7 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',                  pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',          pct: null },
-        { label: '필름 타입',  value: '티타늄 증착 (메탈)',    pct: null },
+        { label: '필름 타입',  value: '티타늄 증착 (메탈 · 반사형)', pct: null },
         { label: '컬러',       value: '딥 블랙 (세계 유일 티타늄 증착)', pct: null },
         { label: '제조원',     value: 'USA 생고뱅',     pct: null },
       ]},
@@ -428,7 +430,7 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '비반사 (Comfort & Smart)', pct: null },
+        { label: '필름 타입',  value: '나노 세라믹 (열흡수 타입 · 비반사)', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
@@ -637,12 +639,11 @@ function pdRenderIntro(p) {
    index·pricing 양쪽 #pdSpecs가 이 함수 하나를 호출 — 표 수정은 여기 한 곳만.
    ───────────────────────────────────────────────────────────── */
 
-/* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 타입' row의 축약.
-   LX만 스펙에 해당 row가 없어 마스터 문서(풀메탈 스퍼터·5-Layer 세계특허) 기준. */
+/* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 타입' row의 축약 (양쪽 동기). */
 const PD_FILM_TYPE = {
-  lx: '풀 메탈 스퍼터 (반사형) · 5-Layer', vogue: '풀 메탈 스퍼터 (반사형)', xenith: '세라믹 IR',
-  quantum: '풀 메탈 스퍼터', titanium: '티타늄 증착 (메탈)', gline: '메탈반사 하이브리드',
-  sline: '비반사', galaxie: '기본형',
+  lx: '풀 메탈 스퍼터 (반사형) · 5-Layer', vogue: '풀 메탈 스퍼터 (반사형)', xenith: '세라믹 IR (열흡수)',
+  quantum: '풀 메탈 스퍼터 (반사형)', titanium: '티타늄 증착 (메탈 · 반사형)', gline: '메탈반사 하이브리드',
+  sline: '나노 세라믹 (비반사)', galaxie: '기본형',
 };
 
 /* 농도별/모델별 스펙 rows 파싱 — 라벨 '농도 15 — VLT 12%' / 'Quantum Black — VLT 8%' 공통 */

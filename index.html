@@ -1288,21 +1288,22 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .product-panel.has-scene { grid-template-columns:1fr 1fr; gap:3rem; }
 .product-panel.has-scene .product-image { grid-column:1 / -1; aspect-ratio:auto; }
 .product-panel.has-scene .product-image img { height:auto; }
-/* 비교컷 농도 커튼 (2026-08-13 2안) — VLT 하늘 섹션과 동일 문법.
-   바탕=필름 걷어낸 복원 컷(-base.jpg), 위로 원본 컷이 실제 밴드 폭대로 커튼 슬라이드.
+/* 비교컷 농도 커튼 (2026-08-13 3안 확정) — 사진 고정, 필름 창(clip)만 밴드별로 쓸어냄.
+   바탕=필름 걷어낸 복원 컷(-base.jpg), 필름층=원본 컷 그대로(clip 창만 이동) → 완착=원본 픽셀 동일.
    .scn-anim은 JS가 층 구성 후에만 부여 — JS 실패·미지원 시 기존 정적 컷 그대로 */
 .product-panel.has-scene .product-image { position:relative; }
-.product-image .scn-base { position:absolute; inset:0; }
-.product-image .scn-base img { width:100%; height:100%; object-fit:cover; display:block; }
-.product-image .scn-strip {
-  position:absolute; top:0; bottom:0;
-  transform:translateX(-102%); will-change:transform;
-  transition:transform 1.1s cubic-bezier(0.4,0,0.15,1);
+.product-image .scn-base, .product-image .scn-film {
+  position:absolute; inset:0; background-size:100% 100%; background-repeat:no-repeat;
   pointer-events:none;
 }
-.product-image.scn-on .scn-strip { transform:translateX(0); }
+.product-image .scn-film {
+  clip-path: inset(0 calc(100% - var(--l)) 0 var(--l));
+  transition: clip-path 1.1s cubic-bezier(0.4,0,0.15,1);
+  will-change: clip-path;
+}
+.product-image.scn-on .scn-film { clip-path: inset(0 calc(100% - var(--r)) 0 var(--l)); }
 @media (prefers-reduced-motion: reduce) {
-  .product-image .scn-strip { transition:none; transform:translateX(0); }
+  .product-image .scn-film { transition:none; clip-path: inset(0 calc(100% - var(--r)) 0 var(--l)); }
 }
 .product-name    { font-size:clamp(2rem,3.5vw,3rem); font-weight:600; letter-spacing:-0.04em; color:var(--black); margin-bottom:.5rem; }
 .product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:.9rem; font-weight:300; line-height:1.6; }
@@ -4520,35 +4521,31 @@ if (prodSec) prodIO.observe(prodSec);
   });
 })();
 
-/* ── 제품 비교컷 농도 커튼 (2026-08-13 2안) — 필름 걷어낸 복원 컷 위로 원본이 실제 밴드 폭대로 덮임.
+/* ── 제품 비교컷 농도 커튼 (2026-08-13 3안 확정) — 사진은 고정, 필름 창만 밴드별로 쓸어냄.
+   바탕=복원 컷(고정) / 필름층=원본 컷을 clip 창으로 공개 → 완착 시 원본과 픽셀 동일.
    VLT 하늘 섹션과 같은 관찰 문법(threshold .35, 이탈 시 리셋=재생, 탭 전환 시에도 재생) ── */
 (function() {
   if (!('IntersectionObserver' in window)) return;
-  /* 제품별: 복원 바탕(필름 걷어낸 사진, 고정) + 실측 밴드 경계 + 밴드별 필름막 농도.
-     바탕은 원본에서 같은 알파로 역산한 것 — 막이 다 덮이면 원본과 동일해짐 */
+  /* 제품별: 복원 바탕 + 실측 밴드 경계(원본 px, 전 행 중앙값 스텝 측정) */
   const SCN = {
-    'lx-vlt-scene.jpg': { base: 'lx-vlt-scene-base.jpg?v=2', w: 2036, edges: [0, 303, 610, 1226, 1564, 2036],
-      tints: [0.458, 0.345, 0.18, 0.10, 0.05].map(a => 'rgba(6,10,22,' + a + ')') },
+    'lx-vlt-scene.jpg': { base: 'lx-vlt-scene-base.jpg?v=3', w: 2036, edges: [0, 303, 610, 918, 1226, 2036] },
   };
   const wraps = [];
   document.querySelectorAll('.product-panel.has-scene .product-image').forEach(w => {
     const img = w.querySelector('img');
     const conf = img && SCN[img.getAttribute('src')];
     if (!conf) return;
-    const baseWrap = document.createElement('div');
-    baseWrap.className = 'scn-base';
-    const baseImg = document.createElement('img');
-    baseImg.src = conf.base; baseImg.alt = ''; baseImg.setAttribute('aria-hidden', 'true');
-    baseWrap.appendChild(baseImg);
-    w.appendChild(baseWrap);
+    const base = document.createElement('div');
+    base.className = 'scn-base';
+    base.style.backgroundImage = 'url("' + conf.base + '")';
+    w.appendChild(base);
     for (let i = 0; i < conf.edges.length - 1; i++) {
-      const l = conf.edges[i] / conf.w, r = conf.edges[i + 1] / conf.w;
-      const st = document.createElement('div');
-      st.className = 'scn-strip';
-      st.style.left = (l * 100) + '%';
-      st.style.width = ((r - l) * 100) + '%';
-      st.style.background = conf.tints[i];
-      w.appendChild(st);
+      const film = document.createElement('div');
+      film.className = 'scn-film';
+      film.style.backgroundImage = 'url("' + img.getAttribute('src') + '")';
+      film.style.setProperty('--l', (conf.edges[i] / conf.w * 100) + '%');
+      film.style.setProperty('--r', (conf.edges[i + 1] / conf.w * 100) + '%');
+      w.appendChild(film);
     }
     w.classList.add('scn-anim');
     wraps.push(w);

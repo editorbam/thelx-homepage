@@ -73,6 +73,7 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
         { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형) · 5-Layer', pct: null },
+        { label: '컬러',       value: '블랙', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
         { label: '세계특허',   value: 'WO2015102923 / 미국특허 US7709095', pct: null },
       ]},

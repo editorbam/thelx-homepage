@@ -432,6 +432,7 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '나노 세라믹 (열흡수 타입 · 비반사)', pct: null },
+        { label: '컬러',       value: '블랙', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},
@@ -489,6 +490,7 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '기본형 (Intelligent & Balance)', pct: null },
+        { label: '컬러',       value: '블랙', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
         { label: '표면 코팅',  value: '스크래치 방지 특허 코팅', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },

@@ -1288,23 +1288,6 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .product-panel.has-scene { grid-template-columns:1fr 1fr; gap:3rem; }
 .product-panel.has-scene .product-image { grid-column:1 / -1; aspect-ratio:auto; }
 .product-panel.has-scene .product-image img { height:auto; }
-/* 비교컷 필름 덮임 모션 (2026-08-13) — VLT 하늘 섹션 문법 이식.
-   바탕=같은 사진을 밝게(필름 전 유리), 위로 실제 컷 5조각이 밴드처럼 슬라이드로 덮임.
-   .scn-anim은 JS가 조각 생성 후에만 부여 — JS 실패 시 기존 정적 컷 그대로 */
-.product-panel.has-scene .product-image { position:relative; }
-.product-image.scn-anim > img { filter:brightness(1.18) saturate(.94); }
-.product-image .scn-strip {
-  position:absolute; top:0; bottom:0; width:20%;
-  background-size:500% 100%; background-repeat:no-repeat;
-  transform:translateX(-102%); will-change:transform;
-  transition:transform 1.1s cubic-bezier(0.4,0,0.15,1);
-  pointer-events:none;
-}
-.product-image.scn-on .scn-strip { transform:translateX(0); }
-@media (prefers-reduced-motion: reduce) {
-  .product-image.scn-anim > img { filter:none; }
-  .product-image .scn-strip { transition:none; transform:translateX(0); }
-}
 .product-name    { font-size:clamp(2rem,3.5vw,3rem); font-weight:600; letter-spacing:-0.04em; color:var(--black); margin-bottom:.5rem; }
 .product-tagline { font-size:1rem; color:var(--gray-3); margin-bottom:.9rem; font-weight:300; line-height:1.6; }
 .product-bridge  { font-size:.95rem; color:var(--gray-4); font-weight:400; line-height:1.6; margin-bottom:1.75rem; padding-left:.85rem; border-left:2px solid var(--black); }
@@ -4519,31 +4502,6 @@ if (prodSec) prodIO.observe(prodSec);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.querySelector('.fm-tg').textContent = open ? '\u2212' : '+';
   });
-})();
-
-/* ── 제품 비교컷 필름 덮임 (2026-08-13) — 위 VLT 관찰자와 같은 문법(threshold .35, 이탈 시 리셋=재생) ── */
-(function() {
-  if (!('IntersectionObserver' in window)) return;
-  const wraps = [];
-  document.querySelectorAll('.product-panel.has-scene .product-image').forEach(w => {
-    const img = w.querySelector('img');
-    if (!img || (img.getAttribute('src') || '').indexOf('vlt-scene') === -1) return;
-    for (let i = 0; i < 5; i++) {
-      const st = document.createElement('div');
-      st.className = 'scn-strip';
-      st.style.left = (i * 20) + '%';
-      st.style.backgroundImage = 'url("' + img.getAttribute('src') + '")';
-      st.style.backgroundPosition = (i * 25) + '% 0';
-      w.appendChild(st);
-    }
-    w.classList.add('scn-anim');
-    wraps.push(w);
-  });
-  if (!wraps.length) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => e.target.classList.toggle('scn-on', e.isIntersecting));
-  }, { threshold: 0.35 });
-  wraps.forEach(w => io.observe(w));
 })();
 document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', () => {

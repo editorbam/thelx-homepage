@@ -3309,7 +3309,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Xenith IR -->
       <div class="product-panel has-scene" id="panel-xenith">
-        <div class="product-image"><img src="xenith-vlt-scene.jpg" alt="Xenith IR 농도별 발색 비교 — 비크 블랙 발색" width="2036" height="964" loading="lazy" decoding="async"></div>
+        <div class="product-image"><img src="xenith-vlt-scene.jpg?v=2" alt="Xenith IR 농도별 발색 비교 — 비크 블랙 발색" width="2036" height="964" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">천장의 빛</span>
           <h3 class="product-name">Xenith IR</h3>
@@ -3403,7 +3403,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- G-LINE -->
       <div class="product-panel has-scene" id="panel-gline">
-        <div class="product-image"><img src="gline-vlt-scene.jpg" alt="G-LINE 농도별 발색 비교 — 라미네이티드 블루 발색" width="2020" height="962" loading="lazy" decoding="async"></div>
+        <div class="product-image"><img src="gline-vlt-scene.jpg?v=2" alt="G-LINE 농도별 발색 비교 — 라미네이티드 블루 발색" width="2020" height="962" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Balance &amp; Hybrid</span>
           <h3 class="product-name">G-LINE</h3>
@@ -3434,7 +3434,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- S-LINE -->
       <div class="product-panel has-scene" id="panel-sline">
-        <div class="product-image"><img src="sline-vlt-scene.jpg" alt="S-LINE 농도별 발색 비교" width="2032" height="964" loading="lazy" decoding="async"></div>
+        <div class="product-image"><img src="sline-vlt-scene.jpg?v=2" alt="S-LINE 농도별 발색 비교" width="2032" height="964" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Comfort &amp; Smart</span>
           <h3 class="product-name">S-LINE</h3>
@@ -3465,7 +3465,7 @@ body.pd-open { overflow: hidden; }
 
       <!-- Galaxie -->
       <div class="product-panel has-scene" id="panel-galaxie">
-        <div class="product-image"><img src="galaxie-vlt-scene.jpg" alt="Galaxie 농도별 발색 비교" width="2028" height="966" loading="lazy" decoding="async"></div>
+        <div class="product-image"><img src="galaxie-vlt-scene.jpg?v=2" alt="Galaxie 농도별 발색 비교" width="2028" height="966" loading="lazy" decoding="async"></div>
         <div>
           <span class="product-category">Intelligent &amp; Balance</span>
           <h3 class="product-name">Galaxie</h3>
@@ -4531,12 +4531,12 @@ if (prodSec) prodIO.observe(prodSec);
   const SCN = {
     'lx-vlt-scene.jpg':       { base: 'lx-vlt-scene-base.jpg?v=3', w: 2036, edges: [0, 303, 610, 918, 1226, 2036] },
     'vogue-vlt-scene-2.jpg':  { base: 'vogue-vlt-scene-2-base.jpg', w: 2040, edges: [0, 360, 729, 1099, 1468, 2040] },
-    'xenith-vlt-scene.jpg':   { base: 'xenith-vlt-scene-base.jpg', w: 2036, edges: [0, 608, 1221, 2036] },
+    'xenith-vlt-scene.jpg?v=2':   { base: 'xenith-vlt-scene-base.jpg?v=2', w: 2036, edges: [0, 608, 2036] },
     'quantum-vlt-scene-4.jpg':{ base: 'quantum-vlt-scene-4-base.jpg', w: 2030, edges: [0, 239, 504, 769, 1031, 1295, 1560, 2030] },
     'titanium-vlt-scene.jpg?v=2': { base: 'titanium-vlt-scene-base.jpg?v=2', w: 2038, edges: [0, 453, 913, 2038] }, /* 26 틴트를 끝까지 연장한 v2 컷 (2026-08-13) */
-    'gline-vlt-scene.jpg':    { base: 'gline-vlt-scene-base.jpg', w: 2020, edges: [0, 540, 1094, 2020] },
-    'sline-vlt-scene.jpg':    { base: 'sline-vlt-scene-base.jpg', w: 2032, edges: [0, 546, 1099, 2032] },
-    'galaxie-vlt-scene.jpg':  { base: 'galaxie-vlt-scene-base.jpg', w: 2028, edges: [0, 449, 911, 1373, 2028] },
+    'gline-vlt-scene.jpg?v=2':    { base: 'gline-vlt-scene-base.jpg?v=2', w: 2020, edges: [0, 540, 2020] },
+    'sline-vlt-scene.jpg?v=2':    { base: 'sline-vlt-scene-base.jpg?v=2', w: 2032, edges: [0, 546, 2032] },
+    'galaxie-vlt-scene.jpg?v=2':  { base: 'galaxie-vlt-scene-base.jpg?v=2', w: 2028, edges: [0, 449, 911, 2028] },
   };
   const wraps = [];
   document.querySelectorAll('.product-panel.has-scene .product-image').forEach(w => {

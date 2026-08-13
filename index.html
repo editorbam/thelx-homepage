@@ -1299,9 +1299,10 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 .product-image .scn-film {
   inset:auto; top:0; bottom:0; position:absolute; overflow:hidden;
   width:0;
-  transition: width 1.1s cubic-bezier(0.4,0,0.15,1);
+  transition: width 1.1s cubic-bezier(0.4,0,0.15,1), opacity .5s ease .45s;
   will-change: width;
 }
+.product-image.scn-focused .scn-film { opacity:0; transition: width 1.1s cubic-bezier(0.4,0,0.15,1), opacity .35s ease; }
 .product-image.scn-on .scn-film { width: var(--w); }
 @media (prefers-reduced-motion: reduce) {
   .product-image .scn-film { transition:none; width: var(--w); }
@@ -4596,11 +4597,7 @@ if (prodSec) prodIO.observe(prodSec);
       label.innerHTML = '<span class="sfn"></span><span class="sfp"></span><span class="sfh">화면을 선택하면 비교로 돌아갑니다</span>';
       w.appendChild(label);
       const hint = document.createElement('p'); hint.className = 'scn-hint'; hint.textContent = '농도를 클릭하세요'; w.appendChild(hint);
-      const unfocus = () => {
-        if (!w.classList.contains('scn-focused')) return;
-        w.classList.remove('scn-focused');
-        setTimeout(() => w.classList.add('scn-on'), 150);
-      };
+      const unfocus = () => { w.classList.remove('scn-focused'); };
       for (let i = 0; i < conf.edges.length - 1; i++) {
         const hit = document.createElement('div');
         hit.className = 'scn-hit';
@@ -4614,7 +4611,6 @@ if (prodSec) prodIO.observe(prodSec);
           full.style.background = conf.tints[i];
           label.querySelector('.sfn').textContent = conf.names[i];
           label.querySelector('.sfp').textContent = 'VLT ' + conf.vlts[i] + '%';
-          w.classList.remove('scn-on');
           w.classList.add('scn-focused');
         };
         hit.addEventListener('click', focus);

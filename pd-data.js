@@ -72,7 +72,7 @@ const PD_DATA = {
       { title: 'UV 성능', rows: [
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
-        { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형) · 5-Layer', pct: null },
+        { label: '필름 타입',  value: '풀 메탈 스퍼터 (반사형)', pct: null },
         { label: '컬러',       value: '블랙', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
         { label: '세계특허',   value: 'WO2015102923 / 미국특허 US7709095', pct: null },
@@ -644,7 +644,7 @@ function pdRenderIntro(p) {
 
 /* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 타입' row의 축약 (양쪽 동기). */
 const PD_FILM_TYPE = {
-  lx: '풀 메탈 스퍼터 (반사형) · 5-Layer', vogue: '풀 메탈 스퍼터 (반사형)', xenith: '세라믹 IR (열흡수)',
+  lx: '풀 메탈 스퍼터 (반사형)', vogue: '풀 메탈 스퍼터 (반사형)', xenith: '세라믹 IR (열흡수)',
   quantum: '풀 메탈 스퍼터 (반사형)', titanium: '티타늄 증착 (메탈 · 반사형)', gline: '메탈반사 하이브리드',
   sline: '나노 세라믹 (비반사)', galaxie: '기본형',
 };

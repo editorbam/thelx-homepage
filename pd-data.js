@@ -257,7 +257,6 @@ const PD_DATA = {
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
         { label: '필름 타입',  value: '풀 메탈 스퍼터 (열반사)', pct: null },
-        { label: '소재',       value: '금 · 은 · 니켈 희귀 금속 합금', pct: null },
         { label: '컬러',       value: '에메랄드', pct: null },
         { label: '제조원',     value: 'USA 생고뱅', pct: null },
       ]},

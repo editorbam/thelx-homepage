@@ -4779,7 +4779,7 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
 });
 
 // 필름 8종 비교표 — PD_DATA 단일 소스에서 생성, 행 클릭=해당 제품 모달 (2026-07-30)
-// +컬러 칩·위계 그룹 행 (2026-07-30 2차 — 총판 "필름 색감" 피드백. 컬러=pd-data 스펙 명기값만, 미표기 3종=무채색)
+// +컬러 칩·위계 그룹 행 (2026-07-30 2차 — 총판 "필름 색감" 피드백. 컬러=pd-data 스펙 명기값, 2026-08-13 전 제품 확정)
 (function () {
   var el = document.getElementById('filmCompareTable');
   /* pd-data.js 구버전 캐시 가드 — PD_DATA만 있고 신규 심볼(pdParseDens 등)이 없으면 조용히 스킵 (ReferenceError로 아래 전체 스크립트가 죽는 것 방지) */
@@ -4787,14 +4787,14 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
   /* 위계 그룹 행은 1차 시안에서 "표가 복잡해진다"로 제거(7/30) — 위계는 네비 제품소개 드롭다운이 담당 */
   var order = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie'];
   var COLORS = {
-    lx:       { c: 'linear-gradient(135deg,#4a4d52,#1a1b1e)', n: '무채색' },
+    lx:       { c: 'linear-gradient(135deg,#2c2e33,#101113)', n: '블랙' },
     vogue:    { c: 'linear-gradient(135deg,#0c3426,#4a541e)', n: '그린 골드' },
     xenith:   { c: 'linear-gradient(135deg,#1b1b20,#060607)', n: '비크 블랙' },
     quantum:  { c: 'linear-gradient(135deg,#0e3b32,#2a6b52)', n: '에메랄드' },
     titanium: { c: 'linear-gradient(135deg,#232629,#0a0b0c)', n: '딥 블랙' },
     gline:    { c: 'linear-gradient(135deg,#16324f,#0b1626)', n: '라미네이티드 블루' },
-    sline:    { c: 'linear-gradient(135deg,#3f4247,#191a1d)', n: '무채색' },
-    galaxie:  { c: 'linear-gradient(135deg,#3f4247,#191a1d)', n: '무채색' },
+    sline:    { c: 'linear-gradient(135deg,#2c2e33,#101113)', n: '블랙' },
+    galaxie:  { c: 'linear-gradient(135deg,#2c2e33,#101113)', n: '블랙' },
   };
   var head = '<thead><tr>'
     + '<th class="fc-name">제품</th>'

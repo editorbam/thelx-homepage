@@ -72,10 +72,11 @@ const PD_DATA = {
       { title: 'UV 성능', rows: [
         { label: 'UV 차단율',  value: '99%+',          pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',  pct: null },
-        { label: '필름 타입',  value: '풀 메탈 스퍼터', pct: null },
+        { label: '필름 등급',  value: '풀 메탈 스퍼터링', pct: null },
+        { label: '열차단 방식', value: '열반사', pct: null },
         { label: '컬러',       value: '블랙', pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
-        { label: '세계특허',   value: 'WO2015102923 / 미국특허 US7709095', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
+        { label: '특허',       value: '세계특허 미국특허', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '10년', pct: null },

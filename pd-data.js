@@ -136,9 +136,10 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '풀 메탈 스퍼터 (열반사)', pct: null },
+        { label: '필름 등급',  value: '풀 메탈 스퍼터링', pct: null },
+        { label: '열차단 방식', value: '열반사', pct: null },
         { label: '컬러',       value: '그린 골드',         pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
@@ -196,9 +197,10 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '나노 세라믹 (열흡수)', pct: null },
+        { label: '필름 등급',  value: '나노 세라믹', pct: null },
+        { label: '열차단 방식', value: '열흡수', pct: null },
         { label: '컬러',       value: '비크 블랙',         pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -257,9 +259,10 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '풀 메탈 스퍼터 (열반사)', pct: null },
+        { label: '필름 등급',  value: '풀 메탈 스퍼터링', pct: null },
+        { label: '열차단 방식', value: '열반사', pct: null },
         { label: '컬러',       value: '에메랄드', pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '7년', pct: null },
@@ -315,9 +318,10 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',                  pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',          pct: null },
-        { label: '필름 타입',  value: '티타늄 증착 (열반사)', pct: null },
+        { label: '필름 등급',  value: '티타늄 증착', pct: null },
+        { label: '열차단 방식', value: '열반사', pct: null },
         { label: '컬러',       value: '딥 블랙 (세계 유일 티타늄 증착)', pct: null },
-        { label: '제조원',     value: 'USA 생고뱅',     pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드',     pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -372,10 +376,11 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '메탈 하이브리드 (열반사 · 열흡수)', pct: null },
+        { label: '필름 등급',  value: '메탈 하이브리드', pct: null },
+        { label: '열차단 방식', value: '열반사 · 열흡수', pct: null },
         { label: '컬러',       value: '라미네이티드 블루',  pct: null },
         { label: '기술',       value: '스퍼터링 + 나노 카본 세라믹 융합', pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -430,10 +435,11 @@ const PD_DATA = {
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 차단율',  value: '99%+',              pct: 99   },
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '나노 세라믹 (열흡수)', pct: null },
+        { label: '필름 등급',  value: '나노 세라믹', pct: null },
+        { label: '열차단 방식', value: '열흡수', pct: null },
         { label: '컬러',       value: '블랙', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -488,11 +494,11 @@ const PD_DATA = {
       ]},
       { title: 'UV 성능 · 특성', rows: [
         { label: 'UV 등급',    value: 'PA+++ SPF 285',      pct: null },
-        { label: '필름 타입',  value: '기본형 (Intelligent & Balance)', pct: null },
+        { label: '필름 등급',  value: '기본형 (Intelligent & Balance)', pct: null },
         { label: '컬러',       value: '블랙', pct: null },
         { label: '전파 방해',  value: '없음',              pct: null },
         { label: '표면 코팅',  value: '스크래치 방지 특허 코팅', pct: null },
-        { label: '제조원',     value: 'USA 생고뱅', pct: null },
+        { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '5년', pct: null },
@@ -641,10 +647,10 @@ function pdRenderIntro(p) {
    index·pricing 양쪽 #pdSpecs가 이 함수 하나를 호출 — 표 수정은 여기 한 곳만.
    ───────────────────────────────────────────────────────────── */
 
-/* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 타입' row의 축약 (양쪽 동기). */
+/* 홈 #products 비교표 '방식' 열 — 각 제품 스펙 '필름 등급 + 열차단 방식' row의 축약 (양쪽 동기). */
 const PD_FILM_TYPE = {
-  lx: '풀 메탈 스퍼터 (열반사)', vogue: '풀 메탈 스퍼터 (열반사)', xenith: '나노 세라믹 (열흡수)',
-  quantum: '풀 메탈 스퍼터 (열반사)', titanium: '티타늄 증착 (열반사)', gline: '메탈 하이브리드 (열반사 · 열흡수)',
+  lx: '풀 메탈 스퍼터링 (열반사)', vogue: '풀 메탈 스퍼터링 (열반사)', xenith: '나노 세라믹 (열흡수)',
+  quantum: '풀 메탈 스퍼터링 (열반사)', titanium: '티타늄 증착 (열반사)', gline: '메탈 하이브리드 (열반사 · 열흡수)',
   sline: '나노 세라믹 (열흡수)', galaxie: '기본형',
 };
 

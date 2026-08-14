@@ -2673,15 +2673,23 @@ body.pd-open { overflow: hidden; }
         <label class="form-label" for="bPhone">연락처</label>
         <input type="tel" id="bPhone" name="phone" class="field-underline" placeholder="010-0000-0000" required>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="bCar">차량 모델</label>
-        <input type="text" id="bCar" name="car" class="field-underline" placeholder="벤츠 E클래스 2023" required>
+      <div class="form-group cp-zone">
+        <label class="form-label" for="bBrand">차량 브랜드</label>
+        <input type="text" id="bBrand" name="brand" class="field-underline" placeholder="선택 또는 입력" autocomplete="off">
+      </div>
+      <div class="form-group cp-zone">
+        <label class="form-label" for="bCar">차종</label>
+        <input type="text" id="bCar" name="car" class="field-underline" placeholder="선택 또는 입력" autocomplete="off" required>
+      </div>
+      <div class="form-group full" style="padding-bottom:0; position:relative;">
+        <div class="cp-panel" id="cpBrandPanel"></div>
+        <div class="cp-panel" id="cpModelPanel"></div>
       </div>
       <div class="form-group">
         <label class="form-label" for="bDate">희망 날짜</label>
         <input type="date" id="bDate" name="date" class="field-underline" required>
       </div>
-      <div class="form-group full">
+      <div class="form-group">
         <label class="form-label" for="bProduct">관심 제품</label>
         <select id="bProduct" name="product" class="field-underline">
           <option value=""></option>
@@ -2791,7 +2799,7 @@ body.pd-open { overflow: hidden; }
      JAVASCRIPT
 ======================================== -->
   <script src="pd-data.js?v=35"></script> <!-- ?v= 캐시 버스터 — index.html과 동기 -->
-<script src="car-list.js?v=1" defer></script> <!-- 예약 폼 차량 모델 추천 목록 (CMS 차종 동기, car-list.js 주석 참조) -->
+<script src="car-picker.js?v=1" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){
@@ -3374,7 +3382,7 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
   const payload = {
     name:    document.getElementById('bName').value,
     phone:   document.getElementById('bPhone').value,
-    car:     document.getElementById('bCar').value,
+    car:     (document.getElementById('bBrand').value.trim() + ' ' + document.getElementById('bCar').value.trim()).trim(),
     date:    document.getElementById('bDate').value,
     product: document.getElementById('bProduct').value || '미정'
   };

@@ -16,7 +16,7 @@ if (!brand || !model || !brandPanel || !modelPanel) return;
 var css = [
 '.cp-panel{position:absolute;left:0;right:0;top:.4rem;z-index:60;background:rgba(255,255,255,.97);',
 '-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:.5px solid #e8e8ed;border-radius:18px;',
-'box-shadow:0 24px 60px rgba(0,0,0,.35);padding:1.5rem 1.6rem 1.3rem;max-height:340px;overflow-y:auto;display:none;}',
+'box-shadow:0 24px 60px rgba(0,0,0,.10);padding:1.5rem 1.6rem 1.3rem;max-height:340px;overflow-y:auto;display:none;}',
 '.cp-panel.open{display:block;}',
 '.cp-panel::-webkit-scrollbar{width:5px;}.cp-panel::-webkit-scrollbar-thumb{background:rgba(10,10,10,.18);}',
 '.cp-grp{grid-column:1/-1;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#6e6e73;font-weight:500;padding:10px 6px 4px;}',
@@ -39,6 +39,7 @@ Object.keys(CAR_TREE).forEach(function(cat){
 });
 
 function closeAll(){ brandPanel.classList.remove('open'); modelPanel.classList.remove('open'); }
+function closeDt(){ var d=document.getElementById('dtPanel'); if(d) d.classList.remove('open'); }
 document.addEventListener('click', function(e){ if (!e.target.closest('.cp-zone') && !e.target.closest('.cp-panel')) closeAll(); });
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
 
@@ -57,7 +58,7 @@ function showBrands(q){
     h += '</div>';
   });
   if (!found) h = '<div class="cp-empty">목록에 없는 브랜드입니다.<br>그대로 입력하셔도 접수됩니다.</div>';
-  brandPanel.innerHTML = h; brandPanel.classList.add('open'); modelPanel.classList.remove('open');
+  brandPanel.innerHTML = h; brandPanel.classList.add('open'); modelPanel.classList.remove('open'); closeDt();
 }
 function brandOpen(){
   var exact = MAKERS.some(function(x){ return x.maker === brand.value.trim(); });
@@ -108,7 +109,7 @@ function showModels(q){
     }
   }
   if (!found && q) h = '<div class="cp-empty">목록에 없는 차종입니다.<br>지금 쓰신 이름 그대로 접수됩니다 — 계속 입력하셔도 됩니다.</div>';
-  modelPanel.innerHTML = h; modelPanel.classList.add('open'); brandPanel.classList.remove('open');
+  modelPanel.innerHTML = h; modelPanel.classList.add('open'); brandPanel.classList.remove('open'); closeDt();
 }
 function modelOpen(){
   var sel = currentBrand();

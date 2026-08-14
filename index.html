@@ -2085,26 +2085,26 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 /* ============================
    BOOKING FORM (index.html — light)
 ============================ */
-#booking { background:var(--black); padding:var(--section-v) 2rem; }
+#booking { background:#f5f5f7; padding:var(--section-v) 2rem; }
 .booking-inner { max-width:680px; margin:0 auto; }
-.booking-title { font-size:clamp(2.2rem,5vw,4rem); font-weight:600; color:var(--white); letter-spacing:-0.03em; margin-bottom:.75rem; line-height:1.1; }
+.booking-title { font-size:clamp(2.2rem,5vw,4rem); font-weight:600; color:#0a0a0a; letter-spacing:-0.03em; margin-bottom:.75rem; line-height:1.1; }
 .booking-title em { font-style:normal; font-weight:300; }
-.booking-sub { color:rgba(255,255,255,.42); font-size:1.05rem; margin-bottom:3.5rem; font-weight:300; line-height:1.6; }
+.booking-sub { color:rgba(10,10,10,.5); font-size:1.05rem; margin-bottom:3.5rem; font-weight:300; line-height:1.6; }
 .booking-form { display:grid; grid-template-columns:1fr 1fr; gap:0 2.5rem; }
 .form-group { padding-bottom:1.5rem; position:relative; }
 .form-group.full { grid-column:1/-1; }
-.form-label { display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:.75rem; font-weight:400; }
+.form-label { display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(10,10,10,.4); margin-bottom:.75rem; font-weight:400; }
 .field-underline {
-  border:none; border-bottom:1px solid rgba(255,255,255,.15);
-  background:transparent; color:var(--white); font-size:16px;
+  border:none; border-bottom:1px solid rgba(10,10,10,.2);
+  background:transparent; color:#0a0a0a; font-size:16px;
   padding:10px 0; width:100%; outline:none; transition:border-color .2s;
   font-family:var(--font); font-weight:300;
 }
-.field-underline::placeholder { color:rgba(255,255,255,.22); }
-.field-underline:focus { border-bottom-color:rgba(255,255,255,.6); }
-select.field-underline option { background:var(--black); color:var(--white); }
+.field-underline::placeholder { color:rgba(10,10,10,.3); }
+.field-underline:focus { border-bottom-color:rgba(10,10,10,.7); }
+select.field-underline option { background:#fff; color:#0a0a0a; }
 .booking-submit {
-  background:var(--white); color:var(--black); border:none;
+  background:#0a0a0a; color:#fff; border:none;
   padding:14px 32px; border-radius:980px; font-size:15px; font-weight:500;
   cursor:none; transition:opacity .2s, transform .15s;
   font-family:var(--font); letter-spacing:-0.01em; margin-top:2rem;
@@ -2113,11 +2113,11 @@ select.field-underline option { background:var(--black); color:var(--white); }
 .booking-success { display:none; text-align:center; padding:4rem 0; }
 .booking-success.show { display:block; animation:panelFade .5s ease; }
 .booking-success-check {
-  width:56px; height:56px; border:1px solid rgba(255,255,255,.2); border-radius:50%;
+  width:56px; height:56px; border:1px solid rgba(10,10,10,.25); border-radius:50%;
   display:flex; align-items:center; justify-content:center;
-  margin:0 auto 1.5rem; font-size:1.25rem; color:rgba(255,255,255,.55);
+  margin:0 auto 1.5rem; font-size:1.25rem; color:rgba(10,10,10,.6);
 }
-.booking-success p { color:rgba(255,255,255,.7); font-size:1.1rem; line-height:1.7; font-weight:300; }
+.booking-success p { color:rgba(10,10,10,.7); font-size:1.1rem; line-height:1.7; font-weight:300; }
 
 /* ============================
    CTA (restructured)
@@ -3935,31 +3935,31 @@ body.pd-open { overflow: hidden; }
 ======================================== -->
 <section id="booking">
   <div class="booking-inner">
-    <p class="section-eyebrow fi" style="color:rgba(255,255,255,.35);">Reserve</p>
+    <p class="section-eyebrow fi" style="color:rgba(10,10,10,.4);">Reserve</p>
     <h2 class="booking-title fi">
       오늘부터,<br><em>다른 공간</em>.
     </h2>
     <p class="booking-sub fi">당신의 거실, 오늘 시작합니다.</p>
 
-    <div class="booking-steps fi" style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:3rem; padding:1.4rem 0; border-top:.5px solid rgba(255,255,255,.1); border-bottom:.5px solid rgba(255,255,255,.1);">
+    <div class="booking-steps fi" style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:3rem; padding:1.4rem 0; border-top:.5px solid rgba(10,10,10,.12); border-bottom:.5px solid rgba(10,10,10,.12);">
       <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
-        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">01</span>
-        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">상담</span>
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(10,10,10,.4); font-weight:500;">01</span>
+        <span style="font-size:13px; color:rgba(10,10,10,.85); font-weight:400;">상담</span>
       </div>
-      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <span style="color:rgba(10,10,10,.25); font-size:12px;">→</span>
       <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
-        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">02</span>
-        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">예약</span>
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(10,10,10,.4); font-weight:500;">02</span>
+        <span style="font-size:13px; color:rgba(10,10,10,.85); font-weight:400;">예약</span>
       </div>
-      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <span style="color:rgba(10,10,10,.25); font-size:12px;">→</span>
       <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
-        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">03</span>
-        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">시공</span>
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(10,10,10,.4); font-weight:500;">03</span>
+        <span style="font-size:13px; color:rgba(10,10,10,.85); font-weight:400;">시공</span>
       </div>
-      <span style="color:rgba(255,255,255,.2); font-size:12px;">→</span>
+      <span style="color:rgba(10,10,10,.25); font-size:12px;">→</span>
       <div style="display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:1;">
-        <span style="font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.35); font-weight:500;">04</span>
-        <span style="font-size:13px; color:rgba(255,255,255,.9); font-weight:400;">보증</span>
+        <span style="font-size:10px; letter-spacing:.18em; color:rgba(10,10,10,.4); font-weight:500;">04</span>
+        <span style="font-size:13px; color:rgba(10,10,10,.85); font-weight:400;">보증</span>
       </div>
     </div>
 
@@ -3985,8 +3985,11 @@ body.pd-open { overflow: hidden; }
         <div class="cp-panel" id="cpModelPanel"></div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="bDate">희망 날짜</label>
-        <input type="date" id="bDate" name="date" class="field-underline" required>
+        <label class="form-label" for="bDate">희망 날짜 · 시간</label>
+        <input type="text" id="bDate" name="date" class="field-underline" placeholder="날짜와 시간을 선택해 주세요" autocomplete="off" readonly required>
+      </div>
+      <div class="form-group full" style="padding-bottom:0; position:relative;">
+        <div id="dtPanel"></div>
       </div>
       <div class="form-group">
         <label class="form-label" for="bProduct">관심 제품</label>
@@ -4108,7 +4111,7 @@ body.pd-open { overflow: hidden; }
      JAVASCRIPT
 ======================================== -->
   <script src="pd-data.js?v=35"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
-<script src="car-picker.js?v=1" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
+<script src="car-picker.js?v=3" defer></script> <script src="date-picker.js?v=2" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){

@@ -76,7 +76,7 @@ const PD_DATA = {
         { label: '열차단 방식', value: '열반사', pct: null },
         { label: '컬러',       value: '블랙', pct: null },
         { label: '제조원',     value: '생고뱅 솔라가드', pct: null },
-        { label: '특허',       value: '세계특허 미국특허', pct: null },
+        { label: '특허',       value: '세계특허 WO2015102923 · 미국특허 US7709095', pct: null },
       ]},
       { title: '보증', rows: [
         { label: '내구성 보증',    value: '10년', pct: null },

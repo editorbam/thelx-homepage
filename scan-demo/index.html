@@ -79,7 +79,7 @@ input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-s
   <p class="foot">실서버에선 이 번호가 보증서 등록 화면에 자동 입력되고 유효성 검사까지 돕니다.</p>
 </div>
 
-<p class="foot">THE LX 내부 테스트용 데모 · 서버 전송 없음 · 스캔 데이터는 브라우저(localStorage)에만 저장됩니다.<br>판독 즉시 진동과 함께 목록에 추가됩니다. 판독 엔진: zxing(정밀형).</p>
+<p class="foot">THE LX 내부 테스트용 데모 · 서버 전송 없음 · 스캔 데이터는 브라우저(localStorage)에만 저장됩니다.<br>조준 불필요 — 비추기만 하면 자동 인식, 여러 박스가 한 화면에 보이면 동시에 잡힙니다.</p>
 <div class="toast" id="toast"></div>
 
 <script src="zxing-reader.iife.js" charset="utf-8"></script>
@@ -88,7 +88,7 @@ input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-s
 var $=function(id){return document.getElementById(id)};
 /* 판독 엔진 = zxing WASM (기준 엔진의 웹 버전, 로컬 vendored) — 8/18 현장 테스트에서 JS 경량 엔진 판독 실패로 교체 */
 ZXingWASM.prepareZXingModule({overrides:{locateFile:function(f){return './'+f}}});
-var READ_OPTS={formats:["Code128","Code39","QRCode"],tryHarder:true,maxNumberOfSymbols:1};
+var READ_OPTS={formats:["Code128","Code39","QRCode"],tryHarder:true,maxNumberOfSymbols:6};
 
 /* 저장소 */
 var store={
@@ -110,56 +110,63 @@ function parseScan(t){
 
 /* 공용 연속 스캐너 — 카메라 프레임 직접 캡처 → zxing WASM 판독 */
 function makeScanner(wrapId,statId,onAccept,single,guide){
-  var stream=null,video=null,timer=null,lastVal='',acceptedAt=0,busy=false;
-  guide=guide||'bar';
+  var stream=null,video=null,running=false,accepted={}; /* code→마지막 수락 시각 */
   return {
-    running:function(){return !!stream},
+    running:function(){return running},
     start:function(){
       var wrap=$(wrapId);wrap.style.display='block';wrap.innerHTML='';wrap.style.position='relative';
       video=document.createElement('video');
       video.setAttribute('playsinline','');video.setAttribute('autoplay','');video.muted=true;
       video.style.cssText='width:100%;display:block';
       wrap.appendChild(video);
-      /* 조준 틀 — 바코드=가로 띠 / QR=정사각. 판독 영역과 일치 */
-      var g=document.createElement('div');
-      g.style.cssText='position:absolute;border:2px solid rgba(255,255,255,.95);border-radius:10px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);pointer-events:none;'+
-        (guide==='qr' ? 'left:15%;top:50%;width:70%;aspect-ratio:1/1;transform:translateY(-50%);'
-                      : 'left:4%;top:50%;width:92%;height:34%;transform:translateY(-50%);');
-      wrap.appendChild(g);
       var tip=document.createElement('div');
-      tip.textContent=(guide==='qr')?'QR을 틀 안에':'바코드 줄무늬를 띠 안에 맞춰 주세요';
+      tip.textContent='박스를 비추기만 하면 자동 인식됩니다';
       tip.style.cssText='position:absolute;left:0;right:0;bottom:6px;text-align:center;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none;';
       wrap.appendChild(tip);
       navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}}})
-      .then(function(s){stream=s;video.srcObject=s;return video.play()})
+      .then(function(st){
+        stream=st;video.srcObject=st;running=true;
+        /* 손전등(지원 기기만) */
+        try{
+          var track=st.getVideoTracks()[0];
+          if(track.getCapabilities&&track.getCapabilities().torch){
+            var tb=document.createElement('button');tb.type='button';tb.textContent='🔦';
+            tb.style.cssText='position:absolute;top:8px;right:8px;border:none;border-radius:50%;width:38px;height:38px;font-size:17px;background:rgba(0,0,0,.5);';
+            var on=false;
+            tb.addEventListener('click',function(){on=!on;track.applyConstraints({advanced:[{torch:on}]}).catch(function(){});tb.style.background=on?'rgba(255,200,0,.85)':'rgba(0,0,0,.5)'});
+            wrap.appendChild(tb);
+          }
+        }catch(e){}
+        return video.play();
+      })
       .then(function(){
         var canvas=document.createElement('canvas');
         var ctx=canvas.getContext('2d',{willReadFrequently:true});
-        timer=setInterval(function(){
-          if(busy||!video||!video.videoWidth)return;
-          busy=true;
-          var vw=video.videoWidth,vh=video.videoHeight,sx,sy,sw,sh;
-          if(guide==='qr'){var side=Math.floor(Math.min(vw,vh)*.8);sx=(vw-side)>>1;sy=(vh-side)>>1;sw=sh=side}
-          else{sw=vw;sh=Math.floor(vh*.44);sx=0;sy=(vh-sh)>>1} /* 가이드 띠(34%)보다 넉넉한 44% */
-          canvas.width=sw;canvas.height=sh;
-          ctx.drawImage(video,sx,sy,sw,sh,0,0,sw,sh);
-          var id=ctx.getImageData(0,0,sw,sh);
+        (function loop(){
+          if(!running||!video)return;
+          if(!video.videoWidth){setTimeout(loop,60);return}
+          canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+          ctx.drawImage(video,0,0);
+          var id=ctx.getImageData(0,0,canvas.width,canvas.height);
           ZXingWASM.readBarcodes(id,READ_OPTS).then(function(res){
-            busy=false;
-            if(!res||!res.length||!res[0].text)return;
-            var txt=res[0].text;
-            $(statId).textContent='판독: '+txt;
-            var now=Date.now();
-            if(txt===lastVal&&now-acceptedAt<2500)return; /* 같은 코드 연속 재수락 방지 */
-            lastVal=txt;acceptedAt=now;
-            buzz();onAccept(txt);
-          }).catch(function(){busy=false});
-        },280);
+            if(!running)return;
+            var now=Date.now(),hit=false;
+            (res||[]).forEach(function(r){
+              if(!r.text)return;
+              $(statId).textContent='판독: '+r.text;
+              if(accepted[r.text]&&now-accepted[r.text]<3000)return; /* 같은 롤 3초 재수락 방지 */
+              accepted[r.text]=now;hit=true;
+              onAccept(r.text);
+            });
+            if(hit)buzz();
+            setTimeout(loop,0); /* 쉼 없이 다음 프레임 */
+          }).catch(function(){setTimeout(loop,120)});
+        })();
       })
-      .catch(function(e){$(statId).textContent='카메라를 열 수 없습니다: '+e;wrap.style.display='none';stream=null});
+      .catch(function(e){$(statId).textContent='카메라를 열 수 없습니다: '+e;wrap.style.display='none';stream=null;running=false});
     },
     stop:function(){
-      if(timer){clearInterval(timer);timer=null}
+      running=false;
       if(stream){stream.getTracks().forEach(function(t){t.stop()});stream=null}
       video=null;
       var wrap=$(wrapId);wrap.style.display='none';wrap.innerHTML='';

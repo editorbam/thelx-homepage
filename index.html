@@ -397,11 +397,7 @@ nav.on-dark .nav-drop-btn { color: rgba(255,255,255,.7); }
   padding: .55rem .65rem; border-radius: 10px; transition: background .15s;
 }
 .nav-drop-item:hover { background: var(--gray-1); }
-.nav-drop-tier {
-  display: block; font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--gray-3); font-weight: 500; margin-bottom: .2rem;
-}
-.nav-drop-tier:empty::before { content: '\00a0'; } /* 라벨 없는 항목(그 외)도 같은 높이 — 이름 줄 맞춤 (2026-08-04) */
+/* 조건 라벨(nav-drop-tier)은 2026-08-18 사용자 요청으로 제거 — 제품명만 나열 */
 .nav-drop-name { display: block; font-size: 15px; font-weight: 500; color: var(--black); letter-spacing: -.01em; white-space: nowrap; }
 /* 패널은 항상 흰 배경 — on-dark 네비 링크 색 규칙보다 뒤에 선언해 같은 특이도로 승리 */
 nav .nav-links .nav-drop-panel a.nav-drop-all {
@@ -5017,12 +5013,6 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
 // 제품소개 드롭다운 (데스크탑 패널 + 모바일 아코디언) — 항목=PD_DATA 단일 소스, 위계 라벨=마스터 문서 제품 위계 (2026-07-30)
 (function () {
   if (typeof PD_DATA === 'undefined') return;
-  /* 2026-08-04 축 전환: 등급(Flagship→Essential) → 조건.
-     등급 언어는 없앤 게 아니라 견적 쪽으로 내렸다. 주력 넷만 고유 조건, 나머지는 '그 외'. */
-  var TIERS = {
-    lx: '맑은 시야', vogue: '외관의 색', xenith: '천장의 빛', quantum: '가장 많은 선택',
-    titanium: '', gline: '', sline: '', galaxie: '', shield: '보호 필름 · PPF',
-  };
   var keys = ['lx', 'vogue', 'xenith', 'quantum', 'titanium', 'gline', 'sline', 'galaxie', 'shield'];
 
   // 데스크탑 패널
@@ -5032,7 +5022,6 @@ document.querySelectorAll('.product-detail-btn').forEach(btn => {
   if (drop && btn && grid) {
     grid.innerHTML = keys.map(function (k) {
       return '<button type="button" class="nav-drop-item" data-product="' + k + '">'
-        + '<span class="nav-drop-tier">' + TIERS[k] + '</span>'
         + '<span class="nav-drop-name">' + PD_DATA[k].name + '</span></button>';
     }).join('');
     function setOpen(v) { drop.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); }

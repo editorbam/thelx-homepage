@@ -1196,18 +1196,7 @@ nav .nav-links .nav-drop-panel a.nav-drop-all:hover { color: var(--black); opaci
 }
 .tab-btn.active { color:var(--black); font-weight:500; }
 .tab-btn.active::after { transform:scaleX(1); }
-/* 두 층 구조(2026-08-04) — 주력 넷은 항상 노출, 나머지는 '그 외'로 접음.
-   래퍼 없이 클래스로만 감춰서 flex 정렬을 그대로 유지한다. */
-.product-tabs-nav:not(.show-more) .tab-btn.is-more { display:none; }
-.tab-more-btn {
-  padding:.9rem 1.1rem; font-size:13px; font-weight:400;
-  color:rgba(0,0,0,.42); cursor:none; white-space:nowrap;
-  border:none; background:none; font-family:var(--font); letter-spacing:.04em;
-  display:flex; align-items:center; gap:.4rem; transition:color .2s;
-}
-.tab-more-btn:hover { color:var(--black); }
-.tab-more-btn .tm-tg { font-size:14px; line-height:1; transition:transform .25s ease; display:inline-block; }
-.product-tabs-nav.show-more .tab-more-btn .tm-tg { transform:rotate(45deg); }
+/* 두 층 구조는 2026-08-18 폐기 — 전 제품 평면 나열 */
 .flagship-badge {
   font-size:9px; letter-spacing:.12em; background:var(--black);
   color:white; padding:2px 7px; border-radius:8px; font-weight:500;
@@ -3253,11 +3242,11 @@ body.pd-open { overflow: hidden; }
       <button class="tab-btn" data-tab="vogue">Vogue</button>
       <button class="tab-btn" data-tab="xenith">Xenith IR</button>
       <button class="tab-btn" data-tab="quantum">Quantum</button>
-      <button class="tab-more-btn" id="tabMoreBtn" type="button" aria-expanded="false" aria-controls="products">그 외 <span class="tm-tg" aria-hidden="true">+</span></button>
-      <button class="tab-btn is-more" data-tab="titanium">Titanium</button>
-      <button class="tab-btn is-more" data-tab="gline">G-LINE</button>
-      <button class="tab-btn is-more" data-tab="sline">S-LINE</button>
-      <button class="tab-btn is-more" data-tab="galaxie">Galaxie</button>
+      <!-- '그 외' 접기 제거(2026-08-18 사용자 요청) — 전 제품 평면 나열, 좁은 화면은 탭 줄 가로 스크롤이 담당 -->
+      <button class="tab-btn" data-tab="titanium">Titanium</button>
+      <button class="tab-btn" data-tab="gline">G-LINE</button>
+      <button class="tab-btn" data-tab="sline">S-LINE</button>
+      <button class="tab-btn" data-tab="galaxie">Galaxie</button>
       <button class="tab-btn" data-tab="shield">LX SHIELD <span class="ppf-badge">PPF</span></button>
     </div>
 
@@ -4448,28 +4437,6 @@ function activateTab(name) {
   }
 }
 tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
-
-/* '그 외' 토글 (2026-08-04) — 주력 넷 뒤의 하위 라인을 펼친다.
-   .tab-more-btn은 data-tab이 없어 탭 목록(tabBtns)에 잡히지 않는다. */
-(function () {
-  var moreBtn = document.getElementById('tabMoreBtn');
-  var tabsNav = moreBtn && moreBtn.closest('.product-tabs-nav');
-  if (!moreBtn || !tabsNav) return;
-  moreBtn.addEventListener('click', function () {
-    var open = !tabsNav.classList.contains('show-more');
-    tabsNav.classList.toggle('show-more', open);
-    moreBtn.setAttribute('aria-expanded', open);
-    if (open) {
-      /* 좁은 화면에서는 새로 나온 탭이 가로 스크롤 바깥에 생겨 변화가 안 보인다 */
-      var first = tabsNav.querySelector('.tab-btn.is-more');
-      if (first && first.scrollIntoView) first.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
-    } else {
-      /* 접을 때 활성 탭이 숨겨지면 탭 줄엔 활성 표시가 없는데 패널만 남는다 → 첫 탭으로 되돌린다 */
-      var active = tabsNav.querySelector('.tab-btn.active');
-      if (active && active.classList.contains('is-more')) activateTab('lx');
-    }
-  });
-}());
 
 // 제품 섹션 진입 시 스펙바 애니메이션
 const prodIO = new IntersectionObserver(entries => {

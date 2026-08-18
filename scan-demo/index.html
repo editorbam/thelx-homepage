@@ -109,16 +109,27 @@ function parseScan(t){
 }
 
 /* 공용 연속 스캐너 — 카메라 프레임 직접 캡처 → zxing WASM 판독 */
-function makeScanner(wrapId,statId,onAccept,single){
+function makeScanner(wrapId,statId,onAccept,single,guide){
   var stream=null,video=null,timer=null,lastVal='',acceptedAt=0,busy=false;
+  guide=guide||'bar';
   return {
     running:function(){return !!stream},
     start:function(){
-      var wrap=$(wrapId);wrap.style.display='block';wrap.innerHTML='';
+      var wrap=$(wrapId);wrap.style.display='block';wrap.innerHTML='';wrap.style.position='relative';
       video=document.createElement('video');
       video.setAttribute('playsinline','');video.setAttribute('autoplay','');video.muted=true;
       video.style.cssText='width:100%;display:block';
       wrap.appendChild(video);
+      /* 조준 틀 — 바코드=가로 띠 / QR=정사각. 판독 영역과 일치 */
+      var g=document.createElement('div');
+      g.style.cssText='position:absolute;border:2px solid rgba(255,255,255,.95);border-radius:10px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);pointer-events:none;'+
+        (guide==='qr' ? 'left:15%;top:50%;width:70%;aspect-ratio:1/1;transform:translateY(-50%);'
+                      : 'left:4%;top:50%;width:92%;height:34%;transform:translateY(-50%);');
+      wrap.appendChild(g);
+      var tip=document.createElement('div');
+      tip.textContent=(guide==='qr')?'QR을 틀 안에':'바코드 줄무늬를 띠 안에 맞춰 주세요';
+      tip.style.cssText='position:absolute;left:0;right:0;bottom:6px;text-align:center;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none;';
+      wrap.appendChild(tip);
       navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}}})
       .then(function(s){stream=s;video.srcObject=s;return video.play()})
       .then(function(){
@@ -127,9 +138,12 @@ function makeScanner(wrapId,statId,onAccept,single){
         timer=setInterval(function(){
           if(busy||!video||!video.videoWidth)return;
           busy=true;
-          canvas.width=video.videoWidth;canvas.height=video.videoHeight;
-          ctx.drawImage(video,0,0);
-          var id=ctx.getImageData(0,0,canvas.width,canvas.height);
+          var vw=video.videoWidth,vh=video.videoHeight,sx,sy,sw,sh;
+          if(guide==='qr'){var side=Math.floor(Math.min(vw,vh)*.8);sx=(vw-side)>>1;sy=(vh-side)>>1;sw=sh=side}
+          else{sw=vw;sh=Math.floor(vh*.44);sx=0;sy=(vh-sh)>>1} /* 가이드 띠(34%)보다 넉넉한 44% */
+          canvas.width=sw;canvas.height=sh;
+          ctx.drawImage(video,sx,sy,sw,sh,0,0,sw,sh);
+          var id=ctx.getImageData(0,0,sw,sh);
           ZXingWASM.readBarcodes(id,READ_OPTS).then(function(res){
             busy=false;
             if(!res||!res.length||!res[0].text)return;
@@ -225,7 +239,7 @@ var scQr=makeScanner('camWrap3','statQr',function(txt){
   var digits=txt.replace(/\D/g,'').slice(0,8);
   $('qrVal').textContent=digits||txt;
   scQr.stop();$('btnQr').textContent='📷 보증서 QR 스캔';$('btnQr').classList.remove('stop');
-},false);
+},false,'qr');
 $('btnQr').addEventListener('click',function(){
   if(scQr.running()){scQr.stop();this.textContent='📷 보증서 QR 스캔';this.classList.remove('stop')}
   else{scQr.start();this.textContent='⏹ 종료';this.classList.add('stop')}

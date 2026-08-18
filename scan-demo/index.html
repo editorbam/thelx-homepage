@@ -79,16 +79,16 @@ input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-s
   <p class="foot">실서버에선 이 번호가 보증서 등록 화면에 자동 입력되고 유효성 검사까지 돕니다.</p>
 </div>
 
-<p class="foot">THE LX 내부 테스트용 데모 · 서버 전송 없음 · 스캔 데이터는 브라우저(localStorage)에만 저장됩니다.<br>인식이 잘 되면: 같은 값 2회 연속 확인 후 진동과 함께 목록에 추가됩니다.</p>
+<p class="foot">THE LX 내부 테스트용 데모 · 서버 전송 없음 · 스캔 데이터는 브라우저(localStorage)에만 저장됩니다.<br>판독 즉시 진동과 함께 목록에 추가됩니다. 판독 엔진: zxing(정밀형).</p>
 <div class="toast" id="toast"></div>
 
-<script src="html5-qrcode.min.js" charset="utf-8"></script>
+<script src="zxing-reader.iife.js" charset="utf-8"></script>
 <script>
 'use strict';
 var $=function(id){return document.getElementById(id)};
-var FMT=[Html5QrcodeSupportedFormats.QR_CODE,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39];
-var NATIVE_OK=false;
-if(window.BarcodeDetector&&BarcodeDetector.getSupportedFormats){BarcodeDetector.getSupportedFormats().then(function(f){NATIVE_OK=!!(f&&f.length)}).catch(function(){})}
+/* 판독 엔진 = zxing WASM (기준 엔진의 웹 버전, 로컬 vendored) — 8/18 현장 테스트에서 JS 경량 엔진 판독 실패로 교체 */
+ZXingWASM.prepareZXingModule({overrides:{locateFile:function(f){return './'+f}}});
+var READ_OPTS={formats:["Code128","Code39","QRCode"],tryHarder:true,maxNumberOfSymbols:1};
 
 /* 저장소 */
 var store={
@@ -108,32 +108,47 @@ function parseScan(t){
   return{code:'',roll:t,raw:t};
 }
 
-/* 공용 연속 스캐너 */
+/* 공용 연속 스캐너 — 카메라 프레임 직접 캡처 → zxing WASM 판독 */
 function makeScanner(wrapId,statId,onAccept,single){
-  var scanner=null,last=null,acceptedAt=0,lastVal='';
+  var stream=null,video=null,timer=null,lastVal='',acceptedAt=0,busy=false;
   return {
-    running:function(){return !!scanner},
+    running:function(){return !!stream},
     start:function(){
-      var wrap=$(wrapId);wrap.style.display='block';
-      var conf={experimentalFeatures:{useBarCodeDetectorIfSupported:NATIVE_OK},formatsToSupport:FMT};
-      scanner=new Html5Qrcode(wrapId,conf);
-      scanner.start({facingMode:'environment'},
-        {fps:15,qrbox:function(w,h){return{width:Math.floor(w*.9),height:Math.floor(h*.55)}},videoConstraints:{facingMode:'environment',width:{ideal:1280}}},
-        function(txt){
-          $(statId).textContent='판독: '+txt;
-          var now=Date.now();
-          if(txt===lastVal&&now-acceptedAt<2500)return; /* 같은 코드 연속 재수락 방지 */
-          if(txt!==last){last=txt;return}               /* 2회 연속 일치 확인 */
-          last=null;lastVal=txt;acceptedAt=now;
-          buzz();onAccept(txt);
-          if(single)this.stop();
-        }.bind(this),
-        function(){}
-      ).catch(function(e){$(statId).textContent='카메라를 열 수 없습니다: '+e;wrap.style.display='none';scanner=null});
+      var wrap=$(wrapId);wrap.style.display='block';wrap.innerHTML='';
+      video=document.createElement('video');
+      video.setAttribute('playsinline','');video.setAttribute('autoplay','');video.muted=true;
+      video.style.cssText='width:100%;display:block';
+      wrap.appendChild(video);
+      navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}}})
+      .then(function(s){stream=s;video.srcObject=s;return video.play()})
+      .then(function(){
+        var canvas=document.createElement('canvas');
+        var ctx=canvas.getContext('2d',{willReadFrequently:true});
+        timer=setInterval(function(){
+          if(busy||!video||!video.videoWidth)return;
+          busy=true;
+          canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+          ctx.drawImage(video,0,0);
+          var id=ctx.getImageData(0,0,canvas.width,canvas.height);
+          ZXingWASM.readBarcodes(id,READ_OPTS).then(function(res){
+            busy=false;
+            if(!res||!res.length||!res[0].text)return;
+            var txt=res[0].text;
+            $(statId).textContent='판독: '+txt;
+            var now=Date.now();
+            if(txt===lastVal&&now-acceptedAt<2500)return; /* 같은 코드 연속 재수락 방지 */
+            lastVal=txt;acceptedAt=now;
+            buzz();onAccept(txt);
+          }).catch(function(){busy=false});
+        },280);
+      })
+      .catch(function(e){$(statId).textContent='카메라를 열 수 없습니다: '+e;wrap.style.display='none';stream=null});
     },
     stop:function(){
-      var s=scanner;scanner=null;
-      if(s)s.stop().then(function(){try{s.clear()}catch(e){}$(wrapId).style.display='none'}).catch(function(){try{s.clear()}catch(e){}$(wrapId).style.display='none'});
+      if(timer){clearInterval(timer);timer=null}
+      if(stream){stream.getTracks().forEach(function(t){t.stop()});stream=null}
+      video=null;
+      var wrap=$(wrapId);wrap.style.display='none';wrap.innerHTML='';
       $(statId).textContent='';
     }
   };

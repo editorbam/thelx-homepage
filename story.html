@@ -11,6 +11,18 @@
   <meta name="author" content="THE LX · Solar Gard Premium">
   <link rel="canonical" href="https://isolargard.com/story.html">
 
+  <!-- 폰트 자체 호스팅 — 다른 7페이지와 동일 서브셋(2026-08-18 이식, story 글자 포함 확인). 구글 폰트 링크 금지 -->
+  <link rel="preload" href="noto-sans-kr-subset.woff2?v=3" as="font" type="font/woff2" crossorigin>
+  <style>
+  @font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('noto-sans-kr-subset.woff2?v=3') format('woff2');
+  }
+  </style>
+
   <!-- Open Graph -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="THE LX">

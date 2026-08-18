@@ -654,6 +654,14 @@ const PD_FILM_TYPE = {
   sline: '나노 세라믹 (열흡수)', galaxie: '기본형',
 };
 
+/* 농도별 성능 격자 표 하단 각주 — 구 홈페이지 원문 그대로 이식(2026-08-18, 8/11 백업본 product_02.php 기준).
+   측정 기준·규격 고지라 임의 수정 금지. 격자 표가 있는 제품(농도별·모델별)에만 렌더 — SHIELD는 표가 없어 미노출. */
+const PD_GRID_NOTES = [
+  '※ 성능 결과 1/8" 투명 유리(3mm clear glass)에 적용된 결과 값이며, 측정 조건에 따라 오차 범위 3~5%가 있을 수 있습니다.',
+  '※ THE LX 제품의 성능 결과는 IWFA[국제윈도우필름협회]에서 인정하는 NFRC[국립창호인증위원회] 테스트 방법론과 LBNL[로렌스버클리국립연구소] 윈도우 소프트웨어를 사용하여 계산된 수치이며, 국내 기준은 ISO 9050:2003에 준거하여 측정된 결과입니다. 모든 수치는 산업 표준내 변동에 따라 달라질 수 있고, 오직 필름 성능의 추정 목적으로만 사용됩니다.',
+  '※ 모든 윈도우 필름의 에너지 차단 성능에 대한 표시 기준은 TSER(총태양에너지차단율)이며 이는 국내외 공식 규격입니다. 일부 윈도우 필름 업체에서 표기하는 적외선차단율, 열 차단율, 토탈적외선 차단율, 열적외선 차단율 등의 표기는 모두 TSER의 하위개념으로써, 국내외 규격에도 없는 성능 표기 방식이며, 윈도우 필름의 실제성능과 차이가 있으니 주의 하시기 바랍니다.',
+];
+
 /* 농도별/모델별 스펙 rows 파싱 — 라벨 '농도 15 — VLT 12%' / 'Quantum Black — VLT 8%' 공통 */
 function pdParseDens(p) {
   const sec = (p.specs || []).find(s => /^(농도별|모델별)/.test(s.title));
@@ -724,6 +732,7 @@ function pdRenderSpecs(p) {
       </tr></thead>
       <tbody>${body}</tbody>
     </table></div>
+    <div class="pd-grid-notes">${PD_GRID_NOTES.map(t => `<p>${t}</p>`).join('')}</div>
   </div>`;
   const rest = [];
   const restUv = uvRows.filter(r => r.label !== 'UV 차단율' && r.label !== 'UV 등급');

@@ -34,14 +34,14 @@
 <meta name="twitter:image:alt" content="THE LX — 차량 위 '하루 90분의 거실' 브랜드 공유 카드">
 
 <!-- 폰트 자체 호스팅 — 전체 페이지(index·pricing·technology·recommend·warranty)에 쓰인 글자만 추린 가변 woff2(굵기 100~900, 약 122KB). 새 카피 추가 시 서브셋에 글자 있는지 확인. 구글 폰트 링크 금지(오프라인·렌더링 차단 방지) -->
-<link rel="preload" href="noto-sans-kr-subset.woff2?v=2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="noto-sans-kr-subset.woff2?v=3" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('noto-sans-kr-subset.woff2?v=2') format('woff2');
+  src: url('noto-sans-kr-subset.woff2?v=3') format('woff2');
 }
 </style>
 
@@ -2477,6 +2477,8 @@ body.pd-open { overflow: hidden; }
 .pd-grid .g-merge { background: var(--gray-1); font-weight: 400; }
 .pd-grid .g-merge span { display: block; font-size: .82rem; color: var(--gray-4); padding: .12rem 0; font-weight: 300; }
 .pd-grid .g-merge strong { font-weight: 600; }
+.pd-grid-notes { margin-top: .9rem; }
+.pd-grid-notes p { font-size: .78rem; font-weight: 300; color: var(--gray-3); line-height: 1.7; margin: .35rem 0 0; }
 
 .pd-cta {
   background: var(--black); padding: 6rem 2rem; text-align: center; margin-top: 2rem;
@@ -4110,7 +4112,7 @@ body.pd-open { overflow: hidden; }
 <!-- ========================================
      JAVASCRIPT
 ======================================== -->
-  <script src="pd-data.js?v=36"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
+  <script src="pd-data.js?v=37"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
 <script src="car-picker.js?v=3" defer></script> <script src="date-picker.js?v=2" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
 <script>
 /* ── COMPARE ROW HOVER ── */

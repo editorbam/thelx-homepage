@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>LX 스캔 데모</title>
+<style>
+:root{--ink:#111;--line:#e2e2e6;--sub:#8a8a90;--cms:#4a90e2;--ok:#0a7d38;--warn:#b45309;--bad:#b91c1c}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,'Noto Sans KR',sans-serif;background:#f4f4f6;color:var(--ink);max-width:520px;margin:0 auto;padding-bottom:40px}
+header{background:var(--ink);color:#fff;padding:14px 16px;font-size:16px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+header small{font-weight:400;opacity:.6;font-size:11px}
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;border:none;background:none;padding:13px 0;font-size:14px;color:var(--sub);font-family:inherit}
+.tabs button.on{color:var(--ink);font-weight:700;box-shadow:inset 0 -2px 0 var(--ink)}
+.pane{display:none;padding:14px}
+.pane.on{display:block}
+.big{display:block;width:100%;border:none;background:var(--cms);color:#fff;padding:14px;border-radius:12px;font-size:15px;font-weight:600;font-family:inherit}
+.big.stop{background:var(--bad)}
+.big.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:8px}
+#camWrap,#camWrap2,#camWrap3{margin:10px 0;border-radius:12px;overflow:hidden;background:#000;display:none}
+.stat{color:var(--ok);font-size:12px;text-align:center;min-height:1.3em;margin:4px 0}
+.cnt{background:var(--ink);color:#fff;border-radius:12px;text-align:center;padding:11px;font-size:13px;margin:10px 0}
+.cnt b{font-size:19px}
+.item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.item .rn{color:var(--sub);font-size:11.5px}
+.item .nm{font-weight:600}
+.stat3{display:flex;gap:7px;margin:10px 0}
+.stat3 div{flex:1;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 4px;background:#fff}
+.stat3 b{display:block;font-size:18px}
+.stat3 small{font-size:10.5px;color:var(--sub)}
+.g{color:var(--ok)}.o{color:var(--warn)}.r{color:var(--bad)}
+.diff{padding:8px 11px;border-radius:9px;font-size:12px;margin-bottom:6px;display:flex;justify-content:space-between}
+.diff.m{background:#fef3e2}.diff.x{background:#fdeaea}
+.foot{font-size:11px;color:var(--sub);text-align:center;margin-top:14px;line-height:1.6}
+.qrbig{background:#fff;border:1px solid var(--line);border-radius:12px;text-align:center;padding:18px;margin:10px 0}
+.qrbig b{font-size:26px;letter-spacing:.08em}
+input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-size:12px;width:110px;font-family:inherit}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style></head><body>
+<header>LX 스캔 데모 <small>현장 테스트 · 데이터는 이 폰에만 저장</small></header>
+<div class="tabs">
+  <button class="on" data-p="in">입고 스캔</button>
+  <button data-p="audit">재고 실사</button>
+  <button data-p="qr">보증서 QR</button>
+</div>
+
+<div class="pane on" id="p-in">
+  <button class="big" id="btnIn">📷 연속 스캔 시작</button>
+  <div id="camWrap"></div>
+  <p class="stat" id="statIn"></p>
+  <div class="cnt">스캔 <b id="cntIn">0</b>롤 · 제품 <b id="cntPrd">0</b>종</div>
+  <div id="listIn"></div>
+  <button class="big ghost" id="btnCopy">📋 목록 복사 (엑셀 붙여넣기용)</button>
+  <button class="big ghost" id="btnSave">이 목록을 장부로 저장 (실사 대조용)</button>
+  <button class="big ghost" id="btnClear">목록 비우기</button>
+</div>
+
+<div class="pane" id="p-audit">
+  <div class="cnt">장부 <b id="cntLedger">0</b>롤 — 입고 탭에서 저장한 목록</div>
+  <button class="big" id="btnAu">📷 실사 스캔 시작</button>
+  <div id="camWrap2"></div>
+  <p class="stat" id="statAu"></p>
+  <div class="stat3">
+    <div><b class="g" id="auOk">0</b><small>일치</small></div>
+    <div><b class="o" id="auMiss">0</b><small>장부에만 있음</small></div>
+    <div><b class="r" id="auExtra">0</b><small>실물에만 있음</small></div>
+  </div>
+  <div id="listAu"></div>
+  <button class="big ghost" id="btnAuCopy">📋 실사 결과 복사</button>
+  <button class="big ghost" id="btnAuReset">실사 다시 시작</button>
+</div>
+
+<div class="pane" id="p-qr">
+  <button class="big" id="btnQr">📷 보증서 QR 스캔</button>
+  <div id="camWrap3"></div>
+  <p class="stat" id="statQr"></p>
+  <div class="qrbig">QR번호<br><b id="qrVal">—</b></div>
+  <p class="foot">실서버에선 이 번호가 보증서 등록 화면에 자동 입력되고 유효성 검사까지 돕니다.</p>
+</div>
+
+<p class="foot">THE LX 내부 테스트용 데모 · 서버 전송 없음 · 스캔 데이터는 브라우저(localStorage)에만 저장됩니다.<br>인식이 잘 되면: 같은 값 2회 연속 확인 후 진동과 함께 목록에 추가됩니다.</p>
+<div class="toast" id="toast"></div>
+
+<script src="html5-qrcode.min.js" charset="utf-8"></script>
+<script>
+'use strict';
+var $=function(id){return document.getElementById(id)};
+var FMT=[Html5QrcodeSupportedFormats.QR_CODE,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39];
+var NATIVE_OK=false;
+if(window.BarcodeDetector&&BarcodeDetector.getSupportedFormats){BarcodeDetector.getSupportedFormats().then(function(f){NATIVE_OK=!!(f&&f.length)}).catch(function(){})}
+
+/* 저장소 */
+var store={
+  get:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},
+  set:function(k,v){localStorage.setItem(k,JSON.stringify(v))}
+};
+var scans=store.get('lx_scans',[]);      /* [{code,roll,raw,t}] */
+var names=store.get('lx_names',{});      /* 제품코드→이름 */
+var ledger=store.get('lx_ledger',[]);    /* 장부 rolls */
+var audit=store.get('lx_audit',[]);      /* 실사 스캔 rolls */
+
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1600)}
+function buzz(){if(navigator.vibrate)navigator.vibrate(80);try{var c=new (window.AudioContext||window.webkitAudioContext)();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=1200;g.gain.value=.08;o.start();setTimeout(function(){o.stop();c.close()},120)}catch(e){}}
+function parseScan(t){
+  var m=t.match(/^([A-Z]{2}[0-9]{8}-[0-9]{5})[\s]*(.*)$/);
+  if(m)return{code:m[1],roll:(m[2]||'').trim()||'(롤번호 없음)',raw:t};
+  return{code:'',roll:t,raw:t};
+}
+
+/* 공용 연속 스캐너 */
+function makeScanner(wrapId,statId,onAccept,single){
+  var scanner=null,last=null,acceptedAt=0,lastVal='';
+  return {
+    running:function(){return !!scanner},
+    start:function(){
+      var wrap=$(wrapId);wrap.style.display='block';
+      var conf={experimentalFeatures:{useBarCodeDetectorIfSupported:NATIVE_OK},formatsToSupport:FMT};
+      scanner=new Html5Qrcode(wrapId,conf);
+      scanner.start({facingMode:'environment'},
+        {fps:15,qrbox:function(w,h){return{width:Math.floor(w*.9),height:Math.floor(h*.55)}},videoConstraints:{facingMode:'environment',width:{ideal:1280}}},
+        function(txt){
+          $(statId).textContent='판독: '+txt;
+          var now=Date.now();
+          if(txt===lastVal&&now-acceptedAt<2500)return; /* 같은 코드 연속 재수락 방지 */
+          if(txt!==last){last=txt;return}               /* 2회 연속 일치 확인 */
+          last=null;lastVal=txt;acceptedAt=now;
+          buzz();onAccept(txt);
+          if(single)this.stop();
+        }.bind(this),
+        function(){}
+      ).catch(function(e){$(statId).textContent='카메라를 열 수 없습니다: '+e;wrap.style.display='none';scanner=null});
+    },
+    stop:function(){
+      var s=scanner;scanner=null;
+      if(s)s.stop().then(function(){try{s.clear()}catch(e){}$(wrapId).style.display='none'}).catch(function(){try{s.clear()}catch(e){}$(wrapId).style.display='none'});
+      $(statId).textContent='';
+    }
+  };
+}
+
+/* ── 입고 탭 ── */
+function renderIn(){
+  $('cntIn').textContent=scans.length;
+  var prds={};scans.forEach(function(s){prds[s.code||s.roll]=1});
+  $('cntPrd').textContent=Object.keys(prds).length;
+  $('listIn').innerHTML=scans.slice().reverse().map(function(s,i){
+    var nm=names[s.code]||'';
+    return '<div class="item"><div><div class="nm">'+(nm||s.code||'형식 외 코드')+
+      (nm?'':' <input class="name" placeholder="제품명 입력" data-code="'+s.code+'">')+
+      '</div><div class="rn">롤 '+s.roll+'</div></div><span style="color:var(--cms);font-weight:700">✓</span></div>';
+  }).join('');
+  [].forEach.call(document.querySelectorAll('input.name'),function(inp){
+    inp.addEventListener('change',function(){if(inp.value.trim()){names[inp.dataset.code]=inp.value.trim();store.set('lx_names',names);renderIn()}});
+  });
+}
+var scIn=makeScanner('camWrap','statIn',function(txt){
+  var p=parseScan(txt);
+  if(scans.some(function(s){return s.raw===txt})){toast('이미 스캔된 롤');return}
+  scans.push({code:p.code,roll:p.roll,raw:txt,t:new Date().toISOString().slice(0,16)});
+  store.set('lx_scans',scans);renderIn();toast('추가: '+p.roll);
+});
+$('btnIn').addEventListener('click',function(){
+  if(scIn.running()){scIn.stop();this.textContent='📷 연속 스캔 시작';this.classList.remove('stop')}
+  else{scIn.start();this.textContent='⏹ 스캔 종료';this.classList.add('stop')}
+});
+$('btnCopy').addEventListener('click',function(){
+  var rows=scans.map(function(s){return [names[s.code]||s.code,s.roll,s.raw,s.t].join('\t')});
+  navigator.clipboard.writeText('제품\t롤번호\t원문\t시각\n'+rows.join('\n')).then(function(){toast('복사됨 — 엑셀에 붙여넣으세요')});
+});
+$('btnSave').addEventListener('click',function(){
+  ledger=scans.map(function(s){return s.raw});store.set('lx_ledger',ledger);
+  $('cntLedger').textContent=ledger.length;toast('장부 저장: '+ledger.length+'롤');
+});
+$('btnClear').addEventListener('click',function(){if(confirm('스캔 목록을 비울까요?')){scans=[];store.set('lx_scans',scans);renderIn()}});
+
+/* ── 실사 탭 ── */
+function renderAu(){
+  $('cntLedger').textContent=ledger.length;
+  var lset={};ledger.forEach(function(r){lset[r]=1});
+  var aset={};audit.forEach(function(r){aset[r]=1});
+  var ok=0,miss=[],extra=[];
+  ledger.forEach(function(r){if(aset[r])ok++;else miss.push(r)});
+  audit.forEach(function(r){if(!lset[r])extra.push(r)});
+  $('auOk').textContent=ok;$('auMiss').textContent=miss.length;$('auExtra').textContent=extra.length;
+  $('listAu').innerHTML=
+    miss.map(function(r){var p=parseScan(r);return '<div class="diff m"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="o">실물 없음</span></div>'}).join('')+
+    extra.map(function(r){var p=parseScan(r);return '<div class="diff x"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="r">장부 없음</span></div>'}).join('');
+}
+var scAu=makeScanner('camWrap2','statAu',function(txt){
+  if(audit.indexOf(txt)===-1){audit.push(txt);store.set('lx_audit',audit);toast('확인: '+parseScan(txt).roll)}
+  else toast('이미 확인된 롤');
+  renderAu();
+});
+$('btnAu').addEventListener('click',function(){
+  if(scAu.running()){scAu.stop();this.textContent='📷 실사 스캔 시작';this.classList.remove('stop')}
+  else{scAu.start();this.textContent='⏹ 실사 종료';this.classList.add('stop')}
+});
+$('btnAuCopy').addEventListener('click',function(){
+  var lset={};ledger.forEach(function(r){lset[r]=1});var aset={};audit.forEach(function(r){aset[r]=1});
+  var lines=['구분\t원문'];
+  ledger.forEach(function(r){lines.push((aset[r]?'일치':'실물없음')+'\t'+r)});
+  audit.forEach(function(r){if(!lset[r])lines.push('장부없음\t'+r)});
+  navigator.clipboard.writeText(lines.join('\n')).then(function(){toast('실사 결과 복사됨')});
+});
+$('btnAuReset').addEventListener('click',function(){audit=[];store.set('lx_audit',audit);renderAu();toast('실사 초기화')});
+
+/* ── 보증서 QR 탭 ── */
+var scQr=makeScanner('camWrap3','statQr',function(txt){
+  var digits=txt.replace(/\D/g,'').slice(0,8);
+  $('qrVal').textContent=digits||txt;
+  scQr.stop();$('btnQr').textContent='📷 보증서 QR 스캔';$('btnQr').classList.remove('stop');
+},false);
+$('btnQr').addEventListener('click',function(){
+  if(scQr.running()){scQr.stop();this.textContent='📷 보증서 QR 스캔';this.classList.remove('stop')}
+  else{scQr.start();this.textContent='⏹ 종료';this.classList.add('stop')}
+});
+
+/* 탭 전환 — 카메라 정리 */
+[].forEach.call(document.querySelectorAll('.tabs button'),function(b){
+  b.addEventListener('click',function(){
+    [scIn,scAu,scQr].forEach(function(s){s.stop()});
+    $('btnIn').textContent='📷 연속 스캔 시작';$('btnIn').classList.remove('stop');
+    $('btnAu').textContent='📷 실사 스캔 시작';$('btnAu').classList.remove('stop');
+    $('btnQr').textContent='📷 보증서 QR 스캔';$('btnQr').classList.remove('stop');
+    [].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.remove('on')});
+    b.classList.add('on');
+    [].forEach.call(document.querySelectorAll('.pane'),function(p){p.classList.remove('on')});
+    $('p-'+b.dataset.p).classList.add('on');
+  });
+});
+
+/* 알려진 제품코드 시드 */
+if(!names['SF55000950-60100'])names['SF55000950-60100']='HP QUANTUM 14 HC';
+store.set('lx_names',names);
+renderIn();renderAu();
+</script>
+</body></html>

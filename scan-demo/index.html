@@ -16,6 +16,11 @@ header small{font-weight:400;opacity:.6;font-size:11px}
 .pane.on{display:block}
 .big{display:block;width:100%;border:none;background:var(--cms);color:#fff;padding:14px;border-radius:12px;font-size:15px;font-weight:600;font-family:inherit}
 .big.stop{background:var(--bad)}
+.hw{display:none;margin-top:10px}.hw.on{display:block}
+.hw input{width:100%;box-sizing:border-box;font:600 18px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;padding:14px;border:2px solid var(--cms);border-radius:12px;background:#f0f7ff;outline:none;letter-spacing:.02em}
+.hw input:focus{background:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.18)}
+.hw .hint{font-size:12px;color:#666;margin-top:6px;line-height:1.5}
+.big.ghost.on{border-color:var(--cms);color:var(--cms)}
 .big.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:8px}
 #camWrap,#camWrap2,#camWrap3{margin:10px 0;border-radius:12px;overflow:hidden;background:#000;display:none}
 .stat{color:var(--ok);font-size:12px;text-align:center;min-height:1.3em;margin:4px 0}
@@ -65,6 +70,8 @@ input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-s
 
 <div class="pane on" id="p-in">
   <button class="big" id="btnIn">📷 연속 스캔 시작</button>
+  <button class="big ghost" id="btnHwIn">⌨️ 스캐너(레이저건) 입력 모드</button>
+  <div class="hw" id="hwIn"><input id="hwInInp" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="none" placeholder="이 칸에 커서를 두고 스캐너로 쏘세요"><div class="hint">USB·블루투스 스캐너 = 키보드. 한 번 쏠 때마다 한 롤이 처리됩니다. 다른 데를 누르면 커서가 빠지니 이 칸을 다시 탭하세요.</div></div>
   <div id="camWrap"></div>
   <p class="stat" id="statIn"></p>
   <div class="cnt">스캔 <b id="cntIn">0</b>롤 · 제품 <b id="cntPrd">0</b>종</div>
@@ -77,6 +84,8 @@ input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-s
 <div class="pane" id="p-audit">
   <div class="cnt">장부 <b id="cntLedger">0</b>롤 — 입고 탭에서 저장한 목록</div>
   <button class="big" id="btnAu">📷 실사 스캔 시작</button>
+  <button class="big ghost" id="btnHwAu">⌨️ 스캐너(레이저건) 입력 모드</button>
+  <div class="hw" id="hwAu"><input id="hwAuInp" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="none" placeholder="이 칸에 커서를 두고 스캐너로 쏘세요"><div class="hint">한 번 쏠 때마다 장부와 대조됩니다.</div></div>
   <div id="camWrap2"></div>
   <p class="stat" id="statAu"></p>
   <div class="stat3">
@@ -141,6 +150,25 @@ function buzz(kind){
     g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.14);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.15)}}catch(e){}
   var f=document.getElementById('flash');if(f){f.classList.remove('on','dup');void f.offsetWidth;if(dup)f.classList.add('dup');f.classList.add('on')}
 }
+/* ── CMS 제품 코드표 (2026-08-20 sgpcms 제품목록 실측, 필름 40종) ── */
+var CMS_PRODUCTS={
+ 'SF53005340-60100':'LX / 2MIL / 40% [60inch]','SF53005315-60100':'LX / 2MIL / 15 [60inch]',
+ 'SF53005325-36100':'LX / 2MIL / 25% [36inch]','SF53005340-36100':'LX / 2MIL / 40% [36inch]','SF53005355-36100':'LX / 2MIL / 55% [36inch]','SF53005360-36100':'LX / 2MIL / 70% [36inch]',
+ 'SF53005325-72100':'LX / 2MIL / 25% [72inch]','SF53005340-72100':'LX / 2MIL / 40% [72inch]','SF53005355-72100':'LX / 2MIL / 55% [72inch]','SF53005360-72100':'LX / 2MIL / 70% [72inch]',
+ 'SF53005775-60100':'LX / 3MIL / 15%','SF53005785-60100':'LX / 3MIL / 25%','SF53005765-60100':'LX / 3MIL / 40%','SF53005790-60100':'LX / 3MIL / 55%','SF53005370-60100':'LX / 3MIL / 70%',
+ 'SF75200908-60100':'Xenith IR / 05%','SF75200915-60100':'Xenith IR / 15%','SF75200930-60100':'Xenith IR / 30%','SF75200955-60100':'Xenith IR / 50%',
+ 'SF53001010-60100':'Vogue / 10%','SF53002010-60100':'Vogue / 20%','SF53003010-60100':'Vogue / 30%','SF53004010-60100':'Vogue / 40%',
+ 'SF55005468-60100P':'Quantum Plus / 08%','SF55004558-60100P':'Quantum Black / 08%','SF55000950-60100':'Quantum / 14%','SF55000900-60100':'Quantum / 19%','SF55000850-60100':'Quantum / 28%','SF55000800-60100':'Quantum / 37%','SF55000750-60100':'Quantum / 52%',
+ 'SF55000220-60100':'Titanium / 06%','SF55000150-60100':'Titanium / 16%','SF55000748-60100P':'Titanium / 26%','SF55002050-60100':'Titanium / 50%',
+ 'SF55001740-60100':'GALAXIE 12%','SF55001700-60100':'GALAXIE 35%','SF55001710-60100':'GALAXIE 50%',
+ 'SF95520111-60100':'S-LINE / 10%','SF95520112-60100':'S-LINE / 30%','SF95520165-60100':'G-LINE / 10%','SF95520166-60100':'G-LINE / 30%'
+};
+/* 제품명 → 축약키 (예: "Xenith IR / 30%" → XENITHIR30) — 국내 라벨 매칭용 */
+function nameKey(n){return n.toUpperCase().replace(/\[.*?\]/g,'').replace(/[^A-Z0-9]/g,'')}
+var KEY2CODE={};Object.keys(CMS_PRODUCTS).forEach(function(c){KEY2CODE[nameKey(CMS_PRODUCTS[c])]=c});
+/* 롤번호 정규화: CMS 수기 입력의 - / _ / __ / 공백 차이를 없앰 (26A19S09__024 == 26A19S09-024) */
+function normRoll(r){return (r||'').toUpperCase().replace(/[\s_\-]+/g,'_').replace(/^_|_$/g,'')}
+function scanKey(p){return (p.code||'?')+'|'+normRoll(p.roll)}
 var hitTimer=null;
 function showHit(p,dup){
   var h=document.getElementById('hit');if(!h)return;
@@ -263,14 +291,30 @@ function renderIn(){
     inp.addEventListener('change',function(){if(inp.value.trim()){names[inp.dataset.code]=inp.value.trim();store.set('lx_names',names);renderIn()}});
   });
 }
-var scIn=makeScanner('camWrap','statIn',function(txt){
+function acceptIn(txt){
   var p=parseScan(txt);
   var k=scanKey(p);
   if(scans.some(function(s){return scanKey(s)===k})){buzz('dup');showHit(p,true);return}
   scans.push({code:p.code,roll:p.roll,raw:txt,fmt:p.fmt,fam:p.fam,t:new Date().toISOString().slice(0,16)});
   store.set('lx_scans',scans);renderIn();buzz('ok');showHit(p);
-});
-$('btnIn').addEventListener('click',function(){armFeedback();
+}
+var scIn=makeScanner('camWrap','statIn',acceptIn);
+/* ── 스캐너(HID 키보드) 입력 모드: Enter/Tab 접미 또는 250ms 입력 멈춤 = 한 롤 ── */
+function makeHw(btnId,boxId,inpId,camScanner,camBtnId,camLabel,onAccept){
+  var btn=$(btnId),box=$(boxId),inp=$(inpId),on=false,tm=null;
+  function fire(){var v=inp.value.trim();inp.value='';if(v.length>=4)onAccept(v)}
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();clearTimeout(tm);fire()}});
+  inp.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(fire,250)});
+  inp.addEventListener('blur',function(){if(on)setTimeout(function(){if(on&&document.activeElement!==inp&&!/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName))inp.focus()},400)});
+  btn.addEventListener('click',function(){armFeedback();on=!on;box.classList.toggle('on',on);btn.classList.toggle('on',on);
+    if(on){if(camScanner.running()){camScanner.stop();$(camBtnId).textContent=camLabel;$(camBtnId).classList.remove('stop')}
+      btn.textContent='⌨️ 스캐너 입력 모드 끄기';setTimeout(function(){inp.focus()},50)}
+    else{btn.textContent='⌨️ 스캐너(레이저건) 입력 모드';inp.blur()}
+  });
+  return{off:function(){if(on)btn.click()}};
+}
+var hwIn=makeHw('btnHwIn','hwIn','hwInInp',scIn,'btnIn','📷 연속 스캔 시작',acceptIn);
+$('btnIn').addEventListener('click',function(){armFeedback();hwIn.off();
   if(scIn.running()){scIn.stop();this.textContent='📷 연속 스캔 시작';this.classList.remove('stop')}
   else{scIn.start();this.textContent='⏹ 스캔 종료';this.classList.add('stop')}
 });
@@ -298,13 +342,15 @@ function renderAu(){
     miss.map(function(r){var p=parseScan(r);return '<div class="diff m"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="o">실물 없음</span></div>'}).join('')+
     extra.map(function(r){var p=parseScan(r);return '<div class="diff x"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="r">장부 없음</span></div>'}).join('');
 }
-var scAu=makeScanner('camWrap2','statAu',function(txt){
+function acceptAu(txt){
   var k=scanKey(parseScan(txt));
   if(!audit.some(function(r){return scanKey(parseScan(r))===k})){audit.push(txt);store.set('lx_audit',audit);buzz('ok');showHit(parseScan(txt))}
   else {buzz('dup');showHit(parseScan(txt),true)}
   renderAu();
-});
-$('btnAu').addEventListener('click',function(){armFeedback();
+}
+var scAu=makeScanner('camWrap2','statAu',acceptAu);
+var hwAu=makeHw('btnHwAu','hwAu','hwAuInp',scAu,'btnAu','📷 실사 스캔 시작',acceptAu);
+$('btnAu').addEventListener('click',function(){armFeedback();hwAu.off();
   if(scAu.running()){scAu.stop();this.textContent='📷 실사 스캔 시작';this.classList.remove('stop')}
   else{scAu.start();this.textContent='⏹ 실사 종료';this.classList.add('stop')}
 });
@@ -331,7 +377,7 @@ $('btnQr').addEventListener('click',function(){armFeedback();
 /* 탭 전환 — 카메라 정리 */
 [].forEach.call(document.querySelectorAll('.tabs button'),function(b){
   b.addEventListener('click',function(){
-    [scIn,scAu,scQr].forEach(function(s){s.stop()});
+    [scIn,scAu,scQr].forEach(function(s){s.stop()});hwIn.off();hwAu.off();
     $('btnIn').textContent='📷 연속 스캔 시작';$('btnIn').classList.remove('stop');
     $('btnAu').textContent='📷 실사 스캔 시작';$('btnAu').classList.remove('stop');
     $('btnQr').textContent='📷 보증서 QR 스캔';$('btnQr').classList.remove('stop');

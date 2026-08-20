@@ -37,7 +37,15 @@ header small{font-weight:400;opacity:.6;font-size:11px}
 input.name{border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-size:12px;width:110px;font-family:inherit}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:999}
 .toast.show{opacity:1}
+#flash{position:fixed;inset:0;pointer-events:none;z-index:998;box-shadow:inset 0 0 0 0 rgba(16,185,129,0);opacity:0}
+#flash.on{animation:fl .32s ease-out}
+@keyframes fl{0%{opacity:1;box-shadow:inset 0 0 0 14px rgba(16,185,129,.95);background:rgba(16,185,129,.18)}100%{opacity:0;box-shadow:inset 0 0 0 4px rgba(16,185,129,0)}}
+.guide{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72%;aspect-ratio:4/1;border:2px solid rgba(255,255,255,.85);border-radius:6px;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,.28)}
+.guide:before,.guide:after{content:'';position:absolute;left:50%;width:2px;height:10px;background:rgba(255,255,255,.85);transform:translateX(-50%)}
+.guide:before{top:-12px}.guide:after{bottom:-12px}
+.hitbox{position:absolute;inset:0;pointer-events:none}
 </style></head><body>
+<div id="flash"></div>
 <header>LX 스캔 데모 <small>현장 테스트 · 데이터는 이 폰에만 저장</small></header>
 <div class="tabs">
   <button class="on" data-p="in">입고 스캔</button>
@@ -101,11 +109,38 @@ var ledger=store.get('lx_ledger',[]);    /* 장부 rolls */
 var audit=store.get('lx_audit',[]);      /* 실사 스캔 rolls */
 
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1600)}
-function buzz(){if(navigator.vibrate)navigator.vibrate(80);try{var c=new (window.AudioContext||window.webkitAudioContext)();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=1200;g.gain.value=.08;o.start();setTimeout(function(){o.stop();c.close()},120)}catch(e){}}
+/* 피드백: 아이폰 사파리는 vibrate 미지원 → 소리(터치 때 열어둔 AudioContext 재사용)+스위치 햅틱(iOS17.4+)+화면 플래시 */
+var AC=null,hapSw=null;
+function armFeedback(){
+  try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+    var o=AC.createOscillator(),g=AC.createGain();g.gain.value=0.0001;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+0.02)}catch(e){}
+  if(!hapSw){hapSw=document.createElement('input');hapSw.type='checkbox';try{hapSw.setAttribute('switch','')}catch(e){}
+    hapSw.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0';document.body.appendChild(hapSw)}
+}
+function buzz(){
+  if(navigator.vibrate)try{navigator.vibrate(80)}catch(e){}
+  try{if(hapSw){hapSw.click()}}catch(e){}
+  try{if(AC){var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type='square';o.frequency.setValueAtTime(1568,t);o.frequency.setValueAtTime(2093,t+.07);
+    g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.17)}}catch(e){}
+  var f=document.getElementById('flash');if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+}
 function parseScan(t){
   var m=t.match(/^([A-Z]{2}[0-9]{8}-[0-9]{5})[\s]*(.*)$/);
   if(m)return{code:m[1],roll:(m[2]||'').trim()||'(롤번호 없음)',raw:t};
   return{code:'',roll:t,raw:t};
+}
+
+/* 인식된 바코드 위치에 초록 박스 — 거리·위치 감 잡기용 */
+function drawHits(cv,res,vw,vh){
+  if(!cv||!cv.parentNode)return;
+  var W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+  var c=cv.getContext('2d');c.clearRect(0,0,W,H);
+  if(!res.length)return;
+  c.lineWidth=3;c.strokeStyle='#10b981';c.fillStyle='rgba(16,185,129,.18)';
+  res.forEach(function(r){var p=r.position;if(!p)return;
+    var pts=[p.topLeft,p.topRight,p.bottomRight,p.bottomLeft];
+    c.beginPath();pts.forEach(function(q,i){var x=q.x/vw*W,y=q.y/vh*H;i?c.lineTo(x,y):c.moveTo(x,y)});c.closePath();c.fill();c.stroke();
+  });
 }
 
 /* 공용 연속 스캐너 — 카메라 프레임 직접 캡처 → zxing WASM 판독 */
@@ -119,8 +154,10 @@ function makeScanner(wrapId,statId,onAccept,single,guide){
       video.setAttribute('playsinline','');video.setAttribute('autoplay','');video.muted=true;
       video.style.cssText='width:100%;display:block';
       wrap.appendChild(video);
+      var gd=document.createElement('div');gd.className='guide';wrap.appendChild(gd);
+      var hit=document.createElement('canvas');hit.className='hitbox';hit.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none';wrap.appendChild(hit);
       var tip=document.createElement('div');
-      tip.textContent='박스를 비추기만 하면 자동 인식됩니다';
+      tip.textContent='바코드가 틀 너비를 채울 만큼 가까이 (틀 밖도 읽힙니다)';
       tip.style.cssText='position:absolute;left:0;right:0;bottom:6px;text-align:center;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none;';
       wrap.appendChild(tip);
       navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}}})
@@ -150,15 +187,16 @@ function makeScanner(wrapId,statId,onAccept,single,guide){
           var id=ctx.getImageData(0,0,canvas.width,canvas.height);
           ZXingWASM.readBarcodes(id,READ_OPTS).then(function(res){
             if(!running)return;
-            var now=Date.now(),hit=false;
+            var now=Date.now(),hitAny=false;
+            drawHits(hit,res||[],canvas.width,canvas.height);
             (res||[]).forEach(function(r){
               if(!r.text)return;
               $(statId).textContent='판독: '+r.text;
               if(accepted[r.text]&&now-accepted[r.text]<3000)return; /* 같은 롤 3초 재수락 방지 */
-              accepted[r.text]=now;hit=true;
+              accepted[r.text]=now;hitAny=true;
               onAccept(r.text);
             });
-            if(hit)buzz();
+            if(hitAny)buzz();
             setTimeout(loop,0); /* 쉼 없이 다음 프레임 */
           }).catch(function(){setTimeout(loop,120)});
         })();
@@ -196,7 +234,7 @@ var scIn=makeScanner('camWrap','statIn',function(txt){
   scans.push({code:p.code,roll:p.roll,raw:txt,t:new Date().toISOString().slice(0,16)});
   store.set('lx_scans',scans);renderIn();toast('추가: '+p.roll);
 });
-$('btnIn').addEventListener('click',function(){
+$('btnIn').addEventListener('click',function(){armFeedback();
   if(scIn.running()){scIn.stop();this.textContent='📷 연속 스캔 시작';this.classList.remove('stop')}
   else{scIn.start();this.textContent='⏹ 스캔 종료';this.classList.add('stop')}
 });
@@ -228,7 +266,7 @@ var scAu=makeScanner('camWrap2','statAu',function(txt){
   else toast('이미 확인된 롤');
   renderAu();
 });
-$('btnAu').addEventListener('click',function(){
+$('btnAu').addEventListener('click',function(){armFeedback();
   if(scAu.running()){scAu.stop();this.textContent='📷 실사 스캔 시작';this.classList.remove('stop')}
   else{scAu.start();this.textContent='⏹ 실사 종료';this.classList.add('stop')}
 });
@@ -247,7 +285,7 @@ var scQr=makeScanner('camWrap3','statQr',function(txt){
   $('qrVal').textContent=digits||txt;
   scQr.stop();$('btnQr').textContent='📷 보증서 QR 스캔';$('btnQr').classList.remove('stop');
 },false,'qr');
-$('btnQr').addEventListener('click',function(){
+$('btnQr').addEventListener('click',function(){armFeedback();
   if(scQr.running()){scQr.stop();this.textContent='📷 보증서 QR 스캔';this.classList.remove('stop')}
   else{scQr.start();this.textContent='⏹ 종료';this.classList.add('stop')}
 });

@@ -124,10 +124,38 @@ function buzz(){
     g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.17)}}catch(e){}
   var f=document.getElementById('flash');if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
 }
+/* ── CMS 제품 코드표 (2026-08-20 sgpcms 제품목록 실측, 필름 40종) ── */
+var CMS_PRODUCTS={
+ 'SF53005340-60100':'LX / 2MIL / 40% [60inch]','SF53005315-60100':'LX / 2MIL / 15 [60inch]',
+ 'SF53005325-36100':'LX / 2MIL / 25% [36inch]','SF53005340-36100':'LX / 2MIL / 40% [36inch]','SF53005355-36100':'LX / 2MIL / 55% [36inch]','SF53005360-36100':'LX / 2MIL / 70% [36inch]',
+ 'SF53005325-72100':'LX / 2MIL / 25% [72inch]','SF53005340-72100':'LX / 2MIL / 40% [72inch]','SF53005355-72100':'LX / 2MIL / 55% [72inch]','SF53005360-72100':'LX / 2MIL / 70% [72inch]',
+ 'SF53005775-60100':'LX / 3MIL / 15%','SF53005785-60100':'LX / 3MIL / 25%','SF53005765-60100':'LX / 3MIL / 40%','SF53005790-60100':'LX / 3MIL / 55%','SF53005370-60100':'LX / 3MIL / 70%',
+ 'SF75200908-60100':'Xenith IR / 05%','SF75200915-60100':'Xenith IR / 15%','SF75200930-60100':'Xenith IR / 30%','SF75200955-60100':'Xenith IR / 50%',
+ 'SF53001010-60100':'Vogue / 10%','SF53002010-60100':'Vogue / 20%','SF53003010-60100':'Vogue / 30%','SF53004010-60100':'Vogue / 40%',
+ 'SF55005468-60100P':'Quantum Plus / 08%','SF55004558-60100P':'Quantum Black / 08%','SF55000950-60100':'Quantum / 14%','SF55000900-60100':'Quantum / 19%','SF55000850-60100':'Quantum / 28%','SF55000800-60100':'Quantum / 37%','SF55000750-60100':'Quantum / 52%',
+ 'SF55000220-60100':'Titanium / 06%','SF55000150-60100':'Titanium / 16%','SF55000748-60100P':'Titanium / 26%','SF55002050-60100':'Titanium / 50%',
+ 'SF55001740-60100':'GALAXIE 12%','SF55001700-60100':'GALAXIE 35%','SF55001710-60100':'GALAXIE 50%',
+ 'SF95520111-60100':'S-LINE / 10%','SF95520112-60100':'S-LINE / 30%','SF95520165-60100':'G-LINE / 10%','SF95520166-60100':'G-LINE / 30%'
+};
+/* 제품명 → 축약키 (예: "Xenith IR / 30%" → XENITHIR30) — 국내 라벨 매칭용 */
+function nameKey(n){return n.toUpperCase().replace(/\[.*?\]/g,'').replace(/[^A-Z0-9]/g,'')}
+var KEY2CODE={};Object.keys(CMS_PRODUCTS).forEach(function(c){KEY2CODE[nameKey(CMS_PRODUCTS[c])]=c});
+/* 롤번호 정규화: CMS 수기 입력의 - / _ / __ / 공백 차이를 없앰 (26A19S09__024 == 26A19S09-024) */
+function normRoll(r){return (r||'').toUpperCase().replace(/[\s_\-]+/g,'_').replace(/^_|_$/g,'')}
+function scanKey(p){return (p.code||'?')+'|'+normRoll(p.roll)}
 function parseScan(t){
-  var m=t.match(/^([A-Z]{2}[0-9]{8}-[0-9]{5})[\s]*(.*)$/);
-  if(m)return{code:m[1],roll:(m[2]||'').trim()||'(롤번호 없음)',raw:t};
-  return{code:'',roll:t,raw:t};
+  t=(t||'').trim();
+  /* ① 솔라가드 본사 라벨: 제품코드(SF+8자리-5자리, 일부 P 접미) + 공백 + 롤번호 */
+  var m=t.match(/^([A-Z]{2}[0-9]{8}-[0-9]{5}P?)[\s]*(.*)$/);
+  if(m)return{code:m[1],roll:(m[2]||'').trim()||'(롤번호 없음)',raw:t,fmt:'sg'};
+  /* ② 국내 라벨: 제품명_농도_로트_일련 (예: XENITHIR_CERAMIC_30_26C03S03_031) → CMS 롤번호 = 로트_일련 */
+  m=t.toUpperCase().match(/^([A-Z][A-Z0-9]*(?:[_\-][A-Z][A-Z0-9]*)*)[_\-](\d{2,3})[_\-]+(\d{2}[A-Z]\d{2}S\d{2})[_\-]+(\d{2,4})$/);
+  if(m){
+    var fam=m[1].split(/[_\-]/).filter(function(x){return ['CERAMIC','FILM','HC','WINDOW'].indexOf(x)<0}).join('');
+    var code=KEY2CODE[fam+m[2]]||'';
+    return{code:code,roll:m[3]+'_'+m[4],raw:t,fmt:'kr',fam:m[1].replace(/[_\-]/g,' ')+' '+m[2]+'%'};
+  }
+  return{code:'',roll:t,raw:t,fmt:'?'};
 }
 
 /* 인식된 바코드 위치에 초록 박스 — 거리·위치 감 잡기용 */
@@ -219,8 +247,8 @@ function renderIn(){
   var prds={};scans.forEach(function(s){prds[s.code||s.roll]=1});
   $('cntPrd').textContent=Object.keys(prds).length;
   $('listIn').innerHTML=scans.slice().reverse().map(function(s,i){
-    var nm=names[s.code]||'';
-    return '<div class="item"><div><div class="nm">'+(nm||s.code||'형식 외 코드')+
+    var nm=names[s.code]||'';var lab=nm||s.code||(s.fmt==='kr'?('국내 라벨 · '+(s.fam||'')+' (CMS 미등록 제품)'):'형식 외 코드');
+    return '<div class="item"><div><div class="nm">'+lab+(s.fmt==='kr'&&nm?' <small style="opacity:.55">국내 라벨</small>':'')+
       (nm?'':' <input class="name" placeholder="제품명 입력" data-code="'+s.code+'">')+
       '</div><div class="rn">롤 '+s.roll+'</div></div><span style="color:var(--cms);font-weight:700">✓</span></div>';
   }).join('');
@@ -230,8 +258,9 @@ function renderIn(){
 }
 var scIn=makeScanner('camWrap','statIn',function(txt){
   var p=parseScan(txt);
-  if(scans.some(function(s){return s.raw===txt})){toast('이미 스캔된 롤');return}
-  scans.push({code:p.code,roll:p.roll,raw:txt,t:new Date().toISOString().slice(0,16)});
+  var k=scanKey(p);
+  if(scans.some(function(s){return scanKey(s)===k})){toast('이미 스캔된 롤');return}
+  scans.push({code:p.code,roll:p.roll,raw:txt,fmt:p.fmt,fam:p.fam,t:new Date().toISOString().slice(0,16)});
   store.set('lx_scans',scans);renderIn();toast('추가: '+p.roll);
 });
 $('btnIn').addEventListener('click',function(){armFeedback();
@@ -239,8 +268,8 @@ $('btnIn').addEventListener('click',function(){armFeedback();
   else{scIn.start();this.textContent='⏹ 스캔 종료';this.classList.add('stop')}
 });
 $('btnCopy').addEventListener('click',function(){
-  var rows=scans.map(function(s){return [names[s.code]||s.code,s.roll,s.raw,s.t].join('\t')});
-  navigator.clipboard.writeText('제품\t롤번호\t원문\t시각\n'+rows.join('\n')).then(function(){toast('복사됨 — 엑셀에 붙여넣으세요')});
+  var rows=scans.map(function(s){return [names[s.code]||s.code,s.code,s.roll,s.raw,s.t].join('\t')});
+  navigator.clipboard.writeText('제품\tCMS코드\t롤번호(CMS형식)\t원문\t시각\n'+rows.join('\n')).then(function(){toast('복사됨 — 엑셀에 붙여넣으세요')});
 });
 $('btnSave').addEventListener('click',function(){
   ledger=scans.map(function(s){return s.raw});store.set('lx_ledger',ledger);
@@ -251,18 +280,20 @@ $('btnClear').addEventListener('click',function(){if(confirm('스캔 목록을 �
 /* ── 실사 탭 ── */
 function renderAu(){
   $('cntLedger').textContent=ledger.length;
-  var lset={};ledger.forEach(function(r){lset[r]=1});
-  var aset={};audit.forEach(function(r){aset[r]=1});
+  var K=function(r){return scanKey(parseScan(r))};
+  var lset={};ledger.forEach(function(r){lset[K(r)]=1});
+  var aset={};audit.forEach(function(r){aset[K(r)]=1});
   var ok=0,miss=[],extra=[];
-  ledger.forEach(function(r){if(aset[r])ok++;else miss.push(r)});
-  audit.forEach(function(r){if(!lset[r])extra.push(r)});
+  ledger.forEach(function(r){if(aset[K(r)])ok++;else miss.push(r)});
+  audit.forEach(function(r){if(!lset[K(r)])extra.push(r)});
   $('auOk').textContent=ok;$('auMiss').textContent=miss.length;$('auExtra').textContent=extra.length;
   $('listAu').innerHTML=
     miss.map(function(r){var p=parseScan(r);return '<div class="diff m"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="o">실물 없음</span></div>'}).join('')+
     extra.map(function(r){var p=parseScan(r);return '<div class="diff x"><span>'+(names[p.code]||p.code)+' · 롤 '+p.roll+'</span><span class="r">장부 없음</span></div>'}).join('');
 }
 var scAu=makeScanner('camWrap2','statAu',function(txt){
-  if(audit.indexOf(txt)===-1){audit.push(txt);store.set('lx_audit',audit);toast('확인: '+parseScan(txt).roll)}
+  var k=scanKey(parseScan(txt));
+  if(!audit.some(function(r){return scanKey(parseScan(r))===k})){audit.push(txt);store.set('lx_audit',audit);toast('확인: '+parseScan(txt).roll)}
   else toast('이미 확인된 롤');
   renderAu();
 });
@@ -305,7 +336,7 @@ $('btnQr').addEventListener('click',function(){armFeedback();
 });
 
 /* 알려진 제품코드 시드 */
-if(!names['SF55000950-60100'])names['SF55000950-60100']='HP QUANTUM 14 HC';
+Object.keys(CMS_PRODUCTS).forEach(function(c){if(!names[c]||/^HP QUANTUM 14 HC$/.test(names[c]))names[c]=CMS_PRODUCTS[c]});
 store.set('lx_names',names);
 renderIn();renderAu();
 </script>

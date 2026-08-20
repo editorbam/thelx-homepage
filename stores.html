@@ -889,11 +889,12 @@ function slMapUpdate(list) {
 }
 
 function slRender() {
-  const q   = slQuery.toLowerCase();
+  /* 띄어쓰기 무관 검색 — "송도유원"으로도 "송도 유원지점"이 잡히도록 양쪽 공백 제거 후 비교 (2026-08-20 시공점 요청) */
+  const q   = slQuery.toLowerCase().replace(/\s+/g, '');
   const filtered = STORE_DATA.filter(s => {
     const matchB = slBrand === 'all' || (slBrand === 'lx') === slIsLX(s);
     const matchR = slRegion === 'all' || s.r === slRegion;
-    const matchQ = !q || s.n.toLowerCase().includes(q) || s.a.toLowerCase().includes(q);
+    const matchQ = !q || s.n.toLowerCase().replace(/\s+/g, '').includes(q) || s.a.toLowerCase().replace(/\s+/g, '').includes(q);
     return matchB && matchR && matchQ;
   });
 

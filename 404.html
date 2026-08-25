@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>페이지를 찾을 수 없습니다 — THE LX</title>
+  <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. THE LX 주요 페이지로 이동할 수 있습니다.">
+  <meta name="keywords" content="썬팅 AS, 틴팅 AS, 윈도우 필름 하자, 썬팅 후 관리, 썬팅 건조 기간, 필름 기포, 솔라가드 프리미엄 AS, THE LX AS">
+  <meta name="robots" content="noindex, follow">
+  <meta name="author" content="THE LX · Solar Gard Premium">
+
+  <!-- Open Graph -->
+
+  <!-- Twitter Card -->
+
+  
+  <!-- JSON-LD: Organization + WebPage (2026-08-06 신설)
+       이 페이지만 BreadcrumbList 하나뿐이었다. "솔라가드 정품 확인 방법",
+       "THE LX 보증 기간" 같은 질의의 정답 페이지인데 기계가 읽을 구조가 없던 상태.
+       아래 두 블록은 전부 이 화면에 이미 적혀 있는 사실만 옮긴 것 — 새 주장 없음.
+       ⚠️telephone은 국내 형식으로 쓴다. 1899는 대표번호라 +82 국제 형식으로는 연결되지 않고,
+          같은 페이지 tel: 링크(맨번호)·stores.html 419개 시공점 표기와도 어긋난다 -->
+
+  <!-- JSON-LD: BreadcrumbList -->
+
+  <!-- 폰트 자체 호스팅 — 운영 페이지 공유 가변 woff2(굵기 100~900). 구글 폰트 링크 금지 -->
+  <link rel="preload" href="noto-sans-kr-subset.woff2?v=3" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('noto-sans-kr-subset.woff2?v=3') format('woff2');
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, 'Helvetica Neue', sans-serif;
+      background: #ffffff;
+      color: #1d1d1f;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ===========================
+       NAV (light) — heat.html·story.html 공통 문법
+    =========================== */
+    .tech-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem clamp(1.4rem, 3vw, 3rem);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: .5px solid rgba(0,0,0,.08);
+    }
+    .tech-nav-brand {
+      font-size: 14px; font-weight: 700; letter-spacing: .2em;
+      color: #0a0a0a; text-decoration: none; transition: opacity .2s;
+    }
+    .tech-nav-brand:hover { opacity: .65; }
+    .tech-nav-brand img { height: 24px; width: auto; display: block; }
+    .tech-nav-back {
+      font-size: 12px; font-weight: 500; letter-spacing: .04em;
+      color: rgba(0,0,0,.55); text-decoration: none;
+      display: inline-flex; align-items: center; gap: .4rem; transition: color .2s;
+    }
+    .tech-nav-back:hover { color: #0a0a0a; }
+    .tech-nav-links {
+      display: flex; align-items: center; gap: clamp(.85rem, 2vw, 1.4rem);
+      min-width: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    /* 전 페이지 이동 네비(2026-08-04) — 서브페이지에서도 다른 페이지로 바로 간다.
+       링크가 화면보다 길면 가로 스크롤 + 우측 페이드(제품 탭과 같은 문법) */
+    .tech-nav-links::-webkit-scrollbar { display: none; }
+    .tech-nav-back { white-space: nowrap; }
+    .tech-nav-back.is-here { color: #0a0a0a; font-weight: 600; }
+    @media (max-width: 768px) {
+      .tech-nav-links {
+        -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+                mask-image: linear-gradient(90deg, #000 88%, transparent);
+      }
+    }
+
+    /* ===========================
+       HERO
+    =========================== */
+    /* 히어로 = 스카이 블루 그라데이션 밴드 (2026-08-03, index #trust·시공점과 동일 계열) */
+    .tech-hero {
+      padding: clamp(8rem, 18vh, 13rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vh, 6rem);
+      max-width: none; margin: 0; text-align: center;
+      background: linear-gradient(180deg,#fafcfe 0%,#e7eff7 100%);
+      /* flex 중앙 정렬 — 자식의 margin:0 선언과 충돌하지 않게(margin auto 방식 대체) */
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .tech-hero > * { max-width: 760px; width: 100%; }
+    .tech-eyebrow {
+      font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(0,0,0,.42); font-weight: 600;
+      margin: 0 0 clamp(1.4rem, 2.5vh, 2rem);
+    }
+    .tech-h1 {
+      font-size: clamp(2.1rem, 4.6vw, 3.8rem);
+      font-weight: 700; line-height: 1.28; letter-spacing: -0.03em;
+      color: #0a0a0a; margin: 0; word-break: keep-all;
+    }
+    .tech-h1-latin {
+      font-family: 'Didot', 'Baskerville', 'Times New Roman', Georgia, serif; /* 증서 세리프 — 시스템 폰트(외부 폰트 아님) */
+      font-weight: 400;
+      font-size: clamp(1.9rem, 4.3vw, 3.6rem);
+      letter-spacing: .1em; line-height: 1.3; word-break: normal;
+    }
+    .wr-cert-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
+      color: rgba(0,0,0,.45); margin: 0 0 clamp(1.2rem, 2.2vh, 1.6rem);
+    }
+    /* 라틴 증서 타이틀 아래 한글 한 줄 — h1 안에 두어 페이지 대표 제목에 한국어가 남게 함(2026-08-04) */
+    .wr-h1-ko {
+      display: block; margin-top: clamp(.9rem, 1.8vh, 1.3rem);
+      font-family: 'Noto Sans KR', -apple-system, 'Helvetica Neue', sans-serif;
+      font-size: clamp(.95rem, 1.35vw, 1.15rem);
+      font-weight: 400; letter-spacing: .02em; color: rgba(0,0,0,.55);
+    }
+    .tech-lead {
+      font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+      line-height: 1.85; color: rgba(0,0,0,.62);
+      max-width: 600px; margin: clamp(2rem, 4vh, 3rem) auto 0;
+      word-break: keep-all; font-weight: 400;
+    }
+
+    /* ===========================
+       확인 방법 3단계
+    =========================== */
+    .vf-steps {
+      max-width: 980px; margin: 0 auto;
+      padding: clamp(2rem, 4vh, 3rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+    /* 카드 박스·부유 애니메이션 폐기(제네릭 문법) → 상단 헤어라인 3단 칼럼 (2026-08-03) */
+    .vf-card {
+      border-top: .5px solid rgba(0,0,0,.22);
+      padding: clamp(1.4rem, 2.6vw, 1.9rem) 0 0;
+      display: flex; flex-direction: column;
+    }
+    .vf-num {
+      font-size: 12px; font-weight: 700; letter-spacing: .18em;
+      color: rgba(0,0,0,.4); margin: 0 0 1.6rem;
+    }
+    .vf-title {
+      font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700;
+      color: #0a0a0a; letter-spacing: -0.015em; margin: 0 0 .9rem;
+      line-height: 1.4; word-break: keep-all;
+    }
+    .vf-body {
+      font-size: clamp(.92rem, 1.05vw, 1rem); line-height: 1.8;
+      color: rgba(0,0,0,.66); word-break: keep-all;
+      margin: 0 0 1.4rem; flex: 1;
+    }
+    .vf-body strong { color: #0a0a0a; font-weight: 600; }
+    .vf-contact {
+      font-size: clamp(.9rem, 1vw, .98rem); font-weight: 600; color: #0a0a0a;
+      letter-spacing: .02em; line-height: 1.75; margin: 0 0 1.4rem;
+    }
+    .vf-link {
+      font-size: .9rem; font-weight: 600; letter-spacing: .02em;
+      color: #0a0a0a; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .4rem;
+      transition: opacity .2s;
+    }
+    .vf-link:hover { opacity: .65; }
+
+    /* ===========================
+       핵심 문장
+    =========================== */
+    .tech-heart-label {
+      font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(0,0,0,.42); font-weight: 600;
+      margin: 0 0 clamp(1.2rem, 2.4vh, 1.8rem);
+    }
+
+    /* ===========================
+       보증 숫자
+    =========================== */
+    .tech-result {
+      max-width: 720px; margin: 0 auto; text-align: center;
+      padding: clamp(4rem, 9vh, 7rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
+    }
+    .tech-result .tech-heart-label { margin-bottom: clamp(1.8rem, 3.5vh, 2.6rem); }
+    .tech-stats {
+      display: flex; justify-content: center; gap: clamp(2rem, 6vw, 4.5rem);
+      flex-wrap: wrap;
+    }
+    .tech-stat-num {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      color: #0a0a0a; letter-spacing: -0.03em; line-height: 1;
+    }
+    .tech-stat-label {
+      font-size: clamp(.8rem, .95vw, .9rem); color: rgba(0,0,0,.55);
+      margin: .7rem 0 0; font-weight: 500; letter-spacing: .02em;
+    }
+    .tech-stat-src {
+      max-width: 600px; margin: clamp(2rem,4vh,3rem) auto 0;
+      font-size: clamp(.78rem,.9vw,.85rem); line-height: 1.7;
+      color: rgba(0,0,0,.45); word-break: keep-all;
+    }
+
+    /* 제품별 보증 칩 */
+    .tech-proof {
+      max-width: 720px; margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(3rem,6vh,5rem);
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem;
+    }
+    .tech-proof-chip {
+      font-size: clamp(.78rem,.9vw,.86rem); font-weight: 500;
+      color: rgba(0,0,0,.6); letter-spacing: .02em;
+      padding: .6rem 1.2rem; border: .5px solid rgba(0,0,0,.16);
+      border-radius: 980px; word-break: keep-all;
+    }
+    .tech-proof-chip b { color: #0a0a0a; font-weight: 700; }
+
+    /* ===========================
+       보증 범위 (포함 / 제외)
+    =========================== */
+    .wr-scope {
+      max-width: 880px; margin: 0 auto;
+      padding: clamp(1rem, 2vh, 2rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(1rem, 2.5vw, 2rem);
+    }
+    /* 카드 박스·부유 폐기 → 헤어라인 2단. 위계=선 명도와 글자 굵기 (2026-08-03) */
+    .wr-scope-card {
+      border-top: .5px solid rgba(0,0,0,.14);
+      padding: clamp(1.4rem, 2.8vw, 1.9rem) 0 0;
+    }
+    .wr-scope-card.incl { border-top-color: rgba(0,0,0,.7); }
+    .wr-scope-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(0,0,0,.42); margin: 0 0 1.2rem;
+    }
+    .wr-scope-card.incl .wr-scope-label { color: #0a0a0a; font-weight: 700; }
+    .wr-scope-card ul { list-style: none; }
+    /* ✓ 문자 불릿 폐기 — 항목 구분=행간 헤어라인, 포함/제외 위계=글자 명도 (2026-08-03) */
+    .wr-scope-card li {
+      font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.7;
+      word-break: keep-all; padding: .85rem 0;
+      border-bottom: .5px solid rgba(0,0,0,.07);
+    }
+    .wr-scope-card li:last-child { border-bottom: none; }
+    .wr-scope-card.incl li { color: #0a0a0a; }
+    .wr-scope-card.excl li { color: rgba(0,0,0,.45); }
+    .wr-scope-note {
+      max-width: 880px; margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
+      font-size: clamp(.8rem, .95vw, .88rem); line-height: 1.7;
+      color: rgba(0,0,0,.5); text-align: center; word-break: keep-all;
+    }
+
+    /* ===========================
+       본문 챕터
+    =========================== */
+    .tech-section {
+      padding: clamp(3rem, 6vh, 5rem) clamp(1.5rem, 5vw, 4rem);
+      max-width: 720px; margin: 0 auto;
+    }
+    .tech-chapter-title {
+      font-size: clamp(1.3rem, 1.9vw, 1.75rem);
+      font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em;
+      margin: 0 0 1.2rem; line-height: 1.4; word-break: keep-all;
+    }
+    .tech-chapter-body {
+      font-size: clamp(1.05rem, 1.2vw, 1.18rem);
+      line-height: 1.85; color: rgba(0,0,0,.72);
+      margin: 0; word-break: keep-all; letter-spacing: -0.005em; font-weight: 400;
+    }
+    .tech-chapter-body strong { color: #0a0a0a; font-weight: 700; }
+    /* 좌측 막대 폐기(제네릭 인용 문법) → 에디토리얼 쇼트룰 (2026-08-03) */
+    .tech-declaration {
+      font-size: clamp(1.15rem, 1.45vw, 1.4rem);
+      font-weight: 700; color: #0a0a0a; line-height: 1.55;
+      margin: 2rem 0 0; letter-spacing: -0.012em; word-break: keep-all;
+    }
+    .tech-declaration::before {
+      content: ""; display: block; width: 36px;
+      border-top: 1px solid rgba(0,0,0,.55); margin-bottom: 1.1rem;
+    }
+
+    /* ===========================
+       CODA + CTA + FOOTER
+    =========================== */
+    .tech-coda {
+      text-align: center; padding: clamp(4rem,8vh,6rem) clamp(1.5rem,5vw,4rem) 0;
+    }
+    .tech-coda h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      color: #0a0a0a; letter-spacing: -0.03em; margin: 0; word-break: keep-all;
+    }
+    .tech-coda-scope {
+      margin: .9rem 0 0; font-size: 12px; font-weight: 300;
+      color: #6e6e73; letter-spacing: .02em;
+    }
+    .tech-cta {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+      padding: clamp(2.5rem,5vh,4rem) 1.5rem clamp(4rem,8vh,6rem);
+    }
+    .tech-cta a {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .95rem; font-weight: 600; letter-spacing: .03em;
+      text-decoration: none; padding: .9rem 1.9rem; border-radius: 980px;
+      transition: background .3s, border-color .3s, color .3s, opacity .3s;
+    }
+    .tech-cta .primary { background: #0a0a0a; color: #fff; }
+    .tech-cta .primary:hover { opacity: .85; }
+    .tech-cta .ghost { border: 1px solid rgba(0,0,0,.28); color: #0a0a0a; }
+    .tech-cta .ghost:hover { background: rgba(0,0,0,.05); }
+
+    .tech-footer {
+      padding: 3rem 2rem 2.5rem; text-align: center;
+      border-top: .5px solid rgba(0,0,0,.08);
+    }
+    .tech-footer-mark { font-size: 13px; font-weight: 800; letter-spacing: .22em; color: #0a0a0a; margin: 0 0 .6rem; }
+    .tech-footer-copy { font-size: 11px; color: rgba(0,0,0,.45); letter-spacing: .04em; margin: 0; }
+
+    @media (max-width: 768px) {
+      .tech-nav { padding: .9rem 1.2rem; }
+      .vf-steps { grid-template-columns: 1fr; }
+      .wr-scope { grid-template-columns: 1fr; }
+      .tech-heart h2 { font-size: clamp(1.8rem, 7.5vw, 2.5rem); }
+      .tech-stats { gap: 2.2rem; }
+    }
+  
+/* SOUND TOGGLE — index.html과 동일 문법 (배경 음악 이어듣기) */
+.hero-sound {
+  position: fixed; bottom: 1.6rem; left: 1.6rem;
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .82rem .5rem .72rem;
+  background: rgba(15,15,17,.34); border: .5px solid rgba(255,255,255,.16);
+  border-radius: 980px; cursor: pointer;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  z-index: 10001;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity .55s ease, transform .55s ease, background .3s, border-color .3s;
+}
+.hero-sound.show { opacity: 1; transform: none; pointer-events: auto; }
+.hero-sound:hover { background: rgba(15,15,17,.5); border-color: rgba(255,255,255,.28); }
+.hero-sound .eq { display: flex; align-items: flex-end; gap: 2px; height: 13px; }
+.hero-sound .eq i {
+  width: 2px; height: 4px; background: rgba(255,255,255,.85);
+  transition: height .15s ease;
+}
+.hero-sound.playing .eq i { animation: eqBar .9s ease-in-out infinite; }
+.hero-sound.playing .eq i:nth-child(1){ animation-delay: 0s; }
+.hero-sound.playing .eq i:nth-child(2){ animation-delay: .28s; }
+.hero-sound.playing .eq i:nth-child(3){ animation-delay: .52s; }
+.hero-sound.playing .eq i:nth-child(4){ animation-delay: .16s; }
+@keyframes eqBar { 0%,100%{ height:3px; } 50%{ height:13px; } }
+.hero-sound .label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+}
+@media (max-width: 768px){
+  /* 모바일: 라벨 복원 (2026-08-10 사용자 결정) — 원형 아이콘만으론 음소거 위치를 못 찾음.
+     8/3의 본문 가림 문제는 크기 축소가 아니라 위치·투명도로만 관리 */
+  .hero-sound { left: .9rem; bottom: .9rem; padding: .42rem .72rem .42rem .62rem; }
+  .hero-sound.scrolling { opacity: .18; }
+  /* 제품 모달 열림 중에는 비노출 — 모달 본문을 가리지 않도록 */
+  body.pd-open .hero-sound { opacity: 0; pointer-events: none; }
+}
+
+    /* ===========================
+       NAV — index·pricing과 동일 문법으로 통일 (2026-08-04 사용자 요청)
+       이 페이지들은 라이트 전용이라 on-dark 규칙은 가져오지 않는다.
+    =========================== */
+    nav#mainNav {
+      position: fixed; top:0; left:0; right:0; z-index: 500; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: .5px solid rgba(0,0,0,.08);
+    }
+    #mainNav a, #mainNav button, .mobile-menu a { cursor: pointer !important; } /* stores의 전역 커서 리셋 대응 */
+    .nav-logo { display: flex; align-items: center; transition: opacity .2s; }
+    .nav-logo:hover { opacity: .65; }
+    .nav-logo img { height: 26px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 400; color: #0a0a0a;
+      text-decoration: none; transition: opacity .2s; letter-spacing: -.01em; white-space: nowrap;
+    }
+    .nav-links a:hover { opacity: .7; }
+    .nav-links a.is-here { font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 1.6rem; }
+    .nav-cta {
+      font-size: 12px; font-weight: 400; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none;
+      color: #0a0a0a; border: .5px solid rgba(0,0,0,.25);
+      padding: .5rem 1.2rem; border-radius: 980px; white-space: nowrap;
+      transition: color .4s, border-color .4s;
+    }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 6px; z-index: 600; position: relative;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: #0a0a0a;
+      transition: background .4s, transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background:#fff; }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background:#fff; }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: #0a0a0a;
+      z-index: 490; flex-direction: column; align-items: center; gap: 2.4rem;
+      opacity: 0; pointer-events: none; transition: opacity .35s ease;
+      overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+      padding: 2rem 1rem;
+    }
+    /* 항목이 화면보다 길면 중앙정렬 대신 스크롤 (index 주석과 동일 이유 — justify-content:center 금지) */
+    .mobile-menu a:first-child { margin-top: auto; }
+    .mobile-menu a:last-child { margin-bottom: auto; }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a {
+      font-size: clamp(1.6rem, 8vw, 2.8rem); font-weight: 200;
+      letter-spacing: .06em; color: rgba(255,255,255,.85); text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      nav#mainNav { padding: 0 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      body.menu-open { overflow: hidden; }
+      body.menu-open .hero-sound { opacity: 0; pointer-events: none; } /* 사운드 알약이 메뉴 위로 뜨는 것 방지 */
+      /* 메뉴가 열리면 네비 바는 투명 — 흰 바(z:500)가 검정 메뉴(z:490) 위에 남으면
+         흰색으로 변한 햄버거 X가 흰 배경에 묻혀 닫기 버튼이 안 보인다 (2026-08-04 코드리뷰) */
+      body.menu-open nav#mainNav { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; }
+    }
+</style>
+<style>
+/* '클릭' 칩 — 클릭 가능한 링크·버튼 공통 표시 (2026-08-05 사용자 지정, 전 페이지 통일) */
+.lx-click {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: .12em; line-height: 1;
+  color: #3f78d0; border: .5px solid rgba(63,120,208,.45); border-radius: 980px;
+  padding: 2px 7px; margin-left: .5rem; vertical-align: middle; white-space: nowrap;
+}
+.lx-click.on-dark { color: #fff; border-color: rgba(255,255,255,.45); }
+/* 알약 버튼 — 칩을 버튼 안이 아니라 아래에 (버튼 폭이 늘어나 답답해 보이던 문제, 2026-08-06 사용자 요청).
+   본문 산문 속 인라인 링크는 기존대로 글자 옆에 둔다. */
+/* :has로 칩이 실제로 있을 때만 자리를 비운다 — 칩을 빼면 빈 여백이 남던 문제(코드리뷰 2026-08-06) */
+.why-cta:has(> .lx-click), .tech-cta a:has(> .lx-click), .story-back-cta a:has(> .lx-click),
+.pricing-cta-btn:has(> .lx-click), .sl-cta-btn:has(> .lx-click), .product-detail-btn:has(> .lx-click),
+.pd-btn-primary:has(> .lx-click), .pd-btn-ghost:has(> .lx-click),
+.cf-cta a:has(> .lx-click), .pf-cta a:has(> .lx-click), .sl-more-btn:has(> .lx-click) {
+  position: relative;
+  margin-bottom: 1.6rem;
+}
+.why-cta > .lx-click, .tech-cta a > .lx-click, .story-back-cta a > .lx-click, .pricing-cta-btn > .lx-click,
+.sl-cta-btn > .lx-click, .product-detail-btn > .lx-click,
+.pd-btn-primary > .lx-click, .pd-btn-ghost > .lx-click,
+.cf-cta a > .lx-click, .pf-cta a > .lx-click, .sl-more-btn > .lx-click {
+  position: absolute; left: 50%; top: calc(100% + 7px);
+  transform: translateX(-50%); margin-left: 0;
+}
+</style>
+<style>
+/* ── 모바일 최적화 (2026-08-05) — 터치 타깃 44px 권장 대응·최소 글자 크기 ──
+   문제였던 것: 패딩 없는 텍스트 링크(높이 17~24px)·차트 장면 탭(폭 15px)·지역 칩(35px).
+   본문 산문 속 인라인 링크는 글 흐름을 깨므로 제외하고, 독립 링크·버튼만 키운다. */
+@media (max-width: 768px) {
+  /* 독립 링크 — 위아래 여백으로 누를 면적 확보 */
+  .vf-link, .tech-bridge .tb-sub a, .faq-answer p.faq-deepread a, .sl-cta-btn {
+    padding-top: .7rem; padding-bottom: .7rem;
+  }
+  /* 지역 칩 — 35px → 44px */
+  .sl-rtab { padding-top: .72rem; padding-bottom: .72rem; }
+  /* 그래프 장면 탭 — 폭 15px는 손끝보다 좁다 */
+  .rc-dots button { padding: .55rem .7rem; min-width: 44px; }
+  .rc-dots { gap: .5rem; }
+  /* 표 헤더 부제 8.64px → 10px */
+  .rc-table th small { font-size: .62rem; }
+  /* 나머지 독립 링크 — 상단 네비 뒤로가기·푸터·본문 딥리드 */
+  .nav-back { padding: .6rem .2rem; }
+  .footer-links a { display: inline-block; padding: .5rem 0; }
+  .story-deepread a { display: inline-block; padding: .6rem 0; }
+}
+</style>
+<style>
+/* as.html 전용 — 번호 행 목록. wr-scope-card li 와 같은 헤어라인 행 문법 */
+.as-guide { list-style: none; margin: 0; }
+.as-row { padding: clamp(1.6rem,3vh,2.2rem) 0; border-bottom: .5px solid rgba(0,0,0,.1); }
+.as-row:first-child { border-top: .5px solid rgba(0,0,0,.22); }
+.as-kicker { font-size: 12px; font-weight: 700; letter-spacing: .18em; color: rgba(0,0,0,.4); margin: 0 0 .8rem; }
+.as-row-title {
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700; color: #0a0a0a;
+  letter-spacing: -0.015em; margin: 0 0 .7rem; line-height: 1.4; word-break: keep-all;
+}
+.as-row-body {
+  font-size: clamp(.98rem, 1.12vw, 1.08rem); line-height: 1.8; color: rgba(0,0,0,.66);
+  margin: 0; word-break: keep-all;
+}
+</style>
+  <link rel="icon" href="favicon.ico?v=2" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<style>
+/* 메뉴 '열차단의 원리' = 부록 표기 (2026-08-20 사용자 요청) — 위계는 헤어라인·명도·크기로만 */
+.nav-links a.nav-appendix { font-size: 12px; opacity: .62; padding-left: 1.4rem; border-left: .5px solid currentColor; letter-spacing: 0; }
+.nav-links a.nav-appendix:hover { opacity: .85; }
+.nav-links a.nav-appendix.is-here { opacity: .9; font-weight: 400; }
+.mobile-menu a.nav-appendix { font-size: clamp(1.05rem, 4.6vw, 1.5rem); opacity: .5; }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo" aria-label="THE LX 홈">
+    <img src="thelx-logo-nav-b.png" alt="THE LX">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#why-story">브랜드</a></li>
+    <li><a href="technology.html">기술</a></li>
+    <li><a href="index.html#products">제품소개</a></li>
+    <li><a href="recommend.html">필름추천</a></li>
+    <li><a href="pricing.html">가격</a></li>
+    <li><a href="stores.html">시공점</a></li>
+    <li><a href="warranty.html">보증서</a></li>
+    <li><a href="as.html">A/S</a></li>
+    <li><a href="heat.html" class="nav-appendix">열차단의 원리</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#booking" class="nav-cta">예약</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobileMenu()">홈</a>
+  <a href="index.html#why-story" onclick="closeMobileMenu()">브랜드</a>
+  <a href="technology.html" onclick="closeMobileMenu()">기술</a>
+  <a href="index.html#products" onclick="closeMobileMenu()">제품소개</a>
+  <a href="recommend.html" onclick="closeMobileMenu()">필름추천</a>
+  <a href="pricing.html" onclick="closeMobileMenu()">가격</a>
+  <a href="stores.html" onclick="closeMobileMenu()">시공점</a>
+  <a href="warranty.html" onclick="closeMobileMenu()">보증서</a>
+  <a href="as.html" onclick="closeMobileMenu()">A/S</a>
+  <a href="heat.html" onclick="closeMobileMenu()" class="nav-appendix">열차단의 원리</a>
+  <a href="index.html#booking" onclick="closeMobileMenu()">예약하기</a>
+</div>
+
+<style>
+.nf{max-width:980px;margin:0 auto;padding:clamp(7rem,18vh,12rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vh,6rem);min-height:calc(100vh - 160px);display:flex;flex-direction:column;justify-content:center;}
+.nf-num{font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif;font-weight:200;font-size:clamp(6rem,18vw,14rem);line-height:.9;letter-spacing:-0.04em;color:#0a0a0a;margin:0 0 clamp(1.5rem,3vh,2.5rem);}
+.nf-say{font-size:clamp(1.15rem,1.6vw,1.45rem);font-weight:300;line-height:1.7;color:#1d1d1f;max-width:560px;word-break:keep-all;margin:0;}
+.nf-say em{font-style:normal;font-weight:500;}
+.nf-hr{height:.5px;background:#e8e8ed;margin:clamp(2.5rem,5vh,4rem) 0 clamp(1.2rem,2vh,1.6rem);}
+.nf-links{display:flex;flex-wrap:wrap;gap:clamp(1.2rem,2.4vw,2rem);list-style:none;padding:0;margin:0;}
+.nf-links a{font-size:.95rem;font-weight:400;color:#0a0a0a;text-decoration:none;padding-bottom:4px;border-bottom:.5px solid transparent;letter-spacing:.01em;}
+.nf-links a:hover,.nf-links a.first{border-bottom-color:#0a0a0a;font-weight:600;}
+@media(max-width:768px){.nf{padding-top:6rem}}
+</style>
+<!-- 404 전용 페이지 (2026-08-25, B안 에디토리얼 숫자형) — .htaccess ErrorDocument 404 /404.html 연결. sitemap 제외·noindex -->
+<main>
+<section class="nf" aria-label="페이지 없음">
+  <p class="nf-num" aria-label="404">404</p>
+  <p class="nf-say">이 주소에는 아무것도 설계되어 있지 않습니다.<br>주소가 잘못되었거나, 처음부터 없던 페이지입니다.</p>
+  <div class="nf-hr" role="presentation"></div>
+  <ul class="nf-links">
+    <li><a href="index.html" class="first">홈</a></li>
+    <li><a href="technology.html">기술</a></li>
+    <li><a href="recommend.html">필름추천</a></li>
+    <li><a href="pricing.html">가격</a></li>
+    <li><a href="stores.html">시공점</a></li>
+    <li><a href="warranty.html">보증서</a></li>
+    <li><a href="as.html">A/S</a></li>
+  </ul>
+</section>
+</main>
+
+<footer class="tech-footer">
+  <p class="tech-footer-mark">THE LX</p>
+  <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
+</footer>
+
+<!-- 배경 음악 (전 페이지 이어듣기 — sessionStorage 'thelxBgm'로 위치·상태 왕복) -->
+<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  <span class="label" id="heroSoundLabel">Mute</span>
+</button>
+<audio id="heroAudio" src="hero-music.mp3" loop preload="none"></audio>
+<script>
+  (function(){
+    var audio = document.getElementById('heroAudio');
+    var btn   = document.getElementById('heroSound');
+    var label = document.getElementById('heroSoundLabel');
+    if(!audio || !btn) return;
+    var TARGET = 1.0;
+    var started = false, muted = false, fadeTimer = null;
+    audio.volume = 0;
+    btn.classList.add('show');
+
+    // 페이지 간 이어듣기 — 떠날 때 위치·상태 저장, 들어올 때 그 지점부터
+    var resume = null;
+    try { resume = JSON.parse(sessionStorage.getItem('thelxBgm') || 'null'); } catch(e){}
+    var wantSound = resume ? !!resume.on : true;
+    function applySeek(){
+      if(resume && resume.t > 0 && audio.duration){ try { audio.currentTime = resume.t % audio.duration; } catch(e){} }
+    }
+    if(audio.readyState > 0) applySeek();
+    else audio.addEventListener('loadedmetadata', applySeek, { once:true });
+    window.addEventListener('pagehide', function(){
+      try {
+        sessionStorage.setItem('thelxBgm', JSON.stringify({
+          t: started ? audio.currentTime : (resume ? resume.t : 0),
+          on: started ? !muted : wantSound
+        }));
+      } catch(e){}
+    });
+
+    function fadeTo(target, done){
+      if(fadeTimer) clearInterval(fadeTimer);
+      var steps = 14, i = 0, start = audio.volume, delta = (target - start)/steps;
+      fadeTimer = setInterval(function(){
+        i++; audio.volume = Math.min(1, Math.max(0, start + delta*i));
+        if(i>=steps){ audio.volume = target; clearInterval(fadeTimer); fadeTimer=null; if(done) done(); }
+      }, 45);
+    }
+    function updateUI(){
+      var on = started && !muted;
+      btn.classList.toggle('playing', on);
+      btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+      label.textContent = (started && muted) ? 'Muted' : 'Mute';
+    }
+
+    var GESTURES = ['pointerdown','keydown','scroll','touchstart'];
+    function dropGestures(){ GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); }); }
+
+    function startPlayback(){
+      if(started) return;
+      audio.muted = !wantSound;   // 이전 페이지에서 음소거 상태였다면 그 선택을 존중
+      audio.play().then(function(){ started = true; muted = !wantSound; fadeTo(TARGET); updateUI(); dropGestures(); })
+                  .catch(function(){ /* 브라우저가 막음 — 다음 제스처/클릭 때 재시도 */ });
+    }
+    function setMuted(m){ muted = m; audio.muted = m; updateUI(); }
+
+    /* 스크롤 중에는 물러나기(모바일) — 좌하단 고정 버튼이 본문을 가리지 않도록 (2026-08-03) */
+    var dimT = null;
+    window.addEventListener('scroll', function(){
+      btn.classList.add('scrolling');
+      clearTimeout(dimT);
+      dimT = setTimeout(function(){ btn.classList.remove('scrolling'); }, 700);
+    }, { passive: true });
+
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(!started){ wantSound = true; startPlayback(); }
+      else { setMuted(!muted); }
+    });
+
+    function firstGesture(e){
+      if(e && btn.contains(e.target)) return;
+      startPlayback();
+    }
+    GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
+
+    // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 제스처에서 재개)
+    if(resume && resume.on){ startPlayback(); }
+  })();
+</script>
+
+<script>
+/* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */
+(function () {
+  var hamburger  = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  window.closeMobileMenu = function () {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  };
+  hamburger.addEventListener('click', function () {
+    if (hamburger.classList.contains('open')) { window.closeMobileMenu(); return; }
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.classList.add('menu-open');
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') window.closeMobileMenu(); });
+}());
+</script>
+</body>
+</html>

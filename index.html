@@ -3012,18 +3012,24 @@ body.pd-open { overflow: hidden; }
 <section id="hero">
   <div class="hero-sticky" id="heroSticky">
     <!-- HERO BG VIDEO — 제거하려면 이 한 줄만 주석 처리 -->
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="hero-drive-poster.jpg"></video>
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none" poster="hero-drive-poster.jpg"></video>
     <script>
       (function(){
+        // 2026-08-25 LCP 보정: 영상(2.3MB)을 첫 화면 로고보다 먼저 받지 않도록 window load 후 붙임 (포스터가 그동안 표시)
         var v = document.getElementById('heroVideo');
-        var s = document.createElement('source');
-        s.src = 'hero-drive.mp4';   // 데스크탑·모바일 모두 1080p 고화질 (모바일 저화질 분기 제거)
-        s.type = 'video/mp4';
-        v.appendChild(s);
-        v.load();
+        function attach(){
+          var s = document.createElement('source');
+          s.src = 'hero-drive.mp4';   // 데스크탑·모바일 모두 1080p 고화질 (모바일 저화질 분기 제거)
+          s.type = 'video/mp4';
+          v.appendChild(s);
+          v.load();
+          var pr = v.play(); if (pr && pr.catch) pr.catch(function(){});
+        }
+        if (document.readyState === 'complete') attach();
+        else window.addEventListener('load', attach, { once: true });
       })();
     </script>
-    <img class="hero-lx" id="heroLx" src="thelx-hero-logo.png" alt="THE LX — Solar Gard Premium 자동차 윈도우 필름">
+    <img class="hero-lx" id="heroLx" src="thelx-hero-logo.png" fetchpriority="high" alt="THE LX — Solar Gard Premium 자동차 윈도우 필름">
     <div class="hero-copy" id="heroCopy">
       <p class="hero-eyebrow">Solar Gard Premium · Saint-Gobain · Since 1985</p>
       <h1 class="hero-title">

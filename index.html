@@ -5724,7 +5724,7 @@ window.addEventListener('pageshow', function (e) {
     if(seen(cfg.id)) return;
     document.getElementById('evpNote').textContent=cfg.note||'';
     document.getElementById('evpLink').href=cfg.link||'event.html';
-    back.hidden=false; requestAnimationFrame(function(){ back.classList.add('on'); });
+    back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
     start();
     function close(){ if(stopAnim) stopAnim(); back.classList.remove('on');
       setTimeout(function(){ back.hidden=true; if(back.parentNode) back.parentNode.removeChild(back); },380);

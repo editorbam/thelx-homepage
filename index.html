@@ -5660,7 +5660,7 @@ window.addEventListener('pageshow', function (e) {
 
 <!-- ===== 이벤트 팝업 (설정: popup-config.json / 첫 방문 1회 + 오늘 하루 닫기) ===== -->
 <style>
-  .evp-back{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .35s ease}
+  .evp-back{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:9000;display:flex;align-items:flex-start;justify-content:flex-start;padding:96px 16px 16px 40px;opacity:0;pointer-events:none;transition:opacity .35s ease}
   .evp-back.on{opacity:1;pointer-events:auto}
   .evp{width:min(432px,92vw);background:#fff;color:#0a0a0a;font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif;font-weight:300;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(12px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
   .evp-back.on .evp{transform:none}
@@ -5682,7 +5682,7 @@ window.addEventListener('pageshow', function (e) {
   .evp-bar{height:44px;background:#f5f5f7;color:#6e6e73;border-top:.5px solid #e8e8ed;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px}
   .evp-bar button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;padding:8px 0}
   .evp-bar button.x{color:#0a0a0a;font-weight:400}
-  @media (max-width:700px){ .evp{width:auto} .evp-card{height:min(44vh,420px);width:auto;max-width:84vw} .evp-bar{height:36px;font-size:11px;padding:0 12px} }
+  @media (max-width:700px){ .evp-back{align-items:center;justify-content:center;padding:16px} .evp{width:auto} .evp-card{height:min(44vh,420px);width:auto;max-width:84vw} .evp-bar{height:36px;font-size:11px;padding:0 12px} }
 </style>
 <div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="이벤트 안내" hidden>
   <div class="evp">

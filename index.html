@@ -5708,9 +5708,17 @@ window.addEventListener('pageshow', function (e) {
 (function(){
   var back=document.getElementById('evpBack'); if(!back) return;
   function today(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
-  function seen(id){ try{ return localStorage.getItem('evp:'+id)==='seen' || localStorage.getItem('evp:'+id+':today')===today(); }catch(e){ return false; } }
+  /* 노출 규칙 (2026-08-27 수정) — '닫기'는 그 방문(탭)에서만 숨기고, 다음 방문에는 다시 뜬다.
+     '오늘 하루 보지 않기'만 그날 자정까지 숨긴다. 예전에는 닫기도 영구 저장이라
+     한 번 닫으면 다시 안 뜨는 제보가 있었음. */
+  function seen(id){
+    try{ if(localStorage.getItem('evp:'+id+':today')===today()) return true; }catch(e){}
+    try{ if(sessionStorage.getItem('evp:'+id+':closed')==='1') return true; }catch(e){}
+    return false;
+  }
   function show(cfg){
     if(!cfg||!cfg.enabled) return;
+    try{ if(localStorage.getItem('evp:'+cfg.id)==='seen') localStorage.removeItem('evp:'+cfg.id); }catch(e){}
     var now=new Date().toISOString().slice(0,10);
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
@@ -5721,7 +5729,7 @@ window.addEventListener('pageshow', function (e) {
     function close(){ if(stopAnim) stopAnim(); back.classList.remove('on');
       setTimeout(function(){ back.hidden=true; if(back.parentNode) back.parentNode.removeChild(back); },380);
       document.removeEventListener('keydown',onKey);
-      try{ localStorage.setItem('evp:'+cfg.id,'seen'); }catch(e){} }
+      try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} }
     function onKey(e){ if(e.key==='Escape') close(); }
     document.getElementById('evpClose').onclick=close;
     document.getElementById('evpToday').onclick=function(){ try{ localStorage.setItem('evp:'+cfg.id+':today',today()); }catch(e){} close(); };

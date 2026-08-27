@@ -3118,7 +3118,7 @@ body.pd-open { overflow: hidden; }
      PROCESS — Workshop / Craftsmanship (실제 시공 사진)
 ======================================== -->
 <section class="process-section" id="process">
-  <video class="process-bg" src="process-bg.mp4" poster="process-4.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <video class="process-bg" data-src="process-bg.mp4" poster="process-4.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
   <div class="process-inner fi">
     <p class="process-eyebrow">Craft</p>
     <h2 class="process-title">설계는 손에서<br>완성됩니다.</h2>
@@ -5753,6 +5753,32 @@ window.addEventListener('pageshow', function (e) {
     raf=requestAnimationFrame(tick);
   }
   fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
+})();
+</script>
+
+<script>
+/* 영상 지연 로드 (2026-08-27) — 화면에 들어오기 전에는 내려받지 않는다.
+   src를 data-src로 미뤄두고 200px 앞에서 붙인 뒤 재생. 대부분의 방문자가 닿지 않는
+   하단 영상까지 처음부터 받던 낭비를 없앤다(index 1.1MB · event 1.2MB). */
+(function () {
+  var vids = document.querySelectorAll('video[data-src]');
+  if (!vids.length) return;
+  if (!('IntersectionObserver' in window)) {
+    vids.forEach(function (v) { v.src = v.dataset.src; });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var v = e.target;
+      io.unobserve(v);
+      if (v.dataset.src && !v.src) {
+        v.src = v.dataset.src;
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+  vids.forEach(function (v) { io.observe(v); });
 })();
 </script>
 </body>

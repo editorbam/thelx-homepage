@@ -839,7 +839,7 @@ const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ t0=performance
 
 <figure class="sn-video">
   <div class="sn-video-wrap">
-    <video src="safenumber-car.mp4" poster="safenumber-car-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="밤, 차 안 대시보드 위에 놓인 안심번호 QR 카드"></video>
+    <video data-src="safenumber-car.mp4" poster="safenumber-car-poster.jpg" muted loop playsinline preload="none" aria-label="밤, 차 안 대시보드 위에 놓인 안심번호 QR 카드"></video>
     <div class="sn-video-copy"><p class="l2">THE LX · Solar Gard Premium</p></div>
     <p class="sn-video-tag">열은 차단하고, 번호는 지키다.</p>
   </div>
@@ -1039,6 +1039,32 @@ tick();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') window.closeMobileMenu(); });
 }());
+</script>
+
+<script>
+/* 영상 지연 로드 (2026-08-27) — 화면에 들어오기 전에는 내려받지 않는다.
+   src를 data-src로 미뤄두고 200px 앞에서 붙인 뒤 재생. 대부분의 방문자가 닿지 않는
+   하단 영상까지 처음부터 받던 낭비를 없앤다(index 1.1MB · event 1.2MB). */
+(function () {
+  var vids = document.querySelectorAll('video[data-src]');
+  if (!vids.length) return;
+  if (!('IntersectionObserver' in window)) {
+    vids.forEach(function (v) { v.src = v.dataset.src; });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var v = e.target;
+      io.unobserve(v);
+      if (v.dataset.src && !v.src) {
+        v.src = v.dataset.src;
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+  vids.forEach(function (v) { io.observe(v); });
+})();
 </script>
 </body>
 </html>

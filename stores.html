@@ -729,7 +729,7 @@ function slPinPopupHtml(pr) {
   /* 좌표 기반 링크 (2026-08-27) — 주소 문자열만 넘기면 네이버·카카오가 지도를 옮기지 않고
      이전에 보던 위치에 머무는 제보가 있었음. 시공점 좌표를 URL에 실어 정확히 이동시킨다. */
   const kakaoUrl = (pr.y != null)
-    ? 'https://map.kakao.com/link/to/' + encodeURIComponent(pr.n) + ',' + pr.y + ',' + pr.x
+    ? 'https://map.kakao.com/link/to/' + encodeURIComponent(pr.n + ' ' + pr.a) + ',' + pr.y + ',' + pr.x
     : 'https://map.kakao.com/?q=' + encodeURIComponent(pr.a);
   const naverUrl = (pr.y != null)
     ? 'https://map.naver.com/p/search/' + encodeURIComponent(pr.a) + '?c=' + pr.x + ',' + pr.y + ',17,0,0,0,dh'
@@ -871,7 +871,7 @@ function slRender() {
       ? 'https://map.naver.com/p/search/' + encodeURIComponent(s.a) + '?c=' + s.x + ',' + s.y + ',17,0,0,0,dh'
       : 'https://map.naver.com/p/search/' + encodeURIComponent(s.a);
     const kakaoMapUrl = (s.y != null)
-      ? 'https://map.kakao.com/link/map/' + encodeURIComponent(s.n) + ',' + s.y + ',' + s.x
+      ? 'https://map.kakao.com/link/map/' + encodeURIComponent(s.n + ' ' + s.a) + ',' + s.y + ',' + s.x
       : 'https://map.kakao.com/?q=' + encodeURIComponent(s.a);
     const tel    = slPhone1(s.p);
     return `<div class="sl-card" data-i="${STORE_DATA.indexOf(s)}" title="지도에서 위치 보기">

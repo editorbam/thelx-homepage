@@ -297,22 +297,41 @@
 }
 .sl-lg-lx { background:#0a0a0a; color:#fff; }
 .sl-lg-sg { background:#fff; color:#0a0a0a; }
-#slMap .sl-kakao-iw {
-  border-radius:14px; box-shadow:0 14px 40px rgba(0,0,0,.16);
-  border:.5px solid var(--gray-2); padding:1rem 1.1rem; font-family:inherit;
+/* 시공점 팝업 — 카카오 기본 InfoWindow 대신 CustomOverlay(우리 문법: 헤어라인·알약 버튼) */
+.sl-kpop {
+  position:relative; width:270px; background:#fff; border:.5px solid var(--gray-2);
+  border-radius:16px; padding:1.05rem 1.15rem 1.1rem; box-shadow:0 18px 44px rgba(10,10,10,.18);
+  font-family:inherit; transform:translate(-50%,-100%) translateY(-14px);
 }
-
-#slMap .sl-kakao-iw { min-width:210px; }
-.sl-pop { display:flex; flex-direction:column; gap:.3rem; min-width:180px; }
-.sl-pop strong { font-size:.9rem; font-weight:600; color:var(--black); }
-.sl-pop span { font-size:.78rem; color:var(--gray-3); font-weight:300; line-height:1.45; }
-.sl-pop-btns { display:flex; gap:.4rem; margin-top:.45rem; }
-.sl-pop-btns a {
-  flex:1; text-align:center; padding:.42rem .6rem; border-radius:980px;
-  font-size:.75rem; text-decoration:none;
+.sl-kpop:after {
+  content:''; position:absolute; left:50%; bottom:-7px; width:13px; height:13px; background:#fff;
+  border-right:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2);
+  transform:translateX(-50%) rotate(45deg);
 }
-.sl-pop-btns a:first-child { background:#0a0a0a; color:#fff; }
-.sl-pop-btns a:last-child { border:.5px solid rgba(0,0,0,.24); color:var(--black); }
+.sl-kpop .kp-x {
+  position:absolute; top:9px; right:11px; width:22px; height:22px; border:0; background:none;
+  color:var(--gray-3); font-size:15px; line-height:1; cursor:pointer; padding:0;
+}
+.sl-kpop .kp-x:hover { color:var(--black); }
+.sl-kpop .kp-n { font-size:.95rem; font-weight:600; color:var(--black); letter-spacing:-.01em; padding-right:20px; }
+.sl-kpop .kp-r { font-size:.78rem; color:var(--black); font-weight:400; margin-top:.35rem; }
+.sl-kpop .kp-a, .sl-kpop .kp-p { font-size:.78rem; color:var(--gray-3); font-weight:300; line-height:1.5; margin-top:.2rem; }
+.sl-kpop .kp-btns { display:flex; gap:.4rem; margin-top:.85rem; }
+.sl-kpop .kp-btns a {
+  flex:1 1 0; min-width:0; text-align:center; padding:.46rem .2rem; border-radius:980px;
+  font-size:.72rem; letter-spacing:-.01em; text-decoration:none; white-space:nowrap;
+}
+.sl-kpop .kp-btns a.pri { background:#0a0a0a; color:#fff; }
+.sl-kpop .kp-btns a.sec { border:.5px solid rgba(0,0,0,.22); color:var(--black); }
+/* 줌 버튼 — 카카오 기본 컨트롤 숨기고 우리 버튼 사용 */
+.sl-zoom { position:absolute; right:14px; top:14px; z-index:3; display:flex; flex-direction:column; gap:6px; }
+.sl-zoom button {
+  width:34px; height:34px; border-radius:50%; border:.5px solid rgba(0,0,0,.18); background:rgba(255,255,255,.96);
+  font-size:16px; line-height:1; color:var(--black); cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+.sl-zoom button:hover { background:#fff; border-color:rgba(0,0,0,.35); }
+/* 지도 톤 — 카카오 기본색은 바꿀 수 없어 채도만 살짝 낮춤(정보는 유지) */
+#slMap .sl-kakao-canvas { filter:saturate(.88) contrast(1.02); }
 @media (max-width:768px) {
   #slMap { height:clamp(300px, 46vh, 420px); border-radius:14px; }
   .sl-map-legend { justify-content:center; }
@@ -734,14 +753,16 @@ let slMarkers = [], slClusterer = null, slInfo = null, slKakaoReady = false;
 
 function slIsLXName(n){ return n.toUpperCase().indexOf('LX') !== -1; }
 
-function slPinPopupHtml(pr, withBtns) {
+function slPinPopupHtml(pr) {
   const kakaoUrl = 'https://map.kakao.com/?q=' + encodeURIComponent(pr.a);
   const naverUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(pr.a);
-  return '<div class="sl-pop"><strong>' + pr.n + '</strong>' +
-    (pr.c ? '<span>대표 ' + pr.c + '</span>' : '') +
-    '<span>' + pr.a + '</span><span>' + pr.p + '</span>' +
-    (withBtns ? '<span class="sl-pop-btns"><a href="' + kakaoUrl + '" target="_blank" rel="noopener">길찾기</a><a href="' + naverUrl + '" target="_blank" rel="noopener">네이버 지도</a><a href="tel:' + slPhone1(pr.p) + '">전화</a></span>' : '') +
-    '</div>';
+  return '<div class="sl-kpop"><button class="kp-x" type="button" aria-label="닫기">&times;</button>' +
+    '<div class="kp-n">' + pr.n + '</div>' +
+    (pr.c ? '<div class="kp-r">대표 ' + pr.c + '</div>' : '') +
+    '<div class="kp-a">' + pr.a + '</div><div class="kp-p">' + pr.p + '</div>' +
+    '<div class="kp-btns"><a class="pri" href="' + kakaoUrl + '" target="_blank" rel="noopener">길찾기</a>' +
+    '<a class="sec" href="' + naverUrl + '" target="_blank" rel="noopener">네이버 지도</a>' +
+    '<a class="sec" href="tel:' + slPhone1(pr.p) + '">전화</a></div></div>';
 }
 
 /* 마커 이미지 — 브랜드 2색 SVG (THE LX=검정 / 솔라가드 프리미엄=흰 테두리) */
@@ -756,10 +777,14 @@ function slMarkerImage(isLX){
     new kakao.maps.Size(34, 44), { offset: new kakao.maps.Point(17, 43) });
 }
 
-function slOpenPopup(pos, html, marker) {
-  if (slInfo) slInfo.close();
-  slInfo = new kakao.maps.InfoWindow({ content: '<div class="sl-kakao-iw">' + html + '</div>', removable: true });
-  slInfo.open(slMap, marker || new kakao.maps.Marker({ position: pos, map: null }));
+function slOpenPopup(pos, html) {
+  if (slInfo) slInfo.setMap(null);
+  const el = document.createElement('div');
+  el.innerHTML = html;
+  const node = el.firstElementChild;
+  slInfo = new kakao.maps.CustomOverlay({ position: pos, content: node, yAnchor: 0, xAnchor: 0, zIndex: 5 });
+  slInfo.setMap(slMap);
+  node.querySelector('.kp-x').addEventListener('click', () => { slInfo.setMap(null); slInfo = null; });
 }
 
 /* 카드 클릭 → 지도가 해당 지점으로 이동 + 팝업 */
@@ -773,7 +798,7 @@ function slLocate(s) {
   slMap.setLevel(3);
   slMap.panTo(pos);
   const mk = slMarkers.find(m => m.__store && m.__store.n === s.n);
-  slOpenPopup(pos, slPinPopupHtml(s, true), mk);
+  slOpenPopup(pos, slPinPopupHtml(s));
 }
 
 let slInitTries = 0;
@@ -787,7 +812,14 @@ function slInitMap(){
       slMap = new kakao.maps.Map(document.getElementById('slMap'), {
         center: new kakao.maps.LatLng(36.5, 127.8), level: 13
       });
-      slMap.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+      /* 카카오 기본 줌 컨트롤 대신 우리 버튼 */
+      const zw = document.createElement('div'); zw.className = 'sl-zoom';
+      zw.innerHTML = '<button type="button" aria-label="확대">+</button><button type="button" aria-label="축소">\u2212</button>';
+      document.getElementById('slMap').appendChild(zw);
+      zw.children[0].addEventListener('click', () => slMap.setLevel(slMap.getLevel() - 1, { animate: true }));
+      zw.children[1].addEventListener('click', () => slMap.setLevel(slMap.getLevel() + 1, { animate: true }));
+      /* 지도 캔버스에만 채도 필터 (우리 마커·팝업은 원래 색 유지) */
+      setTimeout(() => { const c = document.getElementById('slMap').firstElementChild; if (c) c.classList.add('sl-kakao-canvas'); }, 300);
       /* 휠 확대 허용 (대리점 요청) — 페이지 스크롤 하이재킹 방지 위해 지도 위에서만 동작 */
       slMap.setZoomable(true);
       slKakaoReady = true; slMapReady = true;
@@ -818,7 +850,7 @@ function slMapApply(list){
     const pos = new kakao.maps.LatLng(s.y, s.x);
     const mk = new kakao.maps.Marker({ position: pos, image: slMarkerImage(slIsLXName(s.n)), title: s.n });
     mk.__store = s;
-    kakao.maps.event.addListener(mk, 'click', function(){ slOpenPopup(pos, slPinPopupHtml(s, true), mk); });
+    kakao.maps.event.addListener(mk, 'click', function(){ slOpenPopup(pos, slPinPopupHtml(s)); });
     slMarkers.push(mk);
     bounds.extend(pos);
   });

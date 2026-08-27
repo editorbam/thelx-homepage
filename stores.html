@@ -754,8 +754,14 @@ let slMarkers = [], slClusterer = null, slInfo = null, slKakaoReady = false;
 function slIsLXName(n){ return n.toUpperCase().indexOf('LX') !== -1; }
 
 function slPinPopupHtml(pr) {
-  const kakaoUrl = 'https://map.kakao.com/?q=' + encodeURIComponent(pr.a);
-  const naverUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(pr.a);
+  /* 좌표 기반 링크 (2026-08-27) — 주소 문자열만 넘기면 네이버·카카오가 지도를 옮기지 않고
+     이전에 보던 위치에 머무는 제보가 있었음. 시공점 좌표를 URL에 실어 정확히 이동시킨다. */
+  const kakaoUrl = (pr.y != null)
+    ? 'https://map.kakao.com/link/to/' + encodeURIComponent(pr.n) + ',' + pr.y + ',' + pr.x
+    : 'https://map.kakao.com/?q=' + encodeURIComponent(pr.a);
+  const naverUrl = (pr.y != null)
+    ? 'https://map.naver.com/p/search/' + encodeURIComponent(pr.a) + '?c=' + pr.x + ',' + pr.y + ',17,0,0,0,dh'
+    : 'https://map.naver.com/p/search/' + encodeURIComponent(pr.a);
   return '<div class="sl-kpop"><button class="kp-x" type="button" aria-label="닫기">&times;</button>' +
     '<div class="kp-n">' + pr.n + '</div>' +
     (pr.c ? '<div class="kp-r">대표 ' + pr.c + '</div>' : '') +
@@ -889,7 +895,12 @@ function slRender() {
   var remaining = filtered.length - slShown;
 
   grid.innerHTML = visible.map(s => {
-    const mapUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(s.a);
+    const mapUrl = (s.y != null)
+      ? 'https://map.naver.com/p/search/' + encodeURIComponent(s.a) + '?c=' + s.x + ',' + s.y + ',17,0,0,0,dh'
+      : 'https://map.naver.com/p/search/' + encodeURIComponent(s.a);
+    const kakaoMapUrl = (s.y != null)
+      ? 'https://map.kakao.com/link/map/' + encodeURIComponent(s.n) + ',' + s.y + ',' + s.x
+      : 'https://map.kakao.com/?q=' + encodeURIComponent(s.a);
     const tel    = slPhone1(s.p);
     return `<div class="sl-card" data-i="${STORE_DATA.indexOf(s)}" title="지도에서 위치 보기">
       <span class="sl-card-pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>지도에서 보기</span>
@@ -898,7 +909,8 @@ function slRender() {
       ${s.c ? `<p class="sl-card-rep">대표 ${s.c}</p>` : ''}
       <p class="sl-card-phone">${s.p}</p>
       <div class="sl-card-btns">
-        <a class="sl-btn-map" href="${mapUrl}" target="_blank" rel="noopener">네이버 지도</a>
+        <a class="sl-btn-map" href="${kakaoMapUrl}" target="_blank" rel="noopener">카카오맵</a>
+        <a class="sl-btn-tel" href="${mapUrl}" target="_blank" rel="noopener">네이버 지도</a>
         <a class="sl-btn-tel" href="tel:${tel}">전화</a>
       </div>
     </div>`;

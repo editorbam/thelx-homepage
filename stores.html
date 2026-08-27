@@ -50,36 +50,8 @@
   </script>
 
   <link rel="preload" href="noto-sans-kr-subset.woff2?v=3" as="font" type="font/woff2" crossorigin>
-  <!-- 지도 타일 서버 연결 선행 — 스타일·타일·글꼴 요청의 DNS/TLS 왕복 절감 (CORS라 crossorigin 판 필수) -->
-  <!-- 지도 외부 자원 선행 다운로드 — 스타일은 positron-style.js로 내장돼 사슬이 사라졌고,
-       나머지(타일 목록·스프라이트·글꼴 pbf)는 지도 초기화를 기다리지 않고 HTML 파싱 즉시 병렬로 받는다.
-       글꼴 pbf 목록=초기 전국 뷰에서 실측된 8개(한글 라벨은 MapLibre가 로컬 폰트로 그려 pbf 불필요) -->
-  <script>
-  (function () {
-    var dpr = (window.devicePixelRatio || 1) > 1 ? '@2x' : '';
-    var OFM = 'https://tiles.openfreemap.org';
-    [OFM + '/planet',
-     OFM + '/sprites/ofm_f384/ofm' + dpr + '.json',
-     OFM + '/sprites/ofm_f384/ofm' + dpr + '.png',
-     OFM + '/fonts/Noto%20Sans%20Regular/0-255.pbf',
-     OFM + '/fonts/Noto%20Sans%20Regular/256-511.pbf',
-     OFM + '/fonts/Noto%20Sans%20Regular/1024-1279.pbf',
-     OFM + '/fonts/Noto%20Sans%20Regular/6144-6399.pbf',
-     OFM + '/fonts/Noto%20Sans%20Regular/40960-41215.pbf',
-     OFM + '/fonts/Noto%20Sans%20Regular/41728-41983.pbf',
-     OFM + '/fonts/Noto%20Sans%20Bold/0-255.pbf',
-     OFM + '/fonts/Noto%20Sans%20Bold/1024-1279.pbf',
-     OFM + '/fonts/Noto%20Sans%20Bold/6144-6399.pbf',
-     OFM + '/fonts/Noto%20Sans%20Italic/0-255.pbf',
-     OFM + '/fonts/Noto%20Sans%20Italic/1024-1279.pbf',
-     OFM + '/fonts/Noto%20Sans%20Italic/6144-6399.pbf'
-    ].forEach(function (u) {
-      var l = document.createElement('link');
-      l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'anonymous'; l.href = u;
-      document.head.appendChild(l);
-    });
-  })();
-  </script>
+  <!-- 지도=카카오 SDK (2026-08-27 교체). 옛 OpenFreeMap 프리로드 블록 제거 -->
+
   <style>
   @font-face {
     font-family: 'Noto Sans KR';
@@ -747,7 +719,7 @@ var slShown = SL_PAGE;
 let slMap = null, slMapReady = false, slPending = null;
 
 /* ===== 카카오 지도 (2026-08-27 교체) — 대리점 피드백: 컬러·건물명·휠 확대 =====
-   기존 MapLibre(positron)는 회색조라 확대해도 주변 건물명이 없고 컬러 식별이 어려웠다.
+   기존 지도(회색조)는 확대해도 주변 건물명이 없고 컬러 식별이 어려웠다.
    카카오 지도는 국내 상호 데이터가 촘촘하고 휠 확대가 기본. 마커는 브랜드 2색으로 구분. */
 let slMarkers = [], slClusterer = null, slInfo = null, slKakaoReady = false;
 

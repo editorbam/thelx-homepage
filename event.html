@@ -647,6 +647,28 @@
     .sn-facts dd small { display: block; color: rgba(0,0,0,.5); font-size: .85em; margin-top: .15rem; }
     @media (max-width: 600px) { .sn-facts .r { grid-template-columns: 1fr; gap: .3rem; } }
   </style>
+<style>
+  /* A3: 목업 폭 기준으로 좌우 끝단 정렬 + 중앙 블록 정리 (데스크톱) */
+  @media (min-width:900px){
+    section.tech-section, .sn-facts, .faq-wrap, .tech-heart, .tech-coda, .tech-cta { max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .sn-facts, .faq-wrap, .tech-cta { padding-left: clamp(1.5rem,5vw,4rem); padding-right: clamp(1.5rem,5vw,4rem); box-sizing: border-box; }
+    .faq-wrap .faq-item { max-width: none; }
+    .tech-chapter-title { max-width: 1100px; }
+    /* 본문·선언문: 위 이미지와 오른쪽 끝단 일치 */
+    .tech-chapter-body, .tech-declaration { max-width: none; }
+    .sn-mock { width: 100%; }
+    /* 01: QR 옆 설명 글자 키우고, 행 전체를 이미지 폭에 맞춤 */
+    .sn-row { width: 100%; gap: 3rem; }
+    .sn-row .sn-stage { flex: 0 0 34%; }
+    .sn-col-txt .tech-declaration { font-size: 1rem; line-height: 1.5; }
+    .sn-col-txt .tech-chapter-body { font-size: 1.02rem; line-height: 1.85; margin-top: 1.4rem; }
+    /* 가운데 정렬 블록 */
+    .tech-heart, .tech-coda { text-align: center; }
+    .tech-cta { justify-content: center; }
+    .sn-set { text-align: center; }
+    .sn-set img { width: min(46%, 420px); margin: 0 auto; }
+  }
+</style>
 </head>
 <body>
 

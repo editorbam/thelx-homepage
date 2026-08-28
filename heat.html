@@ -17,7 +17,7 @@
   <meta property="og:title" content="열차단의 원리 — 필름의 열차단 원리와 TSER">
   <meta property="og:description" content="열의 절반은 눈에 보이지 않습니다. 필름을 고르기 전에 알아야 할 빛의 물리.">
   <meta property="og:url" content="https://isolargard.com/heat.html">
-  <meta property="og:image" content="https://isolargard.com/og-heat.jpg?v=7">
+  <meta property="og:image" content="https://isolargard.com/og-heat.jpg?v=8">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="THE LX — ‘필름의 열차단 원리’ 공유 카드">
@@ -27,7 +27,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="열차단의 원리 — 필름의 열차단 원리와 TSER">
   <meta name="twitter:description" content="열의 절반은 눈에 보이지 않습니다. 필름을 고르기 전에 알아야 할 빛의 물리.">
-  <meta name="twitter:image" content="https://isolargard.com/og-heat.jpg?v=7">
+  <meta name="twitter:image" content="https://isolargard.com/og-heat.jpg?v=8">
   <meta name="twitter:image:alt" content="THE LX — ‘필름의 열차단 원리’ 공유 카드">
 
   <!-- JSON-LD: TechArticle -->
@@ -37,7 +37,7 @@
     "@type": "TechArticle",
     "headline": "열차단의 원리 — 필름의 열차단 원리와 TSER",
     "description": "지표면에 도달하는 태양 복사 에너지는 적외선 약 49%, 가시광선 약 49%, 자외선 약 2%로 구성됩니다. 유리에 닿은 에너지는 반사·흡수·투과로 나뉘고 흡수분은 다시 재방사되며, 이를 모두 합친 총량 지표가 TSER(총태양에너지차단율)입니다. 필름이 없는 유리는 TSER 약 10.5%, 일반 사례 기준 열 흡수(IR) 필름은 44%, 열 반사 필름은 72.5%입니다.",
-    "image": "https://isolargard.com/og-heat.jpg?v=7",
+    "image": "https://isolargard.com/og-heat.jpg?v=8",
     "author": { "@type": "Organization", "name": "THE LX" },
     "publisher": {
       "@type": "Organization",
@@ -810,12 +810,13 @@
     var btn   = document.getElementById('heroSound');
     var label = document.getElementById('heroSoundLabel');
     if(!audio || !btn) return;
-    var TARGET = 1.0;
-    var started = false, muted = false, fadeTimer = null;
-    audio.volume = 0;
-    btn.classList.add('show');
+    // 모바일 포함 전 기기 동작 — 음소거는 audio.muted(iOS도 됨), 음량은 파일에 이미 반영
+    var TARGET = 1.0;           // 파일 자체를 은은한 음량으로 구웠으므로 재생 볼륨은 최대
+    var started = false, fadeTimer = null;
+    audio.volume = TARGET;      // 볼륨 0으로 시작하지 않는다 — 조작 없이 볼륨을 올리면 브라우저가 재생을 되멈춘다 (2026-08-27)
+    btn.classList.add('show');  // 페이지 전역 상시 노출
 
-    // 페이지 간 이어듣기 — 떠날 때 위치·상태 저장, 들어올 때 그 지점부터 (index ↔ heat)
+    // 페이지 간 이어듣기 — 떠날 때 위치·상태 저장, 들어올 때 그 지점부터
     var resume = null;
     try { resume = JSON.parse(sessionStorage.getItem('thelxBgm') || 'null'); } catch(e){}
     var wantSound = resume ? !!resume.on : true;
@@ -828,7 +829,7 @@
       try {
         sessionStorage.setItem('thelxBgm', JSON.stringify({
           t: started ? audio.currentTime : (resume ? resume.t : 0),
-          on: started ? !muted : wantSound
+          on: started ? !audio.muted : wantSound
         }));
       } catch(e){}
     });
@@ -841,23 +842,46 @@
         if(i>=steps){ audio.volume = target; clearInterval(fadeTimer); fadeTimer=null; if(done) done(); }
       }, 45);
     }
-    function updateUI(){
-      var on = started && !muted;
+    // 표시는 항상 오디오의 실제 상태를 따른다 — 브라우저가 몰래 멈춰도 막대가 계속 움직이지 않도록 (2026-08-27)
+    function syncUI(){
+      var on = started && !audio.paused && !audio.muted && audio.volume > 0;
       btn.classList.toggle('playing', on);
-      btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
-      label.textContent = (started && muted) ? 'Muted' : 'Mute';
+      btn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
+      label.textContent = (started && audio.muted) ? 'Muted' : 'Mute';
+    }
+    audio.addEventListener('playing', function(){ started = true; syncUI(); });
+    audio.addEventListener('pause',   function(){ syncUI(); armGestures(); });   // 멈추면 표시를 되돌리고 다음 조작에서 재개
+    audio.addEventListener('volumechange', syncUI);
+
+    // 스크롤은 브라우저가 '사용자 조작'으로 치지 않는다 — 실제 조작만 재생 트리거로 (2026-08-27)
+    var GESTURES = ['pointerdown','keydown','touchstart'];
+    var gesturesOn = false;
+    function armGestures(){
+      if(gesturesOn || !audio.paused) return;
+      gesturesOn = true;
+      GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
+    }
+    function dropGestures(){
+      if(!gesturesOn) return;
+      gesturesOn = false;
+      GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); });
     }
 
-    var GESTURES = ['pointerdown','keydown','scroll','touchstart'];
-    function dropGestures(){ GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); }); }
-
-    function startPlayback(){
-      if(started) return;
+    // 재생 — 히어로부터 끝까지 계속 흐름 (스크롤해도 멈추지 않음)
+    // viaGesture: 사용자가 직접 누른 경우에만 페이드인 (조작 없는 볼륨 변경은 브라우저가 막는다)
+    function startPlayback(viaGesture){
+      if(!audio.paused) return;
       audio.muted = !wantSound;   // 이전 페이지에서 음소거 상태였다면 그 선택을 존중
-      audio.play().then(function(){ started = true; muted = !wantSound; fadeTo(TARGET); updateUI(); dropGestures(); })
-                  .catch(function(){ /* 브라우저가 막음 — 다음 제스처/클릭 때 재시도 */ });
+      if(viaGesture) audio.volume = 0;
+      audio.play().then(function(){
+                    started = true;
+                    if(viaGesture) fadeTo(TARGET); else audio.volume = TARGET;
+                    syncUI(); dropGestures();
+                  })
+                  .catch(function(){ audio.volume = TARGET; armGestures(); syncUI(); });
     }
-    function setMuted(m){ muted = m; audio.muted = m; updateUI(); }
+    // 음소거는 audio.muted로 (iOS는 volume 조절 불가라 이 방식이라야 실제로 꺼짐)
+    function setMuted(m){ audio.muted = m; syncUI(); }
 
     /* 스크롤 중에는 물러나기(모바일) — 좌하단 고정 버튼이 본문을 가리지 않도록 (2026-08-03) */
     var dimT = null;
@@ -867,20 +891,22 @@
       dimT = setTimeout(function(){ btn.classList.remove('scrolling'); }, 700);
     }, { passive: true });
 
+    // 버튼 = 멈춰 있으면 재생, 흐르는 중이면 음소거 토글
     btn.addEventListener('click', function(e){
       e.stopPropagation();
-      if(!started){ wantSound = true; startPlayback(); }
-      else { setMuted(!muted); }
+      if(audio.paused){ wantSound = true; startPlayback(true); }
+      else { setMuted(!audio.muted); }
     });
 
+    // 브라우저 자동재생 정책상, 손님이 페이지를 처음 건드리는 순간 재생 시작
     function firstGesture(e){
-      if(e && btn.contains(e.target)) return;
-      startPlayback();
+      if(e && btn.contains(e.target)) return;   // 버튼 클릭은 위에서 처리
+      startPlayback(true);
     }
-    GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
+    armGestures();
 
-    // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 제스처에서 재개)
-    if(resume && resume.on){ startPlayback(); }
+    // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 조작에서 재개)
+    if(resume && resume.on){ startPlayback(false); }
   })();
 </script>
 

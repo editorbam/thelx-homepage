@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>시공 견적 — THE LX 솔라가드 프리미엄 | 자동차 윈도우 필름 가격 계산기</title>
-<meta name="description" content="솔라가드 프리미엄 THE LX 시공 견적 계산기. 승용차 30만원부터, 차종·부위·제품에 따라 패키지 금액이 즉시 계산됩니다. 전국 419개 공식 인증 시공점.">
+<meta name="description" content="솔라가드 프리미엄 THE LX 시공 견적 계산기. 승용차 30만원부터, 차종·부위·제품에 따라 패키지 금액이 즉시 계산됩니다. 전국 430개 공식 인증 시공점.">
 <meta name="keywords" content="자동차 필름 가격, 자동차 틴팅 비용, 자동차 썬팅 가격, 썬팅 비용, 신차 썬팅 가격, 윈도우 필름 견적, THE LX 가격, 솔라가드 프리미엄 가격, 솔라가드프리미엄, LX 필름 가격, 시공 견적, 자동차 필름 견적">
 <!-- 정식 배포 2026-08-11 — 색인 개방 -->
 <meta name="robots" content="index, follow">
@@ -17,7 +17,7 @@
 <meta property="og:title" content="시공 견적 — THE LX 솔라가드 프리미엄 | 자동차 윈도우 필름 가격 계산기">
 <meta property="og:description" content="승용차 기준 30만원부터. 차종·부위·제품을 선택하면 패키지 금액이 즉시 계산됩니다.">
 <meta property="og:url" content="https://isolargard.com/pricing.html">
-<meta property="og:image" content="https://isolargard.com/og-pricing.jpg?v=7">
+<meta property="og:image" content="https://isolargard.com/og-pricing.jpg?v=8">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="THE LX — ‘시공 견적’ 공유 카드">
@@ -27,7 +27,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="시공 견적 — THE LX 솔라가드 프리미엄 | 자동차 윈도우 필름 가격 계산기">
 <meta name="twitter:description" content="승용차 기준 30만원부터. 차종·부위·제품을 선택하면 즉시 계산됩니다.">
-<meta name="twitter:image" content="https://isolargard.com/og-pricing.jpg?v=7">
+<meta name="twitter:image" content="https://isolargard.com/og-pricing.jpg?v=8">
 <meta name="twitter:image:alt" content="THE LX — ‘시공 견적’ 공유 카드">
 
 <!-- 폰트 자체 호스팅 — 운영 페이지 공유 가변 woff2(굵기 100~900). 구글 폰트 링크 금지 -->
@@ -3670,10 +3670,11 @@ pdOverlay.querySelectorAll('button').forEach(el => {
     var btn   = document.getElementById('heroSound');
     var label = document.getElementById('heroSoundLabel');
     if(!audio || !btn) return;
-    var TARGET = 1.0;
-    var started = false, muted = false, fadeTimer = null;
-    audio.volume = 0;
-    btn.classList.add('show');
+    // 모바일 포함 전 기기 동작 — 음소거는 audio.muted(iOS도 됨), 음량은 파일에 이미 반영
+    var TARGET = 1.0;           // 파일 자체를 은은한 음량으로 구웠으므로 재생 볼륨은 최대
+    var started = false, fadeTimer = null;
+    audio.volume = TARGET;      // 볼륨 0으로 시작하지 않는다 — 조작 없이 볼륨을 올리면 브라우저가 재생을 되멈춘다 (2026-08-27)
+    btn.classList.add('show');  // 페이지 전역 상시 노출
 
     // 페이지 간 이어듣기 — 떠날 때 위치·상태 저장, 들어올 때 그 지점부터
     var resume = null;
@@ -3688,7 +3689,7 @@ pdOverlay.querySelectorAll('button').forEach(el => {
       try {
         sessionStorage.setItem('thelxBgm', JSON.stringify({
           t: started ? audio.currentTime : (resume ? resume.t : 0),
-          on: started ? !muted : wantSound
+          on: started ? !audio.muted : wantSound
         }));
       } catch(e){}
     });
@@ -3701,23 +3702,46 @@ pdOverlay.querySelectorAll('button').forEach(el => {
         if(i>=steps){ audio.volume = target; clearInterval(fadeTimer); fadeTimer=null; if(done) done(); }
       }, 45);
     }
-    function updateUI(){
-      var on = started && !muted;
+    // 표시는 항상 오디오의 실제 상태를 따른다 — 브라우저가 몰래 멈춰도 막대가 계속 움직이지 않도록 (2026-08-27)
+    function syncUI(){
+      var on = started && !audio.paused && !audio.muted && audio.volume > 0;
       btn.classList.toggle('playing', on);
-      btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
-      label.textContent = (started && muted) ? 'Muted' : 'Mute';
+      btn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
+      label.textContent = (started && audio.muted) ? 'Muted' : 'Mute';
+    }
+    audio.addEventListener('playing', function(){ started = true; syncUI(); });
+    audio.addEventListener('pause',   function(){ syncUI(); armGestures(); });   // 멈추면 표시를 되돌리고 다음 조작에서 재개
+    audio.addEventListener('volumechange', syncUI);
+
+    // 스크롤은 브라우저가 '사용자 조작'으로 치지 않는다 — 실제 조작만 재생 트리거로 (2026-08-27)
+    var GESTURES = ['pointerdown','keydown','touchstart'];
+    var gesturesOn = false;
+    function armGestures(){
+      if(gesturesOn || !audio.paused) return;
+      gesturesOn = true;
+      GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
+    }
+    function dropGestures(){
+      if(!gesturesOn) return;
+      gesturesOn = false;
+      GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); });
     }
 
-    var GESTURES = ['pointerdown','keydown','scroll','touchstart'];
-    function dropGestures(){ GESTURES.forEach(function(ev){ window.removeEventListener(ev, firstGesture); }); }
-
-    function startPlayback(){
-      if(started) return;
+    // 재생 — 히어로부터 끝까지 계속 흐름 (스크롤해도 멈추지 않음)
+    // viaGesture: 사용자가 직접 누른 경우에만 페이드인 (조작 없는 볼륨 변경은 브라우저가 막는다)
+    function startPlayback(viaGesture){
+      if(!audio.paused) return;
       audio.muted = !wantSound;   // 이전 페이지에서 음소거 상태였다면 그 선택을 존중
-      audio.play().then(function(){ started = true; muted = !wantSound; fadeTo(TARGET); updateUI(); dropGestures(); })
-                  .catch(function(){ /* 브라우저가 막음 — 다음 제스처/클릭 때 재시도 */ });
+      if(viaGesture) audio.volume = 0;
+      audio.play().then(function(){
+                    started = true;
+                    if(viaGesture) fadeTo(TARGET); else audio.volume = TARGET;
+                    syncUI(); dropGestures();
+                  })
+                  .catch(function(){ audio.volume = TARGET; armGestures(); syncUI(); });
     }
-    function setMuted(m){ muted = m; audio.muted = m; updateUI(); }
+    // 음소거는 audio.muted로 (iOS는 volume 조절 불가라 이 방식이라야 실제로 꺼짐)
+    function setMuted(m){ audio.muted = m; syncUI(); }
 
     /* 스크롤 중에는 물러나기(모바일) — 좌하단 고정 버튼이 본문을 가리지 않도록 (2026-08-03) */
     var dimT = null;
@@ -3727,20 +3751,22 @@ pdOverlay.querySelectorAll('button').forEach(el => {
       dimT = setTimeout(function(){ btn.classList.remove('scrolling'); }, 700);
     }, { passive: true });
 
+    // 버튼 = 멈춰 있으면 재생, 흐르는 중이면 음소거 토글
     btn.addEventListener('click', function(e){
       e.stopPropagation();
-      if(!started){ wantSound = true; startPlayback(); }
-      else { setMuted(!muted); }
+      if(audio.paused){ wantSound = true; startPlayback(true); }
+      else { setMuted(!audio.muted); }
     });
 
+    // 브라우저 자동재생 정책상, 손님이 페이지를 처음 건드리는 순간 재생 시작
     function firstGesture(e){
-      if(e && btn.contains(e.target)) return;
-      startPlayback();
+      if(e && btn.contains(e.target)) return;   // 버튼 클릭은 위에서 처리
+      startPlayback(true);
     }
-    GESTURES.forEach(function(ev){ window.addEventListener(ev, firstGesture, {passive:true}); });
+    armGestures();
 
-    // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 제스처에서 재개)
-    if(resume && resume.on){ startPlayback(); }
+    // 이전 페이지에서 음악이 흐르던 중이었다면 즉시 이어재생 시도 (막히면 첫 조작에서 재개)
+    if(resume && resume.on){ startPlayback(false); }
   })();
 </script>
 </body>

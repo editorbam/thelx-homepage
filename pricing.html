@@ -1855,7 +1855,6 @@ body.pd-open { overflow: hidden; }
 }
 .pl-open:focus-visible { outline:2px solid var(--black); outline-offset:3px; }
 .pl-open-t { font-size:19px; font-weight:500; letter-spacing:-.015em; }
-.pl-open-s { display:block; font-size:12.5px; font-weight:300; color:var(--gray-3); margin-top:.45rem; letter-spacing:.01em; }
 .pl-open-a {
   flex-shrink:0; display:inline-flex; align-items:baseline; gap:.45rem;
   font-size:14px; font-weight:500; border-bottom:1px solid var(--black);
@@ -1880,7 +1879,7 @@ body.pd-open { overflow: hidden; }
   background:var(--black); overflow:hidden;
 }
 .pl-panel.on .pl-fold { transform:none; opacity:1; }
-.pl-scroll { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
+.pl-scroll { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding:1.9rem 0; }
 .pl-scroll img { display:block; width:100%; max-width:2560px; margin:0 auto; height:auto; } /* 원본이 2560이라 그 위로는 안 늘림 */
 .pl-panel-foot {
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
@@ -1893,6 +1892,8 @@ body.pd-open { overflow: hidden; }
 }
 .pl-panel-foot a:hover { color:#fff; border-color:#fff; }
 .pl-swipe { display:none; font-weight:300; } /* 표가 화면보다 넓어지는 폰에서만 */
+/* 펼친 표 위에서는 나브에 배경을 깔아 표와 메뉴가 겹쳐 보이지 않게 한다 */
+nav.over-pl { background:var(--black); border-bottom:.5px solid rgba(255,255,255,.14); }
 @media (prefers-reduced-motion: reduce) {
   .pl-panel, .pl-fold, .pl-open-a i { transition:none; }
   .pl-fold { transform:none; }
@@ -1900,10 +1901,10 @@ body.pd-open { overflow: hidden; }
 @media (max-width: 768px) {
   .pl-open { margin-top:2.5rem; padding:1.4rem 0; gap:.9rem; }
   .pl-open-t { font-size:16px; }
-  .pl-open-s { font-size:11.5px; }
   .pl-open-a { font-size:13px; }
   /* 폰 폭에 맞추면 숫자가 안 읽힘 → 표를 1,100px로 두고 좌우로 밀어 보게 */
   .pl-scroll img { width:1100px; max-width:none; }
+  .pl-scroll { padding:1.1rem 0; }
   .pl-panel-foot { padding:.75rem .9rem; font-size:10px; align-items:flex-end; }
   .pl-swipe { display:inline; }
 }
@@ -2721,10 +2722,7 @@ body.pd-open { overflow: hidden; }
     <!-- 공식 PRICE LIST 원본 표 (2026-08-31) — 계산기에 없는 부분 시공 가격까지 한 장에.
          제자리에서 아래로 펼쳐진다. 이미지 width/height를 박아 둬야 열기 전에도 높이를 알 수 있음 -->
     <button type="button" class="pl-open fi" id="plOpen" aria-expanded="false" aria-controls="plPanel">
-      <span>
-        <span class="pl-open-t">2026 공식 PRICE LIST 전체 표</span>
-        <span class="pl-open-s">제품별 VLT·TSER·워런티와 전체 시공 · 부분 시공 가격을 한 장으로</span>
-      </span>
+      <span class="pl-open-t">2026 공식 PRICE LIST 전체 표</span>
       <span class="pl-open-a" id="plLabel">표 보기 <i>↓</i></span>
     </button>
   </div>
@@ -2734,14 +2732,14 @@ body.pd-open { overflow: hidden; }
       <div class="pl-fold" id="plFold">
         <div class="pl-scroll">
           <picture>
-            <source srcset="price-list.webp" type="image/webp">
-            <img src="price-list.png" id="plImg" width="2560" height="1808" loading="lazy" decoding="async"
+            <source srcset="price-list-table.webp" type="image/webp">
+            <img src="price-list-table.png" id="plImg" width="2560" height="1149" loading="lazy" decoding="async"
                  alt="THE LX 솔라가드 프리미엄 2026 공식 가격표 — LX·Vogue·Xenith IR·Quantum·Titanium·G-Line·S-Line 제품별 VLT, TSER, 제조사 워런티와 승용·SUV 전체 시공 및 부분 시공 가격(단위 만원)">
           </picture>
         </div>
         <div class="pl-panel-foot">
           <span>단위 : 만 원(₩) · 권장 소비자가<b class="pl-swipe"> · 좌우로 밀어서 보세요</b></span>
-          <a href="price-list.png" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
+          <a href="price-list-table.png" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
         </div>
       </div>
   </div>
@@ -3097,7 +3095,7 @@ let _winH = window.innerHeight;
 window.addEventListener('resize', () => { _winH = window.innerHeight; }, { passive: true });
 
 /* ── NAV 테마: 상단 라인이 다크 섹션(상단 배너·예약) 위면 흰 글자(on-dark), 라이트 섹션이면 검정 ── */
-const _navDarkSecs = Array.from(document.querySelectorAll('.cf-banner, #booking'));
+const _navDarkSecs = Array.from(document.querySelectorAll('.cf-banner, #booking, .pl-panel'));
 function updateNavTheme() {
   const line = 26; // NAV 세로 중심
   let dark = false;
@@ -3905,12 +3903,23 @@ pdOverlay.querySelectorAll('button').forEach(el => {
     panel.style.height = '0px';
   }
 
-  btn.addEventListener('click', () => { open ? closePanel() : openPanel(); });
+  btn.addEventListener('click', () => { open ? closePanel() : openPanel(); navOverTable(); });
 
   // 다 펴진 뒤에는 auto로 — 창 크기가 바뀌어도 표 높이를 따라간다
   panel.addEventListener('transitionend', e => {
     if (e.propertyName === 'height' && open) panel.style.height = 'auto';
+    navOverTable();
   });
+
+  // 표가 나브 아래를 지나는 동안 나브에 배경을 깐다 (색만 바꿔선 표 위에서 글자가 서로 먹힘)
+  const nav = document.getElementById('mainNav');
+  function navOverTable(){
+    if (!nav) return;
+    const r = panel.getBoundingClientRect();
+    nav.classList.toggle('over-pl', open && r.top <= 26 && r.bottom > 26);
+  }
+  window.addEventListener('scroll', navOverTable, { passive:true });
+  window.addEventListener('resize', navOverTable, { passive:true });
 
   // 버튼에 손이 닿는 순간 이미지를 먼저 받아 둔다 (펼칠 때 빈 검은 칸이 보이지 않도록)
   ['pointerenter','focus','touchstart'].forEach(ev => {

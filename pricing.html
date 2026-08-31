@@ -1902,10 +1902,13 @@ nav.over-pl { background:var(--black); border-bottom:.5px solid rgba(255,255,255
   .pl-open { margin-top:2.5rem; padding:1.4rem 0; gap:.9rem; }
   .pl-open-t { font-size:16px; }
   .pl-open-a { font-size:13px; }
-  /* 폰 폭에 맞추면 숫자가 안 읽힘 → 표를 1,100px로 두고 좌우로 밀어 보게 */
-  .pl-scroll img { width:1100px; max-width:none; }
   .pl-scroll { padding:1.1rem 0; }
   .pl-panel-foot { padding:.75rem .9rem; font-size:10px; align-items:flex-end; }
+}
+/* 화면 폭에 맞추면 숫자가 안 읽히는 구간(태블릿 세로까지) → 표를 1,100px로 두고 좌우로 밀어 보게.
+   위 768 블록과 경계를 달리 두는 이유: 폰트·여백은 폰에서만, 표 확대는 1,023까지 필요 */
+@media (max-width: 1023px) {
+  .pl-scroll img { width:1100px; max-width:none; }
   .pl-swipe { display:inline; }
 }
 
@@ -2739,7 +2742,7 @@ nav.over-pl { background:var(--black); border-bottom:.5px solid rgba(255,255,255
         </div>
         <div class="pl-panel-foot">
           <span>단위 : 만 원(₩) · 권장 소비자가<b class="pl-swipe"> · 좌우로 밀어서 보세요</b></span>
-          <a href="price-list-table.png" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
+          <a href="price-list-table.png" target="_blank" rel="noopener">원본 크게 보기 →</a>
         </div>
       </div>
   </div>

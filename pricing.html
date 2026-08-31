@@ -1845,46 +1845,43 @@ body.pd-open { overflow: hidden; }
 /* 공식 PRICE LIST 원본 표 — 계산기 하단에서 아래로 펼쳐지는 표 (2026-08-31)
    전체화면 뷰어는 "다음 페이지로 넘어간 느낌"이라 폐기, 제자리에서 펼치는 방식으로 교체
    문법 상속: 헤어라인 .5px, evp-cta 밑줄 링크, 흑백. 새 색·새 부품 도입 없음 */
-/* 폭 = 위 계산기 카드(cf-inner 1180)와 같은 줄에 맞춘다 — 980은 잔글씨 기준이라 표가 작았음
-   면 채움 강조는 마스터 문서 기본값과 다르지만, 잔글씨 사이에 묻혀 안 보인다는
-   사용자 판단으로 2026-08-31 확정. 색은 픽토그램에 쓰는 LX 블루 #3f78d0 (골드는 폐지색이라 제외) */
+/* 색 없이 크기·굵기·여백으로만 강조 (2026-08-31 사용자 결정 — 파랑 채움은 되돌림).
+   줄은 본문 그리드(1180)에 맞추고, 펼쳐지는 표만 섹션 전체 폭으로 빠져나간다 */
 .pl-open {
   display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
-  width:100%; max-width:1180px; margin:3.5rem auto 0; padding:1.6rem 1.9rem;
-  background:#3f78d0; border:0; border-radius:18px;
-  font:inherit; color:var(--white); cursor:pointer; text-align:left;
-  transition:background .3s ease, border-radius .35s ease;
+  width:100%; margin:3.5rem 0 0; padding:1.75rem 0;
+  background:none; border:0; border-top:.5px solid var(--gray-2); border-bottom:.5px solid var(--gray-2);
+  font:inherit; color:var(--black); cursor:pointer; text-align:left;
 }
-.pl-open:hover { background:#356aba; }
 .pl-open:focus-visible { outline:2px solid var(--black); outline-offset:3px; }
-/* 펼치면 아래 검은 표와 한 덩어리로 이어지도록 아래 모서리를 편다 */
-.pl-open[aria-expanded="true"] { border-radius:18px 18px 0 0; }
-.pl-open-t { font-size:19px; font-weight:500; letter-spacing:-.015em; color:var(--white); }
-.pl-open-s { display:block; font-size:12.5px; font-weight:300; color:rgba(255,255,255,.75); margin-top:.45rem; letter-spacing:.01em; }
+.pl-open-t { font-size:19px; font-weight:500; letter-spacing:-.015em; }
+.pl-open-s { display:block; font-size:12.5px; font-weight:300; color:var(--gray-3); margin-top:.45rem; letter-spacing:.01em; }
 .pl-open-a {
   flex-shrink:0; display:inline-flex; align-items:baseline; gap:.45rem;
-  font-size:14px; font-weight:500; color:var(--white);
-  border-bottom:1px solid rgba(255,255,255,.6); padding-bottom:3px; white-space:nowrap;
+  font-size:14px; font-weight:500; border-bottom:1px solid var(--black);
+  padding-bottom:3px; white-space:nowrap;
 }
 .pl-open-a i { font-style:normal; transition:transform .55s cubic-bezier(.22,1,.36,1); }
 .pl-open[aria-expanded="true"] .pl-open-a i { transform:rotate(180deg); }
-.pl-open:hover .pl-open-a { border-bottom-color:#fff; }
+.pl-open:hover .pl-open-a { opacity:.55; }
 
 /* 펼쳐짐 — 위 모서리를 경첩 삼아 아래로 넘어오는 접힘 해제.
    높이와 각도를 같은 곡선으로 함께 움직여야 종이가 펴지는 것처럼 보인다 */
+/* 섹션 전체 폭 — 마크업에서 cf-inner 밖으로 빼 뒀으므로 별도 계산 없이 100%.
+   양옆 크림색 여백이 사라진 만큼 표가 커진다 */
 .pl-panel {
-  max-width:1180px; margin:0 auto; height:0; overflow:hidden;
+  height:0; overflow:hidden;
   perspective:1500px;
   transition:height .6s cubic-bezier(.22,1,.36,1);
 }
 .pl-fold {
   transform-origin:top center; transform:rotateX(-82deg); opacity:0;
   transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .4s ease;
-  background:var(--black); border-radius:0 0 18px 18px; overflow:hidden;
+  background:var(--black); overflow:hidden;
 }
 .pl-panel.on .pl-fold { transform:none; opacity:1; }
 .pl-scroll { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
-.pl-scroll img { display:block; width:100%; height:auto; }
+.pl-scroll img { display:block; width:100%; max-width:2560px; margin:0 auto; height:auto; } /* 원본이 2560이라 그 위로는 안 늘림 */
 .pl-panel-foot {
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
   padding:.85rem 1.1rem; border-top:.5px solid rgba(255,255,255,.14);
@@ -1901,12 +1898,10 @@ body.pd-open { overflow: hidden; }
   .pl-fold { transform:none; }
 }
 @media (max-width: 768px) {
-  .pl-open { margin-top:2.5rem; padding:1.2rem 1.15rem; gap:.9rem; border-radius:14px; }
-  .pl-open[aria-expanded="true"] { border-radius:14px 14px 0 0; }
+  .pl-open { margin-top:2.5rem; padding:1.4rem 0; gap:.9rem; }
   .pl-open-t { font-size:16px; }
   .pl-open-s { font-size:11.5px; }
   .pl-open-a { font-size:13px; }
-  .pl-fold { border-radius:0 0 14px 14px; }
   /* 폰 폭에 맞추면 숫자가 안 읽힘 → 표를 1,100px로 두고 좌우로 밀어 보게 */
   .pl-scroll img { width:1100px; max-width:none; }
   .pl-panel-foot { padding:.75rem .9rem; font-size:10px; align-items:flex-end; }
@@ -2720,7 +2715,9 @@ body.pd-open { overflow: hidden; }
       * 상기 가격은 권장 소비자가이며 시공점에 따라 달라질 수 있습니다.<br>
       * Galaxie는 권장 소비자가 미공시 제품으로, 시공가는 가까운 시공점에 문의해 주세요.
     </p>
+  </div>
 
+  <div class="cf-inner">
     <!-- 공식 PRICE LIST 원본 표 (2026-08-31) — 계산기에 없는 부분 시공 가격까지 한 장에.
          제자리에서 아래로 펼쳐진다. 이미지 width/height를 박아 둬야 열기 전에도 높이를 알 수 있음 -->
     <button type="button" class="pl-open fi" id="plOpen" aria-expanded="false" aria-controls="plPanel">
@@ -2730,8 +2727,10 @@ body.pd-open { overflow: hidden; }
       </span>
       <span class="pl-open-a" id="plLabel">표 보기 <i>↓</i></span>
     </button>
+  </div>
 
-    <div class="pl-panel" id="plPanel">
+  <!-- 표는 cf-inner 밖 = 섹션 전체 폭. vw 계산을 쓰면 사파리에서 스크롤바 폭만큼 가로가 넘침 -->
+  <div class="pl-panel" id="plPanel">
       <div class="pl-fold" id="plFold">
         <div class="pl-scroll">
           <picture>
@@ -2745,8 +2744,9 @@ body.pd-open { overflow: hidden; }
           <a href="price-list.png" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
         </div>
       </div>
-    </div>
+  </div>
 
+  <div class="cf-inner">
     <!-- 측정 기준 고지 — index.html #products 하단 블록과 동일 문구(2026-08-18 이식, 수정 시 양쪽 동기) -->
     <div class="products-disclaimer">
       <p>※ 모든 수치는 1/8" 투명 유리(3mm clear glass) 기준이며, 측정 조건에 따라 ±3~5% 오차가 발생할 수 있습니다.</p>

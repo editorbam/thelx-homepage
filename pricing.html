@@ -1842,7 +1842,8 @@ body.pd-open { overflow: hidden; }
   .products-disclaimer p { font-size:10.5px; line-height:1.65; }
 }
 
-/* 공식 PRICE LIST 원본 표 — 계산기 하단 트리거 + 전체화면 뷰어 (2026-08-31)
+/* 공식 PRICE LIST 원본 표 — 계산기 하단에서 아래로 펼쳐지는 표 (2026-08-31)
+   전체화면 뷰어는 "다음 페이지로 넘어간 느낌"이라 폐기, 제자리에서 펼치는 방식으로 교체
    문법 상속: 헤어라인 .5px, evp-cta 밑줄 링크, 흑백. 새 색·새 부품 도입 없음 */
 .pl-open {
   display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
@@ -1852,57 +1853,54 @@ body.pd-open { overflow: hidden; }
 }
 .pl-open-t { font-size:13px; font-weight:400; letter-spacing:-.01em; }
 .pl-open-s { display:block; font-size:11px; font-weight:300; color:var(--gray-3); margin-top:.35rem; letter-spacing:.02em; }
-.pl-open-a { flex-shrink:0; font-size:12px; font-weight:400; border-bottom:1px solid var(--black); padding-bottom:2px; white-space:nowrap; }
+.pl-open-a {
+  flex-shrink:0; display:inline-flex; align-items:baseline; gap:.4rem;
+  font-size:12px; font-weight:400; border-bottom:1px solid var(--black);
+  padding-bottom:2px; white-space:nowrap;
+}
+.pl-open-a i { font-style:normal; transition:transform .55s cubic-bezier(.22,1,.36,1); }
+.pl-open[aria-expanded="true"] .pl-open-a i { transform:rotate(180deg); }
 .pl-open:hover .pl-open-a { opacity:.55; }
 
-.pl-back {
-  position:fixed; inset:0; z-index:10060; background:var(--black);
-  display:flex; flex-direction:column;
-  opacity:0; pointer-events:none; transition:opacity .3s ease;
+/* 펼쳐짐 — 위 모서리를 경첩 삼아 아래로 넘어오는 접힘 해제.
+   높이와 각도를 같은 곡선으로 함께 움직여야 종이가 펴지는 것처럼 보인다 */
+.pl-panel {
+  max-width:980px; margin:0 auto; height:0; overflow:hidden;
+  perspective:1500px;
+  transition:height .6s cubic-bezier(.22,1,.36,1);
 }
-.pl-back.on { opacity:1; pointer-events:auto; }
-.pl-bar {
-  flex-shrink:0; height:52px; display:flex; align-items:center; justify-content:space-between;
-  padding:0 1.75rem; border-bottom:.5px solid rgba(255,255,255,.14);
+.pl-fold {
+  transform-origin:top center; transform:rotateX(-82deg); opacity:0;
+  transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+  background:var(--black);
 }
-.pl-bar-t { font-size:10px; letter-spacing:.26em; color:rgba(255,255,255,.45); }
-.pl-bar-r { display:flex; align-items:center; gap:1.4rem; }
-.pl-bar-r button, .pl-bar-r a {
-  background:none; border:0; font:inherit; font-size:12px; font-weight:300;
-  color:rgba(255,255,255,.55); cursor:pointer; padding:8px 0; text-decoration:none;
+.pl-panel.on .pl-fold { transform:none; opacity:1; }
+.pl-scroll { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
+.pl-scroll img { display:block; width:100%; height:auto; }
+.pl-panel-foot {
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.85rem 1.1rem; border-top:.5px solid rgba(255,255,255,.14);
+  font-size:10.5px; font-weight:300; letter-spacing:.02em; color:rgba(255,255,255,.45);
 }
-.pl-bar-r .x { color:#fff; font-weight:400; }
-.pl-bar-r button:hover, .pl-bar-r a:hover { color:#fff; }
-/* 가운데 정렬은 align-items가 아닌 margin:auto — align-items:center는 넘칠 때 위쪽이 잘려 스크롤로도 못 봄 */
-.pl-body {
-  flex:1; min-height:0; overflow:auto; -webkit-overflow-scrolling:touch;
-  display:flex; padding:1.5rem;
+.pl-panel-foot a {
+  color:rgba(255,255,255,.6); text-decoration:none;
+  border-bottom:.5px solid rgba(255,255,255,.3); padding-bottom:1px; white-space:nowrap;
 }
-.pl-body picture { margin:auto; }
-/* max-height:100%는 부모(picture) 높이가 auto라 무시됨 → 바(52)+힌트(46)+여백(48)을 뺀 실측값으로 */
-.pl-body img {
-  display:block; width:auto; height:auto; max-width:100%;
-  max-height:calc(100vh - 150px); max-height:calc(100dvh - 150px);
-  cursor:zoom-in;
-}
-.pl-back.zoomed .pl-body picture { margin:0; }
-.pl-back.zoomed .pl-body img { max-width:none; max-height:none; width:1600px; cursor:zoom-out; }
-.pl-hint {
-  flex-shrink:0; text-align:center; font-size:10.5px; font-weight:300;
-  color:rgba(255,255,255,.4); letter-spacing:.02em;
-  padding:.9rem 1rem 1.2rem; border-top:.5px solid rgba(255,255,255,.14);
+.pl-panel-foot a:hover { color:#fff; border-color:#fff; }
+.pl-swipe { display:none; font-weight:300; } /* 표가 화면보다 넓어지는 폰에서만 */
+@media (prefers-reduced-motion: reduce) {
+  .pl-panel, .pl-fold, .pl-open-a i { transition:none; }
+  .pl-fold { transform:none; }
 }
 @media (max-width: 768px) {
   .pl-open { margin-top:2.5rem; padding:1.25rem 0; gap:1rem; }
   .pl-open-t { font-size:12.5px; }
   .pl-open-s { font-size:10.5px; }
   .pl-open-a { font-size:11px; }
-  .pl-bar { height:46px; padding:0 1rem; }
-  .pl-bar-r { gap:1rem; }
-  .pl-bar-r button, .pl-bar-r a { font-size:11px; }
-  .pl-body { padding:.75rem; }
-  .pl-body img { max-height:calc(100vh - 118px); max-height:calc(100dvh - 118px); }
-  .pl-back.zoomed .pl-body img { width:1300px; max-height:none; }
+  /* 폰 폭에 맞추면 숫자가 안 읽힘 → 표를 1,100px로 두고 좌우로 밀어 보게 */
+  .pl-scroll img { width:1100px; max-width:none; }
+  .pl-panel-foot { padding:.75rem .9rem; font-size:10px; align-items:flex-end; }
+  .pl-swipe { display:inline; }
 }
 
 .pd-cta {
@@ -2713,14 +2711,31 @@ body.pd-open { overflow: hidden; }
       * Galaxie는 권장 소비자가 미공시 제품으로, 시공가는 가까운 시공점에 문의해 주세요.
     </p>
 
-    <!-- 공식 PRICE LIST 원본 표 열기 (2026-08-31) — 계산기에 없는 부분 시공 가격까지 한 장에 -->
-    <button type="button" class="pl-open fi" id="plOpen" aria-haspopup="dialog">
+    <!-- 공식 PRICE LIST 원본 표 (2026-08-31) — 계산기에 없는 부분 시공 가격까지 한 장에.
+         제자리에서 아래로 펼쳐진다. 이미지 width/height를 박아 둬야 열기 전에도 높이를 알 수 있음 -->
+    <button type="button" class="pl-open fi" id="plOpen" aria-expanded="false" aria-controls="plPanel">
       <span>
         <span class="pl-open-t">2026 공식 PRICE LIST 전체 표</span>
         <span class="pl-open-s">제품별 VLT·TSER·워런티와 전체 시공 · 부분 시공 가격을 한 장으로</span>
       </span>
-      <span class="pl-open-a">표 보기 →</span>
+      <span class="pl-open-a" id="plLabel">표 보기 <i>↓</i></span>
     </button>
+
+    <div class="pl-panel" id="plPanel">
+      <div class="pl-fold" id="plFold">
+        <div class="pl-scroll">
+          <picture>
+            <source srcset="price-list.webp" type="image/webp">
+            <img src="price-list.png" id="plImg" width="2560" height="1808" loading="lazy" decoding="async"
+                 alt="THE LX 솔라가드 프리미엄 2026 공식 가격표 — LX·Vogue·Xenith IR·Quantum·Titanium·G-Line·S-Line 제품별 VLT, TSER, 제조사 워런티와 승용·SUV 전체 시공 및 부분 시공 가격(단위 만원)">
+          </picture>
+        </div>
+        <div class="pl-panel-foot">
+          <span>단위 : 만 원(₩) · 권장 소비자가<b class="pl-swipe"> · 좌우로 밀어서 보세요</b></span>
+          <a href="price-list.png" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
+        </div>
+      </div>
+    </div>
 
     <!-- 측정 기준 고지 — index.html #products 하단 블록과 동일 문구(2026-08-18 이식, 수정 시 양쪽 동기) -->
     <div class="products-disclaimer">
@@ -3842,76 +3857,54 @@ pdOverlay.querySelectorAll('button').forEach(el => {
   })();
 </script>
 
-<!-- ========================================
-     공식 PRICE LIST 뷰어 (2026-08-31)
-     원본 4967×3508 → 표시본 2560px. 원본 링크 없이 표시본이 곧 원본 다운로드 대상
-======================================== -->
-<div class="pl-back" id="plBack" role="dialog" aria-modal="true" aria-label="2026 공식 PRICE LIST" hidden>
-  <div class="pl-bar">
-    <span class="pl-bar-t">2026 PRICE LIST</span>
-    <span class="pl-bar-r">
-      <button type="button" id="plZoom">확대</button>
-      <a href="price-list.png" target="_blank" rel="noopener">새 창 ↗</a>
-      <button type="button" class="x" id="plClose">닫기</button>
-    </span>
-  </div>
-  <div class="pl-body" id="plBody">
-    <picture>
-      <source srcset="price-list.webp" type="image/webp">
-      <img src="price-list.png" id="plImg" alt="THE LX 솔라가드 프리미엄 2026 공식 가격표 — LX·Vogue·Xenith IR·Quantum·Titanium·G-Line·S-Line 제품별 VLT, TSER, 제조사 워런티와 승용·SUV 전체 시공 및 부분 시공 가격(단위 만원)">
-    </picture>
-  </div>
-  <p class="pl-hint" id="plHint">표를 누르면 확대됩니다 · 단위 : 만 원(₩)</p>
-</div>
-
 <script>
-/* PRICE LIST 뷰어 — 열기/닫기, 탭 확대, ESC, 스크롤 잠금 */
+/* PRICE LIST 표 펼치기 — 제자리에서 아래로 펴짐. 페이지 이동 없음 */
 (function(){
-  const back  = document.getElementById('plBack');
-  const open  = document.getElementById('plOpen');
-  const close = document.getElementById('plClose');
-  const zoom  = document.getElementById('plZoom');
-  const body  = document.getElementById('plBody');
+  const btn   = document.getElementById('plOpen');
+  const panel = document.getElementById('plPanel');
+  const fold  = document.getElementById('plFold');
+  const label = document.getElementById('plLabel');
   const img   = document.getElementById('plImg');
-  const hint  = document.getElementById('plHint');
-  if (!back || !open) return;
+  if (!btn || !panel || !fold) return;
 
-  let prevScrollY = 0;
+  let open = false;
 
-  function setZoom(on){
-    back.classList.toggle('zoomed', on);
-    zoom.textContent = on ? '맞춤' : '확대';
-    hint.textContent = on ? '좌우·상하로 밀어서 보세요 · 단위 : 만 원(₩)'
-                          : '표를 누르면 확대됩니다 · 단위 : 만 원(₩)';
-    if (on) { body.scrollLeft = 0; body.scrollTop = 0; }
+  function setLabel(){ label.innerHTML = (open ? '접기 ' : '표 보기 ') + '<i>\u2193</i>'; }
+
+  function openPanel(){
+    open = true;
+    btn.setAttribute('aria-expanded', 'true');
+    setLabel();
+    const h = fold.offsetHeight;           // height:0 이어도 자식의 자기 높이는 그대로 잡힌다
+    panel.style.height = h + 'px';
+    panel.classList.add('on');
+    // 펼친 표가 화면 밖으로 밀려나갈 때만 따라 내려간다 (이미 다 보이면 건드리지 않음)
+    const r = btn.getBoundingClientRect();
+    if (r.bottom + h > window.innerHeight) {
+      window.scrollTo({ top: r.top + window.scrollY - 90, behavior: 'smooth' });
+    }
   }
 
-  function openViewer(){
-    prevScrollY = window.scrollY;
-    back.hidden = false;
-    // 폰에서는 맞춤 보기로는 글씨가 안 읽히므로 확대 상태로 시작
-    setZoom(window.innerWidth < 900);
-    void back.offsetWidth; // 리플로우 강제 후 페이드 — rAF는 탭이 비활성일 때 지연돼 안 열린 것처럼 보임
-    back.classList.add('on');
-    document.body.style.overflow = 'hidden';
-    close.focus();
+  function closePanel(){
+    open = false;
+    btn.setAttribute('aria-expanded', 'false');
+    setLabel();
+    panel.style.height = panel.offsetHeight + 'px';  // height:auto → 실측값으로 고정한 뒤
+    void panel.offsetWidth;                          // 리플로우를 한 번 강제해야 0으로 접힌다
+    panel.classList.remove('on');
+    panel.style.height = '0px';
   }
 
-  function closeViewer(){
-    back.classList.remove('on');
-    document.body.style.overflow = '';
-    setTimeout(() => { back.hidden = true; }, 300);
-    open.focus();
-    window.scrollTo(0, prevScrollY);
-  }
+  btn.addEventListener('click', () => { open ? closePanel() : openPanel(); });
 
-  open.addEventListener('click', openViewer);
-  close.addEventListener('click', closeViewer);
-  zoom.addEventListener('click', () => setZoom(!back.classList.contains('zoomed')));
-  img.addEventListener('click', () => setZoom(!back.classList.contains('zoomed')));
-  body.addEventListener('click', e => { if (e.target === body) closeViewer(); });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !back.hidden) closeViewer();
+  // 다 펴진 뒤에는 auto로 — 창 크기가 바뀌어도 표 높이를 따라간다
+  panel.addEventListener('transitionend', e => {
+    if (e.propertyName === 'height' && open) panel.style.height = 'auto';
+  });
+
+  // 버튼에 손이 닿는 순간 이미지를 먼저 받아 둔다 (펼칠 때 빈 검은 칸이 보이지 않도록)
+  ['pointerenter','focus','touchstart'].forEach(ev => {
+    btn.addEventListener(ev, () => { if (img) img.loading = 'eager'; }, { once:true, passive:true });
   });
 })();
 </script>

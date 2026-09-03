@@ -95,7 +95,7 @@ h1 em{font-style:normal;font-weight:600}
     <a href="https://isolargard.com/technology.html">제품 사양</a>
     <a href="tel:16007530">A/S 문의 1600-7530</a>
   </nav>
-  <p class="foot">시험판 · 실서버 미적용</p>
+  <p class="foot">Solar Gard Premium · 품질보증서</p>
 </main>
 
 <section id="cam" hidden aria-label="스티커 번호 읽기">
@@ -116,7 +116,7 @@ h1 em{font-style:normal;font-weight:600}
   <canvas id="c" hidden></canvas>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.1/tesseract.min.js"></script>
+<script src="ocr/tesseract.min.js?v=20260903"></script>
 <script>
 (function(){
   var VIEW='https://sgp.isolargard.com/warranty_order/warranty_order_view.php?idx=1&order_num1=';
@@ -158,7 +158,7 @@ h1 em{font-style:normal;font-weight:600}
   /* ③ 인식 엔진 미리 준비 (버튼 누르기 전부터) */
   function prepWorker(){
     if(worker||!window.Tesseract) return;
-    Tesseract.createWorker('eng',1,{logger:function(){}}).then(function(w){
+    Tesseract.createWorker('eng',1,{logger:function(){},workerPath:'ocr/worker.min.js?v=20260903',corePath:'ocr/',langPath:'ocr/',gzip:true,cacheMethod:'none'}).then(function(w){
       worker=w;
       return w.setParameters({tessedit_char_whitelist:'0123456789NO.',tessedit_pageseg_mode:'6'});
     }).then(function(){ workerReady=true; statusEl.textContent='읽는 중'; })
@@ -201,6 +201,7 @@ h1 em{font-style:normal;font-weight:600}
     this.classList.toggle('on',torchOn);
   });
   $('#btnCam').addEventListener('click',openCam);
+  if(q.get('mock')==='1'){ landing.hidden=true; cam.hidden=false; layoutGuide(); video.style.background='url(car-sticker.jpg) center/cover'; statusEl.textContent='읽는 중'; if(q.get('hit')==='1'){ guide.classList.add('hit'); readEl.innerHTML='2005 8853<small>보증서 여는 중</small>'; } }
   $('#btnClose').addEventListener('click',closeCam);
   $('#btnManual').addEventListener('click',function(){ closeCam(); $('#no').focus(); });
   window.addEventListener('resize',function(){ if(!cam.hidden) layoutGuide(); });
@@ -238,9 +239,8 @@ h1 em{font-style:normal;font-weight:600}
   }
   /* ⑥ 읽은 글자에서 8자리 뽑기 — "NO."가 "N0."로 읽혀 앞에 0이 붙는 경우 처리 */
   function extract(text){
-    // 안전장치: 반드시 "NO." 접두가 붙은 8자리만 인정 — 거꾸로 읽힌 숫자(예: 58850020)를 배제하기 위해 단독 8자리는 받지 않는다
-    var t=text.replace(/[ \t]+/g,'');
-    var m=t.match(/N[O0]?\.?(\d{8})(?!\d)/);          // "NO.20059201" / "N0.20059201" / "N.20059201"
+    // 안전장치: 반드시 "NO." 접두가 붙은 8자리만 인정 — 거꾸로 읽힌 숫자(예: 58850020)를 배제. 공백은 지우지 않는다(뒤 토큰과 붙어 9자리+로 보이는 오류 방지)
+    var m=text.match(/N\s?[O0]?\s?\.?\s*(\d{8})(?![\d])/);
     return m ? m[1] : null;
   }
   function handle(text,deg){

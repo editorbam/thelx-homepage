@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>품질보증서 · 스티커 번호로 열기</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&display=swap">
 <style>
 /* THE LX 조회 페이지 문법 상속 (잉크 검정·헤어라인·pill·Noto Sans KR) — sgp warranty_order/style.css 2026-08-12 */
 :root{--black:#0a0a0a;--white:#fff;--gray-1:#f5f5f7;--gray-2:#e8e8ed;--gray-3:#6e6e73;--gray-4:#1d1d1f;--hl:#e6ff32}
@@ -55,7 +54,8 @@ h1 em{font-style:normal;font-weight:600}
 #guide i:nth-child(2){right:-2px;top:-2px;border-left:0;border-bottom:0}
 #guide i:nth-child(3){left:-2px;bottom:-2px;border-right:0;border-top:0}
 #guide i:nth-child(4){right:-2px;bottom:-2px;border-left:0;border-top:0}
-#cam .hint{position:absolute;left:0;right:0;top:calc(var(--gt) - 3.2rem);text-align:center;font-size:.95rem;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+#cam .hint small{display:block;font-size:.8rem;opacity:.8;font-weight:300}
+#cam .hint{position:absolute;left:0;right:0;top:calc(var(--gt) - 4rem);text-align:center;font-size:.95rem;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 #cam .read{position:absolute;left:0;right:0;top:calc(var(--gt) + var(--gh) + 1.2rem);text-align:center;font-size:1.5rem;letter-spacing:.14em;font-variant-numeric:tabular-nums;font-weight:500;min-height:2rem}
 #cam .read small{display:block;font-size:.8rem;letter-spacing:0;font-weight:300;opacity:.8;margin-top:.2rem}
 #cam .top{position:absolute;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top) + 12px) 16px 0;display:flex;justify-content:space-between;align-items:center}
@@ -88,7 +88,7 @@ h1 em{font-style:normal;font-weight:600}
     <input id="no" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="NO. 뒤 8자리 직접 입력" aria-label="스티커 번호 8자리">
     <button type="submit">보증서 보기</button>
   </form>
-  <div class="where"><div class="mini"></div><div>번호는 QR 옆 <b>NO.</b> 뒤 8자리입니다. 앞유리 안쪽 스티커를 보세요.</div></div>
+  <div class="where"><div class="mini"></div><div>번호는 QR 옆 <b>NO.</b> 뒤 8자리입니다. 차 문틀이나 유리에 붙은 스티커를 보세요.</div></div>
 
   <nav class="links">
     <a href="https://isolargard.com/stores.html">전국 시공점</a>
@@ -101,7 +101,7 @@ h1 em{font-style:normal;font-weight:600}
 <section id="cam" hidden aria-label="스티커 번호 읽기">
   <video id="v" playsinline muted autoplay></video>
   <div class="shade"></div>
-  <div class="hint">틀 안에 <b>NO.</b>와 숫자 8자리를 가로로 맞춰 주세요</div>
+  <div class="hint">스티커 전체가 틀 안에 들어오게 해 주세요<br><small>방향은 상관없습니다</small></div>
   <div id="guide"><i></i><i></i><i></i><i></i></div>
   <div class="read" id="read"></div>
   <div class="top">
@@ -160,7 +160,7 @@ h1 em{font-style:normal;font-weight:600}
     if(worker||!window.Tesseract) return;
     Tesseract.createWorker('eng',1,{logger:function(){}}).then(function(w){
       worker=w;
-      return w.setParameters({tessedit_char_whitelist:'0123456789NO.',tessedit_pageseg_mode:'7'});
+      return w.setParameters({tessedit_char_whitelist:'0123456789NO.',tessedit_pageseg_mode:'6'});
     }).then(function(){ workerReady=true; statusEl.textContent='읽는 중'; })
       .catch(function(err){ statusEl.textContent='인식 엔진을 불러오지 못했습니다. 직접 입력해 주세요.'; console.error(err); });
   }
@@ -169,8 +169,8 @@ h1 em{font-style:normal;font-weight:600}
   /* ④ 카메라 */
   function layoutGuide(){
     var W=window.innerWidth,H=window.innerHeight;
-    var gw=Math.min(W*0.84,560), gh=Math.round(gw/3.6);
-    var gx=Math.round((W-gw)/2), gt=Math.round(H*0.36);
+    var gw=Math.min(W*0.84,520), gh=gw;
+    var gx=Math.round((W-gw)/2), gt=Math.round((H-gw)/2 - H*0.04);
     cam.style.setProperty('--gx',gx+'px'); cam.style.setProperty('--gt',gt+'px');
     cam.style.setProperty('--gh',gh+'px'); cam.style.setProperty('--gb',(H-gt-gh)+'px');
     return {gx:gx,gt:gt,gw:gw,gh:gh,W:W,H:H};
@@ -206,18 +206,28 @@ h1 em{font-style:normal;font-weight:600}
   window.addEventListener('resize',function(){ if(!cam.hidden) layoutGuide(); });
 
   /* ⑤ 가이드 틀 영역만 잘라 인식 — 화면(object-fit:cover) 좌표 → 영상 좌표 */
+  var rots=[0,90,180,270], rotIdx=0, prefRot=null;
+  function rotated(src,deg){
+    if(deg===0) return src;
+    var c=document.createElement('canvas'), x=c.getContext('2d');
+    if(deg===180){ c.width=src.width; c.height=src.height; } else { c.width=src.height; c.height=src.width; }
+    x.translate(c.width/2,c.height/2); x.rotate(deg*Math.PI/180); x.drawImage(src,-src.width/2,-src.height/2);
+    return c;
+  }
   function tick(){
     if(busy||!workerReady||done||!video.videoWidth) return;
     var g=layoutGuide(), vw=video.videoWidth, vh=video.videoHeight;
     var scale=Math.max(g.W/vw, g.H/vh);           // cover 배율
     var offX=(vw*scale-g.W)/2, offY=(vh*scale-g.H)/2;
     var sx=(g.gx+offX)/scale, sy=(g.gt+offY)/scale, sw=g.gw/scale, sh=g.gh/scale;
-    var tw=520, th=Math.round(tw*sh/sw);
+    var tw=600, th=Math.round(tw*sh/sw);
     canvas.width=tw; canvas.height=th;
     ctx.drawImage(video,sx,sy,sw,sh,0,0,tw,th);
     enhance();
+    var deg = prefRot!==null ? prefRot : rots[rotIdx];   // 성공한 방향이 있으면 고정, 없으면 한 틱에 한 방향씩
+    if(prefRot===null) rotIdx=(rotIdx+1)%rots.length;
     busy=true;
-    worker.recognize(canvas).then(function(r){ handle(r.data.text||''); }).catch(function(){}).finally(function(){ busy=false; });
+    worker.recognize(rotated(canvas,deg)).then(function(r){ handle(r.data.text||'', deg); }).catch(function(){}).finally(function(){ busy=false; });
   }
   function enhance(){ // 흑백 + 대비 늘리기 (인쇄 글자 강조)
     var im=ctx.getImageData(0,0,canvas.width,canvas.height), d=im.data, mn=255, mx=0, i, v;
@@ -228,16 +238,14 @@ h1 em{font-style:normal;font-weight:600}
   }
   /* ⑥ 읽은 글자에서 8자리 뽑기 — "NO."가 "N0."로 읽혀 앞에 0이 붙는 경우 처리 */
   function extract(text){
-    var t=text.replace(/\s+/g,'');
-    var m=t.match(/N?[O0]?\.?(\d{8})(?!\d)/);
-    if(m) return m[1];
-    var digits=t.replace(/\D/g,'');
-    if(digits.length===8) return digits;
-    if(digits.length===9&&/N/i.test(t)) return digits.slice(1);
-    return null;
+    // 안전장치: 반드시 "NO." 접두가 붙은 8자리만 인정 — 거꾸로 읽힌 숫자(예: 58850020)를 배제하기 위해 단독 8자리는 받지 않는다
+    var t=text.replace(/[ \t]+/g,'');
+    var m=t.match(/N[O0]?\.?(\d{8})(?!\d)/);          // "NO.20059201" / "N0.20059201" / "N.20059201"
+    return m ? m[1] : null;
   }
-  function handle(text){
+  function handle(text,deg){
     var no=extract(text);
+    if(no&&deg!==undefined) prefRot=deg; else if(!no&&prefRot!==null&&deg===prefRot){ prefRot=null; }
     if(TEST) statusEl.textContent='읽음: '+JSON.stringify(text.trim());
     if(!no){ if(!TEST) statusEl.textContent='읽는 중'; guide.classList.remove('hit'); readEl.textContent=''; last=null; return; }
     readEl.innerHTML=no.replace(/(\d{4})(\d{4})/,'$1 $2')+'<small>한 번 더 확인 중</small>';
@@ -251,8 +259,9 @@ h1 em{font-style:normal;font-weight:600}
     f.addEventListener('change',function(){
       if(!this.files[0]) return; var img=new Image();
       img.onload=function(){
-        var tw=520, th=Math.round(tw*img.height/img.width); canvas.width=tw; canvas.height=th; ctx.drawImage(img,0,0,tw,th); enhance();
-        var run=function(){ worker.recognize(canvas).then(function(r){ var t=r.data.text||''; camMsg.textContent='읽음: '+JSON.stringify(t.trim())+' → '+(extract(t)||'없음'); }); };
+        var tw=600, th=Math.round(tw*img.height/img.width); canvas.width=tw; canvas.height=th; ctx.drawImage(img,0,0,tw,th); enhance();
+        var run=function(){ var out=[]; (function next(i){ if(i>=rots.length){ camMsg.textContent=out.join(' | '); return; }
+            worker.recognize(rotated(canvas,rots[i])).then(function(r){ var t=r.data.text||''; out.push(rots[i]+'°: '+(extract(t)||'없음')); next(i+1); }); })(0); };
         if(workerReady) run(); else { camMsg.textContent='엔진 준비 중…'; var iv=setInterval(function(){ if(workerReady){clearInterval(iv);run();} },200); }
       };
       img.src=URL.createObjectURL(this.files[0]);

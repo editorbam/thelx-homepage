@@ -1110,11 +1110,11 @@
 </script>
 
 <!-- 배경 음악 (index.html과 이어듣기 — sessionStorage 'thelxBgm'로 위치·상태 왕복) -->
-<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
+<button class="hero-sound" id="heroSound" type="button" style="display:none" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
   <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
   <span class="label" id="heroSoundLabel">Mute</span>
 </button>
-<audio id="heroAudio" src="hero-music.mp3?v=2" loop preload="none"></audio>
+<audio id="heroAudio" data-src="hero-music.mp3?v=2" loop preload="none"></audio>
 <script>
   (function(){
     var audio = document.getElementById('heroAudio');

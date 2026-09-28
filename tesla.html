@@ -567,9 +567,12 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-leaves-line{top:auto;bottom:96px;transform:translateY(calc((1 - var(--a3,0))*14px))}
   .tv-leaves-logo{bottom:24px}
   /* 오너 조합: 왼쪽 반쪽에만 서 있던 세로 차 → 가운데·작게, 캡션도 가운데 */
-  .tv-combo-sec .tv-combo{display:flex;flex-direction:column;align-items:center;margin-top:12px}
-  .tv-combo-sec .tv-combo-stage{width:min(200px,50%)}
-  .tv-combo-cap{text-align:center}
+  .tv-combo-sec .tv-combo{display:flex;flex-direction:column;align-items:flex-start;margin-top:12px}
+  .tv-combo-sec .tv-combo-stage{width:42%;margin-left:var(--gut)}
+  /* 웹과 같은 콜아웃(전면·루프·측후면)을 폰에서도: 선은 짧게, 글은 차 오른쪽 빈 자리에 (사용자 요청 9/28) */
+  .tv-combo .tv-co{display:block;--h:44px!important;--w:min(200px,calc(100vw - 42vw - var(--gut)*2 - 60px))!important}
+  .tv-combo .tv-co>span{font-size:13px;line-height:1.45} .tv-combo .tv-co>span>b{margin-bottom:1px}
+  .tv-combo-cap{text-align:left;padding-left:var(--gut)}
   /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
   .tv-side{height:auto}
@@ -584,7 +587,14 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-mbar .co-row::after{width:var(--v)} .tv-mbar .batt-fill{width:100%}
   /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
   .tv-gx{margin-top:0}
-  .tv-gx-stick{transform:none!important;pointer-events:auto}
+  .tv-gx-stick{pointer-events:auto}
+  /* 웹과 같은 줌인 연출(사용자 요청 9/28): 검은 실내 12×에서 빠져나와 차 전체 → 유리 짙어짐 → 글·목록. will-change 없음(iOS 탭 오작동 교훈) */
+  .tv-gx-top .tv-gx-frame{display:flex;flex-direction:column}
+  .tv-gx-top .tv-gx-carbox{order:-1;margin:0;position:relative;z-index:3}
+  .tv-gx-top .tv-gx-carwrap{transform:translate(calc(var(--dx,0px)*(1 - var(--z,1))),calc(var(--dy,0px)*(1 - var(--z,1)))) scale(var(--sc,1));transform-origin:45% 50%}
+  .tv-gx-top .tv-gx-frame::before{content:"";position:absolute;inset:0;background:#000;opacity:var(--veil,0);z-index:4;pointer-events:none}
+  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{opacity:var(--cp,0)}
+  .tv-gx-top .tv-gx-copy{padding-top:16px}
   /* + 버튼: iOS 탭 지연·하이라이트 제거 */
   .tv-mplus{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
@@ -891,7 +901,7 @@ var tx=0,ty=0,tk=false;b.addEventListener('touchstart',function(e){var p=e.touch
 b.addEventListener('touchend',function(e){if(!tk)return;tk=false;var p=e.changedTouches[0];if(Math.abs(p.clientX-tx)>12||Math.abs(p.clientY-ty)>12)return;e.preventDefault();toggle()});
 b.addEventListener('click',toggle);m.querySelector('.tv-mbar-x').addEventListener('click',close);
 m.querySelectorAll('[data-tab]').forEach(function(c){c.addEventListener('click',function(){var k=c.dataset.tab;m.querySelectorAll('[data-tab]').forEach(function(x){x.classList.toggle('on',x===c);x.setAttribute('aria-selected',x===c?'true':'false')});m.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==k});m.querySelector('.tv-mbar-body').scrollTop=0})});})();
-(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');function u(){var r=g.getBoundingClientRect();var ih=innerHeight;var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));g.style.setProperty('--f',f.toFixed(3));g.classList.toggle('on',f>=.99);g.style.setProperty('--p',p.toFixed(3));if(g.classList.contains('tv-gx-top')){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cb=g.querySelector('.tv-gx-carbox').getBoundingClientRect();g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c){var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}var q=Math.min(1,Math.max(0,(p-.38)/.62));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}else g.style.setProperty('--s','0px')}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u()})();
+(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');function u(){var r=g.getBoundingClientRect();var ih=innerHeight;var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));g.style.setProperty('--f',f.toFixed(3));g.classList.toggle('on',f>=.99);g.style.setProperty('--p',p.toFixed(3));if(g.classList.contains('tv-gx-top')){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cb=g.querySelector('.tv-gx-carbox').getBoundingClientRect();g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c){var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}var q=Math.min(1,Math.max(0,(p-.66)/.34));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}else g.style.setProperty('--s','0px')}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u()})();
 (function(){var l=document.getElementById('leaves');if(!l)return;var cv=l.querySelector('.tv-leaves-cv');if(!cv)return;var ctx=cv.getContext('2d');
 /* 나뭇잎 리빌=이미지 시퀀스(img/leaves-seq/f_001~097.jpg, 12fps). 사파리에서 video.currentTime 스크럽이 그려지지 않아 영상 대신 프레임을 캔버스에 직접 그림 (2026-09-11) */
 var N=97,CS=.5,VE=.84,F=[],loaded=0,cur=-1,raf=0,W=0,H=0,dpr=1;

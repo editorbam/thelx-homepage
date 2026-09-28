@@ -571,7 +571,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-side{height:auto;view-timeline-name:--side;view-timeline-axis:block}
   .tv-side-stick{position:sticky;top:0;z-index:1;height:auto;min-height:0;overflow:visible;clip-path:inset(0);padding:116px 0 28px;display:block;background:#f4f4f4} /* 9/28 녹화: 화면 한 장 무대는 위아래가 비어 보임 → 차 높이만큼만. overflow:hidden·clip 금지(자식 view() 죽음) */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
-  .tv-side-track .tv-wheel{transform:translate(-50%,-50%)} /* view() 미지원 폰: JS --r 회전 차단(지원 폰은 wheelIn이 덮음) */
+  .tv-side-track .tv-wheel{transform:none;translate:-50% -50%;rotate:0deg} /* 폰: 중심 맞춤은 애니메이션 밖(translate 속성) — iOS가 키프레임 안 %translate를 어긋나게 계산(9/28 실기: 바퀴살 처짐). 회전은 rotate 속성만 애니메이션 */
+  .tv-side-tag{transform:none;translate:0 -50%}
   picture{display:block}
   .tv-side-track .tv-car{width:100%;height:auto}
   /* 차 뒤 배경 글자 「Xenith IR for Tesla」(웹과 동일) — 폰은 차 중심 높이에 한 줄, 차가 들어올 때 함께 떠오름 */
@@ -633,8 +634,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both,gxUp linear both;animation-timeline:--gx,--gx;animation-range:contain 50% contain 60%,contain 58% contain 100%}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
-@keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
-@keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(536deg)}to{transform:translate(-50%,-50%) rotate(0deg)}} /* 차가 왼쪽으로 달림 → 바퀴는 반시계(각도 감소). 팝업 JS(--r=-(이동)/반지름)와 같은 방향 */
+@keyframes tagIn{from{opacity:0;transform:translateX(-8vw)}to{opacity:1;transform:none}}
+@keyframes wheelIn{from{rotate:536deg}to{rotate:0deg}} /* 차가 왼쪽으로 달림 → 바퀴는 반시계(각도 감소). 팝업 JS(--r=-(이동)/반지름)와 같은 방향 */
 @keyframes gxUp{from{transform:none}to{transform:translateY(calc(-1 * var(--over,0px)))}}
 @keyframes barFill{from{width:0}to{width:var(--v)}}
 @keyframes battFill{from{width:0}to{width:100%}}

@@ -638,6 +638,9 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--side;animation-range:entry 45% contain 180px} /* 차와 같은 타임라인·구간, 회전량=이동 70vw÷바퀴반지름(7.47vw)=536° */
   .tv-side-tag{animation:tagIn linear both;animation-timeline:--side;animation-range:entry 30% entry 90%}
   .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 58% contain 100%}
+  /* 스펙 막대·배터리: 줄이 화면 아래에서 40% 높이까지 올라오는 동안 스크롤에 비례해 차오름 (사용자 요청 9/28) */
+  .tv-mbar .co-row::after{animation:barFill linear both;animation-timeline:view();animation-range:cover 5% cover 40%;transition:none}
+  .tv-mbar .batt-fill{animation:battFill linear both;animation-timeline:view();animation-range:cover 5% cover 45%;transition:none}
   /* 글·목록은 등장(gxText)+흘림(gxUp) 둘 다 — 한 요소에 animation을 두 번 선언하면 뒤가 앞을 지워 글이 안 보였음(9/28 실기 '정보 사라짐') */
   .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both,gxUp linear both;animation-timeline:--gx,--gx;animation-range:contain 50% contain 60%,contain 58% contain 100%}
 }}
@@ -645,6 +648,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 @keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
 @keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(536deg)}to{transform:translate(-50%,-50%) rotate(0deg)}} /* 차가 왼쪽으로 달림 → 바퀴는 반시계(각도 감소). 팝업 JS(--r=-(이동)/반지름)와 같은 방향 */
 @keyframes gxUp{from{transform:none}to{transform:translateY(calc(-1 * var(--over,0px)))}}
+@keyframes barFill{from{width:0}to{width:var(--v)}}
+@keyframes battFill{from{width:0}to{width:100%}}
 </style>
 </head>
 <body>

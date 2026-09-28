@@ -570,6 +570,21 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-combo-sec .tv-combo{display:flex;flex-direction:column;align-items:center;margin-top:12px}
   .tv-combo-sec .tv-combo-stage{width:min(200px,50%)}
   .tv-combo-cap{text-align:center}
+  /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다
+     — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
+  .tv-side{height:auto}
+  .tv-side-stick{position:static;height:auto;overflow:visible;padding:28px 0 0}
+  .tv-side-track{position:relative;left:auto;top:auto;transform:none!important;width:100%;margin:0 auto}
+  .tv-side-track .tv-car{width:100%;height:auto}
+  .tv-side-tag,.tv-mplus,.tv-mbar-head{display:none!important}
+  .tv-mbar{position:static;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:none;border-radius:0;background:#fff;margin-top:20px}
+  .tv-mbar-body{overflow:visible;padding:28px var(--gut) 36px}
+  .tv-mbar-pane{display:block!important}
+  .tv-mbar-pane+.tv-mbar-pane{margin-top:30px;padding-top:26px;border-top:.5px solid rgba(0,0,0,.12)}
+  .tv-mbar .co-row::after{width:var(--v)} .tv-mbar .batt-fill{width:100%}
+  /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
+  .tv-gx{margin-top:0}
+  .tv-gx-stick{transform:none!important;pointer-events:auto}
   /* + 버튼: iOS 탭 지연·하이라이트 제거 */
   .tv-mplus{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }

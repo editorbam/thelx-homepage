@@ -578,13 +578,13 @@ img,svg{display:block;max-width:100%} a{color:inherit}
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
   /* 9/28 16:40 구조 변경(사용자: 섹션이 스르륵 지나감·글자는 차가 덮어야): 차 무대=화면 한 장 고정(sticky) → 차가 들어오며 뒤의 작은 글자를 덮음 → 제품·스펙·Effect 묶음이 그 위로 올라옴(JS가 mBar를 stick 뒤로 옮김) */
   .tv-side{height:auto;view-timeline-name:--side;view-timeline-axis:block}
-  .tv-side-stick{position:sticky;top:0;z-index:1;height:100lvh;overflow:visible;clip-path:inset(0);padding:100px 0 0;display:flex;align-items:center;background:#f4f4f4} /* overflow:hidden·clip 금지(자식 view() 죽음) */
+  .tv-side-stick{position:sticky;top:0;z-index:1;height:auto;min-height:0;overflow:visible;clip-path:inset(0);padding:116px 0 28px;display:block;background:#f4f4f4} /* 9/28 녹화: 화면 한 장 무대는 위아래가 비어 보임 → 차 높이만큼만. overflow:hidden·clip 금지(자식 view() 죽음) */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
   .tv-side-track .tv-car{width:100%;height:auto}
   .tv-mplus,.tv-mbar-head{display:none!important}
   /* 차 뒤 배경 글자 「Xenith IR for Tesla」(웹과 동일) — 폰은 차 중심 높이에 한 줄, 차가 들어올 때 함께 떠오름 */
-  .tv-side-tag{display:block;top:calc(50% + 50px);font-size:6.2vw;clip-path:none;z-index:0} /* 차 몸통 높이에 작게 — 차가 도착하면 완전히 가려짐(웹의 clip 연출과 같은 결과). 바닥 그림자는 기존 .tv-side-track::after */
-  .tv-mbar{position:relative;z-index:2;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:0 -10px 30px rgba(0,0,0,.08);border-radius:20px 20px 0 0;background:#fff;margin-top:55dvh} /* 차가 도착한 뒤 무대가 잠깐 머물도록 — 그 사이 배경은 .tv-side #f4f4f4 */
+  .tv-side-tag{display:block;top:calc(116px + 19.7vw);font-size:6.2vw;clip-path:none;z-index:0} /* 차 몸통 높이에 작게 — 차가 도착하면 완전히 가려짐(웹의 clip 연출과 같은 결과). 바닥 그림자는 기존 .tv-side-track::after */
+  .tv-mbar{position:relative;z-index:2;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:0 -10px 30px rgba(0,0,0,.08);border-radius:20px 20px 0 0;background:#fff;margin-top:0}
   .tv-mbar-body{overflow:visible;padding:28px var(--gut) 36px}
   .tv-mbar-pane{display:block!important}
   .tv-mbar-pane+.tv-mbar-pane{margin-top:30px;padding-top:26px;border-top:.5px solid rgba(0,0,0,.12)}
@@ -594,8 +594,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-mbar-pane.go>:nth-child(2),.tv-mbar-pane.go .co-block>:nth-child(2){transition-delay:.1s} .tv-mbar-pane.go>:nth-child(3),.tv-mbar-pane.go .co-block>:nth-child(3){transition-delay:.2s} .tv-mbar-pane.go>:nth-child(4),.tv-mbar-pane.go .co-block>:nth-child(4){transition-delay:.3s} .tv-mbar-pane.go>:nth-child(5),.tv-mbar-pane.go .co-block>:nth-child(5){transition-delay:.4s} .tv-mbar-pane.go>:nth-child(n+6),.tv-mbar-pane.go .co-block>:nth-child(n+6){transition-delay:.5s}
   .tv-mbar-pane.go .co-row::after{width:var(--v);transition-delay:.35s} .tv-mbar-pane.go .batt-fill{width:100%}
   /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
-  .tv-gx{margin-top:0}
-  .tv-gx-stick{pointer-events:auto}
+  .tv-gx{margin-top:0;height:380vh}
+  .tv-gx-stick{pointer-events:auto;transform:none!important} /* 폰: 아래서 미끄러져 올라오는 단계(흰 화면 한 장) 제거 */
   /* 웹과 같은 줌인 연출(사용자 요청 9/28): 검은 실내 12×에서 빠져나와 차 전체 → 유리 짙어짐 → 글·목록. will-change 없음(iOS 탭 오작동 교훈) */
   .tv-gx-top .tv-gx-frame{display:flex;flex-direction:column}
   .tv-gx-top .tv-gx-carbox{order:-1;margin:0;position:relative;z-index:3}
@@ -604,6 +604,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-gx-top .tv-gx-frame::before{content:"";position:absolute;inset:0;background:#000;opacity:var(--veil,0);z-index:4;pointer-events:none}
   .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{opacity:var(--cp,0)}
   .tv-gx-top .tv-gx-copy{padding-top:16px}
+  .tv-combo-sec .tv-combo-stage{opacity:1;transform:none;transition:none} .tv-combo-sec .tv-co.hz::before{transform:none;transition:none} .tv-combo-sec .tv-co.hz>span{opacity:1;transform:none;transition:none} /* 폰: 등장 대기 중 빈 자리로 보임(녹화 14.5s) → 즉시 표시 */
+  .tv-leaves{height:320vh} /* 폰: 덮개 문구 전 흰 화면 구간 축소(녹화 18~19.5s) */
   /* + 버튼: iOS 탭 지연·하이라이트 제거 */
   .tv-mplus{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
@@ -613,11 +615,10 @@ img,svg{display:block;max-width:100%} a{color:inherit}
    p(0→1) = 섹션이 화면을 덮는 구간(contain)의 25%→100% (섹션 500vh: t=.25+.75p). 미지원 기기는 기존 JS 경로 그대로. */
 @supports (animation-timeline: view()) { @media (max-width:900px){
   .tv-gx{view-timeline-name:--gx;view-timeline-axis:block}
-  .tv-gx-stick{animation:gxIn linear both;animation-timeline:--gx;animation-range:contain 0% contain 25%}
-  .tv-gx-top .tv-gx-carwrap{animation:gxZoom linear both;animation-timeline:--gx;animation-range:contain 25% contain 66.25%}
-  .tv-gx-top .tv-gx-frame::before{animation:gxVeil linear both;animation-timeline:--gx;animation-range:contain 25% contain 36.25%}
-  .tv-gx-top.ba .tv-gx-after{animation:gxTint linear both;animation-timeline:--gx;animation-range:contain 62.5% contain 73.75%}
-  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both;animation-timeline:--gx;animation-range:contain 70% contain 85%}
+  .tv-gx-top .tv-gx-carwrap{animation:gxZoom linear both;animation-timeline:--gx;animation-range:contain 4% contain 46%}
+  .tv-gx-top .tv-gx-frame::before{animation:gxVeil linear both;animation-timeline:--gx;animation-range:contain 0% contain 8%}
+  .tv-gx-top.ba .tv-gx-after{animation:gxTint linear both;animation-timeline:--gx;animation-range:contain 44% contain 54%}
+  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both;animation-timeline:--gx;animation-range:contain 50% contain 60%}
 }}
 @keyframes gxIn{from{transform:translateY(100%)}to{transform:none}}
 /* 12×→1× 지수 곡선을 5점으로 근사. 줌 원점(앞좌석 사이 콘솔 왼쪽 틈)=차 박스의 45%/50% → 프레임 중앙으로 끌어오는 이동량: x 5vw, y (100lvh-100px)/2 - 23.47vw(차 높이의 절반) */
@@ -633,16 +634,16 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 
 /* ===== 폰 옆모습·탑뷰 추가 모션 (2026-09-28, "모바일이 심심하다") — 전부 scroll-driven, JS 없음 ===== */
 @supports (animation-timeline: view()) { @media (max-width:900px){
-  .tv-side-track{animation:carIn linear both;animation-timeline:--side;animation-range:entry 60% contain 240px}
-  .tv-side-track .tv-wheel,.tv-side-track .tv-wheel-bg{display:none} /* 폰: 회전 오버레이 끔(누끼 차에 바퀴 포함) — 두 겹이 따로 움직이며 어긋나던 실기 증상 제거 */
+  .tv-side-track{animation:carIn linear both;animation-timeline:--side;animation-range:entry 45% contain 180px}
+  .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--side;animation-range:entry 45% contain 180px} /* 차와 같은 타임라인·구간, 회전량=이동 70vw÷바퀴반지름(7.47vw)=536° */
   .tv-side-tag{animation:tagIn linear both;animation-timeline:--side;animation-range:entry 30% entry 90%}
-  .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 74.5% contain 100%}
+  .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 58% contain 100%}
   /* 글·목록은 등장(gxText)+흘림(gxUp) 둘 다 — 한 요소에 animation을 두 번 선언하면 뒤가 앞을 지워 글이 안 보였음(9/28 실기 '정보 사라짐') */
-  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both,gxUp linear both;animation-timeline:--gx,--gx;animation-range:contain 70% contain 85%,contain 74.5% contain 100%}
+  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both,gxUp linear both;animation-timeline:--gx,--gx;animation-range:contain 50% contain 60%,contain 58% contain 100%}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
 @keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
-@keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(-560deg)}to{transform:translate(-50%,-50%) rotate(0deg)}}
+@keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(-536deg)}to{transform:translate(-50%,-50%) rotate(0deg)}}
 @keyframes gxUp{from{transform:none}to{transform:translateY(calc(-1 * var(--over,0px)))}}
 </style>
 </head>

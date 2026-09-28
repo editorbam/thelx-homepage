@@ -568,9 +568,9 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-leaves-logo{bottom:24px}
   /* 오너 조합: 왼쪽 반쪽에만 서 있던 세로 차 → 가운데·작게, 캡션도 가운데 */
   .tv-combo-sec .tv-combo{display:flex;flex-direction:column;align-items:flex-start;margin-top:12px}
-  .tv-combo-sec .tv-combo-stage{width:42%;margin-left:var(--gut)}
-  /* 웹과 같은 콜아웃(전면·루프·측후면)을 폰에서도: 선은 짧게, 글은 차 오른쪽 빈 자리에 (사용자 요청 9/28) */
-  .tv-combo .tv-co{display:block;--h:44px!important;--w:min(200px,calc(100vw - 42vw - var(--gut)*2 - 60px))!important}
+  .tv-combo-sec .tv-combo-stage{width:34vw;margin-left:var(--gut)}
+  /* 웹과 같은 콜아웃(전면·루프·측후면)을 폰에서도: 선은 차 중심(52%)에서 차 바깥 24px까지, 글은 오른쪽 여백 전체 (사용자 요청 9/28, 14:50 글이 차에 가림→연장) */
+  .tv-combo .tv-co{display:block;--h:calc(34vw*.48 + 24px)!important;--w:calc(100vw - var(--gut)*2 - 34vw - 24px - 12px - 28px)!important}
   .tv-combo .tv-co>span{font-size:13px;line-height:1.45} .tv-combo .tv-co>span>b{margin-bottom:1px}
   .tv-combo-cap{text-align:left;padding-left:var(--gut)}
   /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다

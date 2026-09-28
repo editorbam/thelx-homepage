@@ -561,7 +561,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 /* ===== 폰 보정 (2026-09-28, 사용자 실기 제보: 크기 안 맞음·렉·+버튼) ===== */
 @media (max-width:900px){
   /* 고정 무대 높이 = 실제 보이는 화면(dvh) — svh로 두면 주소창이 접힐 때 아래에 다음 섹션이 흰 띠로 비침 */
-  .tv-side-stick,.tv-gx-stick,.tv-leaves-stick{height:100dvh}
+  .tv-side-stick,.tv-gx-stick,.tv-leaves-stick{height:100vh;height:100lvh} /* dvh 금지 — iOS 주소창 접힘마다 높이가 바뀌어 스크롤이 튐(9/28 실기). lvh=고정값 */
   .tv-side{overflow-x:clip} /* 차가 오른쪽 밖에서 들어올 때 가로 스크롤 차단. 주의: stick(부모)에 걸면 WebKit에서 자식 view() 타임라인이 죽고, html/body에 걸면 안 막힘 — 섹션에만 */
   /* 나뭇잎: 세로 프레임에 16:9 영상을 꽉 채우면 뒷바퀴만 크게 잘림 → 캔버스만 16:9로 가운데, 글·로고는 위아래 */
   .tv-leaves-frame .tv-leaves-cv{inset:auto;left:0;right:0;top:50%;height:calc(100vw*9/16);transform:translateY(-50%)}
@@ -578,7 +578,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
   /* 9/28 16:40 구조 변경(사용자: 섹션이 스르륵 지나감·글자는 차가 덮어야): 차 무대=화면 한 장 고정(sticky) → 차가 들어오며 뒤의 작은 글자를 덮음 → 제품·스펙·Effect 묶음이 그 위로 올라옴(JS가 mBar를 stick 뒤로 옮김) */
   .tv-side{height:auto;view-timeline-name:--side;view-timeline-axis:block}
-  .tv-side-stick{position:sticky;top:0;z-index:1;height:100dvh;overflow:visible;clip-path:inset(0);padding:100px 0 0;display:flex;align-items:center;background:#f4f4f4} /* overflow:hidden·clip 금지(자식 view() 죽음) */
+  .tv-side-stick{position:sticky;top:0;z-index:1;height:100lvh;overflow:visible;clip-path:inset(0);padding:100px 0 0;display:flex;align-items:center;background:#f4f4f4} /* overflow:hidden·clip 금지(자식 view() 죽음) */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
   .tv-side-track .tv-car{width:100%;height:auto}
   .tv-mplus,.tv-mbar-head{display:none!important}
@@ -620,12 +620,12 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both;animation-timeline:--gx;animation-range:contain 70% contain 85%}
 }}
 @keyframes gxIn{from{transform:translateY(100%)}to{transform:none}}
-/* 12×→1× 지수 곡선을 5점으로 근사. 줌 원점(앞좌석 사이 콘솔 왼쪽 틈)=차 박스의 45%/50% → 프레임 중앙으로 끌어오는 이동량: x 5vw, y (100dvh-100px)/2 - 23.47vw(차 높이의 절반) */
+/* 12×→1× 지수 곡선을 5점으로 근사. 줌 원점(앞좌석 사이 콘솔 왼쪽 틈)=차 박스의 45%/50% → 프레임 중앙으로 끌어오는 이동량: x 5vw, y (100lvh-100px)/2 - 23.47vw(차 높이의 절반) */
 @keyframes gxZoom{
-  0%{transform:translate(5vw,calc((100dvh - 100px)/2 - 23.47vw)) scale(12)}
-  13.4%{transform:translate(3.75vw,calc(((100dvh - 100px)/2 - 23.47vw)*.75)) scale(6.45)}
-  29.3%{transform:translate(2.5vw,calc(((100dvh - 100px)/2 - 23.47vw)*.5)) scale(3.46)}
-  50%{transform:translate(1.25vw,calc(((100dvh - 100px)/2 - 23.47vw)*.25)) scale(1.86)}
+  0%{transform:translate(5vw,calc((100lvh - 100px)/2 - 23.47vw)) scale(12)}
+  13.4%{transform:translate(3.75vw,calc(((100lvh - 100px)/2 - 23.47vw)*.75)) scale(6.45)}
+  29.3%{transform:translate(2.5vw,calc(((100lvh - 100px)/2 - 23.47vw)*.5)) scale(3.46)}
+  50%{transform:translate(1.25vw,calc(((100lvh - 100px)/2 - 23.47vw)*.25)) scale(1.86)}
   100%{transform:none}}
 @keyframes gxVeil{from{opacity:1}to{opacity:0}}
 @keyframes gxTint{from{opacity:0}to{opacity:1}}
@@ -634,9 +634,11 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 /* ===== 폰 옆모습·탑뷰 추가 모션 (2026-09-28, "모바일이 심심하다") — 전부 scroll-driven, JS 없음 ===== */
 @supports (animation-timeline: view()) { @media (max-width:900px){
   .tv-side-track{animation:carIn linear both;animation-timeline:--side;animation-range:entry 60% contain 240px}
-  .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--side;animation-range:entry 60% contain 240px}
+  .tv-side-track .tv-wheel,.tv-side-track .tv-wheel-bg{display:none} /* 폰: 회전 오버레이 끔(누끼 차에 바퀴 포함) — 두 겹이 따로 움직이며 어긋나던 실기 증상 제거 */
   .tv-side-tag{animation:tagIn linear both;animation-timeline:--side;animation-range:entry 30% entry 90%}
   .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 74.5% contain 100%}
+  /* 글·목록은 등장(gxText)+흘림(gxUp) 둘 다 — 한 요소에 animation을 두 번 선언하면 뒤가 앞을 지워 글이 안 보였음(9/28 실기 '정보 사라짐') */
+  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both,gxUp linear both;animation-timeline:--gx,--gx;animation-range:contain 70% contain 85%,contain 74.5% contain 100%}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
 @keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
@@ -949,7 +951,7 @@ var tx=0,ty=0,tk=false;b.addEventListener('touchstart',function(e){var p=e.touch
 b.addEventListener('touchend',function(e){if(!tk)return;tk=false;var p=e.changedTouches[0];if(Math.abs(p.clientX-tx)>12||Math.abs(p.clientY-ty)>12)return;e.preventDefault();toggle()});
 b.addEventListener('click',toggle);m.querySelector('.tv-mbar-x').addEventListener('click',close);
 m.querySelectorAll('[data-tab]').forEach(function(c){c.addEventListener('click',function(){var k=c.dataset.tab;m.querySelectorAll('[data-tab]').forEach(function(x){x.classList.toggle('on',x===c);x.setAttribute('aria-selected',x===c?'true':'false')});m.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==k});m.querySelector('.tv-mbar-body').scrollTop=0})});})();
-(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');var SDA=innerWidth<=900&&window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()');function u(){var r=g.getBoundingClientRect();var ih=innerHeight;var frR=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cbR=g.querySelector('.tv-gx-carbox').getBoundingClientRect();var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));if(!SDA){g.style.setProperty('--f',f.toFixed(3));g.style.setProperty('--p',p.toFixed(3))}g.classList.toggle('on',f>=.99);if(g.classList.contains('tv-gx-top')&&!SDA){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=frR,cb=cbR;g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c&&!(SDA&&g.dataset.ovw===String(innerWidth))){g.dataset.ovw=String(innerWidth);var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}if(SDA){g.style.setProperty('--over',over.toFixed(1)+'px')}else{var q=Math.min(1,Math.max(0,(p-.66)/.34));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}}else g.style.setProperty('--s','0px')}var tk=false;function su(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;u()})}addEventListener('scroll',su,{passive:true});addEventListener('resize',u);u()})();
+(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');var SDA=innerWidth<=900&&window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()');function u(){var r=g.getBoundingClientRect();var ih=innerHeight;var frR=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cbR=g.querySelector('.tv-gx-carbox').getBoundingClientRect();var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));if(!SDA){g.style.setProperty('--f',f.toFixed(3));g.style.setProperty('--p',p.toFixed(3))}g.classList.toggle('on',f>=.99);if(g.classList.contains('tv-gx-top')&&!SDA){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=frR,cb=cbR;g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c&&!(SDA&&g.dataset.ovw===innerWidth+'x'+innerHeight)){g.dataset.ovw=innerWidth+'x'+innerHeight;var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}if(SDA){g.style.setProperty('--over',over.toFixed(1)+'px')}else{var q=Math.min(1,Math.max(0,(p-.66)/.34));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}}else g.style.setProperty('--s','0px')}var tk=false;function su(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;u()})}addEventListener('scroll',su,{passive:true});addEventListener('resize',u);u()})();
 (function(){var l=document.getElementById('leaves');if(!l)return;var cv=l.querySelector('.tv-leaves-cv');if(!cv)return;var ctx=cv.getContext('2d');
 /* 나뭇잎 리빌=이미지 시퀀스(img/leaves-seq/f_001~097.jpg, 12fps). 사파리에서 video.currentTime 스크럽이 그려지지 않아 영상 대신 프레임을 캔버스에 직접 그림 (2026-09-11) */
 var N=97,CS=.5,VE=.84,F=[],loaded=0,cur=-1,raf=0,W=0,H=0,dpr=1;

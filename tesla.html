@@ -587,7 +587,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-mbar-pane.go .co-row::after{width:var(--v);transition-delay:.35s} .tv-mbar-pane.go .batt-fill{width:100%}
   /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
   .tv-gx{margin-top:0;height:380vh}
-  .tv-gx-stick{pointer-events:auto;transform:none!important;will-change:auto} /* 폰: 아래서 미끄러져 올라오는 단계(흰 화면 한 장) 제거 */
+  .tv-gx-stick{pointer-events:auto;transform:none!important;will-change:auto;background:#111} /* 진입 시 검정 틀 위 흰 띠(상단 100px) 제거 */ /* 폰: 아래서 미끄러져 올라오는 단계(흰 화면 한 장) 제거 */
   /* 웹과 같은 줌인 연출(사용자 요청 9/28): 검은 실내 12×에서 빠져나와 차 전체 → 유리 짙어짐 → 글·목록. will-change 없음(iOS 탭 오작동 교훈) */
   .tv-gx-top .tv-gx-frame{display:flex;flex-direction:column}
   .tv-gx-top .tv-gx-carbox{order:-1;margin:0;position:relative;z-index:3}
@@ -611,11 +611,11 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 }}
 /* 12×→1× 지수 곡선을 5점으로 근사. 줌 원점(앞좌석 사이 콘솔 왼쪽 틈)=차 박스의 45%/50% → 프레임 중앙으로 끌어오는 이동량: x 5vw, y (100lvh-100px)/2 - 23.47vw(차 높이의 절반) */
 @keyframes gxZoom{
-  0%{transform:translate(5vw,calc((100lvh - 100px)/2 - 23.47vw)) scale(12)}
-  13.4%{transform:translate(3.75vw,calc(((100lvh - 100px)/2 - 23.47vw)*.75)) scale(6.45)}
-  29.3%{transform:translate(2.5vw,calc(((100lvh - 100px)/2 - 23.47vw)*.5)) scale(3.46)}
-  50%{transform:translate(1.25vw,calc(((100lvh - 100px)/2 - 23.47vw)*.25)) scale(1.86)}
-  100%{transform:none}}
+  0%{transform:translate(5vw,calc((100lvh - 100px)/2 - 23.47vw)) scale(5)}
+  13.4%{transform:translate(3.75vw,calc(((100lvh - 100px)/2 - 23.47vw)*.75)) scale(3.34)}
+  29.3%{transform:translate(2.5vw,calc(((100lvh - 100px)/2 - 23.47vw)*.5)) scale(2.24)}
+  50%{transform:translate(1.25vw,calc(((100lvh - 100px)/2 - 23.47vw)*.25)) scale(1.5)}
+  100%{transform:none}} /* 폰 시작 배율 12→5 (9/28 녹화: 12×는 iOS 레이어 타일이 버려져 검정↔회색 깜빡임) */
 @keyframes gxVeil{from{opacity:1}to{opacity:0}}
 @keyframes gxTint{from{opacity:0}to{opacity:1}}
 @keyframes gxText{from{opacity:0}to{opacity:1}}

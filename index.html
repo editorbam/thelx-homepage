@@ -5693,49 +5693,49 @@ window.addEventListener('pageshow', function (e) {
   })();
 </script>
 
-<!-- ===== 이벤트 팝업 (설정: popup-config.json / 첫 방문 1회 + 오늘 하루 닫기) ===== -->
+<!-- ===== 이벤트 팝업 (설정: popup-config.json / 첫 방문 1회 + 오늘 하루 닫기) =====
+     2026-09-28 안심번호 팝업 → 테슬라 팝업 교체. 이전 부품 원본=_backup/popup-safenumber-block-20260928.html
+     카드 전체 클릭 = 설정의 link(tesla.html)로 이동 -->
 <style>
   .evp-back{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:10050;display:flex;align-items:flex-start;justify-content:flex-start;padding:96px 16px 16px 40px;opacity:0;pointer-events:none;transition:opacity .35s ease}
   .evp-back.on{opacity:1;pointer-events:auto}
   .evp{width:min(432px,92vw);background:#fff;color:#0a0a0a;font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif;font-weight:300;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(12px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
   .evp-back.on .evp{transform:none}
-  .evp-card{container-type:inline-size;position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;user-select:none;touch-action:pan-y}
-  .evp-logo{position:absolute;left:6.7%;top:5.4%;height:3.2%}
-  .evp-tag{position:absolute;right:6.7%;top:5.6%;font-size:9px;letter-spacing:.24em;color:#6e6e73}
-  .evp-note{position:absolute;left:6.7%;right:6.7%;top:72.5%;text-align:center;font-size:clamp(10px,3.2cqw,12px);color:#0a0a0a;letter-spacing:-.01em;line-height:1.5;word-break:keep-all}
-  .evp-foot{position:absolute;left:6.7%;right:6.7%;bottom:5.4%;display:flex;justify-content:flex-end}
-  .evp-cta{color:#0a0a0a;font-size:clamp(10px,3cqw,11.5px);font-weight:400;border-bottom:1px solid #0a0a0a;padding-bottom:2px;text-decoration:none;white-space:nowrap}
-  .evp-rev{position:absolute;left:7%;right:7%;top:17%;color:#0a0a0a;-webkit-mask:radial-gradient(circle var(--r,0px) at var(--mx,-999px) var(--my,-999px),#000 55%,transparent 100%);mask:radial-gradient(circle var(--r,0px) at var(--mx,-999px) var(--my,-999px),#000 55%,transparent 100%)}
-  .evp-rev .l{font-size:clamp(6.5px,1.9cqw,9px);letter-spacing:.24em;color:#6e6e73}
-  .evp-rev .n{font-size:clamp(13px,6cqw,40px);font-weight:300;letter-spacing:.03em;margin:4px 0 clamp(8px,5cqw,22px);font-variant-numeric:tabular-nums;white-space:nowrap}
-  .evp-rev .c{border:.5px solid #e8e8ed;border-radius:clamp(6px,2.4cqw,12px);padding:clamp(7px,3.2cqw,16px) clamp(8px,3.6cqw,18px);background:#f5f5f7}
-  .evp-rev .c .t{font-size:clamp(6.5px,1.9cqw,9px);letter-spacing:.24em;color:#6e6e73;margin-bottom:6px}
-  .evp-rev .c .r{display:flex;justify-content:space-between;font-size:clamp(8px,2.6cqw,12.5px);padding:clamp(2px,1.1cqw,6px) 0;border-top:.5px solid #e8e8ed}
-  .evp-rev .c .r:first-of-type{border-top:0} .evp-rev .c .r b{font-weight:400}
-  .evp-rev .no{margin-top:clamp(7px,3.4cqw,18px);font-size:clamp(9px,2.9cqw,14px)} .evp-rev .no b{font-weight:500}
-  .evp-card canvas{position:absolute;left:0;top:0;width:100%;height:100%}
+  .evp-card{container-type:inline-size;position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;user-select:none;touch-action:pan-y;background:#f4f4f4;color:inherit;text-decoration:none;cursor:pointer}
+  .evp-tag{position:absolute;right:6.7%;top:5.6%;font-size:9px;letter-spacing:.24em;color:#6e6e73;z-index:5}
   .evp-bar{height:44px;background:#f5f5f7;color:#6e6e73;border-top:.5px solid #e8e8ed;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px}
   .evp-bar button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;padding:8px 0}
   .evp-bar button.x{color:#0a0a0a;font-weight:400}
+  /* 테슬라 무대 (tesla.html 옆모습 섹션 이식) */
+  .tp-stage{position:absolute;left:0;right:0;top:11%;height:60%;overflow:visible}
+  .tp-bg{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;clip-path:polygon(0 0,var(--cf,0px) 0,var(--cf,0px) 100%,0 100%,0 0,100% 0,100% 100%,var(--cr,100%) 100%,var(--cr,100%) 0,100% 0)}
+  .tp-logo{display:block;margin:0 auto 3cqw;height:15cqw;width:auto}
+  .tp-tag{margin:0;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-weight:500;font-size:11.2cqw;letter-spacing:-.03em;line-height:1;color:#171a20;white-space:nowrap}
+  .tp-track{position:absolute;left:0;top:52%;width:var(--w);transform:translate(var(--x,100cqw),-50%);will-change:transform}
+  .tp-track .car{display:block;width:100%;height:auto;position:relative;z-index:0;-webkit-mask-image:linear-gradient(#000 88%,transparent 100%);mask-image:linear-gradient(#000 88%,transparent 100%)}
+  .tp-track::after{content:"";position:absolute;left:5%;width:90%;top:80%;height:26%;background:radial-gradient(ellipse at center,rgba(0,0,0,.9) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 72%);filter:blur(14px);mix-blend-mode:multiply;z-index:1;pointer-events:none}
+  .tp-track .wbg,.tp-track .wh{position:absolute;z-index:2;height:auto;pointer-events:none}
+  .tp-track .wbg{transform:translate(-50%,-50%)}
+  .tp-track .wh{transform:translate(-50%,-50%) rotate(var(--r,0deg));will-change:transform}
+  .tp-head{position:absolute;left:6.7%;right:6.7%;bottom:5.6%;margin:0;text-align:left;font-size:7.4cqw;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:#0a0a0a;word-break:keep-all;z-index:5}
   @media (max-width:700px){ .evp-back{align-items:flex-start;justify-content:flex-start;padding:84px 0 0 14px} .evp{width:min(64vw,300px);box-shadow:0 18px 50px rgba(0,0,0,.35)} .evp-card{height:auto;width:100%;max-width:none;aspect-ratio:4/5} .evp-tag{font-size:7.5px} .evp-bar{height:32px;font-size:10px;padding:0 10px} }
 </style>
-<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="이벤트 안내" hidden>
+<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="테슬라 오너 안내" hidden>
   <div class="evp">
-    <div class="evp-card" id="evpCard">
-      <img class="evp-logo" src="thelx-logo-nav-b.png" alt="THE LX">
-      <div class="evp-tag">안 내</div>
-      <div class="evp-rev" id="evpRev">
-        <div class="l">남에게 보이는 번호</div><div class="n">050-7318-4421</div>
-        <div class="c"><div class="t">전자 품질보증서</div>
-          <div class="r"><span>차량</span><b>12가 3456</b></div>
-          <div class="r"><span>제품</span><b>THE LX SIGNATURE 15</b></div>
-          <div class="r"><span>보증</span><b>2036.08까지</b></div></div>
-        <div class="no">내 번호는 <b>어디에도 없습니다.</b></div>
+    <a class="evp-card" id="evpCard" href="tesla.html" aria-label="테슬라 오너 페이지로 이동">
+      <div class="evp-tag">FOR TESLA OWNERS</div>
+      <div class="tp-stage" id="tpStage" aria-hidden="true">
+        <div class="tp-bg"><img class="tp-logo" src="img/v3/lx-logo-k.png" alt="" width="710" height="352"><p class="tp-tag">Xenith IR for Tesla</p></div>
+        <div class="tp-track" id="tpTrack" style="--w:170cqw">
+          <img class="car" src="img/v3/side_car8.jpg?v=6" alt="" width="4073" height="1604">
+          <img class="wbg" src="img/v3/wheel_brake_disc.png?v=4" alt="" style="left:21.319%;top:71.030%;width:14.942%">
+          <img class="wh" src="img/v3/wheel_spokes.png?v=4" alt="" style="left:21.319%;top:71.030%;width:14.942%">
+          <img class="wbg" src="img/v3/wheel_brake_disc.png?v=4" alt="" style="left:77.955%;top:69.028%;width:14.942%">
+          <img class="wh" src="img/v3/wheel_spokes.png?v=4" alt="" style="left:77.955%;top:69.028%;width:14.942%">
+        </div>
       </div>
-      <canvas id="evpCv"></canvas>
-      <div class="evp-note" id="evpNote"></div>
-      <div class="evp-foot"><a class="evp-cta" id="evpLink" href="event.html">자세히 보기 →</a></div>
-    </div>
+      <h2 class="tp-head">테슬라 틴팅을 가장 먼저,<br>가장 정교하게 완성하는 곳</h2>
+    </a>
     <div class="evp-bar"><button type="button" id="evpToday">오늘 하루 보지 않기</button><button type="button" class="x" id="evpClose">닫기</button></div>
   </div>
 </div>
@@ -5743,22 +5743,19 @@ window.addEventListener('pageshow', function (e) {
 (function(){
   var back=document.getElementById('evpBack'); if(!back) return;
   function today(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
-  /* 노출 규칙 (2026-08-27 수정) — '닫기'는 그 방문(탭)에서만 숨기고, 다음 방문에는 다시 뜬다.
-     '오늘 하루 보지 않기'만 그날 자정까지 숨긴다. 예전에는 닫기도 영구 저장이라
-     한 번 닫으면 다시 안 뜨는 제보가 있었음. */
+  /* 노출 규칙 (2026-08-27) — '닫기'는 그 방문(탭)에서만 숨기고, '오늘 하루 보지 않기'만 그날 자정까지 숨긴다. */
   function seen(id){
     try{ if(localStorage.getItem('evp:'+id+':today')===today()) return true; }catch(e){}
     try{ if(sessionStorage.getItem('evp:'+id+':closed')==='1') return true; }catch(e){}
     return false;
   }
+  var stopAnim=null;
   function show(cfg){
     if(!cfg||!cfg.enabled) return;
-    try{ if(localStorage.getItem('evp:'+cfg.id)==='seen') localStorage.removeItem('evp:'+cfg.id); }catch(e){}
     var now=new Date().toISOString().slice(0,10);
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
-    document.getElementById('evpNote').textContent=cfg.note||'';
-    document.getElementById('evpLink').href=cfg.link||'event.html';
+    document.getElementById('evpCard').href=cfg.link||'tesla.html';
     back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
     start();
     function close(){ if(stopAnim) stopAnim(); back.classList.remove('on');
@@ -5771,29 +5768,23 @@ window.addEventListener('pageshow', function (e) {
     back.addEventListener('click',function(e){ if(e.target===back) close(); });
     document.addEventListener('keydown',onKey);
   }
-  var CELLS=[[0,0,"T",1],[1,0,"H",1],[2,0,"E",1],[3,0,"L",1],[4,0,"X",1],[5,0,"T",1],[6,0,"H",1],[9,0,"E",0],[10,0,"L",0],[16,0,"X",0],[18,0,"T",1],[19,0,"H",1],[20,0,"E",1],[21,0,"L",1],[22,0,"X",1],[23,0,"T",1],[24,0,"H",1],[0,1,"E",1],[6,1,"L",1],[8,1,"X",0],[10,1,"T",0],[11,1,"H",0],[13,1,"E",0],[14,1,"L",0],[18,1,"X",1],[24,1,"T",1],[0,2,"H",1],[2,2,"E",1],[3,2,"L",1],[4,2,"X",1],[6,2,"T",1],[8,2,"H",0],[9,2,"E",0],[15,2,"L",0],[18,2,"X",1],[20,2,"T",1],[21,2,"H",1],[22,2,"E",1],[24,2,"L",1],[0,3,"X",1],[2,3,"T",1],[3,3,"H",1],[4,3,"E",1],[6,3,"L",1],[8,3,"X",0],[9,3,"T",0],[10,3,"H",0],[11,3,"E",0],[12,3,"L",0],[14,3,"X",0],[15,3,"T",0],[18,3,"H",1],[20,3,"E",1],[21,3,"L",1],[22,3,"X",1],[24,3,"T",1],[0,4,"H",1],[2,4,"E",1],[3,4,"L",1],[4,4,"X",1],[6,4,"T",1],[8,4,"H",0],[12,4,"E",0],[15,4,"L",0],[16,4,"X",0],[18,4,"T",1],[20,4,"H",1],[21,4,"E",1],[22,4,"L",1],[24,4,"X",1],[0,5,"T",1],[6,5,"H",1],[8,5,"E",0],[9,5,"L",0],[10,5,"X",0],[12,5,"T",0],[14,5,"H",0],[16,5,"E",0],[18,5,"L",1],[24,5,"X",1],[0,6,"T",1],[1,6,"H",1],[2,6,"E",1],[3,6,"L",1],[4,6,"X",1],[5,6,"T",1],[6,6,"H",1],[8,6,"E",0],[10,6,"L",0],[12,6,"X",0],[14,6,"T",0],[16,6,"H",0],[18,6,"E",1],[19,6,"L",1],[20,6,"X",1],[21,6,"T",1],[22,6,"H",1],[23,6,"E",1],[24,6,"L",1],[10,7,"X",0],[11,7,"T",0],[12,7,"H",0],[13,7,"E",0],[14,7,"L",0],[15,7,"X",0],[16,7,"T",0],[2,8,"H",0],[5,8,"E",0],[6,8,"L",0],[7,8,"X",0],[8,8,"T",0],[10,8,"H",0],[11,8,"E",0],[14,8,"L",0],[16,8,"X",0],[17,8,"T",0],[19,8,"H",0],[20,8,"E",0],[21,8,"L",0],[22,8,"X",0],[23,8,"T",0],[2,9,"H",0],[3,9,"E",0],[4,9,"L",0],[5,9,"X",0],[8,9,"T",0],[9,9,"H",0],[12,9,"E",0],[13,9,"L",0],[16,9,"X",0],[17,9,"T",0],[18,9,"H",0],[22,9,"E",0],[23,9,"L",0],[0,10,"X",0],[1,10,"T",0],[3,10,"H",0],[5,10,"E",0],[6,10,"L",0],[8,10,"X",0],[9,10,"T",0],[12,10,"H",0],[14,10,"E",0],[16,10,"L",0],[17,10,"X",0],[20,10,"T",0],[21,10,"H",0],[23,10,"E",0],[1,11,"L",0],[2,11,"X",0],[3,11,"T",0],[5,11,"H",0],[7,11,"E",0],[12,11,"L",0],[13,11,"X",0],[15,11,"T",0],[16,11,"H",0],[21,11,"E",0],[0,12,"L",0],[1,12,"X",0],[2,12,"T",0],[5,12,"H",0],[6,12,"E",0],[7,12,"L",0],[8,12,"X",0],[11,12,"T",0],[13,12,"H",0],[14,12,"E",0],[15,12,"L",0],[17,12,"X",0],[18,12,"T",0],[20,12,"H",0],[23,12,"E",0],[1,13,"L",0],[4,13,"X",0],[9,13,"T",0],[10,13,"H",0],[11,13,"E",0],[13,13,"L",0],[19,13,"X",0],[20,13,"T",0],[21,13,"H",0],[24,13,"E",0],[0,14,"L",0],[1,14,"X",0],[2,14,"T",0],[3,14,"H",0],[5,14,"E",0],[6,14,"L",0],[7,14,"X",0],[9,14,"T",0],[10,14,"H",0],[13,14,"E",0],[14,14,"L",0],[15,14,"X",0],[20,14,"T",0],[24,14,"H",0],[3,15,"E",0],[4,15,"L",0],[5,15,"X",0],[7,15,"T",0],[8,15,"H",0],[9,15,"E",0],[11,15,"L",0],[12,15,"X",0],[14,15,"T",0],[18,15,"H",0],[19,15,"E",0],[20,15,"L",0],[21,15,"X",0],[0,16,"T",0],[1,16,"H",0],[2,16,"E",0],[3,16,"L",0],[4,16,"X",0],[6,16,"T",0],[7,16,"H",0],[9,16,"E",0],[10,16,"L",0],[12,16,"X",0],[13,16,"T",0],[14,16,"H",0],[15,16,"E",0],[16,16,"L",0],[17,16,"X",0],[18,16,"T",0],[19,16,"H",0],[20,16,"E",0],[22,16,"L",0],[24,16,"X",0],[8,17,"T",0],[10,17,"H",0],[11,17,"E",0],[12,17,"L",0],[16,17,"X",0],[20,17,"T",0],[21,17,"H",0],[23,17,"E",0],[24,17,"L",0],[0,18,"X",1],[1,18,"T",1],[2,18,"H",1],[3,18,"E",1],[4,18,"L",1],[5,18,"X",1],[6,18,"T",1],[8,18,"H",0],[15,18,"E",0],[16,18,"L",0],[18,18,"X",0],[20,18,"T",0],[21,18,"H",0],[23,18,"E",0],[24,18,"L",0],[0,19,"X",1],[6,19,"T",1],[8,19,"H",0],[10,19,"E",0],[11,19,"L",0],[13,19,"X",0],[14,19,"T",0],[15,19,"H",0],[16,19,"E",0],[20,19,"L",0],[21,19,"X",0],[22,19,"T",0],[23,19,"H",0],[24,19,"E",0],[0,20,"L",1],[2,20,"X",1],[3,20,"T",1],[4,20,"H",1],[6,20,"E",1],[11,20,"L",0],[12,20,"X",0],[16,20,"T",0],[17,20,"H",0],[18,20,"E",0],[19,20,"L",0],[20,20,"X",0],[22,20,"T",0],[24,20,"H",0],[0,21,"E",1],[2,21,"L",1],[3,21,"X",1],[4,21,"T",1],[6,21,"H",1],[9,21,"E",0],[12,21,"L",0],[16,21,"X",0],[17,21,"T",0],[18,21,"H",0],[20,21,"E",0],[21,21,"L",0],[0,22,"X",1],[2,22,"T",1],[3,22,"H",1],[4,22,"E",1],[6,22,"L",1],[8,22,"X",0],[12,22,"T",0],[13,22,"H",0],[14,22,"E",0],[17,22,"L",0],[18,22,"X",0],[21,22,"T",0],[22,22,"H",0],[23,22,"E",0],[24,22,"L",0],[0,23,"X",1],[6,23,"T",1],[10,23,"H",0],[12,23,"E",0],[13,23,"L",0],[15,23,"X",0],[21,23,"T",0],[22,23,"H",0],[24,23,"E",0],[0,24,"L",1],[1,24,"X",1],[2,24,"T",1],[3,24,"H",1],[4,24,"E",1],[5,24,"L",1],[6,24,"X",1],[10,24,"T",0],[14,24,"H",0],[15,24,"E",0],[16,24,"L",0],[18,24,"X",0],[21,24,"T",0],[22,24,"H",0],[23,24,"E",0],[24,24,"L",0]], N=25;
-  var stopAnim=null;
+  /* 차가 오른쪽 밖에서 들어와 왼쪽 밖으로 빠져나감. 4.2초 통과 + 1.4초 쉼 반복.
+     글자는 차체 구간(--cf~--cr)만 clip-path로 가림 — tesla.html 옆모습 무대와 같은 방식. */
   function start(){
-    var c=document.getElementById('evpCard'), cv=document.getElementById('evpCv'), ctx=cv.getContext('2d'), rev=document.getElementById('evpRev');
-    var SIZE=0,OX=0,OY=0,U=0,CW=0,CH=0,L=CELLS.map(function(x){return {hx:0,hy:0,x:0,y:0,vx:0,vy:0,ch:x[2],f:x[3]};});
-    function layout(){ var r=c.getBoundingClientRect(); CW=r.width; CH=r.height; var dpr=Math.min(2,devicePixelRatio||1);
-      cv.width=CW*dpr; cv.height=CH*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); SIZE=CW*0.625; OX=(CW-SIZE)/2; OY=CH*0.17; U=SIZE/N;
-      ctx.font="500 "+(U*0.92)+"px 'Noto Sans KR',sans-serif"; ctx.textAlign='center'; ctx.textBaseline='middle';
-      L.forEach(function(l,i){ l.hx=OX+CELLS[i][0]*U+U/2; l.hy=OY+CELLS[i][1]*U+U/2; }); }
-    layout(); L.forEach(function(l){ l.x=l.hx; l.y=l.hy; }); addEventListener('resize',layout);
-    var raf=0, dead=false;
-    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf); removeEventListener('resize',layout); };
-    var K=0.09,D=0.80,mx=-999,my=-999,t0=performance.now();
-    function tick(){ if(dead||back.hidden) return;
-      var t=(performance.now()-t0)/1000, cx=OX+SIZE/2, cy=OY+SIZE/2, R=SIZE*0.34, PUSH=SIZE*0.0096;
-      mx=cx+Math.sin(t*1.35)*SIZE*0.38; my=cy+Math.sin(t*0.9+1.2)*SIZE*0.38;
-      for(var i=0;i<L.length;i++){ var l=L[i], dx=l.x-mx, dy=l.y-my, d=Math.hypot(dx,dy)||1; if(d<R){ var f=(1-d/R)*PUSH; l.vx+=dx/d*f; l.vy+=dy/d*f; }
-        l.vx+=(l.hx-l.x)*K; l.vy+=(l.hy-l.y)*K; l.vx*=D; l.vy*=D; l.x+=l.vx; l.y+=l.vy; }
-      ctx.clearRect(0,0,CW,CH);
-      for(var j=0;j<L.length;j++){ var q=L[j]; if(q.f){ ctx.fillStyle='#0a0a0a'; ctx.fillRect(q.x-U/2,q.y-U/2,U,U); ctx.fillStyle='#fff'; } else ctx.fillStyle='#0a0a0a'; ctx.fillText(q.ch,q.x,q.y+0.5); }
-      rev.style.setProperty('--mx',(mx-CW*0.07)+'px'); rev.style.setProperty('--my',(my-CH*0.17)+'px'); rev.style.setProperty('--r',(SIZE*0.29)+'px');
+    var st=document.getElementById('tpStage'), tr=document.getElementById('tpTrack'), tg=st.querySelector('.tp-bg');
+    var wheels=tr.querySelectorAll('.wh'), DUR=4200, PAUSE=1400, t0=performance.now(), raf=0, dead=false;
+    function ease(p){ return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; }
+    function tick(now){ if(dead||back.hidden) return;
+      var W=tr.offsetWidth, S=st.offsetWidth, T=(now-t0)%(DUR+PAUSE), e=ease(Math.min(1,T/DUR));
+      var x0=S, x1=-W, x=x0+(x1-x0)*e;
+      tr.style.setProperty('--x',x.toFixed(1)+'px');
+      tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.09)).toFixed(1)+'px');
+      tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.93)).toFixed(1)+'px');
+      var deg=(-(x0-x)/(0.074708*W)*57.2958).toFixed(2)+'deg';
+      for(var i=0;i<wheels.length;i++) wheels[i].style.setProperty('--r',deg);
       raf=requestAnimationFrame(tick); }
     raf=requestAnimationFrame(tick);
+    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf); };
   }
   fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();

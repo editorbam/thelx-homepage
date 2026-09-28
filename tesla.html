@@ -576,17 +576,21 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
   .tv-side{height:auto}
-  .tv-side-stick{position:static;height:auto;overflow:visible;padding:28px 0 0}
+  .tv-side-stick{position:relative;height:auto;overflow:visible;clip-path:inset(0);padding:28px 0 0} /* overflow:hidden·clip 금지 — WebKit에서 자식 view() 타임라인이 죽음. 넘침은 clip-path로 자름 */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
   .tv-side-track .tv-car{width:100%;height:auto}
-  .tv-side-tag,.tv-mplus,.tv-mbar-head{display:none!important}
+  .tv-mplus,.tv-mbar-head{display:none!important}
+  /* 차 뒤 배경 글자 「Xenith IR for Tesla」(웹과 동일) — 폰은 차 중심 높이에 한 줄, 차가 들어올 때 함께 떠오름 */
+  .tv-side-tag{display:block;top:calc(28px + 19.7vw);font-size:8.6vw;clip-path:none;z-index:0}
   .tv-mbar{position:static;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:none;border-radius:0;background:#fff;margin-top:20px}
   .tv-mbar-body{overflow:visible;padding:28px var(--gut) 36px}
   .tv-mbar-pane{display:block!important}
   .tv-mbar-pane+.tv-mbar-pane{margin-top:30px;padding-top:26px;border-top:.5px solid rgba(0,0,0,.12)}
-  .tv-mbar-pane{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .8s cubic-bezier(.22,1,.36,1)}
-  .tv-mbar.go .tv-mbar-pane{opacity:1;transform:none} .tv-mbar.go .tv-mbar-pane:nth-child(2){transition-delay:.18s} .tv-mbar.go .tv-mbar-pane:nth-child(3){transition-delay:.36s}
-  /* 막대(.co-row::after)·배터리(.batt-fill)는 기존 .tv-mbar.go 규칙이 차오름 — .go는 화면 진입 시 JS(IntersectionObserver)가 붙임 */
+  /* 묶음(제품·스펙·Effect)마다 화면에 들어올 때 .go — 안의 줄들이 위로 떠오르며 차례로, 막대·배터리는 그 뒤 차오름 (9/28 15:20 묶음 단위→줄 단위) */
+  .tv-mbar-pane>*,.tv-mbar-pane .co-block>*{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+  .tv-mbar-pane.go>*,.tv-mbar-pane.go .co-block>*{opacity:1;transform:none}
+  .tv-mbar-pane.go>:nth-child(2),.tv-mbar-pane.go .co-block>:nth-child(2){transition-delay:.1s} .tv-mbar-pane.go>:nth-child(3),.tv-mbar-pane.go .co-block>:nth-child(3){transition-delay:.2s} .tv-mbar-pane.go>:nth-child(4),.tv-mbar-pane.go .co-block>:nth-child(4){transition-delay:.3s} .tv-mbar-pane.go>:nth-child(5),.tv-mbar-pane.go .co-block>:nth-child(5){transition-delay:.4s} .tv-mbar-pane.go>:nth-child(n+6),.tv-mbar-pane.go .co-block>:nth-child(n+6){transition-delay:.5s}
+  .tv-mbar-pane.go .co-row::after{width:var(--v);transition-delay:.35s} .tv-mbar-pane.go .batt-fill{width:100%}
   /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
   .tv-gx{margin-top:0}
   .tv-gx-stick{pointer-events:auto}
@@ -629,9 +633,11 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 @supports (animation-timeline: view()) { @media (max-width:900px){
   .tv-side-track{view-timeline-name:--car;animation:carIn linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
   .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--car;animation-range:entry 0% cover 28%}
+  .tv-side-tag{animation:tagIn linear both;animation-timeline:view();animation-range:entry 0% cover 60%}
   .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 74.5% contain 100%}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
+@keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
 @keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(-560deg)}to{transform:translate(-50%,-50%) rotate(0deg)}}
 @keyframes gxUp{from{transform:none}to{transform:translateY(calc(-1 * var(--over,0px)))}}
 </style>
@@ -893,7 +899,7 @@ addEventListener('pageshow',function(e){if(e.persisted&&!v.ended)play()});})();
 </script>
 <script>
 /* 폰 옆모습 정적 구성: 제품·스펙·Effect 묶음이 화면에 들어오면 .go (막대·배터리 차오름, 묶음 순차 등장) — 2026-09-28 */
-(function(){var m=document.getElementById('mBar');if(!m||innerWidth>900||!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){m.classList.add('go');io.disconnect()}})},{threshold:.2});io.observe(m)})();
+(function(){var m=document.getElementById('mBar');if(!m||innerWidth>900||!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('go');io.unobserve(e.target)}})},{threshold:.3});m.querySelectorAll('.tv-mbar-pane').forEach(function(p){io.observe(p)})})();
 </script>
 <script>
 /* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */

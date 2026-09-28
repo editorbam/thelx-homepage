@@ -5780,11 +5780,18 @@ window.addEventListener('pageshow', function (e) {
       tr.style.setProperty('--x',x.toFixed(1)+'px');
       tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.09)).toFixed(1)+'px');
       tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.93)).toFixed(1)+'px');
-      var deg=(-(x0-x)/(0.074708*W)*57.2958).toFixed(2)+'deg';
-      for(var i=0;i<wheels.length;i++) wheels[i].style.setProperty('--r',deg);
+      var dv=-(x0-x)/(0.074708*W)*57.2958, deg=dv.toFixed(2)+'deg';
+      /* 화면 갱신이 느린 기기에서 바퀴살이 멈춰 보이는 착시(마차 바퀴 효과) 방지 — 한 장면에 많이 돌수록 살을 살짝 흐림 */
+      var step=Math.abs(dv-lastDeg), bl=Math.min(1.8,Math.max(0,(step-4)/8)); lastDeg=dv;
+      for(var i=0;i<wheels.length;i++){ wheels[i].style.setProperty('--r',deg); wheels[i].style.filter=bl>.05?'blur('+bl.toFixed(2)+'px)':''; }
       raf=requestAnimationFrame(tick); }
-    raf=requestAnimationFrame(tick);
-    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf); };
+    var lastDeg=0; raf=requestAnimationFrame(tick);
+    /* 팝업이 떠 있는 동안 뒤쪽 히어로 영상을 멈춰 화면 갱신 여유 확보 — 닫으면 다시 재생 */
+    var hv=document.getElementById('heroVideo');
+    function hold(){ if(!dead&&hv&&!hv.paused) hv.pause(); }
+    if(hv){ hold(); hv.addEventListener('play',hold); }
+    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf);
+      if(hv){ hv.removeEventListener('play',hold); var pr=hv.play(); if(pr&&pr.catch) pr.catch(function(){}); } };
   }
   fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();

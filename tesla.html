@@ -576,14 +576,15 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-combo-cap{text-align:left;padding-left:var(--gut)}
   /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
-  .tv-side{height:auto}
-  .tv-side-stick{position:relative;height:auto;overflow:visible;clip-path:inset(0);padding:28px 0 0} /* overflow:hidden·clip 금지 — WebKit에서 자식 view() 타임라인이 죽음. 넘침은 clip-path로 자름 */
+  /* 9/28 16:40 구조 변경(사용자: 섹션이 스르륵 지나감·글자는 차가 덮어야): 차 무대=화면 한 장 고정(sticky) → 차가 들어오며 뒤의 작은 글자를 덮음 → 제품·스펙·Effect 묶음이 그 위로 올라옴(JS가 mBar를 stick 뒤로 옮김) */
+  .tv-side{height:auto;view-timeline-name:--side;view-timeline-axis:block}
+  .tv-side-stick{position:sticky;top:0;z-index:1;height:100dvh;overflow:visible;clip-path:inset(0);padding:100px 0 0;display:flex;align-items:center;background:#f4f4f4} /* overflow:hidden·clip 금지(자식 view() 죽음) */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
   .tv-side-track .tv-car{width:100%;height:auto}
   .tv-mplus,.tv-mbar-head{display:none!important}
   /* 차 뒤 배경 글자 「Xenith IR for Tesla」(웹과 동일) — 폰은 차 중심 높이에 한 줄, 차가 들어올 때 함께 떠오름 */
-  .tv-side-tag{display:block;top:calc(28px + 7vw);font-size:9vw;clip-path:none;z-index:0} /* 폰=누끼 차(side_car8_2k_cut.webp) 뒤에 실제로 놓임 — 글자 아랫부분이 지붕·유리에 가려지는 웹 구도. 바닥 그림자는 기존 .tv-side-track::after */
-  .tv-mbar{position:static;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:none;border-radius:0;background:#fff;margin-top:20px}
+  .tv-side-tag{display:block;top:calc(50% + 50px);font-size:6.2vw;clip-path:none;z-index:0} /* 차 몸통 높이에 작게 — 차가 도착하면 완전히 가려짐(웹의 clip 연출과 같은 결과). 바닥 그림자는 기존 .tv-side-track::after */
+  .tv-mbar{position:relative;z-index:2;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:0 -10px 30px rgba(0,0,0,.08);border-radius:20px 20px 0 0;background:#fff;margin-top:55dvh} /* 차가 도착한 뒤 무대가 잠깐 머물도록 — 그 사이 배경은 .tv-side #f4f4f4 */
   .tv-mbar-body{overflow:visible;padding:28px var(--gut) 36px}
   .tv-mbar-pane{display:block!important}
   .tv-mbar-pane+.tv-mbar-pane{margin-top:30px;padding-top:26px;border-top:.5px solid rgba(0,0,0,.12)}
@@ -632,9 +633,9 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 
 /* ===== 폰 옆모습·탑뷰 추가 모션 (2026-09-28, "모바일이 심심하다") — 전부 scroll-driven, JS 없음 ===== */
 @supports (animation-timeline: view()) { @media (max-width:900px){
-  .tv-side-track{view-timeline-name:--car;animation:carIn linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
-  .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--car;animation-range:entry 0% cover 28%}
-  .tv-side-tag{animation:tagIn linear both;animation-timeline:view();animation-range:entry 0% cover 60%}
+  .tv-side-track{animation:carIn linear both;animation-timeline:--side;animation-range:entry 60% contain 240px}
+  .tv-side-track .tv-wheel{animation:wheelIn linear both;animation-timeline:--side;animation-range:entry 60% contain 240px}
+  .tv-side-tag{animation:tagIn linear both;animation-timeline:--side;animation-range:entry 30% entry 90%}
   .tv-gx-top .tv-gx-frame>*{animation:gxUp linear both;animation-timeline:--gx;animation-range:contain 74.5% contain 100%}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
@@ -900,7 +901,7 @@ addEventListener('pageshow',function(e){if(e.persisted&&!v.ended)play()});})();
 </script>
 <script>
 /* 폰 옆모습 정적 구성: 제품·스펙·Effect 묶음이 화면에 들어오면 .go (막대·배터리 차오름, 묶음 순차 등장) — 2026-09-28 */
-(function(){var m=document.getElementById('mBar');if(!m||innerWidth>900||!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('go');io.unobserve(e.target)}})},{threshold:.3});m.querySelectorAll('.tv-mbar-pane').forEach(function(p){io.observe(p)})})();
+(function(){var m=document.getElementById('mBar');if(!m||innerWidth>900)return;var sd=document.getElementById('side');if(sd&&m.parentNode!==sd)sd.appendChild(m);/* 폰: 묶음을 고정 무대 뒤(형제)로 옮겨 무대 위로 올라오게 */if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('go');io.unobserve(e.target)}})},{threshold:.3});m.querySelectorAll('.tv-mbar-pane').forEach(function(p){io.observe(p)})})();
 </script>
 <script>
 /* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */

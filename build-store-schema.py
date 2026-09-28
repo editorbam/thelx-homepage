@@ -16,6 +16,7 @@ stores.html의 BUILD 마커 사이에 삽입한다.
     <!-- BUILD:STORE_SCHEMA:END -->
 
 시공점 추가/삭제/변경 시 STORE_DATA만 수정하고 이 스크립트 한 번 실행.
+→ JSON-LD + 예약 폼용 stores-list.js 가 함께 갱신된다.
 """
 
 import re
@@ -24,6 +25,7 @@ import sys
 from pathlib import Path
 
 HTML_FILE = Path(__file__).parent / "stores.html"  # 2026-07-14 시공점 목록 페이지 분리로 대상 이동
+LIST_FILE = Path(__file__).parent / "stores-list.js"  # 예약 폼 시공점 선택 목록
 BASE_URL = "https://isolargard.com/"
 MARKER_START = "<!-- BUILD:STORE_SCHEMA:START -->"
 MARKER_END = "<!-- BUILD:STORE_SCHEMA:END -->"
@@ -141,7 +143,15 @@ def main():
 
     HTML_FILE.write_text(new_html, encoding="utf-8")
 
+    # 예약 폼 시공점 선택용 목록(stores-list.js) — 같은 STORE_DATA에서 생성 (2026-09-28)
+    lite = [{"r": x["r"], "n": x["n"], "a": x["a"]} for x in stores]
+    LIST_FILE.write_text(
+        "/* 예약 폼 시공점 목록 — build-store-schema.py가 stores.html STORE_DATA에서 자동 생성. 직접 수정 금지 */\n"
+        "window.STORE_LIST=" + json.dumps(lite, ensure_ascii=False, separators=(",", ":")) + ";\n",
+        encoding="utf-8")
+
     print(f"✓ {len(stores)}개 시공점 스키마 생성 완료")
+    print(f"✓ 예약 폼 시공점 목록 {LIST_FILE.name} 갱신 ({len(lite)}곳) — index·pricing의 ?v= 올려서 배포")
     print(f"  파일 크기: {before:,} → {after:,} bytes (+{after-before:,})")
     print(f"  마커: {MARKER_START} ... {MARKER_END}")
 

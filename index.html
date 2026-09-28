@@ -4007,6 +4007,18 @@ body.pd-open { overflow: hidden; }
         <div class="cp-panel" id="cpBrandPanel"></div>
         <div class="cp-panel" id="cpModelPanel"></div>
       </div>
+      <div class="form-group sp-zone">
+        <label class="form-label" for="bRegion">지역</label>
+        <input type="text" id="bRegion" name="region" class="field-underline" placeholder="선택" autocomplete="off" readonly>
+      </div>
+      <div class="form-group sp-zone">
+        <label class="form-label" for="bStore">시공점</label>
+        <input type="text" id="bStore" name="store" class="field-underline" placeholder="선택 또는 입력" autocomplete="off" required>
+      </div>
+      <div class="form-group full" style="padding-bottom:0; position:relative;">
+        <div class="cp-panel" id="spRegionPanel"></div>
+        <div class="cp-panel" id="spStorePanel"></div>
+      </div>
       <div class="form-group">
         <label class="form-label" for="bDate">희망 날짜 · 시간</label>
         <input type="text" id="bDate" name="date" class="field-underline" placeholder="날짜와 시간을 선택해 주세요" autocomplete="off" readonly required>
@@ -4136,7 +4148,7 @@ body.pd-open { overflow: hidden; }
      JAVASCRIPT
 ======================================== -->
   <script src="pd-data.js?v=37"></script> <!-- ?v= 캐시 버스터 — pd-data.js에 새 심볼 추가 시 숫자 올릴 것 (pricing.html과 동기) -->
-<script src="car-picker.js?v=3" defer></script> <script src="date-picker.js?v=2" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
+<script src="car-picker.js?v=3" defer></script> <script src="date-picker.js?v=2" defer></script> <script src="stores-list.js?v=1" defer></script> <script src="store-picker.js?v=1" defer></script> <!-- 예약 폼 브랜드·차종 선택 (CMS 차종 동기, car-picker.js 주석 참조) -->
 <script>
 /* ── COMPARE ROW HOVER ── */
 (function(){
@@ -4711,7 +4723,7 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 });
 
 /* ── BOOKING FORM ── */
-const BOOKING_URL = 'https://script.google.com/macros/s/AKfycbzZU4oDcQn2VBHj_uxyIXcXOvlqfVasGqQpFhOTVhpVqbil422gLsceZIt598rwfS6p4w/exec';
+const BOOKING_URL = 'https://script.google.com/macros/s/AKfycbw8pcx1t4KMe2bzqwSYXpIzKJiKr6byz9Y1GRgAmS0XNfatxaikOSdfalVuq_zWQ3Q/exec';
 
 document.getElementById('bookingForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -4724,7 +4736,10 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
     phone:   document.getElementById('bPhone').value,
     car:     (document.getElementById('bBrand').value.trim() + ' ' + document.getElementById('bCar').value.trim()).trim(),
     date:    document.getElementById('bDate').value,
-    product: document.getElementById('bProduct').value || '미정'
+    product: document.getElementById('bProduct').value || '미정',
+    region:  document.getElementById('bRegion').value,
+    store:   document.getElementById('bStore').value.trim(),
+    source:  '홈페이지'
   };
 
   try {

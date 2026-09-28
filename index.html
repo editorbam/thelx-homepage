@@ -4813,7 +4813,7 @@ window.addEventListener('scroll', () => {
   if (heroVideo) {
     /* 실제 paused 상태 기준 — Safari가 임의로 멈춘 경우에도 스크롤만으로 복구된다 */
     if (sy > _heroH) { if (!heroVideo.paused) heroVideo.pause(); }
-    else if (heroVideo.paused) { const p = heroVideo.play(); if (p && p.catch) p.catch(() => {}); }
+    else if (heroVideo.paused && !window.__evpHold) { const p = heroVideo.play(); if (p && p.catch) p.catch(() => {}); }
   }
 }, { passive: true });
 
@@ -5765,6 +5765,7 @@ window.addEventListener('pageshow', function (e) {
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
     document.getElementById('evpCard').href=cfg.link||'tesla.html';
+    document.getElementById('evpCard').addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} });
     back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
     start();
     function close(){ if(stopAnim) stopAnim(); back.classList.remove('on');
@@ -5798,9 +5799,9 @@ window.addEventListener('pageshow', function (e) {
     /* 팝업이 떠 있는 동안 뒤쪽 히어로 영상을 멈춰 화면 갱신 여유 확보 — 닫으면 다시 재생 */
     var hv=document.getElementById('heroVideo');
     function hold(){ if(!dead&&hv&&!hv.paused) hv.pause(); }
-    if(hv){ hold(); hv.addEventListener('play',hold); }
-    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf);
-      if(hv){ hv.removeEventListener('play',hold); var pr=hv.play(); if(pr&&pr.catch) pr.catch(function(){}); } };
+    if(hv){ window.__evpHold=true; hold(); hv.addEventListener('play',hold); }
+    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf); window.__evpHold=false;
+      if(hv){ hv.removeEventListener('play',hold); if(hv.getBoundingClientRect().bottom>0){ var pr=hv.play(); if(pr&&pr.catch) pr.catch(function(){}); } } };
   }
   fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();

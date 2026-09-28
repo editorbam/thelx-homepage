@@ -63,7 +63,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-glass-stick::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,calc(var(--p,0)*.3));pointer-events:none}
 .tv-glass-copy{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 var(--gut);opacity:var(--p,0);transform:translateY(calc((1 - var(--p,0))*16px))}
 /* side-profile scroll pan (2026-09-07, 폴스타 문법) — --x 가로 이동, --n 설명 노출 */
-.tv-side{position:relative;height:500vh;background:#f4f4f4;margin-top:clamp(56px,8vh,96px)}
+.tv-side{position:relative;height:500vh;background:#f4f4f4;margin-top:clamp(56px,8vh,96px);overflow-x:clip} /* 9/28: 옆모습 차가 오른쪽 밖에서 대기하는 동안 생기던 가로 스크롤(26px) 차단 */
 .tv-side-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .tv-side-track{position:absolute;left:0;top:62%;transform:translate(var(--x,0px),-50%);will-change:transform}
 .tv-side-track .tv-car{height:clamp(260px,50vh,640px);width:auto;max-width:none;display:block}
@@ -72,7 +72,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-side-notes{position:absolute;right:var(--gut);top:50%;transform:translateY(calc(-50% + (1 - var(--n,0))*12px));width:min(320px,32vw);opacity:var(--n,0);margin:0;padding:0}
 .tv-side-notes li{list-style:none;position:relative;padding-left:52px;font-size:14px;line-height:1.55;color:#3a3c40;margin:26px 0;word-break:keep-all}
 .tv-side-notes li::before{content:"";position:absolute;left:0;top:.8em;width:40px;height:1px;background:#171a20}
-@media (max-width:900px){ .tv-side{height:440vh} .tv-side-track .tv-car{height:auto;width:210vw} .tv-side-notes{display:none} }
 /* sticky sub bar */
 .tv-bar{position:fixed;top:52px;left:0;right:0;z-index:400;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:.5px solid rgba(0,0,0,.08);transform:translateY(-120px);transition:transform .3s}
 .tv-bar.on{transform:none} .tv-bar b{font-size:15px;font-weight:600} .tv-bar .tv-btn{min-width:0;height:32px;padding:0 16px;font-size:12px}
@@ -215,31 +214,23 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-co:hover>span>b{text-decoration:underline;text-underline-offset:3px}
 @media (max-width:900px){ .tv-co{display:none} }
 /* 모바일: 지붕 위 + 버튼 → 무대 하단 콜아웃 바 (2026-09-09). ≤900px에서만. 문구는 데스크톱 콜아웃과 동일 유지 */
-.tv-mplus{display:none;position:absolute;z-index:4;width:34px;height:34px;padding:0;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.22);color:#171a20;box-shadow:0 2px 10px rgba(0,0,0,.12);transform:translate(-50%,-100%);cursor:pointer;opacity:var(--n,0);transition:opacity .4s,background .25s,color .25s}
-.tv-mplus svg{width:14px;height:14px;display:block;margin:auto;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;fill:none;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
-.tv-mplus::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:14px;background:#171a20}
-.tv-mplus[aria-expanded="true"]{background:#171a20;color:#fff;border-color:#171a20} .tv-mplus[aria-expanded="true"] svg{transform:rotate(45deg)}
 .tv-mbar{display:none;position:absolute;left:0;right:0;bottom:0;z-index:5;max-height:62%;background:#fff;border-radius:var(--rad) var(--rad) 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.14);transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.7,.2,1);flex-direction:column} /* 9/28: will-change 레이어 승격은 iOS에서 시트 안 탭 무반응·내용 잘림 유발(실기 제보) → 제거 */
 .tv-mbar.open{transform:none}
-.tv-mbar-head{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0 var(--gut)}
 .tv-mbar-tabs{display:flex;gap:6px} .tv-mbar-tabs button{font:inherit;font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid rgba(0,0,0,.18);background:#fff;color:#3a3c40;cursor:pointer} .tv-mbar-tabs button.on{background:#171a20;color:#fff;border-color:#171a20}
 .tv-mbar-x{width:36px;height:36px;border:0;background:none;font-size:24px;line-height:1;color:#171a20;cursor:pointer}
 .tv-mbar-body{overflow:auto;-webkit-overflow-scrolling:touch;padding:14px var(--gut) 24px}
 .tv-mbar .m-k{display:none}
 .tv-mbar .co-h{font-size:30px}
 .tv-mbar .co-plus{margin-top:16px}
-.tv-mbar .co-row::after{width:0} .tv-mbar.go .co-row::after{width:var(--v)}
+.tv-mbar .co-row::after{width:0}
 .tv-mbar .m-batt-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .tv-mbar .batt{position:static;width:96px} .tv-mbar .batt-label{position:static}
-.tv-mbar.go .batt-fill{width:100%}
 .tv-mbar .m-b{margin:0 0 4px;font-size:15px;font-weight:600;color:#171a20}
 .tv-mbar .m-p{margin:0;font-size:13px;line-height:1.55;color:#3a3c40;word-break:keep-all}
-@media (max-width:900px){ .tv-mplus{display:block} .tv-mbar{display:flex} }
 
 /* 배경 문장 (2026-09-08) — 차 뒤에 크게, 차 앞머리가 지나간 오른쪽부터 지워짐(--cf = 차 앞머리 x) */
 .tv-side-tag{position:absolute;left:0;right:0;top:60%;transform:translateY(-50%);margin:0;text-align:center;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-size:clamp(36px,5.2vw,116px);font-weight:500;letter-spacing:-.03em;color:#171a20;white-space:nowrap;pointer-events:none;z-index:0;clip-path:polygon(0 0,var(--cf,100vw) 0,var(--cf,100vw) 100%,var(--cr,100vw) 100%,var(--cr,100vw) 0,100% 0,100% 100%,0 100%)}
 .tv-side-track{z-index:1}
-@media (max-width:900px){ .tv-side-tag{display:none} }
 /* 앞유리 전체 오버레이 (2026-09-08, 테슬라 컨피규레이터 문법) */
 .tv-plus{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-left:6px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.18);font-style:normal;font-weight:400;font-size:14px;line-height:1;color:#171a20;vertical-align:-2px}
 .tv-co:hover .tv-plus{background:#171a20;color:#fff;border-color:#171a20}
@@ -287,7 +278,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-co>span{box-sizing:border-box} .tv-co.l>span.co-block{padding-right:40px}
 /* 콜아웃 높이 자동 계산 (2026-09-08) — 블록은 바 아래 고정, 선 길이는 JS가 차 위치로 계산 */
 @media (max-height:1050px){ .tv-side-track .tv-car{height:clamp(240px,42vh,520px)} .tv-side-track{top:68%} }
-@media (max-width:900px){ .tv-side-track .tv-car{height:auto} .tv-side-track{top:62%} } /* 폰: 차 높이를 화면 높이(vh)에 묶지 않음 — 주소창 접힘 시 축소·찌그러짐 방지 (2026-09-09) */
 /* 배터리 (2026-09-08, 애플워치 배터리 모션) — 트렁크 쪽 콜아웃, 콜아웃이 뜬 뒤 왼쪽부터 차오름 */
 .batt{position:absolute;left:14px;top:calc(-1 * var(--h) + 14px);display:flex;align-items:center;gap:4px;width:96px;font-style:normal}
 .batt-body{display:block;flex:1;height:44px;border:3px solid #34c759;border-radius:12px;padding:3px;background:#fff;box-sizing:border-box}
@@ -401,6 +391,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-combo-sec .tv-gx-k{color:#6e6e73}
 .tv-combo-sec h2{font-size:clamp(22px,2.2vw,34px);font-weight:600;line-height:1.2;letter-spacing:-.01em;margin:0 0 44px;word-break:keep-all}
 .tv-combo-grid{grid-template-columns:1fr 1fr;gap:26px clamp(24px,4vw,72px);max-width:1320px;margin:0 auto}
+.tv-combo-sec{overflow-x:clip} /* 9/28: 2번 열 translateX가 1440px에서 26px 가로 넘침을 만들던 것 차단(스크롤 컨테이너 아님) */
 .tv-combo-grid>div:nth-child(2){transform:translateX(clamp(24px,6vw,120px))}
 @media (max-width:900px){ .tv-combo-grid>div:nth-child(2){transform:none} }
 .tv-combo-sec .tv-combo{width:min(100%,620px);margin:28px auto 0}
@@ -561,7 +552,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 /* ===== 폰 보정 (2026-09-28, 사용자 실기 제보: 크기 안 맞음·렉·+버튼) ===== */
 @media (max-width:900px){
   /* 고정 무대 높이 = 실제 보이는 화면(dvh) — svh로 두면 주소창이 접힐 때 아래에 다음 섹션이 흰 띠로 비침 */
-  .tv-side-stick,.tv-gx-stick,.tv-leaves-stick{height:100vh;height:100lvh} /* dvh 금지 — iOS 주소창 접힘마다 높이가 바뀌어 스크롤이 튐(9/28 실기). lvh=고정값 */
+  .tv-gx-stick,.tv-leaves-stick{height:100vh;height:100lvh} /* dvh 금지 — iOS 주소창 접힘마다 높이가 바뀌어 스크롤이 튐(9/28 실기). lvh=고정값 */
   .tv-side{overflow-x:clip} /* 차가 오른쪽 밖에서 들어올 때 가로 스크롤 차단. 주의: stick(부모)에 걸면 WebKit에서 자식 view() 타임라인이 죽고, html/body에 걸면 안 막힘 — 섹션에만 */
   /* 나뭇잎: 세로 프레임에 16:9 영상을 꽉 채우면 뒷바퀴만 크게 잘림 → 캔버스만 16:9로 가운데, 글·로고는 위아래 */
   .tv-leaves-frame .tv-leaves-cv{inset:auto;left:0;right:0;top:50%;height:calc(100vw*9/16);transform:translateY(-50%)}
@@ -580,8 +571,9 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-side{height:auto;view-timeline-name:--side;view-timeline-axis:block}
   .tv-side-stick{position:sticky;top:0;z-index:1;height:auto;min-height:0;overflow:visible;clip-path:inset(0);padding:116px 0 28px;display:block;background:#f4f4f4} /* 9/28 녹화: 화면 한 장 무대는 위아래가 비어 보임 → 차 높이만큼만. overflow:hidden·clip 금지(자식 view() 죽음) */
   .tv-side-track{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto}
+  .tv-side-track .tv-wheel{transform:translate(-50%,-50%)} /* view() 미지원 폰: JS --r 회전 차단(지원 폰은 wheelIn이 덮음) */
+  picture{display:block}
   .tv-side-track .tv-car{width:100%;height:auto}
-  .tv-mplus,.tv-mbar-head{display:none!important}
   /* 차 뒤 배경 글자 「Xenith IR for Tesla」(웹과 동일) — 폰은 차 중심 높이에 한 줄, 차가 들어올 때 함께 떠오름 */
   .tv-side-tag{display:block;top:calc(116px + 19.7vw);font-size:6.2vw;clip-path:none;z-index:0} /* 차 몸통 높이에 작게 — 차가 도착하면 완전히 가려짐(웹의 clip 연출과 같은 결과). 바닥 그림자는 기존 .tv-side-track::after */
   .tv-mbar{position:relative;z-index:2;display:block!important;transform:none!important;transition:none;max-height:none;box-shadow:0 -10px 30px rgba(0,0,0,.08);border-radius:20px 20px 0 0;background:#fff;margin-top:0}
@@ -595,7 +587,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-mbar-pane.go .co-row::after{width:var(--v);transition-delay:.35s} .tv-mbar-pane.go .batt-fill{width:100%}
   /* 옆모습 무대가 고정 무대가 아니게 되면서, 그 위로 200svh 겹쳐 올라오던 탑뷰 섹션은 겹침 없이 이어붙임 */
   .tv-gx{margin-top:0;height:380vh}
-  .tv-gx-stick{pointer-events:auto;transform:none!important} /* 폰: 아래서 미끄러져 올라오는 단계(흰 화면 한 장) 제거 */
+  .tv-gx-stick{pointer-events:auto;transform:none!important;will-change:auto} /* 폰: 아래서 미끄러져 올라오는 단계(흰 화면 한 장) 제거 */
   /* 웹과 같은 줌인 연출(사용자 요청 9/28): 검은 실내 12×에서 빠져나와 차 전체 → 유리 짙어짐 → 글·목록. will-change 없음(iOS 탭 오작동 교훈) */
   .tv-gx-top .tv-gx-frame{display:flex;flex-direction:column}
   .tv-gx-top .tv-gx-carbox{order:-1;margin:0;position:relative;z-index:3}
@@ -606,8 +598,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-gx-top .tv-gx-copy{padding-top:16px}
   .tv-combo-sec .tv-combo-stage{opacity:1;transform:none;transition:none} .tv-combo-sec .tv-co.hz::before{transform:none;transition:none} .tv-combo-sec .tv-co.hz>span{opacity:1;transform:none;transition:none} /* 폰: 등장 대기 중 빈 자리로 보임(녹화 14.5s) → 즉시 표시 */
   .tv-leaves{height:320vh} /* 폰: 덮개 문구 전 흰 화면 구간 축소(녹화 18~19.5s) */
-  /* + 버튼: iOS 탭 지연·하이라이트 제거 */
-  .tv-mplus{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
 
 /* ===== 폰 탑뷰: 스크롤 연동 애니메이션을 브라우저(컴포지터)에 맡김 (2026-09-28) =====
@@ -618,9 +608,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   .tv-gx-top .tv-gx-carwrap{animation:gxZoom linear both;animation-timeline:--gx;animation-range:contain 4% contain 46%}
   .tv-gx-top .tv-gx-frame::before{animation:gxVeil linear both;animation-timeline:--gx;animation-range:contain 0% contain 8%}
   .tv-gx-top.ba .tv-gx-after{animation:gxTint linear both;animation-timeline:--gx;animation-range:contain 44% contain 54%}
-  .tv-gx-top .tv-gx-copy,.tv-gx-top .tv-gx-mlist{animation:gxText linear both;animation-timeline:--gx;animation-range:contain 50% contain 60%}
 }}
-@keyframes gxIn{from{transform:translateY(100%)}to{transform:none}}
 /* 12×→1× 지수 곡선을 5점으로 근사. 줌 원점(앞좌석 사이 콘솔 왼쪽 틈)=차 박스의 45%/50% → 프레임 중앙으로 끌어오는 이동량: x 5vw, y (100lvh-100px)/2 - 23.47vw(차 높이의 절반) */
 @keyframes gxZoom{
   0%{transform:translate(5vw,calc((100lvh - 100px)/2 - 23.47vw)) scale(12)}
@@ -728,9 +716,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 <section class="tv-side" id="side" aria-label="모델 Y 옆모습">
   <div class="tv-side-stick">
     <p class="tv-side-tag" aria-hidden="true">Xenith IR for Tesla</p>
-    <div class="tv-side-track"><picture><source media="(max-width:900px)" srcset="img/v3/side_car8_2k_cut.webp"><img class="tv-car" src="img/v3/side_car8_2k.jpg" alt="흰 모델 Y 옆모습" width="4073" height="1604" loading="lazy"></picture><img class="tv-wheel-bg" src="img/v3/wheel_brake_disc_512.png" alt="" aria-hidden="true" style="left:21.319%;top:71.030%;width:14.942%"><img class="tv-wheel" src="img/v3/wheel_spokes_512.png" alt="" aria-hidden="true" style="left:21.319%;top:71.030%;width:14.942%"><img class="tv-wheel-bg" src="img/v3/wheel_brake_disc_512.png" alt="" aria-hidden="true" style="left:77.955%;top:69.028%;width:14.942%"><img class="tv-wheel" src="img/v3/wheel_spokes_512.png" alt="" aria-hidden="true" style="left:77.955%;top:69.028%;width:14.942%"><div class="tv-co l" role="button" tabindex="0" data-full="front" style="left:29%;top:21%;--h:100px;--w:390px"><span class="co-block"><strong class="co-h">Xenith IR <small>제니스 IR</small></strong><em class="co-q">가장 진보된 세라믹 소재. 어떤 차에도 어울리는 비크 블랙.</em><em class="co-why"><small>왜 XENITH인가</small>전기차 오너에게 사랑받는 이유. 확실한 열 차단, 방해받지 않는 신호, 선명한 시야, 눈부심 없는 주행. 그게 Xenith입니다.</em><a class="co-plus" href="index.html?pd=xenith#products" aria-label="Xenith IR 제품 페이지로"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9"/></svg></i><span>제품 페이지</span></a></span></div><button class="tv-co v" type="button" data-card="roof" style="left:50%;top:-1%;--h:80px;--w:340px"><span class="co-block co-spec"><em class="co-row" style="--v:100%"><span>UV 차단율</span><b>99%+ · PA+++ SPF 285</b></em><em class="co-row" style="--v:68%"><span>총 태양에너지 차단 (TSER)</span><b>68%</b></em><em class="co-row" style="--v:56%"><span>가시광선 투과율 (VLT)</span><b>8 ~ 56%</b></em><em class="co-row" style="--v:50%"><span>내구성 보증</span><b>5년</b></em><em class="co-note">* 농도 5 기준 최대 TSER · 농도 라인업: 5–50</em></span></button><button class="tv-co r" type="button" data-card="rear" style="left:75%;top:10%;--h:70px;--w:300px"><span><b>냉방은 배터리에서 나옵니다</b>더운 날 에어컨은 주행거리의 17%를 씁니다. THE LX 라인업 필름 중 하나인 제니스는 유리를 지나는 열을 막아, 냉난방에 쓰는 배터리를 아낍니다.<small class="co-src">AAA 2019 · 35℃ 실내 시험 5차종 · 냉방 작동 시 감소분</small></span><em class="batt" aria-hidden="true"><em class="batt-body"><em class="batt-fill"></em></em><em class="batt-nub"></em></em><em class="batt-label" aria-hidden="true">SAVE BATTERY EFFECT</em></button><button class="tv-mplus" type="button" aria-expanded="false" aria-controls="mBar" aria-label="Xenith IR 안내 열기" style="left:30%;top:9%"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9"/></svg></button></div>
+    <div class="tv-side-track"><picture><source media="(max-width:900px)" srcset="img/v3/side_car8_2k_cut.webp"><img class="tv-car" src="img/v3/side_car8_2k.jpg" alt="흰 모델 Y 옆모습" width="2048" height="807" loading="lazy"></picture><img class="tv-wheel-bg" src="img/v3/wheel_brake_disc_512.png" alt="" aria-hidden="true" style="left:21.319%;top:71.030%;width:14.942%"><img class="tv-wheel" src="img/v3/wheel_spokes_512.png" alt="" aria-hidden="true" style="left:21.319%;top:71.030%;width:14.942%"><img class="tv-wheel-bg" src="img/v3/wheel_brake_disc_512.png" alt="" aria-hidden="true" style="left:77.955%;top:69.028%;width:14.942%"><img class="tv-wheel" src="img/v3/wheel_spokes_512.png" alt="" aria-hidden="true" style="left:77.955%;top:69.028%;width:14.942%"><div class="tv-co l" role="button" tabindex="0" data-full="front" style="left:29%;top:21%;--h:100px;--w:390px"><span class="co-block"><strong class="co-h">Xenith IR <small>제니스 IR</small></strong><em class="co-q">가장 진보된 세라믹 소재. 어떤 차에도 어울리는 비크 블랙.</em><em class="co-why"><small>왜 XENITH인가</small>전기차 오너에게 사랑받는 이유. 확실한 열 차단, 방해받지 않는 신호, 선명한 시야, 눈부심 없는 주행. 그게 Xenith입니다.</em><a class="co-plus" href="index.html?pd=xenith#products" aria-label="Xenith IR 제품 페이지로"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9"/></svg></i><span>제품 페이지</span></a></span></div><button class="tv-co v" type="button" style="left:50%;top:-1%;--h:80px;--w:340px"><span class="co-block co-spec"><em class="co-row" style="--v:100%"><span>UV 차단율</span><b>99%+ · PA+++ SPF 285</b></em><em class="co-row" style="--v:68%"><span>총 태양에너지 차단 (TSER)</span><b>68%</b></em><em class="co-row" style="--v:56%"><span>가시광선 투과율 (VLT)</span><b>8 ~ 56%</b></em><em class="co-row" style="--v:50%"><span>내구성 보증</span><b>5년</b></em><em class="co-note">* 농도 5 기준 최대 TSER · 농도 라인업: 5–50</em></span></button><button class="tv-co r" type="button" style="left:75%;top:10%;--h:70px;--w:300px"><span><b>냉방은 배터리에서 나옵니다</b>더운 날 에어컨은 주행거리의 17%를 씁니다. THE LX 라인업 필름 중 하나인 제니스는 유리를 지나는 열을 막아, 냉난방에 쓰는 배터리를 아낍니다.<small class="co-src">AAA 2019 · 35℃ 실내 시험 5차종 · 냉방 작동 시 감소분</small></span><em class="batt" aria-hidden="true"><em class="batt-body"><em class="batt-fill"></em></em><em class="batt-nub"></em></em><em class="batt-label" aria-hidden="true">SAVE BATTERY EFFECT</em></button></div>
     <div class="tv-mbar" id="mBar" hidden role="dialog" aria-label="Xenith IR 부위별 안내">
-      <div class="tv-mbar-head"><div class="tv-mbar-tabs" role="tablist"><button type="button" role="tab" data-tab="front" aria-selected="true" class=on>제품</button><button type="button" role="tab" data-tab="roof" aria-selected="false">스펙</button><button type="button" role="tab" data-tab="rear" aria-selected="false">Effect</button></div><button class="tv-mbar-x" type="button" aria-label="닫기">×</button></div>
       <div class="tv-mbar-body"><div class="tv-mbar-pane" data-pane="front"><span class="co-block"><strong class="co-h">Xenith IR <small>제니스 IR</small></strong><em class="co-q">가장 진보된 세라믹 소재. 어떤 차에도 어울리는 비크 블랙.</em><em class="co-why"><small>왜 XENITH인가</small>전기차 오너에게 사랑받는 이유. 확실한 열 차단, 방해받지 않는 신호, 선명한 시야, 눈부심 없는 주행. 그게 Xenith입니다.</em><a class="co-plus" href="index.html?pd=xenith#products" aria-label="Xenith IR 제품 페이지로"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9"/></svg></i><span>제품 페이지</span></a></span></div><div class="tv-mbar-pane" data-pane="roof" hidden><span class="co-block co-spec"><em class="co-row" style="--v:100%"><span>UV 차단율</span><b>99%+ · PA+++ SPF 285</b></em><em class="co-row" style="--v:68%"><span>총 태양에너지 차단 (TSER)</span><b>68%</b></em><em class="co-row" style="--v:56%"><span>가시광선 투과율 (VLT)</span><b>8 ~ 56%</b></em><em class="co-row" style="--v:50%"><span>내구성 보증</span><b>5년</b></em><em class="co-note">* 농도 5 기준 최대 TSER · 농도 라인업: 5–50</em></span></div><div class="tv-mbar-pane" data-pane="rear" hidden><div class="m-batt-row" aria-hidden="true"><em class="batt"><em class="batt-body"><em class="batt-fill"></em></em><em class="batt-nub"></em></em><em class="batt-label">SAVE BATTERY EFFECT</em></div>
     <p class="m-b">냉방은 배터리에서 나옵니다</p>
     <p class="m-p">더운 날 에어컨은 주행거리의 17%를 씁니다. THE LX 라인업 필름 중 하나인 제니스는 유리를 지나는 열을 막아, 냉난방에 쓰는 배터리를 아낍니다.</p>
@@ -780,7 +767,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   </div>
 </section>
 
-<div id="m1"></div><section class="tv-gx tv-gx-top ba" id="gx" aria-label="Xenith IR 특징">
+<section class="tv-gx tv-gx-top ba" id="gx" aria-label="Xenith IR 특징">
   <div class="tv-gx-stick">
     <div class="tv-gx-frame">
       <div class="tv-gx-copy">
@@ -822,7 +809,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
     <h2>테슬라 오너가 사랑하는 조합</h2>
     <div class="tv-grid tv-combo-grid">
         <div><small>커스텀 1</small><b>전면 LX · 측후면 LX · 루프 제니스IR</b><small style="margin-top:6px">전면과 측후면으로 들어오는 복사열을 반사하고, 루프는 세라믹으로.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top1_v.webp" alt="조합 1: 전면과 측후면 LX, 루프 제니스IR — 흰 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>LX · 풀메탈 스퍼터</span></div></div><p class="tv-combo-cap">전면 LX · 루프 제니스IR · 측후면 LX</p></div></div>
-        <div><small>커스텀 2</small><b>전면 LX · 측후면 제니스IR · 루프 제니스IR</b><small style="margin-top:6px">전파 간섭 우려와 비용을 함께 고려하는 선택.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top2_v.webp" alt="조합 2: 전면 LX, 측후면과 루프 제니스IR — 검정 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>제니스IR · 나노 세라믹</span></div></div><p class="tv-combo-cap">전면 LX · 루프 제니스IR · 측후면 제니스IR</p></div>
+        <div><small>커스텀 2</small><b>전면 LX · 측후면 제니스IR · 루프 제니스IR</b><small style="margin-top:6px">전파 간섭 우려와 비용을 함께 고려하는 선택.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top2_v.webp" alt="조합 2: 전면 LX, 측후면과 루프 제니스IR — 검정 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>제니스IR · 나노 세라믹</span></div></div><p class="tv-combo-cap">전면 LX · 루프 제니스IR · 측후면 제니스IR</p></div></div>
+    </div>
   </div>
 </section>
 
@@ -891,7 +879,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 document.querySelectorAll('.tv-tabs button').forEach(function(bt){bt.addEventListener('click',function(){document.querySelectorAll('.tv-tabs button').forEach(function(x){x.classList.toggle('on',x===bt)});document.querySelectorAll('.tv-pane').forEach(function(pn){pn.hidden=pn.getAttribute('data-pane')!==bt.getAttribute('data-tab')})})});
 var v=document.querySelector('.tv-hero video');var hero=h;function tone(){hero.classList.toggle('light',!v||v.ended||v.currentTime>4.1);if(!v||v.ended)hero.classList.add('done')}if(v){v.addEventListener('timeupdate',tone);v.addEventListener('ended',tone);v.addEventListener('play',tone);if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&v.paused&&!v.ended){var p=v.play();if(p&&p.catch)p.catch(function(){});io.disconnect();}})},{threshold:.45});io.observe(hero);}else{v.play().catch&&v.play().catch(function(){});}}tone();function k(){if(v&&v.paused&&!v.ended){var p=v.play();if(p&&p.catch)p.catch(function(){})}}['touchstart','click'].forEach(function(e){addEventListener(e,k,{once:true,passive:true})});document.addEventListener('visibilitychange',function(){if(!document.hidden)k()});})();
 (function(){var g=document.getElementById('glass');if(!g)return;function u(){var r=g.getBoundingClientRect();var p=Math.min(1,Math.max(0,(-r.top)/(window.innerHeight*.8)));g.style.setProperty('--p',p.toFixed(3))}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u()})();
-(function(){var s=document.getElementById('side');if(!s)return;var t=s.querySelector('.tv-side-track');function u(){var r=s.getBoundingClientRect();var p=Math.min(1,Math.max(0,(-r.top)/(r.height-innerHeight)));var pc=Math.min(1,p/.45);var e=pc<.5?2*pc*pc:1-Math.pow(-2*pc+2,2)/2;var W=t.offsetWidth,vw=innerWidth,g=vw>900?vw*.62:vw-16;var x0=vw-W*.23,x1=vw>900?(vw-W)/2:8;var x=x0+(x1-x0)*e;s.style.setProperty('--x',x.toFixed(1)+'px');s.style.setProperty('--cf',(x+W*.09).toFixed(1)+'px');s.style.setProperty('--cr',(x+W*.93).toFixed(1)+'px');var rp=0.074708*W;s.style.setProperty('--r',(-(x0-x)/rp*57.2958).toFixed(2)+'deg');var nn=Math.min(1,Math.max(0,(p-.38)/.1));s.style.setProperty('--n',nn.toFixed(3));if(nn>=.6&&!s.dataset.go){s.dataset.go='1';setTimeout(function(){s.classList.add('go')},500)}else if(nn<=0&&s.dataset.go){s.dataset.go='';s.classList.remove('go')}}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u();var im=t.querySelector('.tv-car');if(im&&!im.complete)im.addEventListener('load',u)})();
+(function(){var s=document.getElementById('side');if(!s)return;var t=s.querySelector('.tv-side-track');function u(){if(innerWidth<=900)return;/* 폰은 CSS(정적+scroll-driven) 경로 */var r=s.getBoundingClientRect();var p=Math.min(1,Math.max(0,(-r.top)/(r.height-innerHeight)));var pc=Math.min(1,p/.45);var e=pc<.5?2*pc*pc:1-Math.pow(-2*pc+2,2)/2;var W=t.offsetWidth,vw=innerWidth,g=vw>900?vw*.62:vw-16;var x0=vw-W*.23,x1=vw>900?(vw-W)/2:8;var x=x0+(x1-x0)*e;s.style.setProperty('--x',x.toFixed(1)+'px');s.style.setProperty('--cf',(x+W*.09).toFixed(1)+'px');s.style.setProperty('--cr',(x+W*.93).toFixed(1)+'px');var rp=0.074708*W;s.style.setProperty('--r',(-(x0-x)/rp*57.2958).toFixed(2)+'deg');var nn=Math.min(1,Math.max(0,(p-.38)/.1));s.style.setProperty('--n',nn.toFixed(3));if(nn>=.6&&!s.dataset.go){s.dataset.go='1';setTimeout(function(){s.classList.add('go')},500)}else if(nn<=0&&s.dataset.go){s.dataset.go='';s.classList.remove('go')}}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u();var im=t.querySelector('.tv-car');if(im&&!im.complete)im.addEventListener('load',u)})();
 </script>
 <script>
 /* hero 멈춤 감시 (2026-09-28) — 사파리에서 재생 중 영상이 한 장면에 멈춰 있는 경우가 있음(사용자 제보).
@@ -909,7 +897,7 @@ addEventListener('pageshow',function(e){if(e.persisted&&!v.ended)play()});})();
 </script>
 <script>
 /* 폰 옆모습 정적 구성: 제품·스펙·Effect 묶음이 화면에 들어오면 .go (막대·배터리 차오름, 묶음 순차 등장) — 2026-09-28 */
-(function(){var m=document.getElementById('mBar');if(!m||innerWidth>900)return;var sd=document.getElementById('side');if(sd&&m.parentNode!==sd)sd.appendChild(m);/* 폰: 묶음을 고정 무대 뒤(형제)로 옮겨 무대 위로 올라오게 */if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('go');io.unobserve(e.target)}})},{threshold:.3});m.querySelectorAll('.tv-mbar-pane').forEach(function(p){io.observe(p)})})();
+(function(){var m=document.getElementById('mBar');if(!m)return;var sd=document.getElementById('side');if(sd&&m.parentNode!==sd)sd.appendChild(m);m.removeAttribute('hidden');m.removeAttribute('role');m.removeAttribute('aria-modal');/* 묶음을 고정 무대 뒤(형제)로 — 데스크톱은 display:none이라 무해, 폰 회전 대비 항상 실행 */if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('go');io.unobserve(e.target)}})},{threshold:.3});m.querySelectorAll('.tv-mbar-pane').forEach(function(p){io.observe(p)})})();
 </script>
 <script>
 /* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */
@@ -950,14 +938,8 @@ document.addEventListener('keydown',function(e){if(!f.hidden&&e.key==='Escape')f
 (function(){var st=document.querySelector('.tv-side-stick');if(!st)return;var cos=st.querySelectorAll('.tv-co');function fit(){var sr=st.getBoundingClientRect();cos.forEach(function(c){var sp=c.querySelector(':scope>span');if(!sp)return;var r=c.getBoundingClientRect();var anchor=r.top-sr.top;var h=anchor-180-sp.offsetHeight;if(h<24)h=24;c.style.setProperty('--h',h.toFixed(0)+'px')})}
 addEventListener('resize',fit);addEventListener('load',fit);setTimeout(fit,50);setTimeout(fit,600);var im=st.querySelector('.tv-car');if(im&&!im.complete)im.addEventListener('load',fit);})();
 (function(){var b=document.querySelector('.tv-craft-btn'),p=document.getElementById('craftPanel');if(!b||!p)return;var v=p.querySelector('video');b.addEventListener('click',function(){var o=!p.classList.contains('open');p.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');p.setAttribute('aria-hidden',o?'false':'true');if(o){v.play().catch(function(){})}else{v.pause()}})})();
-(function(){var s=document.getElementById('side'),b=s&&s.querySelector('.tv-mplus'),m=document.getElementById('mBar');if(!b||!m)return;var t;function open(){m.hidden=false;clearTimeout(t);m.getBoundingClientRect();m.classList.add('open');t=setTimeout(function(){m.classList.add('go')},220);b.setAttribute('aria-expanded','true')}function close(){m.classList.remove('open','go');b.setAttribute('aria-expanded','false');clearTimeout(t);t=setTimeout(function(){m.hidden=true},500)}
-function toggle(){m.classList.contains('open')?close():open()}
-/* iOS: 스크롤 관성 중 탭은 click이 안 오는 경우가 있어 touchend로도 연다(손가락이 12px 넘게 움직였으면 스크롤로 보고 무시) */
-var tx=0,ty=0,tk=false;b.addEventListener('touchstart',function(e){var p=e.touches[0];tx=p.clientX;ty=p.clientY;tk=true},{passive:true});
-b.addEventListener('touchend',function(e){if(!tk)return;tk=false;var p=e.changedTouches[0];if(Math.abs(p.clientX-tx)>12||Math.abs(p.clientY-ty)>12)return;e.preventDefault();toggle()});
-b.addEventListener('click',toggle);m.querySelector('.tv-mbar-x').addEventListener('click',close);
-m.querySelectorAll('[data-tab]').forEach(function(c){c.addEventListener('click',function(){var k=c.dataset.tab;m.querySelectorAll('[data-tab]').forEach(function(x){x.classList.toggle('on',x===c);x.setAttribute('aria-selected',x===c?'true':'false')});m.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==k});m.querySelector('.tv-mbar-body').scrollTop=0})});})();
-(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');var SDA=innerWidth<=900&&window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()');function u(){var r=g.getBoundingClientRect();var ih=innerHeight;var frR=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cbR=g.querySelector('.tv-gx-carbox').getBoundingClientRect();var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));if(!SDA){g.style.setProperty('--f',f.toFixed(3));g.style.setProperty('--p',p.toFixed(3))}g.classList.toggle('on',f>=.99);if(g.classList.contains('tv-gx-top')&&!SDA){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=frR,cb=cbR;g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c&&!(SDA&&g.dataset.ovw===innerWidth+'x'+innerHeight)){g.dataset.ovw=innerWidth+'x'+innerHeight;var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}if(SDA){g.style.setProperty('--over',over.toFixed(1)+'px')}else{var q=Math.min(1,Math.max(0,(p-.66)/.34));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}}else g.style.setProperty('--s','0px')}var tk=false;function su(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;u()})}addEventListener('scroll',su,{passive:true});addEventListener('resize',u);u()})();
+
+(function(){var g=document.getElementById('gx');if(!g)return;/* 9/15 시안 스위치: ?glass=1&ghost=.72 */var q=new URLSearchParams(location.search);if(q.get('glass')==='1'){g.classList.add('glass');if(q.get('ghost'))g.style.setProperty('--ghost',q.get('ghost'))}if(q.get('tint')==='1'){g.classList.add('tint');if(q.get('t'))g.style.setProperty('--tint',q.get('t'))}var c=g.querySelector('.tv-gx-copy');var SUP=!!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()'));function u(){var SDA=innerWidth<=900&&SUP;/* 회전·리사이즈마다 재판정 */var r=g.getBoundingClientRect();var ih=innerHeight;var frR=g.querySelector('.tv-gx-frame').getBoundingClientRect(),cbR=g.querySelector('.tv-gx-carbox').getBoundingClientRect();var f=Math.min(1,Math.max(0,(-r.top)/ih));var p=Math.min(1,Math.max(0,(-r.top-ih)/(r.height-2*ih)));if(!SDA){g.style.setProperty('--f',f.toFixed(3));g.style.setProperty('--p',p.toFixed(3))}g.classList.toggle('on',f>=.99);if(g.classList.contains('tv-gx-top')&&!SDA){var z=Math.min(1,p/.55);z=1-Math.pow(1-z,2);g.style.setProperty('--z',z.toFixed(3));g.style.setProperty('--sc',Math.pow(12,1-z).toFixed(3));g.style.setProperty('--veil',Math.min(1,Math.max(0,1-p/.15)).toFixed(3));var fr=frR,cb=cbR;g.style.setProperty('--dx',((fr.left+fr.width/2)-(cb.left+.45*cb.width)).toFixed(1)+'px');g.style.setProperty('--dy',((fr.top+fr.height/2)-(cb.top+.50*cb.height)).toFixed(1)+'px');g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.5)/.2)).toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,(p-.6)/.2)).toFixed(3));g.style.setProperty('--gl',Math.min(1,Math.max(0,(p-.5)/.15)).toFixed(3))}var pm=Math.min(1,p/.3);g.style.setProperty('--pm',pm.toFixed(3));if(innerWidth<=900&&c&&!(SDA&&g.dataset.ovw===innerWidth+'x'+innerHeight)){g.dataset.ovw=innerWidth+'x'+innerHeight;var inner=0,over=0;if(g.classList.contains('tv-gx-top')){var fr=g.querySelector('.tv-gx-frame');var ks=fr.children;for(var i=0;i<ks.length;i++)inner+=ks[i].offsetHeight;over=Math.max(0,inner-fr.clientHeight)}else{var kids=c.children;for(var i=0;i<kids.length;i++)inner+=kids[i].offsetHeight;inner+=parseFloat(getComputedStyle(c).paddingTop)+parseFloat(getComputedStyle(c).paddingBottom)+(kids.length>1?20:0);over=Math.max(0,inner-c.clientHeight)}if(SDA){g.style.setProperty('--over',over.toFixed(1)+'px')}else{var q=Math.min(1,Math.max(0,(p-.66)/.34));g.style.setProperty('--s',(over*q).toFixed(1)+'px')}}else g.style.setProperty('--s','0px')}var tk=false;function su(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;u()})}addEventListener('scroll',su,{passive:true});addEventListener('resize',u);u()})();
 (function(){var l=document.getElementById('leaves');if(!l)return;var cv=l.querySelector('.tv-leaves-cv');if(!cv)return;var ctx=cv.getContext('2d');
 /* 나뭇잎 리빌=이미지 시퀀스(img/leaves-seq/f_001~097.jpg, 12fps). 사파리에서 video.currentTime 스크럽이 그려지지 않아 영상 대신 프레임을 캔버스에 직접 그림 (2026-09-11) */
 var N=97,CS=.5,VE=.84,F=[],loaded=0,cur=-1,raf=0,W=0,H=0,dpr=1;

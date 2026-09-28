@@ -643,7 +643,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 }}
 @keyframes carIn{from{transform:translateX(70vw)}to{transform:none}}
 @keyframes tagIn{from{opacity:0;transform:translate(-8vw,-50%)}to{opacity:1;transform:translate(0,-50%)}}
-@keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(-536deg)}to{transform:translate(-50%,-50%) rotate(0deg)}}
+@keyframes wheelIn{from{transform:translate(-50%,-50%) rotate(536deg)}to{transform:translate(-50%,-50%) rotate(0deg)}} /* 차가 왼쪽으로 달림 → 바퀴는 반시계(각도 감소). 팝업 JS(--r=-(이동)/반지름)와 같은 방향 */
 @keyframes gxUp{from{transform:none}to{transform:translateY(calc(-1 * var(--over,0px)))}}
 </style>
 </head>

@@ -801,6 +801,20 @@ var v=document.querySelector('.tv-hero video');var hero=h;function tone(){hero.c
 (function(){var s=document.getElementById('side');if(!s)return;var t=s.querySelector('.tv-side-track');function u(){var r=s.getBoundingClientRect();var p=Math.min(1,Math.max(0,(-r.top)/(r.height-innerHeight)));var pc=Math.min(1,p/.45);var e=pc<.5?2*pc*pc:1-Math.pow(-2*pc+2,2)/2;var W=t.offsetWidth,vw=innerWidth,g=vw>900?vw*.62:vw-16;var x0=vw-W*.23,x1=vw>900?(vw-W)/2:8;var x=x0+(x1-x0)*e;s.style.setProperty('--x',x.toFixed(1)+'px');s.style.setProperty('--cf',(x+W*.09).toFixed(1)+'px');s.style.setProperty('--cr',(x+W*.93).toFixed(1)+'px');var rp=0.074708*W;s.style.setProperty('--r',(-(x0-x)/rp*57.2958).toFixed(2)+'deg');var nn=Math.min(1,Math.max(0,(p-.38)/.1));s.style.setProperty('--n',nn.toFixed(3));if(nn>=.6&&!s.dataset.go){s.dataset.go='1';setTimeout(function(){s.classList.add('go')},500)}else if(nn<=0&&s.dataset.go){s.dataset.go='';s.classList.remove('go')}}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u();var im=t.querySelector('.tv-car');if(im&&!im.complete)im.addEventListener('load',u)})();
 </script>
 <script>
+/* hero 멈춤 감시 (2026-09-28) — 사파리에서 재생 중 영상이 한 장면에 멈춰 있는 경우가 있음(사용자 제보).
+   0.5초마다 재생 위치를 보고, 1.5초 넘게 안 움직이면 다시 재생. 3번 시도해도 안 되면 마지막 정지 장면으로 넘김.
+   뒤로가기로 돌아온 경우(페이지 보관 복원)에도 다시 재생. */
+(function(){var v=document.querySelector('.tv-hero video'),h=document.querySelector('.tv-hero');if(!v||!h)return;
+function play(){var p=v.play();if(p&&p.catch)p.catch(function(){})}
+var last=-1,still=0,tries=0,id=setInterval(function(){
+  if(v.ended||h.classList.contains('done')){clearInterval(id);return}
+  if(document.hidden)return;
+  if(v.currentTime===last){still+=.5}else{still=0;last=v.currentTime}
+  if(still>=1.5){still=0;if(tries<3){tries++;play()}else{h.classList.add('light','done');clearInterval(id)}}
+},500);
+addEventListener('pageshow',function(e){if(e.persisted&&!v.ended)play()});})();
+</script>
+<script>
 /* NAV 모바일 메뉴 — index·pricing과 동일 (2026-08-04) */
 (function () {
   var hamburger  = document.getElementById('navHamburger');

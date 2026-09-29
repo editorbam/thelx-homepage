@@ -1005,7 +1005,8 @@ var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build
     s+='<svg viewBox="0 0 '+W+' '+H+'" aria-hidden="true"><defs><linearGradient id="spcVis" x1="0" x2="1">';
     for(n=380;n<=780;n+=20) s+='<stop offset="'+((n-380)/400)+'" stop-color="'+wl(n)+'"/>';
     s+='</linearGradient><linearGradient id="spcUv" x1="0" x2="1"><stop offset="0" stop-color="#2a1740"/><stop offset="1" stop-color="#6b3fa0"/></linearGradient><linearGradient id="spcIr" x1="0" x2="1"><stop offset="0" stop-color="#8f1d1d"/><stop offset=".35" stop-color="#4a1a1c"/><stop offset="1" stop-color="#241a1e"/></linearGradient></defs>';
-    s+='<rect x="'+X(780)+'" y="'+m.t+'" width="'+(X(2500)-X(780))+'" height="'+(y0-m.t)+'" fill="#d9383a" opacity=".10"/>';
+    /* 배경 = 구간별 빛의 색(9/29 사용자: 시안 B-2 배경에 맞춤) — 자외선 보라·가시광선 스펙트럼·적외선 빨강, 옅게 */
+    s+='<rect x="'+X(210)+'" y="'+m.t+'" width="'+(X(380)-X(210))+'" height="'+(y0-m.t)+'" fill="#7a4bc0" opacity=".10"/><rect x="'+X(380)+'" y="'+m.t+'" width="'+(X(780)-X(380))+'" height="'+(y0-m.t)+'" fill="url(#spcVis)" opacity=".10"/><rect x="'+X(780)+'" y="'+m.t+'" width="'+(X(2500)-X(780))+'" height="'+(y0-m.t)+'" fill="#d9383a" opacity=".08"/>';
     s+='<text x="'+((X(780)+X(2500))/2)+'" y="'+(m.t+(y0-m.t)*.42)+'" text-anchor="middle" font-size="'+(sm?20:34)+'" font-weight="600" fill="#fff" opacity=".16" font-family="Helvetica Neue,-apple-system,sans-serif">Xenith IR</text>';
     [0,10,20,30,40,50,60,70].forEach(function(g){s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="'+(g?'rgba(255,255,255,.1)':'rgba(255,255,255,.35)')+'"/><text x="'+(W-m.r+(sm?4:10))+'" y="'+(Y(g)+4)+'" font-size="'+(sm?11:12)+'" fill="'+mute+'">'+g+'%</text>'});
     [380,780].forEach(function(b){s+='<line x1="'+X(b)+'" x2="'+X(b)+'" y1="'+(m.t-26)+'" y2="'+y0+'" stroke="rgba(255,255,255,.35)" stroke-dasharray="3 3"/>'});

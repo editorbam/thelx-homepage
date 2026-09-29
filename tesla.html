@@ -327,7 +327,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-leaves-cover canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;opacity:calc((1 - var(--tp,0))*var(--ct,1))}
 .tv-leaves-cover p{margin:0;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-size:clamp(40px,7vw,150px);font-weight:500;letter-spacing:0;color:#c8c9cc;line-height:1.15;text-align:center;word-break:keep-all;padding:0 var(--gut);position:relative;z-index:1;opacity:calc(var(--tp,0)*var(--ct,1))}
 /* 폰: gx 폰 규칙과 같이 고정 바 아래(100px) 화면 전체를 무대로. 헤드라인 위·로고 아래·슬로건 가운데로 세 덩어리 분리 (2026-09-11) */
-@media (max-width:900px){ .tv-leaves{height:430vh} .tv-leaves-stick{display:block} .tv-leaves-frame{position:absolute;left:0;right:0;top:100px;bottom:0;width:auto;aspect-ratio:auto;max-height:none} .tv-leaves-stick{padding-top:0}  .tv-leaves-cap{left:var(--gut);right:var(--gut);top:28px} .tv-leaves-cap .h{font-size:clamp(20px,6vw,28px)} .tv-leaves-cap .s{font-size:14px} .tv-leaves-logo{top:auto;right:var(--gut);bottom:28px;width:120px} .tv-leaves-line{white-space:normal;line-height:1.6;font-size:clamp(13px,3.4vw,20px);letter-spacing:.22em;text-indent:.22em} }
+@media (max-width:900px){ .tv-leaves{height:430vh} .tv-leaves-stick{display:block} .tv-leaves-frame{position:absolute;left:0;right:0;top:100px;bottom:0;width:auto;aspect-ratio:auto;max-height:none} .tv-leaves-stick{padding-top:0}  .tv-leaves-cap{left:var(--gut);right:var(--gut);top:28px} .tv-leaves-cap .h{font-size:clamp(20px,6vw,28px)} .tv-leaves-cap .s{font-size:14px} .tv-leaves-logo{top:auto;right:var(--gut);bottom:28px;width:120px} .tv-leaves-line{white-space:normal;line-height:1.6;font-size:clamp(13px,3.4vw,20px);letter-spacing:.22em;text-indent:0} .tv-leaves-line span{display:block;text-indent:.22em} }
 /* lead (2026-09-08) — 히어로와 앞유리 섹션 사이 여백+텍스트 자리, tv-intro 문법 상속 */
 .tv-lead{text-align:center;background:#fff;padding:clamp(72px,10vh,120px) var(--gut)}
 .tv-lead h2{font-size:clamp(30px,3.6vw,44px);font-weight:600;letter-spacing:-.01em}
@@ -383,8 +383,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-combo .tv-co::before,.tv-combo .tv-co::after{background:rgba(255,255,255,.85)}
 .tv-combo .tv-co.d::before{top:0} .tv-combo .tv-co.d::after{top:var(--h)} .tv-combo .tv-co.d>span{bottom:auto;top:calc(var(--h) + 8px)}
 .tv-combo .tv-co>span{color:#b8babd;font-size:12px} .tv-combo .tv-co>span>b{color:#fff}
-.tv-combo-cap{display:none;margin:10px 0 0;font-size:13px;color:#b8babd}
-@media (max-width:900px){ .tv-combo{padding-bottom:0} .tv-combo-cap{display:block} }
+@media (max-width:900px){ .tv-combo{padding-bottom:0} }
 /* 오너 조합 섹션 (2026-09-16) — gx 탑뷰 무대 상속: 연회색 무대, 검정 가는 선 콜아웃 */
 .tv-combo-sec{background:#fff;color:#171a20;padding:clamp(64px,9vh,110px) clamp(24px,4vw,72px) clamp(56px,8vh,96px)}
 .tv-combo-in{max-width:none;margin:0}
@@ -399,7 +398,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-combo-sec .tv-grid small{color:#6e6e73} .tv-combo-sec .tv-grid b{color:#171a20}
 .tv-combo-sec .tv-combo .tv-co::before,.tv-combo-sec .tv-combo .tv-co::after{background:rgba(23,26,32,.85)}
 .tv-combo-sec .tv-combo .tv-co>span{color:#3a3c40} .tv-combo-sec .tv-combo .tv-co>span>b{color:#171a20}
-.tv-combo-sec .tv-combo-cap{color:#3a3c40}
 @media (max-width:900px){ .tv-combo-grid{grid-template-columns:1fr} }
 
 /* 오너 조합 등장 (2026-09-16): 차 → 콜아웃 전면·루프·측후면 순서로 선이 그어지고 글이 뒤따름 */
@@ -563,7 +561,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   /* 웹과 같은 콜아웃(전면·루프·측후면)을 폰에서도: 선은 차 중심(52%)에서 차 바깥 24px까지, 글은 오른쪽 여백 전체 (사용자 요청 9/28, 14:50 글이 차에 가림→연장) */
   .tv-combo .tv-co{display:block;--h:calc(34vw*.48 + 24px)!important;--w:calc(100vw - var(--gut)*2 - 34vw - 24px - 12px - 28px)!important}
   .tv-combo .tv-co>span{font-size:13px;line-height:1.45} .tv-combo .tv-co>span>b{margin-bottom:1px}
-  .tv-combo-cap{text-align:left;padding-left:var(--gut)}
   /* 옆모습 무대(2026-09-28 사용자 결정): 폰에서는 스크롤 연동 고정 무대·+시트를 끄고 웹처럼 한 번에 보여준다
      — 차 사진 아래에 제품·스펙·Effect 세 묶음을 그대로 펼침 (iOS에서 시트 탭 무반응·프리징 반복) */
   /* 9/28 16:40 구조 변경(사용자: 섹션이 스르륵 지나감·글자는 차가 덮어야): 차 무대=화면 한 장 고정(sticky) → 차가 들어오며 뒤의 작은 글자를 덮음 → 제품·스펙·Effect 묶음이 그 위로 올라옴(JS가 mBar를 stick 뒤로 옮김) */
@@ -809,8 +806,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
     <p class="tv-gx-k">TESLA OWNERS · 오너 조합</p>
     <h2>테슬라 오너가 사랑하는 조합</h2>
     <div class="tv-grid tv-combo-grid">
-        <div><small>커스텀 1</small><b>전면 LX · 측후면 LX · 루프 제니스IR</b><small style="margin-top:6px">전면과 측후면으로 들어오는 복사열을 반사하고, 루프는 세라믹으로.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top1_v.webp" alt="조합 1: 전면과 측후면 LX, 루프 제니스IR — 흰 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>LX · 풀메탈 스퍼터</span></div></div><p class="tv-combo-cap">전면 LX · 루프 제니스IR · 측후면 LX</p></div></div>
-        <div><small>커스텀 2</small><b>전면 LX · 측후면 제니스IR · 루프 제니스IR</b><small style="margin-top:6px">전파 간섭 우려와 비용을 함께 고려하는 선택.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top2_v.webp" alt="조합 2: 전면 LX, 측후면과 루프 제니스IR — 검정 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>제니스IR · 나노 세라믹</span></div></div><p class="tv-combo-cap">전면 LX · 루프 제니스IR · 측후면 제니스IR</p></div></div>
+        <div><small>커스텀 1</small><b>전면 LX · 측후면 LX · 루프 제니스IR</b><small style="margin-top:6px">전면과 측후면으로 들어오는 복사열을 반사하고, 루프는 세라믹으로.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top1_v.webp" alt="조합 1: 전면과 측후면 LX, 루프 제니스IR — 흰 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>LX · 풀메탈 스퍼터</span></div></div></div></div>
+        <div><small>커스텀 2</small><b>전면 LX · 측후면 제니스IR · 루프 제니스IR</b><small style="margin-top:6px">전파 간섭 우려와 비용을 함께 고려하는 선택.</small><div class="tv-combo"><div class="tv-combo-stage"><img class="tv-combo-img" src="img/v3/hf_top2_v.webp" alt="조합 2: 전면 LX, 측후면과 루프 제니스IR — 검정 모델 Y 탑뷰(세로)" width="1344" height="3168" loading="lazy"><div class="tv-co hz" style="left:52%;top:31%;--h:150px;--w:150px"><span><b>전면</b>LX · 풀메탈 스퍼터</span></div><div class="tv-co hz" style="left:50%;top:53%;--h:150px;--w:150px"><span><b>루프</b>제니스IR · 나노 세라믹</span></div><div class="tv-co hz" style="left:52%;top:78%;--h:150px;--w:150px"><span><b>측후면</b>제니스IR · 나노 세라믹</span></div></div></div></div>
     </div>
   </div>
 </section>
@@ -822,7 +819,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
       <canvas class="tv-leaves-cv" aria-hidden="true"></canvas>
       <div class="tv-leaves-cap"><p class="h">필름 한 장에 탄소까지 생각했습니다.</p><p class="s">환경성적표지(EPD) 인증, THE LX<img class="tv-leaves-mark" src="img/v3/mark-usgbc.png?v=3" alt="U.S. Green Building Council 멤버" width="232" height="232" loading="lazy"></p></div>
       <img class="tv-leaves-logo" src="img/v3/lx-logo-k.png" alt="THE LX by Solar Gard PREMIUM" width="710" height="352">
-      <p class="tv-leaves-line">LX SAVES YOUR HEALTH, WEALTH, &amp; EARTH.</p>
+      <p class="tv-leaves-line"><span>LX SAVES</span> <span>YOUR HEALTH, WEALTH, &amp; EARTH.</span></p>
     </div>
   </div>
 </section>

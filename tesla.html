@@ -422,7 +422,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .ts-in{max-width:1080px;margin:0 auto}
 .ts-sec h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01em;text-align:center}
 .ts-sub{font-size:14px;color:var(--mute);text-align:center;margin-top:8px}
-.ts-ctl{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:28px}
+.ts-ctl{display:flex;flex-direction:column;align-items:center;gap:14px}
 .ts-seg{display:inline-flex;background:#e7e7e8;border-radius:4px;padding:4px}
 .ts-seg button{border:0;background:none;font:500 14px 'Noto Sans KR',sans-serif;color:var(--mute);padding:8px 22px;border-radius:4px;cursor:pointer;min-width:92px}
 .ts-seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -838,8 +838,6 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 
 <section class="ts-sec" id="spectrum" aria-label="Xenith IR·LX 파장별 투과율">
   <div class="ts-in">
-    <h2>파장별 투과율</h2>
-    <p class="ts-sub">빛은 들이고, 열은 막습니다</p>
     <div class="ts-ctl"><div class="ts-seg" role="group" aria-label="제품"><button type="button" data-p="xen" class="on">Xenith IR</button><button type="button" data-p="lx">LX</button></div><div class="ts-chips" role="group" aria-label="농도"></div></div>
     <div class="ts-stats"><div><b id="tsVlt"></b><span>가시광선 투과율</span></div><div><b id="tsTser"></b><span>총 태양에너지 차단</span></div><div><b>99%+</b><span>자외선 차단</span></div></div>
     <div class="ts-chart" id="tsChart" role="img" aria-label="선택한 필름·농도의 파장별 투과율 그래프. 가시광선 구간에서는 농도만큼 빛이 통과하고, 적외선 구간에서는 투과율이 바닥으로 내려감"></div>

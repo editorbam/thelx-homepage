@@ -303,6 +303,8 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 .tv-gx-p{font-size:clamp(12px,.9vw,15px);line-height:1.6;color:rgba(255,255,255,.8);margin:12px 0 0;word-break:keep-all}
 .tv-gx-list{list-style:none;margin:clamp(12px,1.2vw,22px) 0 0;padding:0}
 .tv-gx-list li{padding:clamp(7px,.6vw,12px) 0;border-top:.5px solid rgba(255,255,255,.28);font-size:clamp(13px,.95vw,15px);color:rgba(255,255,255,.92);word-break:keep-all} .tv-gx-list li:last-child{border-bottom:.5px solid rgba(255,255,255,.28)}
+/* 9/29 피드백: 특징 앞 번호 1~6 (CSS 카운터 — 항목 추가·삭제 시 자동) */
+.tv-gx-list{counter-reset:gx} .tv-gx-list li{counter-increment:gx;display:flex;gap:10px} .tv-gx-list li::before{content:counter(gx);flex:0 0 14px;font-weight:600;font-variant-numeric:tabular-nums;opacity:.55}
 .tv-gx-right{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,.6vw,12px)}
 .tv-gx-right .tm-card{background:rgba(255,255,255,.94);min-height:0;padding:clamp(12px,1vw,18px) clamp(14px,1vw,18px) clamp(14px,1.1vw,20px);color:var(--ink)}
 .tv-gx-right .tm-card svg{width:clamp(26px,1.8vw,34px);height:clamp(26px,1.8vw,34px)}
@@ -783,6 +785,7 @@ img,svg{display:block;max-width:100%} a{color:inherit}
           <p class="tv-gx-p">현재 사용 가능한 가장 진보된 세라믹 소재와 생고뱅 솔라가드의 독점 기술로 만들어진 IR 라인. 최대 68%의 총 태양에너지 차단, 셀룰러·GPS 신호의 명확한 전송, 모든 바디 컬러에 어울리는 비크 블랙.</p>
           <ul class="tv-gx-list">
             <li>최대 68%의 업계 최정상급 TSER(총 태양 에너지 차단율)</li>
+            <li>적외선 전체 영역 차단 구조</li>
             <li>GPS 수신 장애가 없는 전파 친화적 구조</li>
             <li>사고시 유리 비산 방지로 2차 사고 예방</li>
             <li>모든 외관을 보완하는 풍부한 블랙 컬러</li>

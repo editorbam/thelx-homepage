@@ -3027,7 +3027,7 @@ body.pd-open { overflow: hidden; }
 #hero{display:none} /* 원래 hero(하루 90분의 거실)는 DOM 유지·숨김 — JS 의존 때문에 삭제하지 않음 */
 #sunHero{font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif}
 #sunHero p,#sunHero h2{margin:0}
-@media(min-width:761px){#sunHero{height:100vh;height:100svh;min-height:560px}} /* 9/30 대문 hero=화면 전체 높이(이벤트 페이지는 92vh·900px 상한 그대로) */
+@media(min-width:761px){#sunHero{height:min(100vh,max(70vw,600px));height:min(100svh,max(70vw,600px));min-height:560px}#sunHero img.bg{object-position:40% 40%}} /* 9/30 대문 hero=화면 전체 높이(이벤트 페이지는 92vh·900px 상한 그대로) */
 @media(min-width:761px){#sunHero:after{background:linear-gradient(180deg,rgba(0,15,45,.62) 0%,rgba(0,15,45,.22) 14%,rgba(0,0,0,0) 32%,rgba(0,0,0,0) 58%,rgba(0,0,0,.66) 100%)}} /* 투명 내비(흰 글자)가 하늘 위에서 읽히도록 위쪽만 더 어둡게 */
 #sunHero .pm-h1{margin-top:.6rem}
 .pm-hero{position:relative;height:min(92vh,900px);min-height:560px;margin-top:0;overflow:hidden;color:#fff;background:#0a0a0a}
@@ -3061,9 +3061,11 @@ body.pd-open { overflow: hidden; }
 @media(max-width:760px){.pm-hero{height:auto;min-height:0;padding-top:52px;background:#0a0a0a;display:flex;flex-direction:column}.pm-hero img.bg{position:static;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:50% 50%;order:0}.pm-hero:after{display:none}.pm-copy{position:absolute;left:1.1rem;right:1.1rem;top:52px;height:56.25vw;text-align:right;padding:.7rem 0 0;box-sizing:border-box}.pm-rate{text-shadow:none}.pm-top{justify-content:flex-end}.pm-top img{width:34px}.pm-top p{font-size:.72rem}.pm-h1{position:absolute;right:0;bottom:.7rem;font-size:1.6rem;margin:0;white-space:nowrap}.pm-foot{position:static;order:2;padding:1rem 1.4rem 1.8rem;flex-direction:column;align-items:stretch;gap:1rem}.pm-foot>div:first-child{text-align:right}.pm-foot .pm-rate{justify-content:flex-end}}
 .pm-stage-leaves{position:absolute;inset:0;z-index:1;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.pm-stage-leaves{display:none}}
+/* 9/30 태블릿 세로(761~1024): 화면 전체 높이로 두면 사진 양옆이 잘려 차·입체 글자가 끊김 → 모바일과 같은 「사진 위·글 아래」 배치. 가로·데스크톱은 높이 상한 70vw로 잘림 방지 */
+@media(min-width:761px) and (max-width:1024px) and (orientation:portrait){#sunHero{height:auto;min-height:0;padding-top:52px;display:flex;flex-direction:column}#sunHero:after{display:none}#sunHero img.bg{position:static;width:100%;height:auto;aspect-ratio:16/9;object-position:50% 50%;order:0}#sunHero .pm-copy{left:2rem;right:2rem;top:52px;height:56.25vw;padding:1.3rem 0 0;box-sizing:border-box}#sunHero .pm-h1{position:absolute;right:0;bottom:1.3rem;margin:0;white-space:nowrap;font-size:6vw}#sunHero .pm-foot{position:static;order:2;padding:1.8rem 2rem 2.6rem;flex-direction:column;align-items:stretch;gap:1rem}#sunHero .pm-rate{text-shadow:none}}
 </style>
 <section class="pm-hero" id="sunHero" aria-label="10월 할인 이벤트 — 가을 햇빛, SUN 넘네">
-  <img class="bg" src="car-hero-tesla-y.jpg" alt="단풍 든 산길을 달리는 짙은 회색 전기 SUV, 그 뒤 산 중턱에 거대한 입체 글자 QUANTUM · XENITH가 서 있다">
+  <img class="bg" src="car-hero-tesla-y.webp" srcset="car-hero-tesla-y-1200.webp 1200w, car-hero-tesla-y.webp 2400w" sizes="(min-width:761px) 125vw, 100vw" width="2400" height="1357" fetchpriority="high" alt="단풍 든 산길을 달리는 짙은 회색 전기 SUV, 그 뒤 산 중턱에 거대한 입체 글자 QUANTUM · XENITH가 서 있다">
   <canvas class="pm-stage-leaves" data-zone="hero" aria-hidden="true"></canvas>
   <div class="pm-copy">
     <div class="pm-top"><img src="fb-2025.png" alt="대한민국 퍼스트브랜드 대상 2025"><img src="fb-2026.png" alt="대한민국 퍼스트브랜드 대상 2026"><p>2년 연속 퍼스트브랜드 대상,<br>THE LX가 작심하고 준비한 10월</p></div>

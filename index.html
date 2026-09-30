@@ -3027,6 +3027,7 @@ body.pd-open { overflow: hidden; }
 #hero{display:none} /* 원래 hero(하루 90분의 거실)는 DOM 유지·숨김 — JS 의존 때문에 삭제하지 않음 */
 #sunHero{font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif}
 #sunHero p,#sunHero h2{margin:0}
+@media(min-width:761px){#sunHero{height:100vh;height:100svh;min-height:560px}} /* 9/30 대문 hero=화면 전체 높이(이벤트 페이지는 92vh·900px 상한 그대로) */
 @media(min-width:761px){#sunHero:after{background:linear-gradient(180deg,rgba(0,15,45,.62) 0%,rgba(0,15,45,.22) 14%,rgba(0,0,0,0) 32%,rgba(0,0,0,0) 58%,rgba(0,0,0,.66) 100%)}} /* 투명 내비(흰 글자)가 하늘 위에서 읽히도록 위쪽만 더 어둡게 */
 #sunHero .pm-h1{margin-top:.6rem}
 .pm-hero{position:relative;height:min(92vh,900px);min-height:560px;margin-top:0;overflow:hidden;color:#fff;background:#0a0a0a}

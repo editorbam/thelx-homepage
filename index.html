@@ -5914,7 +5914,7 @@ function tick(t){if(dead)return;var dt=Math.min(.05,(t-last)/1000||0);last=t;ctx
  requestAnimationFrame(tick)}
     reset();last=performance.now();requestAnimationFrame(tick);
   }
-  fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
+  fetch('popup-config.json?v='+Date.now(),{cache:'no-store'}).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();
 </script>
 

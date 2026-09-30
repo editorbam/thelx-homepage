@@ -1,8 +1,8 @@
 {
   "enabled": true,
-  "id": "tesla-2026-09",
-  "link": "tesla.html",
-  "start": "2026-09-28",
-  "end": "2026-12-31",
-  "note": "테슬라 오너 페이지 안내 (이전: safenumber-2026-08 안심번호 → event.html)"
+  "id": "sunline-2026-10",
+  "link": "event.html",
+  "start": "2026-09-30",
+  "end": "2026-10-31",
+  "note": "10월 이벤트 「가을 햇빛, SUN 넘네」 (이전: tesla-2026-09 테슬라 오너 → tesla.html, 원본 popup-config.json.bak20260930 / 부품 _backup/popup-tesla-block-20260930.html)"
 }

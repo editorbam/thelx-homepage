@@ -5793,8 +5793,8 @@ window.addEventListener('pageshow', function (e) {
 </script>
 
 <!-- ===== 이벤트 팝업 (설정: popup-config.json / 첫 방문 1회 + 오늘 하루 닫기) =====
-     2026-09-28 안심번호 팝업 → 테슬라 팝업 교체. 이전 부품 원본=_backup/popup-safenumber-block-20260928.html
-     카드 전체 클릭 = 설정의 link(tesla.html)로 이동 -->
+     2026-09-30 테슬라 팝업 → 10월 이벤트 팝업(가을 햇빛, SUN 넘네) 교체. 이전 부품 원본=_backup/popup-tesla-block-20260930.html (11/1 복귀 시 이 블록을 그 파일로 되돌리고 popup-config.json.bak20260930 복원)
+     카드 전체 클릭 = 설정의 link(event.html)로 이동 -->
 <style>
   .evp-back{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:10050;display:flex;align-items:flex-start;justify-content:flex-start;padding:96px 16px 16px 40px;opacity:0;pointer-events:none;transition:opacity .35s ease}
   .evp-back.on{opacity:1;pointer-events:auto}
@@ -5805,35 +5805,56 @@ window.addEventListener('pageshow', function (e) {
   .evp-bar{height:44px;background:#f5f5f7;color:#6e6e73;border-top:.5px solid #e8e8ed;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px}
   .evp-bar button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;padding:8px 0}
   .evp-bar button.x{color:#0a0a0a;font-weight:400}
-  /* 테슬라 무대 (tesla.html 옆모습 섹션 이식) */
-  .tp-stage{position:absolute;left:0;right:0;top:11%;height:60%;overflow:visible}
-  .tp-bg{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;clip-path:polygon(0 0,var(--cf,0px) 0,var(--cf,0px) 100%,0 100%,0 0,100% 0,100% 100%,var(--cr,100%) 100%,var(--cr,100%) 0,100% 0)}
-  .tp-logo{display:block;margin:0 auto 3cqw;height:15cqw;width:auto}
-  .tp-tag{margin:0;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-weight:500;font-size:11.2cqw;letter-spacing:-.03em;line-height:1;color:#171a20;white-space:nowrap}
-  .tp-track{position:absolute;left:0;top:52%;width:var(--w);transform:translate(var(--x,100cqw),-50%);will-change:transform}
-  .tp-track .car{display:block;width:100%;height:auto;position:relative;z-index:0;-webkit-mask-image:linear-gradient(#000 88%,transparent 100%);mask-image:linear-gradient(#000 88%,transparent 100%)}
-  .tp-track::after{content:"";position:absolute;left:5%;width:90%;top:80%;height:26%;background:radial-gradient(ellipse at center,rgba(0,0,0,.9) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 72%);filter:blur(14px);mix-blend-mode:multiply;z-index:1;pointer-events:none}
-  .tp-track .wbg,.tp-track .wh{position:absolute;z-index:2;height:auto;pointer-events:none}
-  .tp-track .wbg{transform:translate(-50%,-50%)}
-  .tp-track .wh{transform:translate(-50%,-50%) rotate(var(--r,0deg));will-change:transform}
-  .tp-head{position:absolute;left:6.7%;right:6.7%;bottom:5.6%;margin:0;text-align:left;font-size:7.4cqw;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:#0a0a0a;word-break:keep-all;z-index:5}
+  /* 10월 이벤트 팝업 안쪽 (popup-sunline-v3 이식) */
+  #evpCard{background:#0a0a0a;color:#fff;font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif}
+  #evpCard h2,#evpCard p{margin:0}
+  .sl-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .sl-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,40,.30) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 48%,rgba(0,0,0,.70) 100%)}
+  .sl-logo{position:absolute;left:6.7%;top:4.6%;height:5.2%;z-index:5}
+  .sl-date{position:absolute;right:6.7%;top:5.6%;font-size:2.6cqw;font-weight:700;letter-spacing:.06em;color:#fff;z-index:5}
+  .sl-txt{position:absolute;left:6.7%;right:6.7%;bottom:15%;z-index:4;text-shadow:1px 2px 1.5px rgba(0,15,40,.35),7px 10px 14px rgba(0,20,55,.30)}
+  .sl-txt h2{margin:0;font-size:10cqw;font-weight:900;letter-spacing:-.035em;line-height:1.14;text-shadow:2px 3px 2px rgba(0,15,40,.35),11px 15px 22px rgba(0,20,55,.30)}
+  .sl-y{color:#FFD23F}
+  .sl-before,.sl-after{transition:opacity .5s}
+  .sl-top{top:11.5%;bottom:auto;text-align:right}
+  .sl-top .sl-rate{justify-content:flex-end}
+  .sl-top{top:9.8%}
+  .sl-top h2{font-size:9cqw}
+  .sl-top .sl-rate b{font-size:13cqw}
+  .sl-fb{display:flex;justify-content:flex-end;align-items:center;gap:1.6cqw;margin-bottom:1cqw}
+  .sl-fb img{width:6.4cqw;height:auto;display:block}
+  .sl-fb img+img{margin-left:-2.4cqw}
+  .sl-fb p{margin:0;font-size:2.7cqw;font-weight:700;line-height:1.35;letter-spacing:-.02em;text-align:right}
+  .sl-bot{bottom:12.5%}
+  .sl-after{opacity:0}
+  .evp-card.on .sl-before{opacity:0}
+  .evp-card.on .sl-after{opacity:1}
+  .sl-rate{display:flex;align-items:baseline;gap:.35em;margin-top:1.2cqw;line-height:.9}
+  .sl-rate .mx{font-size:4.4cqw;font-weight:800}
+  .sl-rate b{font-size:14cqw;font-weight:900;letter-spacing:-.045em;color:#FFD23F}
+  .sl-rate .n{font-style:normal;font-variant-numeric:tabular-nums;display:inline-block;min-width:2ch;text-align:right}
+  .sl-pr{display:flex;justify-content:flex-end;gap:5.5cqw;margin-top:0;font-size:3.4cqw;font-weight:600;align-items:baseline}
+  .sl-pr b{font-size:5.6cqw;font-weight:800;color:#FFD23F;margin-left:1.2cqw}
+  .sl-pr small{font-size:3cqw;font-weight:600;color:#fff;margin-left:.4cqw}
+  .sl-foot{position:absolute;left:6.7%;right:6.7%;bottom:5.4%;display:flex;justify-content:space-between;align-items:flex-end;font-size:2.6cqw;font-weight:500;color:#fff;z-index:5;text-shadow:1px 2px 1.5px rgba(0,15,40,.35)}
+  .sl-foot .cta{white-space:nowrap;font-weight:700;border-bottom:1px solid #fff;padding-bottom:2px}
+  @media(prefers-reduced-motion:reduce){.sl-before,.sl-after{transition:none}}
+  .sl-leaves{position:absolute;inset:0;z-index:3;pointer-events:none}
+  @media(prefers-reduced-motion:reduce){.sl-leaves{display:none}}
   @media (max-width:700px){ .evp-back{align-items:flex-start;justify-content:flex-start;padding:84px 0 0 14px} .evp{width:min(64vw,300px);box-shadow:0 18px 50px rgba(0,0,0,.35)} .evp-card{height:auto;width:100%;max-width:none;aspect-ratio:4/5} .evp-tag{font-size:7.5px} .evp-bar{height:32px;font-size:10px;padding:0 10px} }
 </style>
-<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="테슬라 오너 안내" hidden>
+<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="10월 할인 이벤트 안내" hidden>
   <div class="evp">
-    <a class="evp-card" id="evpCard" href="tesla.html" aria-label="테슬라 오너 페이지로 이동">
-      <div class="evp-tag">FOR TESLA OWNERS</div>
-      <div class="tp-stage" id="tpStage" aria-hidden="true">
-        <div class="tp-bg"><img class="tp-logo" src="img/v3/lx-logo-k.png" alt="" width="710" height="352"><p class="tp-tag">Xenith IR for Tesla</p></div>
-        <div class="tp-track" id="tpTrack" style="--w:170cqw">
-          <img class="car" src="img/v3/side_car8_2k.jpg" alt="" width="4073" height="1604">
-          <img class="wbg" src="img/v3/wheel_brake_disc_512.png" alt="" style="left:21.319%;top:71.030%;width:14.942%">
-          <img class="wh" src="img/v3/wheel_spokes_512.png" alt="" style="left:21.319%;top:71.030%;width:14.942%">
-          <img class="wbg" src="img/v3/wheel_brake_disc_512.png" alt="" style="left:77.955%;top:69.028%;width:14.942%">
-          <img class="wh" src="img/v3/wheel_spokes_512.png" alt="" style="left:77.955%;top:69.028%;width:14.942%">
-        </div>
-      </div>
-      <h2 class="tp-head">테슬라 틴팅을 가장 먼저,<br>가장 정교하게 완성하는 곳</h2>
+    <a class="evp-card on" id="evpCard" href="event.html" aria-label="10월 할인 이벤트 페이지로 이동">
+      <img class="sl-video" src="popup-hero-4x5.jpg" alt="" aria-hidden="true">
+      <div class="sl-shade"></div>
+      <canvas class="sl-leaves" aria-hidden="true"></canvas>
+      <img class="sl-logo" src="logo-w.png" alt="THE LX">
+      <div class="sl-date">10.1 — 10.31</div>
+      <div class="sl-txt sl-after sl-top"><div class="sl-fb"><img src="fb-2025.png" alt="대한민국 퍼스트브랜드 대상 2025"><img src="fb-2026.png" alt="대한민국 퍼스트브랜드 대상 2026"><p>2년 연속 퍼스트브랜드 대상,<br>THE LX가 작심하고 준비한 10월</p></div><h2>선 넘은 할인.</h2>
+        <p class="sl-rate" aria-label="최대 50%"><span class="mx" aria-hidden="true">최대</span><b aria-hidden="true"><i class="n">50</i>%</b></p></div>
+      <div class="sl-txt sl-after sl-bot"><div class="sl-pr"><span>Quantum<b>70</b><small>만원</small></span><span>Xenith IR<b>90</b><small>만원</small></span></div></div>
+      <div class="sl-foot"><span>승용 기준 · 전국 인증 시공점</span><span class="cta">시공 가격 확인 →</span></div>
     </a>
     <div class="evp-bar"><button type="button" id="evpToday">오늘 하루 보지 않기</button><button type="button" class="x" id="evpClose">닫기</button></div>
   </div>
@@ -5854,7 +5875,7 @@ window.addEventListener('pageshow', function (e) {
     var now=new Date().toISOString().slice(0,10);
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
-    document.getElementById('evpCard').href=cfg.link||'tesla.html';
+    document.getElementById('evpCard').href=cfg.link||'event.html';
     document.getElementById('evpCard').addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} });
     back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
     start();
@@ -5868,30 +5889,29 @@ window.addEventListener('pageshow', function (e) {
     back.addEventListener('click',function(e){ if(e.target===back) close(); });
     document.addEventListener('keydown',onKey);
   }
-  /* 차가 오른쪽 밖에서 들어와 왼쪽 밖으로 빠져나감. 4.2초 통과 + 1.4초 쉼 반복.
-     글자는 차체 구간(--cf~--cr)만 clip-path로 가림 — tesla.html 옆모습 무대와 같은 방식. */
+  /* 등장과 함께 「최대 50」 카운트 1회 + 낙엽 캔버스. 닫으면 멈춤 */
   function start(){
-    var st=document.getElementById('tpStage'), tr=document.getElementById('tpTrack'), tg=st.querySelector('.tp-bg');
-    var wheels=tr.querySelectorAll('.wh'), DUR=4200, PAUSE=1400, t0=performance.now(), raf=0, dead=false;
-    function ease(p){ return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; }
-    function tick(now){ if(dead||back.hidden) return;
-      var W=tr.offsetWidth, S=st.offsetWidth, T=(now-t0)%(DUR+PAUSE), e=ease(Math.min(1,T/DUR));
-      var x0=S, x1=-W, x=x0+(x1-x0)*e;
-      tr.style.setProperty('--x',x.toFixed(1)+'px');
-      tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.09)).toFixed(1)+'px');
-      tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.93)).toFixed(1)+'px');
-      var dv=-(x0-x)/(0.074708*W)*57.2958, deg=dv.toFixed(2)+'deg';
-      /* 화면 갱신이 느린 기기에서 바퀴살이 멈춰 보이는 착시(마차 바퀴 효과) 방지 — 한 장면에 많이 돌수록 살을 살짝 흐림 */
-      var step=Math.abs(dv-lastDeg), bl=Math.min(1.8,Math.max(0,(step-4)/8)); lastDeg=dv;
-      for(var i=0;i<wheels.length;i++){ wheels[i].style.setProperty('--r',deg); wheels[i].style.filter=bl>.05?'blur('+bl.toFixed(2)+'px)':''; }
-      raf=requestAnimationFrame(tick); }
-    var lastDeg=0; raf=requestAnimationFrame(tick);
-    /* 팝업이 떠 있는 동안 뒤쪽 히어로 영상을 멈춰 화면 갱신 여유 확보 — 닫으면 다시 재생 */
-    var hv=document.getElementById('heroVideo');
-    function hold(){ if(!dead&&hv&&!hv.paused) hv.pause(); }
-    if(hv){ window.__evpHold=true; hold(); hv.addEventListener('play',hold); }
-    stopAnim=function(){ dead=true; if(raf) cancelAnimationFrame(raf); window.__evpHold=false;
-      if(hv){ hv.removeEventListener('play',hold); if(hv.getBoundingClientRect().bottom>0){ var pr=hv.play(); if(pr&&pr.catch) pr.catch(function(){}); } } };
+    var card=document.getElementById('evpCard'), n=card.querySelector('.sl-rate .n'), dead=false;
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(n&&!reduce){ var to=+n.textContent||50, t0=Date.now()+500; n.textContent='0';
+      var iv=setInterval(function(){ var k=Math.min(1,Math.max(0,(Date.now()-t0)/900)); k=1-Math.pow(1-k,3); n.textContent=Math.round(to*k); if(k>=1||dead){ n.textContent=to; clearInterval(iv); } },33); }
+    stopAnim=function(){ dead=true; };
+    if(reduce) return;
+    var LEAF=new Path2D('M50 98 L48 96 L49 74 L34 84 L36 76 L18 78 L24 70 L6 68 L14 60 L10 52 L22 54 L16 42 L26 46 L22 30 L32 40 L36 34 L40 44 L38 30 L44 34 L50 12 L56 34 L62 30 L60 44 L64 34 L68 40 L78 30 L74 46 L84 42 L78 54 L90 52 L86 60 L94 68 L76 70 L82 78 L64 76 L66 84 L51 74 L52 96 Z');
+var COLS=[['#d7763e','#a63b11'],['#bf5219','#7d2a0c'],['#e8893f','#bf5219']];
+var cv=document.querySelector('.sl-leaves'),fr=cv.parentNode,ctx=cv.getContext('2d'),W=0,H=0,dpr=Math.min(2,devicePixelRatio||1),L=[],last=0;
+function size(){var r=fr.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+function sprite(c,s,blur){var pad=6,d=Math.ceil(s*dpr)+pad*2,o=document.createElement('canvas');o.width=o.height=d;var x=o.getContext('2d');x.translate(pad,pad);x.scale(s*dpr/100,s*dpr/100);if(blur)x.filter='blur('+(1.2*dpr)+'px)';
+ var g=x.createLinearGradient(0,0,100,100);g.addColorStop(0,c[0]);g.addColorStop(1,c[1]);x.fillStyle=g;x.fill(LEAF);
+ x.strokeStyle='rgba(60,20,5,.3)';x.lineWidth=1.5;x.beginPath();x.moveTo(50,74);x.lineTo(50,14);x.moveTo(50,74);x.lineTo(23,31);x.moveTo(50,74);x.lineTo(77,31);x.moveTo(50,74);x.lineTo(8,67);x.moveTo(50,74);x.lineTo(92,67);x.stroke();return{cv:o,d:d/dpr}}
+function mk(top){var s=10+Math.random()*16,c=COLS[Math.floor(Math.random()*3)],bl=Math.random()<.3,sp=sprite(c,s,bl);return{sp:sp,x:Math.random()*W,y:top?-s-Math.random()*H*.4:Math.random()*H,s:s,vy:14+Math.random()*20,ph:Math.random()*6.28,sw:10+Math.random()*16,rot:Math.random()*6.28,vr:(Math.random()-.5)*1.2,tilt:Math.random()*6.28,a:.8+Math.random()*.2}}
+function reset(){size();L=[];for(var i=0;i<14;i++)L.push(mk(false))}
+function draw(l){ctx.save();ctx.globalAlpha=l.a;ctx.translate(l.x,l.y);ctx.rotate(l.rot);var sx=.55+.45*Math.abs(Math.cos(l.tilt));ctx.scale(sx,1);var d=l.sp.d;ctx.drawImage(l.sp.cv,-d/2,-d/2,d,d);ctx.restore()}
+function tick(t){if(dead)return;var dt=Math.min(.05,(t-last)/1000||0);last=t;ctx.clearRect(0,0,W,H);
+ for(var i=0;i<L.length;i++){var l=L[i];l.ph+=dt*1.1;l.tilt+=dt*1.6;l.y+=l.vy*dt;l.x+=Math.sin(l.ph)*l.sw*dt;l.rot+=l.vr*dt;
+  if(l.y>H+l.s||l.x<-l.s*2||l.x>W+l.s*2){L[i]=mk(true);continue}draw(l)}
+ requestAnimationFrame(tick)}
+    reset();last=performance.now();requestAnimationFrame(tick);
   }
   fetch('popup-config.json?v='+Math.floor(Date.now()/3600000)).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();

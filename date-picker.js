@@ -119,7 +119,7 @@ function renderSlots(){
     var label = pad(t)+':00';
     h += '<button type="button" class="dtp-slot'+(selTime===label?' sel':'')+'" data-t="'+label+'">'+label+'</button>';
   }
-  h += '<button type="button" class="dtp-slot tbd'+(selTime==='시간미정'?' sel':'')+'" data-t="시간미정">시간 미정 — 상담 후 확정</button>';
+  /* 2026-09-30 「시간 미정 — 상담 후 확정」 버튼 제거(사용자 요청) */
   slotsEl.innerHTML = h;
 }
 function refreshFoot(){

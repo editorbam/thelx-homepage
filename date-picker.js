@@ -78,6 +78,7 @@ var HOLIDAYS = {
 
 var DOW = ['일','월','화','수','목','금','토'];
 var today = new Date(); today.setHours(0,0,0,0);
+var LAST_HOUR = 20; /* 마지막 시간대. 이 시각이 지나면 오늘은 달력에서 지난 날 취급 */
 var view = new Date(today.getFullYear(), today.getMonth(), 1);
 var selDate = null, selTime = null;
 var titleEl = document.getElementById('dtpTitle');
@@ -101,7 +102,7 @@ function renderCal(){
   for (var k=0;k<42;k++){
     var d = new Date(start); d.setDate(start.getDate()+k);
     var out = d.getMonth() !== view.getMonth();
-    var past = d < today;
+    var past = d < today || (d.getTime()===today.getTime() && new Date().getHours() >= LAST_HOUR); /* 마지막 시간대 지나면 오늘도 선택 불가 */
     var hol = HOLIDAYS[iso(d)];
     var cls = ['dtp-day'];
     if (out) cls.push('out');
@@ -118,7 +119,7 @@ function renderSlots(){
   /* 2026-10-01 오늘을 고른 경우 이미 지난 시간대(현재 시각의 '시' 이하)는 회색 비활성(사용자 요청) */
   var now = new Date(), isToday = !selDate || selDate.getTime()===today.getTime(); /* 날짜 미선택=오늘 기준(가장 이른 날이 오늘이므로) */
   var h='';
-  for (var t=9;t<=18;t++){
+  for (var t=9;t<=LAST_HOUR;t++){ /* 2026-10-01 사용자: 20시까지 표기 */
     var label = pad(t)+':00', gone = isToday && t <= now.getHours();
     if (gone && selTime===label) selTime = null;
     h += '<button type="button" class="dtp-slot'+(selTime===label?' sel':'')+(gone?' gone':'')+'" data-t="'+label+'"'+(gone?' disabled':'')+'>'+label+'</button>';

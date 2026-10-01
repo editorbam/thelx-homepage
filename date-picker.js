@@ -37,6 +37,7 @@ var css = [
 'padding:.62rem 0;border-radius:11px;transition:background .15s,border-color .15s;text-align:center;}',
 '.dtp-slot:hover{background:#f5f5f7;}',
 '.dtp-slot.sel{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}',
+'.dtp-slot:disabled,.dtp-slot.gone{color:#c7c7cc;background:#fafafa;border-color:#eeeef0;cursor:default;text-decoration:line-through;}.dtp-slot:disabled:hover{background:#fafafa;}',
 '.dtp-slot.tbd{grid-column:1/-1;color:#6e6e73;font-weight:400;}.dtp-slot.tbd.sel{color:#fff;}',
 '.dtp-note{font-size:11px;color:#6e6e73;margin-top:.8rem;line-height:1.6;}',
 '.dtp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:1.3rem;padding-top:1.1rem;border-top:.5px solid #e8e8ed;}',
@@ -114,10 +115,13 @@ function renderCal(){
   gridEl.innerHTML = h;
 }
 function renderSlots(){
+  /* 2026-10-01 오늘을 고른 경우 이미 지난 시간대(현재 시각의 '시' 이하)는 회색 비활성(사용자 요청) */
+  var now = new Date(), isToday = selDate && selDate.getTime()===today.getTime();
   var h='';
   for (var t=9;t<=18;t++){
-    var label = pad(t)+':00';
-    h += '<button type="button" class="dtp-slot'+(selTime===label?' sel':'')+'" data-t="'+label+'">'+label+'</button>';
+    var label = pad(t)+':00', gone = isToday && t <= now.getHours();
+    if (gone && selTime===label) selTime = null;
+    h += '<button type="button" class="dtp-slot'+(selTime===label?' sel':'')+(gone?' gone':'')+'" data-t="'+label+'"'+(gone?' disabled':'')+'>'+label+'</button>';
   }
   /* 2026-09-30 「시간 미정 — 상담 후 확정」 버튼 제거(사용자 요청) */
   slotsEl.innerHTML = h;
@@ -133,10 +137,10 @@ gridEl.addEventListener('click', function(e){
   var b = e.target.closest('.dtp-day'); if (!b || b.disabled) return;
   selDate = new Date(Number(b.getAttribute('data-ts')));
   if (selDate.getMonth() !== view.getMonth()) view = new Date(selDate.getFullYear(), selDate.getMonth(), 1);
-  renderCal(); refreshFoot();
+  renderCal(); renderSlots(); refreshFoot();
 });
 slotsEl.addEventListener('click', function(e){
-  var b = e.target.closest('.dtp-slot'); if (!b) return;
+  var b = e.target.closest('.dtp-slot'); if (!b || b.disabled) return;
   selTime = b.getAttribute('data-t');
   renderSlots(); refreshFoot();
 });

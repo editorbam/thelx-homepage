@@ -1,11 +1,12 @@
 /* THE LX 예약 폼 — 희망 날짜·시간 선택 (시안 확정안, 2026-08-14)
-   동작: #bDate 클릭 → 큰 달력+시간대 메가패널(#dtPanel). 지난 날짜 비활성, 일요일·공휴일 붉은 표기+점(선택은 가능).
+   동작: #bDate 클릭 → 큰 달력+시간대 메가패널(#dtPanel). 지난 날짜 비활성, 일요일·공휴일 붉은 표기+점(선택은 가능. 단 #dtPanel에 data-block-red가 있으면 선택 불가 — event.html).
    공휴일: 2026·2027 정부 월력요항 기준(대체공휴일 포함, 2027 노동절·제헌절 신규 반영). 2028 도래 전 표 갱신 필요.
    전송값: "YYYY-MM-DD (요일) HH:00" 또는 "YYYY-MM-DD (요일) 시간미정" — 구글 시트 날짜 열에 그대로 저장 */
 (function(){
 var field = document.getElementById('bDate');
 var host = document.getElementById('dtPanel');
 if (!field || !host) return;
+var BLOCK_RED = host.hasAttribute('data-block-red'); /* 2026-10-01 이벤트 페이지(event.html): 일요일·공휴일(빨간날) 예약 불가 — #dtPanel에 data-block-red 있을 때만 */
 
 var css = [
 '.dtp-panel{position:absolute;left:0;right:0;top:.4rem;z-index:60;background:#fff;',
@@ -104,14 +105,16 @@ function renderCal(){
     var out = d.getMonth() !== view.getMonth();
     var past = d < today || (d.getTime()===today.getTime() && new Date().getHours() >= LAST_HOUR); /* 마지막 시간대 지나면 오늘도 선택 불가 */
     var hol = HOLIDAYS[iso(d)];
+    var red = d.getDay()===0 || !!hol;
+    if (BLOCK_RED && red) past = true; /* 빨간날 선택 불가 */
     var cls = ['dtp-day'];
     if (out) cls.push('out');
     if (past) cls.push('past');
-    if (d.getDay()===0 || hol) cls.push('sun');
+    if (red) cls.push('sun');
     if (d.getTime()===today.getTime()) cls.push('today');
     if (selDate && d.getTime()===selDate.getTime()) cls.push('sel');
     h += '<button type="button" class="'+cls.join(' ')+'" data-ts="'+d.getTime()+'"'+(past?' disabled':'')+
-         (hol?' title="'+hol+'"':'')+'>'+d.getDate()+(hol?'<i class="dtp-dot"></i>':'')+'</button>';
+         (hol?' title="'+hol+(BLOCK_RED?' · 휴무':'')+'"':(BLOCK_RED&&red?' title="휴무"':''))+'>'+d.getDate()+(hol?'<i class="dtp-dot"></i>':'')+'</button>';
   }
   gridEl.innerHTML = h;
 }

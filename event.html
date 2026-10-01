@@ -844,16 +844,16 @@ document.querySelectorAll('.pm-stage-leaves').forEach(function(cv){
 </script>
 <script>
 (function(){var gs=document.querySelectorAll('.pm-stage');if(!gs.length)return;
-/* 10/1 사용자 지시: 무대 전체를 스크롤 연동이 아니라 진입 시 한 번 재생되는 시퀀스로. 카피 0~.5s → 정가 줄 .2~.65s → 숫자 카운트 .35~1.6s → 필름 농도 .6~2.2s → 콜아웃 1.8~2.6s */
+/* 10/1 사용자 지시: 무대 전체를 스크롤 연동이 아니라 진입 시 한 번 재생되는 시퀀스로. 카피 0~.3s → 정가 줄 .1~.4s → 숫자 카운트 .2~1.0s → 필름 농도 .3~1.3s → 콜아웃 .9~1.5s (10/1 사용자 '더 빨리') */
 function u(){gs.forEach(function(g){var r=g.getBoundingClientRect();if(r.top<=innerHeight*.4&&r.bottom>innerHeight*.2&&!g.dataset.cnt){g.dataset.cnt=1;cnt(g)}});}
 function cl(x){return Math.min(1,Math.max(0,x))}function eo(k){return 1-Math.pow(1-k,3)}function io(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2}
 function cnt(g){var b=g.querySelector('.val b'),f=b?+b.dataset.from:0,t=b?+b.dataset.to:0,st=g.style;
 if(matchMedia('(prefers-reduced-motion:reduce)').matches){st.setProperty('--cp','1');st.setProperty('--ln','1');st.setProperty('--w','1');st.setProperty('--co','1');if(b)b.textContent=t;return}
 var t0=performance.now();(function fr(now){var e=(now-t0)/1000;
-st.setProperty('--cp',eo(cl(e/.5)).toFixed(3));st.setProperty('--ln',cl((e-.2)/.45).toFixed(3));
-st.setProperty('--w',io(cl((e-.6)/1.6)).toFixed(3));st.setProperty('--co',eo(cl((e-1.8)/.8)).toFixed(3));
-if(b){var nv=Math.round(f+(t-f)*eo(cl((e-.35)/1.25)));if(b.textContent!=nv)b.textContent=nv}
-if(e<2.65)requestAnimationFrame(fr)})(t0)}
+st.setProperty('--cp',eo(cl(e/.3)).toFixed(3));st.setProperty('--ln',cl((e-.1)/.3).toFixed(3));
+st.setProperty('--w',io(cl((e-.3)/1)).toFixed(3));st.setProperty('--co',eo(cl((e-.9)/.6)).toFixed(3));
+if(b){var nv=Math.round(f+(t-f)*eo(cl((e-.2)/.8)));if(b.textContent!=nv)b.textContent=nv}
+if(e<1.55)requestAnimationFrame(fr)})(t0)}
 var q=0;function qu(){if(q)return;q=requestAnimationFrame(function(){q=0;u()})}addEventListener('scroll',qu,{passive:true});addEventListener('resize',qu);u();})();
 </script>
 

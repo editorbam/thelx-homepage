@@ -1,4 +1,14 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<!-- GA4 시작 (2026-09-01) — 떼려면 이 블록만 지우면 됨 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DT09RSCFG4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DT09RSCFG4');
+</script>
+<!-- GA4 끝 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://isolargard.com/event.html">
 <meta name="description" content="10월 한 달, 가을 햇빛 선 넘은 할인. Quantum 70만원 · Xenith IR 90만원(승용·SUV 기준, 전면+측·후면). 10.1–10.31, THE LX 솔라가드 프리미엄.">
@@ -963,12 +973,13 @@ document.querySelectorAll('.pm-end-btn').forEach(function(a){a.addEventListener(
 <footer class="tech-footer"><p class="tech-footer-mark">THE LX</p><p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p></footer>
 <script>function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open')}
 document.getElementById('navHamburger').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));</script>
-<script src="car-picker.js?v=3" defer></script><script src="date-picker.js?v=3" defer></script><script src="stores-list.js?v=1" defer></script><script src="store-picker.js?v=1" defer></script>
+<script src="car-picker.js?v=3" defer></script><script src="date-picker.js?v=4" defer></script><script src="stores-list.js?v=1" defer></script><script src="store-picker.js?v=1" defer></script>
 <script>
 /* 예약 접수 — 홈페이지와 같은 Apps Script. source로 10월 프로모션 예약 구분 */
 const BOOKING_URL = 'https://script.google.com/macros/s/AKfycbw8pcx1t4KMe2bzqwSYXpIzKJiKr6byz9Y1GRgAmS0XNfatxaikOSdfalVuq_zWQ3Q/exec';
 document.getElementById('bookingForm').addEventListener('submit', async e => {
   e.preventDefault();
+  if (!document.getElementById('bDate').value) { alert('희망 날짜와 시간을 선택해 주세요.'); document.getElementById('bDate').click(); return; } /* 10/1 readonly 필드는 required가 무시됨 */
   const btn = document.getElementById('bookingBtn');
   btn.textContent = '신청 중...'; btn.disabled = true;
   const payload = {

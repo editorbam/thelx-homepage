@@ -150,8 +150,13 @@ field.addEventListener('click', function(){
   ['cpBrandPanel','cpModelPanel'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('open'); });
   host.classList.toggle('open');
 });
+/* 2026-10-01 버그 수정: 날짜·시간 클릭 시 달력이 다시 그려져 누른 버튼이 DOM에서 사라짐 → 아래 문서 클릭 검사에서 '바깥 클릭'으로 오인해 패널이 닫혔음(8/14부터). 그려지기 전(캡처 단계)에 안쪽 클릭을 기억 */
+var inside=false;
+host.addEventListener('click', function(){ inside=true; }, true);
 document.addEventListener('click', function(e){
-  if (e.target !== field && !e.target.closest('#dtPanel')) host.classList.remove('open');
+  var was=inside; inside=false;
+  if (was || e.target === field) return;
+  host.classList.remove('open');
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') host.classList.remove('open'); });
 

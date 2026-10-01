@@ -116,7 +116,7 @@ function renderCal(){
 }
 function renderSlots(){
   /* 2026-10-01 오늘을 고른 경우 이미 지난 시간대(현재 시각의 '시' 이하)는 회색 비활성(사용자 요청) */
-  var now = new Date(), isToday = selDate && selDate.getTime()===today.getTime();
+  var now = new Date(), isToday = !selDate || selDate.getTime()===today.getTime(); /* 날짜 미선택=오늘 기준(가장 이른 날이 오늘이므로) */
   var h='';
   for (var t=9;t<=18;t++){
     var label = pad(t)+':00', gone = isToday && t <= now.getHours();

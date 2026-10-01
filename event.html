@@ -847,8 +847,12 @@ document.querySelectorAll('.pm-stage-leaves').forEach(function(cv){
 function u(){gs.forEach(function(g){var r=g.getBoundingClientRect(),ih=innerHeight;var p=Math.min(1,Math.max(0,(-r.top)/(r.height-ih)));
 var w=Math.min(1,Math.max(0,(p-.22)/.5));w=w<.5?2*w*w:1-Math.pow(-2*w+2,2)/2;      /* 22%~72% 구간 페이드인 */
 g.style.setProperty('--w',w.toFixed(3));g.style.setProperty('--cp',Math.min(1,Math.max(0,p/.12)).toFixed(3));g.style.setProperty('--co',Math.min(1,Math.max(0,(p-.74)/.14)).toFixed(3));
-var ln=Math.min(1,Math.max(0,(p-.18)/.14));g.style.setProperty('--ln',ln.toFixed(3));
-var b=g.querySelector('.val b');if(b){var f=+b.dataset.from,t=+b.dataset.to,k=Math.min(1,Math.max(0,(p-.30)/.42));var nv=Math.round(f+(t-f)*k);if(b.textContent!=nv)b.textContent=nv}});}
+if(r.top<=ih*.15&&r.bottom>ih&&!g.dataset.cnt){g.dataset.cnt=1;cnt(g)}});}
+/* 10/1 사용자 지시: 정가 줄긋기+큰 숫자 카운트다운은 스크롤이 아니라 무대 진입 시 한 번(줄 0~.45s, 숫자 .35~1.6s ease-out). 필름 농도(--w)·콜아웃(--co)은 스크롤 유지 */
+function cnt(g){var b=g.querySelector('.val b');if(!b)return;var f=+b.dataset.from,t=+b.dataset.to;
+if(matchMedia('(prefers-reduced-motion:reduce)').matches){g.style.setProperty('--ln','1');b.textContent=t;return}
+var t0=performance.now();(function st(now){var e=(now-t0)/1000;var ln=Math.min(1,Math.max(0,e/.45));g.style.setProperty('--ln',ln.toFixed(3));
+var k=Math.min(1,Math.max(0,(e-.35)/1.25));k=1-Math.pow(1-k,3);var nv=Math.round(f+(t-f)*k);if(b.textContent!=nv)b.textContent=nv;if(e<1.65)requestAnimationFrame(st)})(t0)}
 var q=0;function qu(){if(q)return;q=requestAnimationFrame(function(){q=0;u()})}addEventListener('scroll',qu,{passive:true});addEventListener('resize',qu);u();})();
 </script>
 

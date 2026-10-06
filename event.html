@@ -734,6 +734,26 @@
   [data-pd-specs="quantum"] .pd-grid .g-dens{font-size:.76rem;white-space:nowrap}
   .pd-grid .g-merge{vertical-align:middle;text-align:center}
 }
+/* 진행 중 이벤트 목록 (2026-10-06) — as.html 헤어라인 번호 행 문법 상속 */
+.ev-list{max-width:1100px;margin:0 auto;padding:calc(64px + clamp(1.6rem,4vh,2.6rem)) clamp(1.4rem,4vw,2rem) clamp(1.6rem,4vh,2.6rem)}
+.ev-list-head{font-size:11px;letter-spacing:.3em;color:#6e6e73;margin:0 0 1rem}
+.ev-list ol{list-style:none;margin:0;padding:0}
+.ev-row{border-bottom:.5px solid rgba(0,0,0,.1)}
+.ev-row:first-child{border-top:.5px solid rgba(0,0,0,.22)}
+.ev-row>a,.ev-row>div{display:grid;grid-template-columns:2.6rem 1fr auto auto;align-items:baseline;gap:1.4rem;padding:1.1rem 0;color:#0a0a0a;text-decoration:none}
+.ev-num{font-size:12px;font-weight:700;letter-spacing:.18em;color:rgba(0,0,0,.4)}
+.ev-title{font-size:clamp(1rem,1.3vw,1.15rem);font-weight:700;letter-spacing:-.015em;word-break:keep-all}
+.ev-date{font-size:13px;color:rgba(0,0,0,.55);white-space:nowrap}
+.ev-state{font-size:12px;color:rgba(0,0,0,.4);white-space:nowrap;min-width:5.5em;text-align:right}
+.ev-row>a .ev-state{color:#0a0a0a}
+.ev-row>a:hover .ev-title{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:.5px}
+@media(max-width:760px){
+ .ev-list{padding-top:calc(52px + 1.4rem)}
+ .ev-row>a,.ev-row>div{grid-template-columns:2rem 1fr auto;gap:.2rem .8rem}
+ .ev-date{grid-column:2;grid-row:2}
+ .ev-state{grid-column:3;grid-row:1}
+ .ev-list + .pm-hero{padding-top:0}
+}
 </style></head><body><nav id="mainNav">
   <a href="index.html" class="nav-logo" aria-label="THE LX 홈">
     <img src="thelx-logo-nav-b.png" alt="THE LX">
@@ -776,6 +796,13 @@
 
 
 <main>
+<section class="ev-list" aria-label="진행 중 이벤트">
+  <p class="ev-list-head">진행 중 이벤트 2</p>
+  <ol>
+    <li class="ev-row"><div aria-current="page"><span class="ev-num">01</span><span class="ev-title">가을 햇빛, SUN 넘네</span><span class="ev-date">10.1 — 10.31</span><span class="ev-state">지금 보는 중</span></div></li>
+    <li class="ev-row"><a href="safenumber.html"><span class="ev-num">02</span><span class="ev-title">안심전화번호 QR 무상 제공</span><span class="ev-date">상시</span><span class="ev-state">보기 →</span></a></li>
+  </ol>
+</section>
 <header class="pm-hero">
   <img class="bg" src="car-hero-tesla-y.webp" srcset="car-hero-tesla-y-1200.webp 1200w, car-hero-tesla-y.webp 2400w" sizes="(min-width:761px) 125vw, 100vw" width="2400" height="1357" fetchpriority="high" alt="단풍 든 산길을 달리는 짙은 회색 전기 SUV, 그 뒤 산 중턱에 거대한 입체 글자 QUANTUM · XENITH가 서 있다">
   <canvas class="pm-stage-leaves" data-zone="hero" aria-hidden="true"></canvas>

@@ -1,8 +1,9 @@
 {
   "enabled": true,
-  "id": "sunline-2026-10",
+  "id": "sunline-tesla-2026-10",
   "link": "event.html",
+  "link2": "tesla.html",
   "start": "2026-09-30",
   "end": "2026-10-31",
-  "note": "10월 이벤트 「가을 햇빛, SUN 넘네」 (이전: tesla-2026-09 테슬라 오너 → tesla.html, 원본 popup-config.json.bak20260930 / 부품 _backup/popup-tesla-block-20260930.html)"
+  "note": "10/6 두 장 동시: 왼쪽 10월 이벤트 「가을 햇빛, SUN 넘네」(link) + 오른쪽 테슬라 오너(link2). id를 바꿔 이미 닫았던 사람도 한 번 더 봄. 이전: sunline-2026-10(popup-config.json.bak20261006) / tesla-2026-09(bak20260930)"
 }

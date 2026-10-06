@@ -5814,14 +5814,16 @@ window.addEventListener('pageshow', function (e) {
 </script>
 
 <!-- ===== 이벤트 팝업 (설정: popup-config.json / 첫 방문 1회 + 오늘 하루 닫기) =====
-     2026-09-30 테슬라 팝업 → 10월 이벤트 팝업(가을 햇빛, SUN 넘네) 교체. 이전 부품 원본=_backup/popup-tesla-block-20260930.html (11/1 복귀 시 이 블록을 그 파일로 되돌리고 popup-config.json.bak20260930 복원)
-     카드 전체 클릭 = 설정의 link(event.html)로 이동 -->
+     2026-10-06 두 장 동시: 왼쪽=10월 이벤트(가을 햇빛, SUN 넘네 → event.html), 오른쪽=테슬라 오너(→ tesla.html). PC 나란히, 폰 위아래.
+     이전 한 장(SUN 넘네만) 원본=_backup/popup-sunline-only-index-20261006.html, 테슬라 단독 부품=_backup/popup-tesla-block-20260930.html
+     11/1 복귀 시: 이 블록을 테슬라 단독 부품으로 되돌리고 popup-config.json.bak20260930 복원 -->
 <style>
   .evp-back{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:10050;display:flex;align-items:flex-start;justify-content:flex-start;padding:96px 16px 16px 40px;opacity:0;pointer-events:none;transition:opacity .35s ease}
   .evp-back.on{opacity:1;pointer-events:auto}
-  .evp{width:min(432px,92vw);background:#fff;color:#0a0a0a;font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif;font-weight:300;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(12px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .evp{width:auto;max-width:calc(100vw - 56px);background:#fff;color:#0a0a0a;font-family:'Noto Sans KR',-apple-system,'Helvetica Neue',sans-serif;font-weight:300;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(12px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
   .evp-back.on .evp{transform:none}
-  .evp-card{container-type:inline-size;position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;user-select:none;touch-action:pan-y;background:#f4f4f4;color:inherit;text-decoration:none;cursor:pointer}
+  .evp-cards{display:flex}
+  .evp-card{container-type:inline-size;position:relative;display:block;width:432px;flex:0 0 auto;aspect-ratio:4/5;overflow:hidden;user-select:none;touch-action:pan-y;background:#f4f4f4;color:inherit;text-decoration:none;cursor:pointer}
   .evp-tag{position:absolute;right:6.7%;top:5.6%;font-size:9px;letter-spacing:.24em;color:#6e6e73;z-index:5}
   .evp-bar{height:44px;background:#f5f5f7;color:#6e6e73;border-top:.5px solid #e8e8ed;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px}
   .evp-bar button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;padding:8px 0}
@@ -5862,10 +5864,25 @@ window.addEventListener('pageshow', function (e) {
   @media(prefers-reduced-motion:reduce){.sl-before,.sl-after{transition:none}}
   .sl-leaves{position:absolute;inset:0;z-index:3;pointer-events:none}
   @media(prefers-reduced-motion:reduce){.sl-leaves{display:none}}
-  @media (max-width:700px){ .evp-back{align-items:flex-start;justify-content:flex-start;padding:84px 0 0 14px} .evp{width:min(64vw,300px);box-shadow:0 18px 50px rgba(0,0,0,.35)} .evp-card{height:auto;width:100%;max-width:none;aspect-ratio:4/5} .evp-tag{font-size:7.5px} .evp-bar{height:32px;font-size:10px;padding:0 10px} }
+  @media (max-width:1000px) and (min-width:701px){ .evp-card{width:min(44vw,432px)} }
+  @media (max-width:700px){ .evp-back{align-items:flex-start;justify-content:flex-start;padding:70px 0 0 14px} .evp{width:min(50vw,240px);max-width:none;box-shadow:0 18px 50px rgba(0,0,0,.35)} .evp-cards{flex-direction:column} .evp-card{height:auto;width:100%;max-width:none;aspect-ratio:4/5} #evpCard2{border-top:.5px solid #e8e8ed} .evp-tag{font-size:7.5px} .evp-bar{height:32px;font-size:10px;padding:0 10px} }
+  /* 테슬라 카드 (tesla.html 옆모습 섹션 이식, 9/28 팝업 부품 그대로) */
+  #evpCard2{background:#f4f4f4;color:#0a0a0a;border-left:.5px solid #e8e8ed}
+  .tp-stage{position:absolute;left:0;right:0;top:11%;height:60%;overflow:visible}
+  .tp-bg{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;clip-path:polygon(0 0,var(--cf,0px) 0,var(--cf,0px) 100%,0 100%,0 0,100% 0,100% 100%,var(--cr,100%) 100%,var(--cr,100%) 0,100% 0)}
+  .tp-logo{display:block;margin:0 auto 3cqw;height:15cqw;width:auto}
+  .tp-tag{margin:0;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-weight:500;font-size:11.2cqw;letter-spacing:-.03em;line-height:1;color:#171a20;white-space:nowrap}
+  .tp-track{position:absolute;left:0;top:52%;width:var(--w);transform:translate(var(--x,100cqw),-50%);will-change:transform}
+  .tp-track .car{display:block;width:100%;height:auto;position:relative;z-index:0;-webkit-mask-image:linear-gradient(#000 88%,transparent 100%);mask-image:linear-gradient(#000 88%,transparent 100%)}
+  .tp-track::after{content:"";position:absolute;left:5%;width:90%;top:80%;height:26%;background:radial-gradient(ellipse at center,rgba(0,0,0,.9) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 72%);filter:blur(14px);mix-blend-mode:multiply;z-index:1;pointer-events:none}
+  .tp-track .wbg,.tp-track .wh{position:absolute;z-index:2;height:auto;pointer-events:none}
+  .tp-track .wbg{transform:translate(-50%,-50%)}
+  .tp-track .wh{transform:translate(-50%,-50%) rotate(var(--r,0deg));will-change:transform}
+  .tp-head{position:absolute;left:6.7%;right:6.7%;bottom:5.6%;margin:0;text-align:left;font-size:7.4cqw;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:#0a0a0a;word-break:keep-all;z-index:5}
 </style>
-<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="10월 할인 이벤트 안내" hidden>
+<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="10월 할인 이벤트 · 테슬라 오너 안내" hidden>
   <div class="evp">
+   <div class="evp-cards">
     <a class="evp-card on" id="evpCard" href="event.html" aria-label="10월 할인 이벤트 페이지로 이동">
       <img class="sl-video" src="popup-hero-4x5.jpg" alt="" aria-hidden="true">
       <div class="sl-shade"></div>
@@ -5877,6 +5894,21 @@ window.addEventListener('pageshow', function (e) {
       <div class="sl-txt sl-after sl-bot"><div class="sl-pr"><span>Quantum<b>70</b><small>만원</small></span><span>Xenith IR<b>90</b><small>만원</small></span></div></div>
       <div class="sl-foot"><span>승용·SUV 기준 · 전국 인증 시공점</span><span class="cta">시공 가격 확인 →</span></div>
     </a>
+    <a class="evp-card" id="evpCard2" href="tesla.html" aria-label="테슬라 오너 페이지로 이동">
+      <div class="evp-tag">FOR TESLA OWNERS</div>
+      <div class="tp-stage" id="tpStage" aria-hidden="true">
+        <div class="tp-bg"><img class="tp-logo" src="img/v3/lx-logo-k.png" alt="" width="710" height="352"><p class="tp-tag">Xenith IR for Tesla</p></div>
+        <div class="tp-track" id="tpTrack" style="--w:170cqw">
+          <img class="car" src="img/v3/side_car8_2k.jpg" alt="" width="4073" height="1604">
+          <img class="wbg" src="img/v3/wheel_brake_disc_512.png" alt="" style="left:21.319%;top:71.030%;width:14.942%">
+          <img class="wh" src="img/v3/wheel_spokes_512.png" alt="" style="left:21.319%;top:71.030%;width:14.942%">
+          <img class="wbg" src="img/v3/wheel_brake_disc_512.png" alt="" style="left:77.955%;top:69.028%;width:14.942%">
+          <img class="wh" src="img/v3/wheel_spokes_512.png" alt="" style="left:77.955%;top:69.028%;width:14.942%">
+        </div>
+      </div>
+      <h2 class="tp-head">테슬라 틴팅을 가장 먼저,<br>가장 정교하게 완성하는 곳</h2>
+    </a>
+   </div>
     <div class="evp-bar"><button type="button" id="evpToday">오늘 하루 보지 않기</button><button type="button" class="x" id="evpClose">닫기</button></div>
   </div>
 </div>
@@ -5890,17 +5922,18 @@ window.addEventListener('pageshow', function (e) {
     try{ if(sessionStorage.getItem('evp:'+id+':closed')==='1') return true; }catch(e){}
     return false;
   }
-  var stopAnim=null;
+  var stopAnim=null, stopTesla=null;
   function show(cfg){
     if(!cfg||!cfg.enabled) return;
     var d=new Date(), now=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); /* 한국 현지 날짜 — toISOString()은 UTC라 09시까지 전날로 셈 */
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
     document.getElementById('evpCard').href=cfg.link||'event.html';
-    document.getElementById('evpCard').addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} });
+    document.getElementById('evpCard2').href=cfg.link2||'tesla.html';
+    [document.getElementById('evpCard'),document.getElementById('evpCard2')].forEach(function(c){ c.addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} }); });
     back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
-    start();
-    function close(){ if(stopAnim) stopAnim(); back.classList.remove('on');
+    start(); startTesla();
+    function close(){ if(stopAnim) stopAnim(); if(stopTesla) stopTesla(); back.classList.remove('on');
       setTimeout(function(){ back.hidden=true; if(back.parentNode) back.parentNode.removeChild(back); },380);
       document.removeEventListener('keydown',onKey);
       try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} }
@@ -5933,6 +5966,30 @@ function tick(t){if(dead)return;var dt=Math.min(.05,(t-last)/1000||0);last=t;ctx
   if(l.y>H+l.s||l.x<-l.s*2||l.x>W+l.s*2){L[i]=mk(true);continue}draw(l)}
  requestAnimationFrame(tick)}
     reset();last=performance.now();requestAnimationFrame(tick);
+  }
+  /* 테슬라 카드: 차가 오른쪽 밖에서 들어와 왼쪽 밖으로 빠져나감. 4.2초 통과 + 1.4초 쉼 반복.
+     글자는 차체 구간(--cf~--cr)만 clip-path로 가림 — tesla.html 옆모습 무대와 같은 방식. 9/28 부품 그대로 */
+  function startTesla(){
+    var st=document.getElementById('tpStage'), tr=document.getElementById('tpTrack'), tg=st.querySelector('.tp-bg');
+    var wheels=tr.querySelectorAll('.wh'), DUR=4200, PAUSE=1400, t0=performance.now(), raf=0, dead=false, lastDeg=0;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){ tr.style.setProperty('--x','-10cqw'); tg.style.setProperty('--cf','0px'); tg.style.setProperty('--cr','0px'); stopTesla=function(){}; return; }
+    function ease(p){ return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; }
+    function tick(now){ if(dead||back.hidden) return;
+      var W=tr.offsetWidth, S=st.offsetWidth, T=(now-t0)%(DUR+PAUSE), e=ease(Math.min(1,T/DUR));
+      var x0=S, x1=-W, x=x0+(x1-x0)*e;
+      tr.style.setProperty('--x',x.toFixed(1)+'px');
+      tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.09)).toFixed(1)+'px');
+      tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.93)).toFixed(1)+'px');
+      var dv=-(x0-x)/(0.074708*W)*57.2958, deg=dv.toFixed(2)+'deg';
+      var step=Math.abs(dv-lastDeg), bl=Math.min(1.8,Math.max(0,(step-4)/8)); lastDeg=dv;
+      for(var i=0;i<wheels.length;i++){ wheels[i].style.setProperty('--r',deg); wheels[i].style.filter=bl>.05?'blur('+bl.toFixed(2)+'px)':''; }
+      raf=requestAnimationFrame(tick); }
+    raf=requestAnimationFrame(tick);
+    var hv=document.getElementById('heroVideo');
+    function hold(){ if(!dead&&hv&&!hv.paused) hv.pause(); }
+    if(hv){ window.__evpHold=true; hold(); hv.addEventListener('play',hold); }
+    stopTesla=function(){ dead=true; if(raf) cancelAnimationFrame(raf); window.__evpHold=false;
+      if(hv){ hv.removeEventListener('play',hold); if(hv.getBoundingClientRect().bottom>0){ var pr=hv.play(); if(pr&&pr.catch) pr.catch(function(){}); } } };
   }
   fetch('popup-config.json?v='+Date.now(),{cache:'no-store'}).then(function(r){ return r.json(); }).then(show).catch(function(){});
 })();

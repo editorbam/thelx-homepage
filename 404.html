@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><base href="/">
+<head>
+<base href="/">
   <meta charset="UTF-8">
+<!-- GA4 시작 (2026-09-01) — 떼려면 이 블록만 지우면 됨 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DT09RSCFG4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DT09RSCFG4');
+</script>
+<!-- GA4 끝 -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>페이지를 찾을 수 없습니다 — THE LX</title>
   <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. THE LX 주요 페이지로 이동할 수 있습니다.">
@@ -578,15 +589,15 @@
 
 <footer class="tech-footer">
   <p class="tech-footer-mark">THE LX</p>
-  <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p>
+  <p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain · <a href="privacy.html" style="color:inherit;text-decoration:underline;text-underline-offset:.2em">개인정보처리방침</a></p>
 </footer>
 
 <!-- 배경 음악 (전 페이지 이어듣기 — sessionStorage 'thelxBgm'로 위치·상태 왕복) -->
-<button class="hero-sound" id="heroSound" type="button" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
+<button class="hero-sound" id="heroSound" type="button" style="display:none" aria-label="배경 음악 음소거 / 해제" aria-pressed="false">
   <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
   <span class="label" id="heroSoundLabel">Mute</span>
 </button>
-<audio id="heroAudio" src="hero-music.mp3" loop preload="none"></audio>
+<audio id="heroAudio" data-src="hero-music.mp3?v=2" loop preload="none"></audio>
 <script>
   (function(){
     var audio = document.getElementById('heroAudio');

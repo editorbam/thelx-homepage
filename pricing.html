@@ -2892,6 +2892,7 @@ nav.over-pl { background:var(--black); border-bottom:.5px solid rgba(255,255,255
       <li><a href="https://www.isolargard.com/bbs/login.php" target="_blank" rel="noopener noreferrer">로그인</a></li>
       <li><a href="https://isolargard.com/adm/" target="_blank" rel="noopener noreferrer">관리자</a></li>
       <li><a href="https://sgp.isolargard.com/" target="_blank" rel="noopener noreferrer" class="footer-cms">총판·파트너 로그인 <span>(SGP CMS)</span></a></li>
+      <li><a href="privacy.html">개인정보처리방침</a></li>
     </ul>
     <p class="footer-legal">주식회사 에스지이피 · 대표 김창완 · 사업자등록번호 131-86-58566</p>
     <p class="footer-legal">인천광역시 남동구 논현동 767-10 · 고객센터 1899-3280 · isolargard@gmail.com</p>
@@ -3548,12 +3549,14 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
   };
 
   try {
-    await fetch(BOOKING_URL, {
+    const res = await fetch(BOOKING_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      /* text/plain = 프리플라이트 없는 단순 요청. Apps Script는 프리플라이트를 못 받으므로 json 헤더·no-cors를 쓰면 응답을 읽을 수 없다(2026-10-06) */
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
+    const out = await res.json();
+    if (!res.ok || out.result !== 'success') throw new Error(out.message || ('HTTP ' + res.status));
     document.getElementById('bookingForm').style.display = 'none';
     document.getElementById('bookingSuccess').classList.add('show');
   } catch (err) {

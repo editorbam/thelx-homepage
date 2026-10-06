@@ -913,7 +913,7 @@ if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.fo
 <!-- 제품 상세 스펙 (9/29) — 홈페이지와 같은 데이터(pd-data.js 사본)·같은 렌더러. 홈 스펙 수정 시 pd-data.js 다시 복사 -->
 <section class="pm-sec pm-specs" aria-label="Quantum 상세 스펙"><div class="pm-spec-head"><p class="pm-eyebrow">QUANTUM · 상세 스펙</p><h2 class="pm-spec-name">Quantum</h2></div><div data-pd-specs="quantum"></div></section>
 <section class="pm-sec pm-specs" aria-label="Xenith IR 상세 스펙"><div class="pm-spec-head"><p class="pm-eyebrow">XENITH IR · 상세 스펙</p><h2 class="pm-spec-name">Xenith IR</h2></div><div data-pd-specs="xenith"></div></section>
-<script src="pd-data.js"></script>
+<script src="pd-data.js?v=37"></script>
 <script>
 document.querySelectorAll('[data-pd-specs]').forEach(function(el){el.innerHTML=pdRenderSpecs(PD_DATA[el.dataset.pdSpecs]);});
 (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.querySelectorAll('.pd-bar-fill[data-w]').forEach(function(b){b.style.width=b.dataset.w+'%';});io.unobserve(e.target);}});},{threshold:.2});
@@ -997,7 +997,7 @@ document.querySelectorAll('.pm-end-btn').forEach(function(a){a.addEventListener(
   </ol>
 </section>
 </main>
-<footer class="tech-footer"><p class="tech-footer-mark">THE LX</p><p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain</p></footer>
+<footer class="tech-footer"><p class="tech-footer-mark">THE LX</p><p class="tech-footer-copy">© 2026 THE LX · Solar Gard Premium · Saint-Gobain · <a href="privacy.html" style="color:inherit;text-decoration:underline;text-underline-offset:.2em">개인정보처리방침</a></p></footer>
 <script>function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open')}
 document.getElementById('navHamburger').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));</script>
 <script src="car-picker.js?v=3" defer></script><script src="date-picker.js?v=8" defer></script><script src="stores-list.js?v=5" defer></script><script src="store-picker.js?v=1" defer></script>
@@ -1020,7 +1020,14 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
     source:  '10월 이벤트 페이지'
   };
   try {
-    await fetch(BOOKING_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    const res = await fetch(BOOKING_URL, {
+      method: 'POST',
+      /* text/plain = 프리플라이트 없는 단순 요청. Apps Script는 프리플라이트를 못 받으므로 json 헤더·no-cors를 쓰면 응답을 읽을 수 없다(2026-10-06) */
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    const out = await res.json();
+    if (!res.ok || out.result !== 'success') throw new Error(out.message || ('HTTP ' + res.status));
     document.getElementById('bookingForm').style.display = 'none';
     document.getElementById('bookingSuccess').classList.add('show');
   } catch (err) {

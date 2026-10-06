@@ -8,6 +8,19 @@
   gtag('config', 'G-DT09RSCFG4');
 </script>
 <!-- GA4 끝 -->
+<!-- Meta Pixel 시작 (2026-10-01) — 떼려면 이 블록만 지우면 됨 -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2169550046976285');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2169550046976285&ev=PageView&noscript=1"/></noscript>
+<!-- Meta Pixel 끝 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://isolargard.com/event.html">
@@ -1030,6 +1043,7 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
     if (!res.ok || out.result !== 'success') throw new Error(out.message || ('HTTP ' + res.status));
     document.getElementById('bookingForm').style.display = 'none';
     document.getElementById('bookingSuccess').classList.add('show');
+    if (window.fbq) fbq('track', 'Lead'); // Meta Pixel: 예약 접수 신호 (2026-10-01)
   } catch (err) {
     btn.textContent = '예약 신청하기'; btn.disabled = false;
     alert('일시적인 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');

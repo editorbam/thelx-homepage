@@ -5869,10 +5869,10 @@ window.addEventListener('pageshow', function (e) {
   /* 테슬라 카드 (tesla.html 옆모습 섹션 이식, 9/28 팝업 부품 그대로) */
   #evpCard2{background:#f4f4f4;color:#0a0a0a;border-left:.5px solid #e8e8ed}
   .tp-stage{position:absolute;left:0;right:0;top:11%;height:60%;overflow:visible}
-  .tp-bg{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;clip-path:polygon(0 0,var(--cf,0px) 0,var(--cf,0px) 100%,0 100%,0 0,100% 0,100% 100%,var(--cr,100%) 100%,var(--cr,100%) 0,100% 0)}
+  .tp-bg{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);z-index:2;pointer-events:none;text-align:center;clip-path:polygon(0 0,var(--cf,0px) 0,var(--cf,0px) 100%,0 100%,0 0,100% 0,100% 100%,var(--cr,100%) 100%,var(--cr,100%) 0,100% 0)}
   .tp-logo{display:block;margin:0 auto 3cqw;height:15cqw;width:auto}
   .tp-tag{margin:0;font-family:'Helvetica Neue',-apple-system,'Noto Sans KR',sans-serif;font-weight:500;font-size:11.2cqw;letter-spacing:-.03em;line-height:1;color:#171a20;white-space:nowrap}
-  .tp-track{position:absolute;left:0;top:52%;width:var(--w);transform:translate(var(--x,100cqw),-50%);will-change:transform}
+  .tp-track{position:absolute;left:0;top:52%;width:var(--w);z-index:1;transform:translate(var(--x,100cqw),-50%);will-change:transform}
   .tp-track .car{display:block;width:100%;height:auto;position:relative;z-index:0;-webkit-mask-image:linear-gradient(#000 88%,transparent 100%);mask-image:linear-gradient(#000 88%,transparent 100%)}
   .tp-track::after{content:"";position:absolute;left:5%;width:90%;top:80%;height:26%;background:radial-gradient(ellipse at center,rgba(0,0,0,.9) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 72%);filter:blur(14px);mix-blend-mode:multiply;z-index:1;pointer-events:none}
   .tp-track .wbg,.tp-track .wh{position:absolute;z-index:2;height:auto;pointer-events:none}
@@ -5978,8 +5978,9 @@ function tick(t){if(dead)return;var dt=Math.min(.05,(t-last)/1000||0);last=t;ctx
       var W=tr.offsetWidth, S=st.offsetWidth, T=(now-t0)%(DUR+PAUSE), e=ease(Math.min(1,T/DUR));
       var x0=S, x1=-W, x=x0+(x1-x0)*e;
       tr.style.setProperty('--x',x.toFixed(1)+'px');
-      tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.09)).toFixed(1)+'px');
-      tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.93)).toFixed(1)+'px');
+      /* 글자를 차 위(z-index 2)에 두고 차체 구간만 가림 — 사진 네모(배경색과 같은 #f4f4f4)가 글자를 먼저 덮던 문제 수정(10/6). 차체 실측 5.3%~94.6% */
+      tg.style.setProperty('--cf',Math.max(0,Math.min(S,x+W*.053)).toFixed(1)+'px');
+      tg.style.setProperty('--cr',Math.max(0,Math.min(S,x+W*.946)).toFixed(1)+'px');
       var dv=-(x0-x)/(0.074708*W)*57.2958, deg=dv.toFixed(2)+'deg';
       var step=Math.abs(dv-lastDeg), bl=Math.min(1.8,Math.max(0,(step-4)/8)); lastDeg=dv;
       for(var i=0;i<wheels.length;i++){ wheels[i].style.setProperty('--r',deg); wheels[i].style.filter=bl>.05?'blur('+bl.toFixed(2)+'px)':''; }

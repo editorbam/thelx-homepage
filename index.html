@@ -4579,6 +4579,18 @@ function activateTab(name) {
 }
 tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
 
+// 제품 딥링크: isolargard.com/#vogue 처럼 탭 이름으로 들어오면 제품 섹션으로 내려가 그 탭을 연다
+// (2026-10-07 네이버 브랜드검색 썸네일 링크용 — 제품마다 각자 탭으로 착지)
+function openTabFromHash() {
+  const name = location.hash.slice(1);
+  if (!name || !document.querySelector(`.tab-btn[data-tab="${name}"]`)) return;
+  activateTab(name);
+  const sec = document.getElementById('products');
+  if (sec) sec.scrollIntoView({ block: 'start' });
+}
+window.addEventListener('load', () => setTimeout(openTabFromHash, 100));
+window.addEventListener('hashchange', openTabFromHash);
+
 // 제품 섹션 진입 시 스펙바 애니메이션
 const prodIO = new IntersectionObserver(entries => {
   entries.forEach(e => {

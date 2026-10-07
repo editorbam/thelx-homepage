@@ -4874,6 +4874,7 @@ document.getElementById('bookingForm').addEventListener('submit', async e => {
     document.getElementById('bookingForm').style.display = 'none';
     document.getElementById('bookingSuccess').classList.add('show');
     if (window.fbq) fbq('track', 'Lead'); // Meta Pixel: 예약 접수 신호 (2026-10-01)
+    if (window.gtag) gtag('event', 'booking_submit', { page: location.pathname }); // GA4: 예약 접수 신호 (2026-10-07)
   } catch (err) {
     btn.textContent = '예약 신청하기';
     btn.disabled = false;

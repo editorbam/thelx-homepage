@@ -1,9 +1,10 @@
 {
   "enabled": true,
-  "id": "sunline-tesla-2026-10",
+  "id": "sunline-tesla-safe-2026-10",
   "link": "event.html",
   "link2": "tesla.html",
+  "link3": "safenumber.html",
   "start": "2026-09-30",
   "end": "2026-10-31",
-  "note": "10/6 두 장 동시: 왼쪽 10월 이벤트 「가을 햇빛, SUN 넘네」(link) + 오른쪽 테슬라 오너(link2). id를 바꿔 이미 닫았던 사람도 한 번 더 봄. 이전: sunline-2026-10(popup-config.json.bak20261006) / tesla-2026-09(bak20260930)"
+  "note": "10/13 세 장: 왼쪽 10월 이벤트(link)+가운데 테슬라(link2)+오른쪽 안심번호 QR(link3). 카드 240px·띠 36px. 이전 두 장=popup-config.json.bak20261013 / 한 장=bak20261006·bak20260930"
 }

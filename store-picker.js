@@ -1,15 +1,12 @@
 /* THE LX 예약 폼 — 지역·시공점 선택 (2026-09-28, car-picker 문법 상속)
    데이터: stores-list.js(window.STORE_LIST) — stores.html STORE_DATA에서 build-store-schema.py가 생성
    동작: 지역 칸 클릭=시·도 패널, 선택 시 시공점 패널로. 시공점 칸 타이핑=매장명·주소 즉시 검색(예: 강남, 논현). 목록에 없는 값도 그대로 접수. */
-/* v2(2026-10-14): 여러 폼에서 쓰도록 인스턴스화. 기본 ID(bRegion/bStore/spRegionPanel/spStorePanel)는 자동 실행, 추가 폼은 window.initStorePicker({region,store,regionPanel,storePanel,zone}) */
-function initStorePicker(ids){
-ids = ids || {};
+(function(){
 var LIST = window.STORE_LIST || [];
-var region = document.getElementById(ids.region || 'bRegion');
-var store = document.getElementById(ids.store || 'bStore');
-var regionPanel = document.getElementById(ids.regionPanel || 'spRegionPanel');
-var storePanel = document.getElementById(ids.storePanel || 'spStorePanel');
-var ZONE = ids.zone || '.sp-zone';
+var region = document.getElementById('bRegion');
+var store = document.getElementById('bStore');
+var regionPanel = document.getElementById('spRegionPanel');
+var storePanel = document.getElementById('spStorePanel');
 if (!region || !store || !regionPanel || !storePanel || !LIST.length) return;
 
 var REGIONS = [
@@ -30,13 +27,13 @@ var css = [
 '.cp-grid button .sp-c{font-weight:400;color:#6e6e73;font-size:12px;margin-left:.3rem;}',
 '@media (max-width:640px){.sp-grid{grid-template-columns:1fr;}}'
 ].join('');
-if (!document.getElementById('spPickerCss')) { var st = document.createElement('style'); st.id='spPickerCss'; st.textContent = css; document.head.appendChild(st); }
+var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
 function closeAll(){ regionPanel.classList.remove('open'); storePanel.classList.remove('open'); }
 function closeOthers(){
   ['cpBrandPanel','cpModelPanel','dtPanel'].forEach(function(id){ var el=document.getElementById(id); if (el) el.classList.remove('open'); });
 }
-document.addEventListener('click', function(e){ if (!e.target.closest(ZONE) && !regionPanel.contains(e.target) && !storePanel.contains(e.target)) closeAll(); });
+document.addEventListener('click', function(e){ if (!e.target.closest('.sp-zone') && !e.target.closest('#spRegionPanel') && !e.target.closest('#spStorePanel')) closeAll(); });
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
 
 function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
@@ -94,6 +91,4 @@ storePanel.addEventListener('click', function(e){
   if (r) REGIONS.forEach(function(x){ if (x[0] === r) region.value = x[1]; });
   closeAll();
 });
-}
-window.initStorePicker = initStorePicker;
-initStorePicker();
+})();

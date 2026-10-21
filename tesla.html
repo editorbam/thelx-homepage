@@ -18,6 +18,8 @@
 <!-- GA4 끝 -->
 <!-- Meta Pixel 시작 (2026-10-01) — 떼려면 이 블록만 지우면 됨 -->
 <script>
+/* 2026-10-21: 실서버(isolargard.com)에서만 픽셀 로드 — 프리뷰·로컬 조회가 리타겟 타겟에 섞이지 않게 */
+if (/(^|\.)isolargard\.com$/.test(location.hostname)) {
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
@@ -25,6 +27,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2169550046976285');
 fbq('track', 'PageView');
+}
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=2169550046976285&ev=PageView&noscript=1"/></noscript>

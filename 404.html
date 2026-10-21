@@ -4,12 +4,17 @@
 <base href="/">
   <meta charset="UTF-8">
 <!-- GA4 시작 (2026-09-01) — 떼려면 이 블록만 지우면 됨 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DT09RSCFG4"></script>
 <script>
+  /* 2026-10-21: 실서버(isolargard.com)에서만 GA4 로드 — 프리뷰(github.io)·로컬 조회가 통계에 섞이지 않게 */
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DT09RSCFG4');
+  if (/(^|\.)isolargard\.com$/.test(location.hostname)) {
+    var _ga = document.createElement('script'); _ga.async = true;
+    _ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-DT09RSCFG4';
+    document.head.appendChild(_ga);
+    gtag('js', new Date());
+    gtag('config', 'G-DT09RSCFG4');
+  }
 </script>
 <!-- GA4 끝 -->
 <!-- Meta Pixel 시작 (2026-10-01) — 떼려면 이 블록만 지우면 됨 -->

@@ -12,7 +12,18 @@
     _ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-DT09RSCFG4';
     document.head.appendChild(_ga);
     gtag('js', new Date());
-    gtag('config', 'G-DT09RSCFG4');
+    /* 2026-10-22: 꼬리표(utm) 없이, 다른 사이트를 거치지 않고, 앱 안 브라우저(카톡·인스타 등)에서 바로 열린 방문은 출처를 그 앱 이름으로 적는다.
+       광고 꼬리표가 있거나 검색처럼 출처가 찍히는 방문은 건드리지 않음. 화면 주소는 바꾸지 않고 GA에 보내는 주소에만 붙인다. */
+    var _cfg = {};
+    try {
+      if (!/[?&]utm_/.test(location.search) && !document.referrer) {
+        var _ua = navigator.userAgent;
+        var _app = /KAKAOTALK/i.test(_ua) ? 'kakao' : /Instagram/.test(_ua) ? 'instagram' : /FBAN|FBAV|FB_IAB/.test(_ua) ? 'facebook'
+                 : /NAVER\(inapp/.test(_ua) ? 'naver_app' : /\bLine\//.test(_ua) ? 'line' : /BAND\//.test(_ua) ? 'band' : '';
+        if (_app) { var _u = new URL(location.href); _u.searchParams.set('utm_source', _app); _u.searchParams.set('utm_medium', 'inapp'); _cfg.page_location = _u.toString(); }
+      }
+    } catch (e) {}
+    gtag('config', 'G-DT09RSCFG4', _cfg);
   }
 </script>
 <!-- GA4 끝 -->

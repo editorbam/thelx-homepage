@@ -2,10 +2,13 @@
    동작: #bDate 클릭 → 큰 달력+시간대 메가패널(#dtPanel). 지난 날짜 비활성, 일요일·공휴일 붉은 표기+점(선택은 가능. 단 #dtPanel에 data-block-red가 있으면 선택 불가 — event.html).
    공휴일: 2026·2027 정부 월력요항 기준(대체공휴일 포함, 2027 노동절·제헌절 신규 반영). 2028 도래 전 표 갱신 필요.
    전송값: "YYYY-MM-DD (요일) HH:00" 또는 "YYYY-MM-DD (요일) 시간미정" — 구글 시트 날짜 열에 그대로 저장 */
-(function(){
-var field = document.getElementById('bDate');
-var host = document.getElementById('dtPanel');
+/* v9(2026-10-14): 여러 폼에서 쓰도록 인스턴스화. 기본(bDate/dtPanel) 자동 실행 + window.initDatePicker({field,host}) */
+function initDatePicker(ids){
+ids = ids || {};
+var field = document.getElementById(ids.field || 'bDate');
+var host = document.getElementById(ids.host || 'dtPanel');
 if (!field || !host) return;
+var K = host.id + '_';
 var BLOCK_RED = host.hasAttribute('data-block-red'); /* 2026-10-01 이벤트 페이지(event.html): 일요일·공휴일(빨간날) 예약 불가 — #dtPanel에 data-block-red 있을 때만 */
 
 var css = [
@@ -46,19 +49,19 @@ var css = [
 '.dtp-done{font-family:inherit;border:none;background:#0a0a0a;color:#fff;font-size:13px;font-weight:500;padding:.65rem 1.5rem;border-radius:999px;}',
 '.dtp-done:disabled{background:#e8e8ed;color:#a0a0a5;}'
 ].join('');
-var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+if (!document.getElementById(K+'dtpCss')) { var st = document.createElement('style'); st.id='dtpCss'; st.textContent = css; document.head.appendChild(st); }
 
 host.className = 'dtp-panel';
 host.innerHTML =
 '<div class="dtp-cols"><div>'+
-'<div class="dtp-cal-head"><div class="dtp-cal-title" id="dtpTitle"></div>'+
-'<div class="dtp-nav"><button type="button" id="dtpPrev" aria-label="이전 달">&#8249;</button>'+
-'<button type="button" id="dtpNext" aria-label="다음 달">&#8250;</button></div></div>'+
-'<div class="dtp-grid" id="dtpGrid"></div></div>'+
-'<div><div class="dtp-slot-head">시간대</div><div class="dtp-slots" id="dtpSlots"></div>'+
+'<div class="dtp-cal-head"><div class="dtp-cal-title" id=\"'+K+'dtpTitle\"></div>'+
+'<div class="dtp-nav"><button type="button" id=\"'+K+'dtpPrev\" aria-label="이전 달">&#8249;</button>'+
+'<button type="button" id=\"'+K+'dtpNext\" aria-label="다음 달">&#8250;</button></div></div>'+
+'<div class="dtp-grid" id=\"'+K+'dtpGrid\"></div></div>'+
+'<div><div class="dtp-slot-head">시간대</div><div class="dtp-slots" id=\"'+K+'dtpSlots\"></div>'+
 '<p class="dtp-note">정확한 시공 시간은 상담 전화에서 최종 확정됩니다.</p></div></div>'+
-'<div class="dtp-foot"><div class="dtp-picked" id="dtpPicked"><span>날짜를 먼저 선택해 주세요</span></div>'+
-'<button type="button" class="dtp-done" id="dtpDone" disabled>선택 완료</button></div>';
+'<div class="dtp-foot"><div class="dtp-picked" id=\"'+K+'dtpPicked\"><span>날짜를 먼저 선택해 주세요</span></div>'+
+'<button type="button" class="dtp-done" id=\"'+K+'dtpDone\" disabled>선택 완료</button></div>';
 
 var HOLIDAYS = {
 '2026-01-01':'신정','2026-02-16':'설 연휴','2026-02-17':'설날','2026-02-18':'설 연휴',
@@ -82,11 +85,11 @@ var today = new Date(); today.setHours(0,0,0,0);
 var LAST_HOUR = 20; /* 마지막 시간대. 이 시각이 지나면 오늘은 달력에서 지난 날 취급 */
 var view = new Date(today.getFullYear(), today.getMonth(), 1);
 var selDate = null, selTime = null;
-var titleEl = document.getElementById('dtpTitle');
-var gridEl = document.getElementById('dtpGrid');
-var slotsEl = document.getElementById('dtpSlots');
-var pickedEl = document.getElementById('dtpPicked');
-var doneEl = document.getElementById('dtpDone');
+var titleEl = document.getElementById(K+'dtpTitle');
+var gridEl = document.getElementById(K+'dtpGrid');
+var slotsEl = document.getElementById(K+'dtpSlots');
+var pickedEl = document.getElementById(K+'dtpPicked');
+var doneEl = document.getElementById(K+'dtpDone');
 
 function pad(n){ return String(n).length<2 ? '0'+n : String(n); }
 function iso(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
@@ -94,7 +97,7 @@ function human(d){ return (d.getMonth()+1)+'월 '+d.getDate()+'일 ('+DOW[d.getD
 
 function renderCal(){
   titleEl.textContent = view.getFullYear()+'년 '+(view.getMonth()+1)+'월';
-  document.getElementById('dtpPrev').disabled =
+  document.getElementById(K+'dtpPrev').disabled =
     (view.getFullYear()===today.getFullYear() && view.getMonth()===today.getMonth());
   var h='';
   for (var i=0;i<7;i++) h += '<div class="dtp-dow'+(i===0?' sun':'')+'">'+DOW[i]+'</div>';
@@ -148,8 +151,8 @@ slotsEl.addEventListener('click', function(e){
   selTime = b.getAttribute('data-t');
   renderSlots(); refreshFoot();
 });
-document.getElementById('dtpPrev').addEventListener('click', function(){ view.setMonth(view.getMonth()-1); renderCal(); });
-document.getElementById('dtpNext').addEventListener('click', function(){ view.setMonth(view.getMonth()+1); renderCal(); });
+document.getElementById(K+'dtpPrev').addEventListener('click', function(){ view.setMonth(view.getMonth()-1); renderCal(); });
+document.getElementById(K+'dtpNext').addEventListener('click', function(){ view.setMonth(view.getMonth()+1); renderCal(); });
 doneEl.addEventListener('click', function(){
   field.value = iso(selDate)+' ('+DOW[selDate.getDay()]+') '+selTime;
   host.classList.remove('open');
@@ -169,4 +172,6 @@ document.addEventListener('click', function(e){
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') host.classList.remove('open'); });
 
 renderCal(); renderSlots(); refreshFoot();
-})();
+}
+window.initDatePicker = initDatePicker;
+initDatePicker();

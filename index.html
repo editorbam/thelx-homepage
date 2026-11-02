@@ -5836,21 +5836,15 @@ window.addEventListener('pageshow', function (e) {
   .sn-cert .row:first-of-type{border-top:0} .sn-cert .row b{font-weight:400}
   .sn-rev .no{margin-top:clamp(7px,3.4cqw,18px);font-size:clamp(9px,2.9cqw,14px);font-weight:300} .sn-rev .no b{font-weight:500}
   .sn-cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3}
+  /* 2026-11-02 이벤트 카드 제거 → 테슬라+안심번호 두 장 */
+  #evpCard2{border-left:0}
+  .evp-card{width:min(240px,calc((100vw - 56px)/2))}
+  @media (max-width:1000px) and (min-width:701px){ .evp-card{width:min(240px,calc((100vw - 56px)/2))} }
+  @media (max-width:700px){ .evp{width:min(92vw,480px)} .evp-card{width:50%} #evpCard2{border-left:0} .evp-tag{font-size:7px} }
 </style>
-<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="10월 할인 이벤트 · 테슬라 오너 · 안심번호 안내" hidden>
+<div class="evp-back" id="evpBack" role="dialog" aria-modal="true" aria-label="테슬라 오너 · 안심번호 안내" hidden>
   <div class="evp">
    <div class="evp-cards">
-    <a class="evp-card on" id="evpCard" href="event.html" aria-label="10월 할인 이벤트 페이지로 이동">
-      <img class="sl-video" src="popup-hero-4x5.jpg" alt="" aria-hidden="true">
-      <div class="sl-shade"></div>
-      <canvas class="sl-leaves" aria-hidden="true"></canvas>
-      <img class="sl-logo" src="logo-w.png" alt="THE LX">
-      <div class="sl-date">10.1 — 10.31</div>
-      <div class="sl-txt sl-after sl-top"><div class="sl-fb"><img src="fb-2025.png" alt="대한민국 퍼스트브랜드 대상 2025"><img src="fb-2026.png" alt="대한민국 퍼스트브랜드 대상 2026"><p>2년 연속 퍼스트브랜드 대상,<br>THE LX가 작심하고 준비한 10월</p></div><h2>선 넘은 할인.</h2>
-        <p class="sl-rate" aria-label="최대 50%"><span class="mx" aria-hidden="true">최대</span><b aria-hidden="true"><i class="n">50</i>%</b></p></div>
-      <div class="sl-txt sl-after sl-bot"><div class="sl-pr"><span>Quantum<b>70</b><small>만원</small></span><span>Xenith IR<b>90</b><small>만원</small></span></div></div>
-      <div class="sl-foot"><span>승용·SUV 기준 · 전국 인증 시공점</span><span class="cta">시공 가격 확인 →</span></div>
-    </a>
     <a class="evp-card" id="evpCard2" href="tesla.html" aria-label="테슬라 오너 페이지로 이동">
       <div class="evp-tag">FOR TESLA OWNERS</div>
       <div class="tp-stage" id="tpStage" aria-hidden="true">
@@ -5902,12 +5896,11 @@ window.addEventListener('pageshow', function (e) {
     var d=new Date(), now=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); /* 한국 현지 날짜 — toISOString()은 UTC라 09시까지 전날로 셈 */
     if(cfg.start&&now<cfg.start) return; if(cfg.end&&now>cfg.end) return;
     if(seen(cfg.id)) return;
-    document.getElementById('evpCard').href=cfg.link||'event.html';
     document.getElementById('evpCard2').href=cfg.link2||'tesla.html';
     document.getElementById('evpCard3').href=cfg.link3||'safenumber.html';
-    [document.getElementById('evpCard'),document.getElementById('evpCard2'),document.getElementById('evpCard3')].forEach(function(c){ c.addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} }); });
+    [document.getElementById('evpCard2'),document.getElementById('evpCard3')].forEach(function(c){ c.addEventListener('click',function(){ try{ sessionStorage.setItem('evp:'+cfg.id+':closed','1'); }catch(e){} }); });
     back.hidden=false; setTimeout(function(){ back.classList.add('on'); }, 30);
-    start(); startTesla(); startSafe();
+    startTesla(); startSafe();
     function close(){ if(stopAnim) stopAnim(); if(stopTesla) stopTesla(); if(stopSafe) stopSafe(); back.classList.remove('on');
       setTimeout(function(){ back.hidden=true; if(back.parentNode) back.parentNode.removeChild(back); },380);
       document.removeEventListener('keydown',onKey);

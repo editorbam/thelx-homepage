@@ -83,6 +83,8 @@ src="https://www.facebook.com/tr?id=2169550046976285&ev=PageView&noscript=1"/></
   font-display: swap;
   src: url('noto-sans-kr-subset.woff2?v=4') format('woff2');
 }
+/* LX SHIELD 표의 '보닛' — 공용 서브셋에 없는 1자 */
+@font-face { font-family:'Noto Sans KR'; font-style:normal; font-weight:100 900; font-display:swap; src:url('faq-extra.woff2?v=2') format('woff2'); unicode-range:U+B2DB; }
 </style>
 
 <!-- JSON-LD: Organization -->
@@ -1924,6 +1926,19 @@ body.pd-open { overflow: hidden; }
 .pl-panel.on .pl-fold { transform:none; opacity:1; }
 .pl-scroll { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding:1.9rem 0; }
 .pl-scroll img { display:block; width:100%; max-width:2560px; margin:0 auto; height:auto; } /* 원본이 2560이라 그 위로는 안 늘림 */
+/* LX SHIELD 표 (2026-11-02) — 위 PRICE LIST 그림과 같은 회색·검정 칸. 그림과 함께 좌우로 밀리도록 .pl-scroll 안에 둔다 */
+.pl-ppf{display:grid;grid-template-columns:150px 1fr 1fr;max-width:2560px;width:calc(100% - 3.5vw);margin:1.9rem auto 0;color:#fff;font-size:clamp(11px,.92vw,17px)}
+.pl-ppf-name{background:#666;border:1px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.5em;font-weight:700;text-align:center;line-height:1.2}
+.pl-ppf-name small{font-size:.58em;font-weight:500;margin-top:.5em}
+.pl-ppf table{border-collapse:collapse;width:100%;height:100%;font-variant-numeric:tabular-nums}
+.pl-ppf th,.pl-ppf td{border:1px solid #fff;padding:.4em .6em;text-align:center;font-weight:600;background:#000}
+.pl-ppf thead th{background:#666;font-weight:700}
+.pl-ppf th.g{background:#666;width:15%;font-weight:700}
+.pl-ppf th.g small{display:block;font-size:.76em;font-weight:500;margin-top:.2em}
+.pl-ppf th.l{border-bottom-color:#bbb;background:#fff;color:#000;text-align:left;font-weight:700;width:46%}
+.pl-ppf th.l small{display:block;font-weight:400;font-size:.76em;line-height:1.35;color:#333}
+.pl-ppf td{width:11%}
+@media(max-width:1023px){.pl-ppf{width:1100px;font-size:11px;margin-top:1.4rem}}
 .pl-panel-foot {
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
   padding:.85rem 1.1rem; border-top:.5px solid rgba(255,255,255,.14);
@@ -2786,6 +2801,8 @@ nav.over-pl { background:var(--black); border-bottom:.5px solid rgba(255,255,255
             <img src="price-list-table.png" id="plImg" width="2560" height="1149" loading="lazy" decoding="async"
                  alt="THE LX 솔라가드 프리미엄 2026 공식 가격표 — LX·Vogue·Xenith IR·Quantum·Titanium·G-Line·S-Line 제품별 VLT, TSER, 제조사 워런티와 승용·SUV 전체 시공 및 부분 시공 가격(단위 만원)">
           </picture>
+          <!-- LX SHIELD(PPF) 표 2026-11-02 — 위 그림과 같은 칸 문법, 금액=구 홈페이지 img/product_02_9_5.jpg 그대로 -->
+          <div class="pl-ppf"><div class="pl-ppf-name">LX SHIELD<small>PPF · 5년 보증</small></div><table><thead><tr><th colspan="2">구분</th><th>승용</th><th>SUV</th><th>RV</th></tr></thead><tbody><tr><th class="g" rowspan="3">패키지</th><th class="l">FULL PACKAGE<small>전체 시공</small></th><td>450</td><td>495</td><td>540</td></tr><tr><th class="l">DOOR SET<small>B필러, 도어, 사이드미러, 사이드 스커트, 트렁크, 주유구</small></th><td>220</td><td>242</td><td>264</td></tr><tr><th class="l">FRONT SET<small>보닛, 프론트 범퍼, 펜더, 사이드미러, 라이트, A필러, 루프 하이그로시</small></th><td>300</td><td>330</td><td>360</td></tr><tr><th class="g" rowspan="4">전체 + 썬팅<small>선루프 별도</small></th><th class="l">LX</th><td>538</td><td>578</td><td>619</td></tr><tr><th class="l">Vogue</th><td>503</td><td>543</td><td>584</td></tr><tr><th class="l">Xenith IR</th><td>489</td><td>529</td><td>570</td></tr><tr><th class="l">Quantum</th><td>468</td><td>508</td><td>549</td></tr></tbody></table><table><thead><tr><th colspan="2">구분</th><th>승용</th><th>SUV</th><th>RV</th></tr></thead><tbody><tr><th class="g" rowspan="11">파츠<small>패널당</small></th><th class="l">A / B / C 필러</th><td>20</td><td>20</td><td>20</td></tr><tr><th class="l">보닛</th><td>70</td><td>77</td><td>84</td></tr><tr><th class="l">트렁크</th><td>50</td><td>55</td><td>60</td></tr><tr><th class="l">도어</th><td>40</td><td>44</td><td>48</td></tr><tr><th class="l">프론트 / 리어 범퍼</th><td>130</td><td>143</td><td>156</td></tr><tr><th class="l">프론트 펜더</th><td>50</td><td>55</td><td>60</td></tr><tr><th class="l">리어 펜더</th><td>140</td><td>154</td><td>168</td></tr><tr><th class="l">사이드미러</th><td>20</td><td>20</td><td>20</td></tr><tr><th class="l">사이드 스커트</th><td>40</td><td>44</td><td>48</td></tr><tr><th class="l">루프</th><td>80</td><td>88</td><td>96</td></tr><tr><th class="l">헤드라이트</th><td>30</td><td>33</td><td>36</td></tr></tbody></table></div>
         </div>
         <div class="pl-panel-foot">
           <span>단위 : 만 원(₩) · 권장 소비자가<b class="pl-swipe"> · 좌우로 밀어서 보세요</b></span>

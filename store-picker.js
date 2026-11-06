@@ -1,6 +1,7 @@
 /* THE LX 예약 폼 — 지역·시공점 선택 (2026-09-28, car-picker 문법 상속)
    데이터: stores-list.js(window.STORE_LIST) — stores.html STORE_DATA에서 build-store-schema.py가 생성
    동작: 지역 칸 클릭=시·도 패널, 선택 시 시공점 패널로. 시공점 칸 타이핑=매장명·주소 즉시 검색(예: 강남, 논현). 목록에 없는 값도 그대로 접수. */
+/* v3(2026-11-06): 관심 제품이 LX·Vogue면 THE LX 시공점만 보여줌(두 제품은 THE LX 지점 전용). 이미 고른 솔라가드 프리미엄 시공점은 비우고 다시 고르게 함 */
 /* v2(2026-10-14): 여러 폼에서 쓰도록 인스턴스화. 기본 ID(bRegion/bStore/spRegionPanel/spStorePanel)는 자동 실행, 추가 폼은 window.initStorePicker({region,store,regionPanel,storePanel,zone}) */
 function initStorePicker(ids){
 ids = ids || {};
@@ -10,6 +11,11 @@ var store = document.getElementById(ids.store || 'bStore');
 var regionPanel = document.getElementById(ids.regionPanel || 'spRegionPanel');
 var storePanel = document.getElementById(ids.storePanel || 'spStorePanel');
 var ZONE = ids.zone || '.sp-zone';
+var product = document.getElementById(ids.product || 'bProduct');
+function isLX(s){ return s.n.toUpperCase().indexOf('LX') !== -1; }
+function lxOnly(){ return !!product && /^(LX|Vogue)$/.test(product.value); }
+function base(){ return lxOnly() ? LIST.filter(isLX) : LIST; }
+var LXNOTE = 'LX·Vogue는 THE LX 시공점에서만 시공합니다';
 if (!region || !store || !regionPanel || !storePanel || !LIST.length) return;
 var MOBILE = matchMedia('(max-width:760px)').matches;
 if (MOBILE) { region.setAttribute('inputmode','none'); store.setAttribute('inputmode','none'); } /* 10/14 폰: 키보드·자동완성 막대 없이 목록만 */
@@ -22,7 +28,8 @@ var REGIONS = [
   ['제주도','제주'],['세종특별자치시','세종']
 ];
 var COUNT = {};
-LIST.forEach(function(s){ COUNT[s.r] = (COUNT[s.r]||0) + 1; });
+function recount(){ COUNT = {}; base().forEach(function(s){ COUNT[s.r] = (COUNT[s.r]||0) + 1; }); }
+recount();
 function fullOf(short){ for (var i=0;i<REGIONS.length;i++) if (REGIONS[i][1] === short) return REGIONS[i][0]; return null; }
 
 /* car-picker의 .cp-panel·.cp-grid 스타일을 그대로 씀. 시공점 줄에 주소 한 줄만 추가 */
@@ -56,7 +63,9 @@ function mark(label, q){ return q ? label.replace(new RegExp('('+escRe(q)+')','i
 
 /* ── 지역 패널 ── */
 function showRegions(){
+  recount();
   var h = '<div class="cp-grid">';
+  if (lxOnly()) h += '<div class="cp-grp">'+LXNOTE+'</div>';
   REGIONS.forEach(function(r){
     if (!COUNT[r[0]]) return;
     h += '<button type="button" data-region="'+r[1]+'">'+r[1]+'<span class="sp-c">'+COUNT[r[0]]+'</span></button>';
@@ -90,6 +99,7 @@ function buildSheet(){
     store.value = b.getAttribute('data-store');
     var r = b.getAttribute('data-r'); if (r) REGIONS.forEach(function(x){ if (x[0] === r) region.value = x[1]; });
     closeSheet();
+    if (note) note.style.display = 'none';
   });
   function fit(){ var vv=window.visualViewport; sheet.style.height=(vv?vv.height:window.innerHeight)+'px'; sheet.style.top=(vv?vv.offsetTop:0)+'px'; }
   if (window.visualViewport) { visualViewport.addEventListener('resize', fit); visualViewport.addEventListener('scroll', fit); }
@@ -106,16 +116,19 @@ function closeSheet(){ if (!sheet) return; sheet.classList.remove('open'); sheet
 function renderList(q, box){
   q = (q||'').trim().toLowerCase();
   var full = fullOf(region.value.trim());
-  var pool = LIST.filter(function(s){ return !full || s.r === full; });
+  var pool = base().filter(function(s){ return !full || s.r === full; });
   var hits = pool.filter(function(s){ return !q || s.n.toLowerCase().indexOf(q) !== -1 || s.a.toLowerCase().indexOf(q) !== -1; });
   var h = '';
   if (hits.length) {
     h = '<div class="cp-grid sp-grid">';
-    if (full) h += '<div class="cp-grp">'+region.value+' · '+hits.length+'곳</div>';
+    if (full) h += '<div class="cp-grp">'+region.value+' · '+(lxOnly()?'THE LX ':'')+hits.length+'곳</div>';
+    if (lxOnly()) h += '<div class="cp-grp">'+LXNOTE+'</div>';
     hits.forEach(function(s){ h += '<button type="button" data-store="'+s.n+'" data-r="'+s.r+'"><span>'+mark(s.n,q)+'</span><small>'+mark(s.a,q)+'</small></button>'; });
     h += '</div>';
   } else {
-    h = '<div class="cp-empty">찾는 시공점이 없습니다.<br>지금 쓰신 이름 그대로 접수됩니다 — 연락드려 확인하겠습니다.</div>';
+    h = lxOnly() && full && !q
+      ? '<div class="cp-empty">'+region.value+'에는 THE LX 시공점이 없습니다.<br>'+LXNOTE+' — 가까운 지역을 골라 주세요.</div>'
+      : '<div class="cp-empty">찾는 시공점이 없습니다.<br>지금 쓰신 이름 그대로 접수됩니다 — 연락드려 확인하겠습니다.</div>';
   }
   box.innerHTML = h;
 }
@@ -123,20 +136,25 @@ function showStores(q){
   if (MOBILE) { openSheet(); return; }
   q = (q||'').trim().toLowerCase();
   var full = fullOf(region.value.trim());
-  var pool = LIST.filter(function(s){ return !full || s.r === full; });
+  var pool = base().filter(function(s){ return !full || s.r === full; });
   var hits = pool.filter(function(s){ return !q || s.n.toLowerCase().indexOf(q) !== -1 || s.a.toLowerCase().indexOf(q) !== -1; });
   var h = '';
-  if (!full && !q) {
+  if (!full && !q && lxOnly()) {
+    h = '<div class="cp-hint">'+LXNOTE+'. 지역을 고르거나 동네 이름으로 검색하세요.</div>';
+  } else if (!full && !q) {
     h = '<div class="cp-hint">지역을 먼저 고르면 좁혀서 보여드립니다. 동네 이름으로 바로 검색하셔도 됩니다 (예: 강남, 논현).</div>';
   } else if (hits.length) {
     h = '<div class="cp-grid sp-grid">';
-    if (full) h += '<div class="cp-grp">'+region.value+' · '+hits.length+'곳</div>';
+    if (full) h += '<div class="cp-grp">'+region.value+' · '+(lxOnly()?'THE LX ':'')+hits.length+'곳</div>';
+    if (lxOnly()) h += '<div class="cp-grp">'+LXNOTE+'</div>';
     hits.slice(0, 80).forEach(function(s){
       h += '<button type="button" data-store="'+s.n+'" data-r="'+s.r+'"><span>'+mark(s.n,q)+'</span><small>'+mark(s.a,q)+'</small></button>';
     });
     h += '</div>';
   } else {
-    h = '<div class="cp-empty">찾는 시공점이 없습니다.<br>지금 쓰신 이름 그대로 접수됩니다 — 연락드려 확인하겠습니다.</div>';
+    h = lxOnly() && full && !q
+      ? '<div class="cp-empty">'+region.value+'에는 THE LX 시공점이 없습니다.<br>'+LXNOTE+' — 가까운 지역을 골라 주세요.</div>'
+      : '<div class="cp-empty">찾는 시공점이 없습니다.<br>지금 쓰신 이름 그대로 접수됩니다 — 연락드려 확인하겠습니다.</div>';
   }
   storePanel.innerHTML = h; storePanel.classList.add('open'); regionPanel.classList.remove('open'); closeOthers();
 }
@@ -149,7 +167,29 @@ storePanel.addEventListener('click', function(e){
   var r = b.getAttribute('data-r');
   if (r) REGIONS.forEach(function(x){ if (x[0] === r) region.value = x[1]; });
   closeAll();
+  if (note) note.style.display = 'none';
 });
+
+/* 관심 제품 변경 — LX·Vogue인데 솔라가드 프리미엄 시공점이 골라져 있으면 비우고 안내 */
+var note = document.createElement('div');
+note.className = 'sp-note';
+note.style.cssText = 'display:none;font-size:12px;line-height:1.5;color:#c0392b;margin-top:6px;';
+store.parentNode.appendChild(note);
+function syncProduct(){
+  var cur = store.value.trim();
+  var known = null; LIST.forEach(function(s){ if (s.n === cur) known = s; });
+  if (lxOnly() && known && !isLX(known)) {
+    store.value = '';
+    note.textContent = LXNOTE + '. 시공점을 다시 선택해 주세요.';
+    note.style.display = 'block';
+  } else if (!lxOnly() || !cur || (known && isLX(known))) {
+    note.style.display = 'none';
+  }
+  store.placeholder = lxOnly() ? 'THE LX 시공점 선택' : '선택 또는 입력';
+}
+if (product) product.addEventListener('change', syncProduct);
+store.addEventListener('change', syncProduct); /* 이름을 직접 쳐 넣은 경우도 확인 */
+store.addEventListener('input', function(){ if (store.value) note.style.display = 'none'; });
 }
 window.initStorePicker = initStorePicker;
 initStorePicker();

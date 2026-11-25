@@ -11,9 +11,8 @@ const here = path => new URL(path, import.meta.url).href; // 이 파일 옆의 �
 const ZONES = { windshield: '전면 유리', front: '1열 좌우', rear: '2열 좌우', back: '후면 유리', roof: '글라스 루프' };
 const SHORT = { windshield: '전면', front: '1열', rear: '2열', back: '후면', roof: '루프' };
 // 홈페이지 테슬라 페이지(tesla.html '테슬라 오너가 사랑하는 조합')의 조합 두 가지. 필름 구성과 문구는 그 페이지 그대로. 농도는 그 페이지에 없어 임의로 넣은 값(전면 30 안팎·나머지 15)
-const COMBOS = [
-  { name: '커스텀 1', text: '전면 LX · 측후면 LX · 루프 제니스IR', zones: { windshield: ['lx', '25'], front: ['lx', '15'], rear: ['lx', '15'], back: ['lx', '15'], roof: ['xenith', '15'] } },
-  { name: '커스텀 2', text: '전면 제니스IR · 측후면 제니스IR · 루프 제니스IR', zones: { windshield: ['xenith', '30'], front: ['xenith', '15'], rear: ['xenith', '15'], back: ['xenith', '15'], roof: ['xenith', '15'] } },
+const COMBOS = [ // 2026-11-25 사용자: 조합은 'LX + 루프 제니스' 하나만, 패널 아래쪽에. 문구는 테슬라 페이지 조합 1의 것 그대로
+  { name: '전면 LX · 측후면 LX · 루프 제니스IR', text: '전면과 측후면으로 들어오는 복사열을 반사하고, 루프는 세라믹으로.', zones: { windshield: ['lx', '25'], front: ['lx', '15'], rear: ['lx', '15'], back: ['lx', '15'], roof: ['xenith', '15'] } },
 ];
 const PAINTS_DEFAULT = [
   ['펄 화이트 멀티코트', '#e9eaee'], ['스텔스 그레이', '#44474c'], ['퀵실버', '#a9adb1'],

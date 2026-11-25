@@ -9,7 +9,7 @@ import {
 	TriangleStripDrawMode,
 	TrianglesDrawMode,
 	Vector3,
-} from 'three';
+} from '../vendor/three.module.js'; // 주소 지도(importmap)를 모르는 옛 브라우저에서도 열리게 파일 주소로 직접 가리킨다
 
 function computeMikkTSpaceTangents( geometry, MikkTSpace, negateSign = true ) {
 

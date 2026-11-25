@@ -64,7 +64,7 @@ import {
 	VectorKeyframeTrack,
 	SRGBColorSpace,
 	InstancedBufferAttribute
-} from 'three';
+} from './three.module.js'; // 주소 지도(importmap)를 모르는 옛 브라우저에서도 열리게 파일 주소로 직접 가리킨다
 import { toTrianglesDrawMode } from '../utils/BufferGeometryUtils.js';
 
 class GLTFLoader extends Loader {

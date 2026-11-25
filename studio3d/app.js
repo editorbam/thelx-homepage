@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './vendor/three.module.js'; // 'three' 별칭(importmap) 대신 파일 주소로: 옛 Safari(16.4 미만)는 별칭을 몰라 통째로 안 열린다
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { DRACOLoader } from './vendor/DRACOLoader.js';
@@ -116,7 +116,7 @@ function renderPanel() {
   }));
   $('combos').replaceChildren(...COMBOS.map(c => {
     const b = document.createElement('button'); b.innerHTML = `<b>${c.name}</b><span>${c.text}</span>`;
-    b.setAttribute('aria-pressed', zs.every(z => state.zf[z] === c.zones[z][0] && state.zones[z]));
+    b.setAttribute('aria-pressed', zs.every(z => state.zones[z]?.[0] === c.zones[z][0] && state.zones[z][1] === c.zones[z][1])); // 필름과 농도가 조합 그대로일 때만 고른 표시
     b.onclick = () => { for (const z of zs) { state.zf[z] = c.zones[z][0]; state.zones[z] = [...c.zones[z]]; } update(); };
     return b;
   }));
@@ -158,7 +158,8 @@ function update(keep) { if (!keep && state.compare) { state.compare = false; $('
 
 $('reset').onclick = () => { for (const z of Object.keys(ZONES)) state.zones[z] = null; update(); };
 $('compare').onclick = () => { state.compare = !state.compare; $('compare').setAttribute('aria-pressed', state.compare); $('badge').hidden = !state.compare; applyGlass(); };
-$('spin').onclick = () => { controls.autoRotate = !controls.autoRotate; $('spin').setAttribute('aria-pressed', controls.autoRotate); };
+// 자동 회전과 각도 버튼은 둘 다 카메라를 움직여 서로 끌어당긴다 → 하나를 켜면 다른 하나를 끈다
+$('spin').onclick = () => { controls.autoRotate = !controls.autoRotate; $('spin').setAttribute('aria-pressed', controls.autoRotate); if (controls.autoRotate) { camGoal = null; for (const b of $('views').children) b.setAttribute('aria-pressed', false); } };
 
 // 화면이 세로로 좁을수록 카메라를 뒤로 물려 차 전체가 들어오게 한다
 const fit = () => { const el = $('viewer'); return Math.min(1.9, Math.max(el.clientWidth < 600 ? .8 : 1, 1.3 / (el.clientWidth / el.clientHeight))); }; // 좁은 화면(휴대폰)은 차 화면이 낮고 넓어서 더 가까이 당겨 차를 크게
@@ -166,6 +167,7 @@ let lastView = '전측면';
 
 function setView(name) {
   lastView = name;
+  if (controls?.autoRotate) { controls.autoRotate = false; $('spin').setAttribute('aria-pressed', false); }
   camGoal = new THREE.Vector3(...VIEWS[name]).multiplyScalar(fit());
   for (const b of $('views').children) b.setAttribute('aria-pressed', b.textContent === name);
 }
@@ -182,6 +184,7 @@ function init() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(32, 1, .1, 100); camera.position.set(...VIEWS['전측면']).multiplyScalar(fit());
   controls = new OrbitControls(camera, renderer.domElement);
+  renderer.domElement.style.touchAction = ''; // OrbitControls가 캔버스에 박아 둔 '세로 스크롤 금지'를 걷어 낸다 → embed.css 값(휴대폰은 세로로 밀면 페이지가 넘어감)이 먹게
   controls.target.set(0, .62, 0); controls.enableDamping = true; controls.enablePan = false;
   controls.minDistance = 3.2; controls.maxDistance = 16; controls.maxPolarAngle = Math.PI * .495; controls.autoRotateSpeed = .8;
   // 직접 돌리면 각도 버튼 표시를 지운다 (유리를 누르기만 한 경우는 그대로 둔다)
@@ -208,7 +211,8 @@ function init() {
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: .3 }));
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
 
-  const resize = () => { const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+  // 창 크기가 바뀌면 화면비에 맞춰 거리도 다시 잡는다(각도 버튼이 켜져 있을 때만: 직접 돌려 둔 각도는 건드리지 않는다)
+  const resize = () => { const w = el.clientWidth, h = el.clientHeight; if (!w || !h) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); if ([...$('views').children].some(b => b.getAttribute('aria-pressed') === 'true')) setView(lastView); };
   new ResizeObserver(resize).observe(el); resize();
   // 휴대폰을 돌리면 그 화면에 맞게 다시 잡는다
   matchMedia('(orientation: portrait)').addEventListener('change', () => setTimeout(() => setView(lastView), 200));
@@ -220,9 +224,10 @@ function init() {
 
   // 유리를 눌러 부위 선택 (끌기와 구분)
   const ray = new THREE.Raycaster(); let down = null;
-  renderer.domElement.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointerdown', e => { down = e.isPrimary ? [e.clientX, e.clientY] : null; }); // 두 번째 손가락이 닿으면(확대) 누르기로 치지 않는다
   renderer.domElement.addEventListener('pointerup', e => {
-    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > (touch ? 12 : 5)) return;
+    const d = down; down = null;
+    if (!d || Math.hypot(e.clientX - d[0], e.clientY - d[1]) > (touch ? 12 : 5)) return;
     const r = renderer.domElement.getBoundingClientRect();
     ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), camera);
     const hit = ray.intersectObjects(scene.children, true).find(h => h.object.isMesh && h.object.visible && !h.object.material.isShadowMaterial);
@@ -231,10 +236,13 @@ function init() {
   });
 
   if (new URLSearchParams(location.search).has('debug')) window.__s = { scene, camera, controls, THREE }; // 부품 찾기용
-  renderer.setAnimationLoop(() => {
+  const tick = () => {
     if (camGoal) { camera.position.lerp(camGoal, .09); if (camera.position.distanceTo(camGoal) < .02) camGoal = null; }
     controls.update(); renderer.render(scene, camera);
-  });
+  };
+  renderer.setAnimationLoop(tick);
+  // 차 화면이 화면 밖에 있을 땐 그리기를 멈춘다(페이지 나머지를 읽는 동안 배터리·발열을 쓰지 않게)
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => renderer.setAnimationLoop(es[es.length - 1].isIntersecting ? tick : null)).observe(el);
 }
 
 async function loadCar() {
@@ -244,7 +252,7 @@ async function loadCar() {
   const gltf = await new GLTFLoader().setDRACOLoader(draco).loadAsync(here('./models/' + CAR.file), e => {
     if (e.total && seq === loadSeq) $('loading').textContent = `차량을 불러오는 중 ${Math.round(e.loaded / e.total * 100)}%`;
   });
-  if (seq !== loadSeq) return; // 불러오는 사이에 다른 차로 바꿨으면 버린다
+  if (seq !== loadSeq) { dispose(gltf.scene); return; } // 불러오는 사이에 다른 차로 바꿨으면 버린다
   const car = carRoot = gltf.scene;
   // 실제 전장에 맞춰 크기를 잡고 바닥 가운데에 놓는다
   car.rotation.y += CAR.rotate; car.updateMatrixWorld(true);
@@ -282,11 +290,19 @@ async function loadCar() {
 }
 
 $('views').replaceChildren(...Object.keys(VIEWS).map(name => { const b = document.createElement('button'); b.textContent = name; b.onclick = () => setView(name); return b; }));
+// 치운 차가 쓰던 그래픽 메모리(형상·재질·그림)를 돌려준다. 안 하면 차를 바꿀 때마다 쌓인다. 하늘 반사 그림(skyEnv)은 계속 쓰므로 남긴다
+function dispose(root) {
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    o.geometry.dispose();
+    for (const m of [].concat(o.material)) { for (const t of Object.values(m)) if (t?.isTexture && t !== skyEnv) t.dispose(); m.dispose(); }
+  });
+}
 // 차를 바꾼다: 페이지를 다시 열지 않고 그 자리에서. 필름·농도는 그대로 두고 차 색만 그 차의 기본으로
 function selectCar(key) {
   carKey = key; CAR = CARS[key]; PAINTS = CAR.paints ?? PAINTS_DEFAULT; state.paint = CAR.paintDefault ?? 0; loadSeq++;
-  if (carRoot) { scene.remove(carRoot); carRoot.traverse(o => o.isMesh && o.geometry.dispose()); carRoot = null; }
-  for (const e of extras.splice(0)) scene.remove(e);
+  if (carRoot) { scene.remove(carRoot); dispose(carRoot); carRoot = null; }
+  for (const e of extras.splice(0)) { scene.remove(e); dispose(e); }
   for (const z of Object.keys(glass)) delete glass[z]; paintMaterial = null; plates.length = 0;
   if ($('title')) { $('title').textContent = CAR.title; $('year').textContent = CAR.year; document.title = `THE LX · ${CAR.title} 3D 필름 스튜디오`; }
   $('credit').innerHTML = CAR.credit;
@@ -294,9 +310,10 @@ function selectCar(key) {
   if (ROOT?.dataset.url) history.replaceState(null, '', `?car=${key}`);
   $('loading').textContent = '차량을 불러오는 중'; $('loading').hidden = false;
   renderPanel();
-  loadCar().catch(err => { $('loading').textContent = '차량을 불러오지 못했습니다. 새로고침해 주세요.'; console.error(err); });
+  const seq = loadSeq;
+  loadCar().catch(err => { if (seq !== loadSeq) return; $('loading').textContent = '차량을 불러오지 못했습니다. 새로고침해 주세요.'; console.error(err); });
 }
 $('cars').replaceChildren(...Object.entries(CARS).map(([key, c]) => { const b = document.createElement('button'); b.textContent = c.short; b.dataset.car = key; b.onclick = () => key !== carKey && selectCar(key); return b; }));
-init();
-setView('전측면');
-selectCar(carKey);
+// 3D를 못 여는 브라우저(WebGL 꺼짐 등)에선 '불러오는 중'에 멈춰 있지 않게 알린다
+try { init(); setView('전측면'); selectCar(carKey); }
+catch (err) { $('loading').textContent = '이 브라우저에서는 3D 화면을 표시할 수 없습니다.'; console.error(err); }

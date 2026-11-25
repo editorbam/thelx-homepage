@@ -9,7 +9,7 @@ import {
 	Plane,
 	Ray,
 	MathUtils
-} from 'three';
+} from './three.module.js'; // 주소 지도(importmap)를 모르는 옛 브라우저에서도 열리게 파일 주소로 직접 가리킨다
 
 // OrbitControls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).

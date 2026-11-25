@@ -1,0 +1,23 @@
+2024 Tesla Model 3 - 3D model
+Author: RBLXSupercars (https://sketchfab.com/RBLXSupercars)
+Source: https://sketchfab.com/3d-models/2024-tesla-model-3-fd22be415215453693d67e33aa7812d0
+License: Creative Commons Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/)
+Modified copy used here: models/model3-film-zones.draco.glb (geometry Draco-compressed from model3-film-zones.glb), taken from https://lx-solargard-3d.netlify.app
+(glass separated into windshield / front / rear / back / roof; upholstery separated). Still CC BY 4.0.
+Further changes at runtime: scale and position normalised, paint and glass materials replaced, lighting added.
+Tesla and vehicle names are trademarks of Tesla, Inc. No affiliation or endorsement.
+
+Three.js r170 - MIT License (vendor/LICENSE)
+
+Film data: https://isolargard.com/pd-data.js?v=37 (checked 2026-11-20). Published 3 mm clear-glass values.
+
+Tesla Model Y 2025 - 3D model
+Author: joyemeng (https://sketchfab.com/joyemeng)
+Source: https://sketchfab.com/3d-models/tesla-model-y-2025-a66f7673a09d4fcb84d37111433f05a9
+License: Creative Commons Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/)
+Browser adaptation: AIWrapLab (https://aiwraplab.com/model-credits)
+Modified copy used here: models/modely-juniper-film.draco.glb (geometry Draco-compressed from modely-juniper-film.glb), taken from https://lx-solargard-3d.netlify.app (three parts joined)
+(window geometry divided into five film zones). Still CC BY 4.0.
+Further changes at runtime: scale and position normalised, paint and glass materials replaced, lighting added.
+
+Draco decoder (vendor/draco) - Apache License 2.0, Google. https://github.com/google/draco

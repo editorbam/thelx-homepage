@@ -939,6 +939,31 @@ img,svg{display:block;max-width:100%} a{color:inherit}
   </div>
 </section>
 
+<!-- 3D 필름 스튜디오 (2026-11-25): 파장별 투과율 아래. 화면 가까이 올 때 studio3d/app.js를 불러온다 -->
+<link rel="stylesheet" href="studio3d/embed.css?v=1125e">
+<section class="lx3d-sec" id="studio" aria-label="3D 필름 스튜디오 — 내 차에 입혀 보기">
+    <div class="lx3d" id="lx3d-root" data-car="my" data-embed="1">
+      <div class="stage">
+        <div id="lx3d-viewer"></div>
+        <div class="head"><p class="k">3D 필름 스튜디오</p><h2>내 차에 입혀 보기</h2><div class="cars" id="lx3d-cars" role="group" aria-label="차종"></div></div>
+        <div class="badge" id="lx3d-badge" hidden>필름 없는 상태</div>
+        <div class="tools"><button type="button" id="lx3d-compare" aria-pressed="false">필름 없이 보기</button><button type="button" id="lx3d-spin" aria-pressed="false">자동 회전</button></div>
+        <div class="views" id="lx3d-views"></div>
+        <div class="hint" id="lx3d-hint">드래그로 회전 · 유리를 누르면 부위 선택</div>
+        <div id="lx3d-loading">차량을 불러오는 중</div>
+      </div>
+      <div class="panel">
+        <div class="blk"><h3>필름 <button type="button" id="lx3d-reset">초기화</button></h3><div class="films" id="lx3d-films"></div><p class="sub">오너 조합</p><div class="combos" id="lx3d-combos"></div></div>
+        <div class="blk"><h3>농도</h3><div class="grid" id="lx3d-grid"></div>
+          <div class="specbox"><p id="lx3d-specname"></p><dl class="spec"><div><dt>가시광선 투과율 VLT</dt><dd id="lx3d-vlt"></dd></div><div><dt>총 태양에너지 차단율 TSER</dt><dd id="lx3d-tser"></dd></div></dl></div></div>
+        <div class="blk"><h3>차량 색상</h3><div class="paints" id="lx3d-paints"></div><p class="paintname" id="lx3d-paintname"></p></div>
+        <div class="blk"><p class="note">VLT·TSER은 THE LX 공식 스펙(3mm 투명 유리 기준)이며, 화면의 유리 색과 어둡기는 이해를 돕기 위한 표현입니다. 실제 차량에서는 유리 자체의 색과 날씨에 따라 다르게 보입니다. 글라스 루프는 출고 유리가 원래 짙어서 같은 필름도 더 어둡게 보입니다.<br><br>3D 모델: <span id="lx3d-credit"></span>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. 유리를 부위별로 분리하고 재질을 바꿨습니다. <a href="studio3d/CREDITS.txt">전체 출처</a></p></div>
+      </div>
+    </div>
+</section>
+<script type="importmap">{"imports":{"three":"./studio3d/vendor/three.module.js"}}</script>
+<script>(function(){var s=document.getElementById("studio");if(!s)return;var go=function(){go=function(){};import("./studio3d/app.js?v=1125v")};if(!("IntersectionObserver" in window)){go();return}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();go()}})},{rootMargin:"900px 0px"});io.observe(s)})();</script>
+
 <section class="tv-leaves" id="leaves" aria-label="LX saves your health, wealth and earth">
   <div class="tv-leaves-stick">
     <div class="tv-leaves-cover" aria-hidden="true"><p>친환경차에 맞는<br>친환경 필름</p><canvas></canvas></div>

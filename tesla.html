@@ -940,17 +940,15 @@ img,svg{display:block;max-width:100%} a{color:inherit}
 </section>
 
 <!-- 3D 필름 스튜디오 (2026-11-25): 파장별 투과율 아래. 화면 가까이 올 때 studio3d/app.js를 불러온다 -->
-<link rel="stylesheet" href="studio3d/embed.css?v=1125f">
+<link rel="stylesheet" href="studio3d/embed.css?v=1125g">
 <section class="lx3d-sec" id="studio" aria-label="3D 필름 스튜디오 — 내 차에 입혀 보기">
     <div class="lx3d" id="lx3d-root" data-car="my" data-embed="1">
       <div class="stage">
-        <div id="lx3d-viewer"></div>
         <div class="head"><p class="k">3D 필름 스튜디오</p><h2>내 차에 입혀 보기</h2><div class="cars" id="lx3d-cars" role="group" aria-label="차종"></div></div>
-        <div class="badge" id="lx3d-badge" hidden>필름 없는 상태</div>
         <div class="tools"><button type="button" id="lx3d-compare" aria-pressed="false">필름 없이 보기</button><button type="button" id="lx3d-spin" aria-pressed="false">자동 회전</button></div>
+        <div id="lx3d-viewer"><div class="badge" id="lx3d-badge" hidden>필름 없는 상태</div><div id="lx3d-loading">차량을 불러오는 중</div></div>
         <div class="views" id="lx3d-views"></div>
         <div class="hint" id="lx3d-hint">드래그로 회전 · 유리를 누르면 부위 선택</div>
-        <div id="lx3d-loading">차량을 불러오는 중</div>
       </div>
       <div class="panel">
         <div class="blk"><h3>필름 <button type="button" id="lx3d-reset">초기화</button></h3><div class="films" id="lx3d-films"></div><p class="sub">오너 조합</p><div class="combos" id="lx3d-combos"></div></div>

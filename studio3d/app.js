@@ -9,7 +9,13 @@ import { FILMS, DEFAULTS } from './film-data.js?v=1125j';
 const $ = id => document.getElementById('lx3d-' + id);
 const here = path => new URL(path, import.meta.url).href; // 이 파일 옆의 파일 주소(끼워 넣은 페이지가 어느 폴더에 있든 맞게)
 const ZONES = { windshield: '전면 유리', front: '1열 좌우', rear: '2열 좌우', back: '후면 유리', roof: '글라스 루프' };
-const SHORT = { windshield: '전면', front: '1열', rear: '2열', back: '후면', roof: '루프' };
+// 화면에서 고르는 단위는 세 묶음(2026-11-25 시안 A 확정): 전면·측후면·루프 — 홈페이지 테슬라 페이지가 쓰는 말 그대로. 유리 부품은 다섯이지만 1열·2열·후면은 '측후면' 한 줄로 같이 바뀐다
+const GROUPS = [
+  { key: 'windshield', label: '전면', name: '전면 유리', zones: ['windshield'] },
+  { key: 'side', label: '측후면', name: '측후면 유리', zones: ['front', 'rear', 'back'] },
+  { key: 'roof', label: '루프', name: '글라스 루프', zones: ['roof'] },
+];
+const groupOf = zone => GROUPS.find(g => g.zones.includes(zone));
 // 홈페이지 테슬라 페이지(tesla.html '테슬라 오너가 사랑하는 조합')의 조합 두 가지. 필름 구성과 문구는 그 페이지 그대로. 농도는 그 페이지에 없어 임의로 넣은 값(전면 30 안팎·나머지 15)
 const COMBOS = [ // 2026-11-25 사용자: 조합은 'LX + 루프 제니스' 하나만, 패널 아래쪽에. 문구는 테슬라 페이지 조합 1의 것 그대로
   { name: '전면 LX · 측후면 LX · 루프 제니스IR', text: '전면과 측후면으로 들어오는 복사열을 반사하고, 루프는 세라믹으로.', zones: { windshield: ['lx', '25'], front: ['lx', '15'], rear: ['lx', '15'], back: ['lx', '15'], roof: ['xenith', '15'] } },
@@ -114,33 +120,29 @@ function renderPanel() {
     b.onclick = () => { for (const z of zs) { state.zf[z] = c.zones[z][0]; state.zones[z] = [...c.zones[z]]; } update(); };
     return b;
   }));
-  const same = zs.every(z => state.zf[z] === state.zf[zs[0]]);
-  const row = (label, key) => {
-    const film = key ? state.zf[key] : same ? state.zf[zs[0]] : null, shades = film ? FILMS[film].variants : [];
-    const r = document.createElement('div'); r.className = 'row' + (key ? '' : ' whole') + (key && key === state.selected ? ' on' : '') + (shades.length > 4 ? ' dense' : '');
-    r.style.setProperty('--n', (film ? FILMS[film].variants.length : Math.max(...zs.map(z => FILMS[state.zf[z]].variants.length))) + 1);
-    if (key) {
+  const mixed = !zs.every(z => state.zf[z] === state.zf[zs[0]]);
+  const row = g => {
+    const film = state.zf[g.zones[0]], shades = FILMS[film].variants, on = id => g.zones.every(z => (state.zones[z]?.[1] ?? null) === id);
+    const r = document.createElement('div'); r.className = 'row' + (g.key === state.selected ? ' on' : '') + (shades.length > 4 ? ' dense' : '');
+    r.style.setProperty('--n', shades.length + 1);
+    if (mixed) { // 필름이 섞여 있을 때만 줄 이름 아래에 필름 이름을 적고, 누르면 그 줄만 필름을 바꾼다
       const other = Object.keys(FILMS).find(f => f !== film);
-      const name = document.createElement('button'); name.className = 'zf'; name.innerHTML = `<b>${label}</b><small>${FILMS[film].name}</small>`;
-      name.setAttribute('aria-label', `${ZONES[key]} 필름 바꾸기, 지금 ${FILMS[film].name}`);
-      name.onclick = () => { setFilm(key, other); state.selected = key; update(); };
+      const name = document.createElement('button'); name.className = 'zf'; name.innerHTML = `<b>${g.label}</b><small>${FILMS[film].name}</small>`;
+      name.setAttribute('aria-label', `${g.name} 필름 바꾸기, 지금 ${FILMS[film].name}`);
+      name.onclick = () => { for (const z of g.zones) setFilm(z, other); state.selected = g.key; update(); };
       r.append(name);
-    } else { const name = document.createElement('b'); name.textContent = label; r.append(name); }
-    const off = document.createElement('button'); off.className = 'd'; off.textContent = '없음'; off.setAttribute('aria-label', `${key ? ZONES[key] : '전체 유리'} 필름 없음`);
-    off.setAttribute('aria-pressed', key ? !state.zones[key] : Object.values(state.zones).every(z => !z));
-    off.onclick = () => { if (key) { state.zones[key] = null; state.selected = key; } else for (const z of zs) state.zones[z] = null; update(); };
-    r.append(off);
-    for (const x of shades) {
-      const b = document.createElement('button'); b.className = 'd'; b.textContent = x.label; b.setAttribute('aria-label', `${key ? ZONES[key] : '전체 유리'} ${x.label}`);
-      b.setAttribute('aria-pressed', key ? state.zones[key]?.[1] === x.id : Object.values(state.zones).every(z => z?.[1] === x.id));
-      b.onclick = () => { if (key) { state.zones[key] = [film, x.id]; state.selected = key; } else for (const z of zs) state.zones[z] = [film, x.id]; update(); };
-      r.append(b);
-    }
+    } else { const name = document.createElement('b'); name.textContent = g.label; r.append(name); }
+    const cell = (text, id) => {
+      const b = document.createElement('button'); b.className = 'd' + (id ? '' : ' off'); b.textContent = text; b.setAttribute('aria-label', `${g.name} ${id ? text : '필름 없음'}`); b.setAttribute('aria-pressed', on(id));
+      b.onclick = () => { for (const z of g.zones) state.zones[z] = id ? [film, id] : null; state.selected = g.key; update(); };
+      return b;
+    };
+    r.append(cell('없음', null), ...shades.map(x => cell(x.label, x.id)));
     return r;
   };
-  $('grid').replaceChildren(row('전체'), ...zs.map(z => row(SHORT[z], z)));
-  const cur = variant(state.selected);
-  $('specname').textContent = ZONES[state.selected] + ' · ' + (cur ? `${FILMS[state.zones[state.selected][0]].name} ${cur.label}` : '필름 없음');
+  $('grid').replaceChildren(...GROUPS.map(row));
+  const selG = GROUPS.find(g => g.key === state.selected), selZ = selG.zones[0], cur = variant(selZ);
+  $('specname').textContent = selG.name + ' · ' + (cur ? `${FILMS[state.zones[selZ][0]].name} ${cur.label}` : '필름 없음');
   $('vlt').innerHTML = cur ? `${cur.vlt}<small>%</small>` : '–'; $('tser').innerHTML = cur ? `${cur.tser}<small>%</small>` : '–';
   $('paints').replaceChildren(...PAINTS.map(([name, hex], i) => {
     const b = document.createElement('button'); b.style.setProperty('--c', hex); b.title = name; b.setAttribute('aria-label', name);
@@ -225,7 +227,7 @@ function init() {
     ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), camera);
     const hit = ray.intersectObjects(scene.children, true).find(h => h.object.isMesh && h.object.visible && !h.object.material.isShadowMaterial);
     const zone = hit?.object.userData.zone;
-    if (zone && ZONES[zone]) { state.selected = zone; renderPanel(); }
+    if (zone && ZONES[zone]) { state.selected = groupOf(zone).key; renderPanel(); }
   });
 
   if (new URLSearchParams(location.search).has('debug')) window.__s = { scene, camera, controls, THREE }; // 부품 찾기용

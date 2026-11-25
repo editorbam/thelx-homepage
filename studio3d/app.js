@@ -146,20 +146,21 @@ function renderPanel() {
   $('paints').replaceChildren(...PAINTS.map(([name, hex], i) => {
     const b = document.createElement('button'); b.style.setProperty('--c', hex); b.title = name; b.setAttribute('aria-label', name);
     b.setAttribute('aria-pressed', i === state.paint);
-    b.onclick = () => { state.paint = i; update(); };
+    b.onclick = () => { state.paint = i; update(true); };
     return b;
   }));
   $('paintname').textContent = PAINTS[state.paint][0];
 }
 
-function update() { applyGlass(); if (paintMaterial) paintMaterial.color.set(PAINTS[state.paint][1]); renderPanel(); }
+// 필름·농도를 고르면 '필름 없이 보기'는 저절로 꺼진다(켜 둔 걸 잊으면 필름이 안 입혀진 것처럼 보임). 차 색만 바꿀 땐 그대로(keep)
+function update(keep) { if (!keep && state.compare) { state.compare = false; $('compare').setAttribute('aria-pressed', false); $('badge').hidden = true; } applyGlass(); if (paintMaterial) paintMaterial.color.set(PAINTS[state.paint][1]); renderPanel(); }
 
 $('reset').onclick = () => { for (const z of Object.keys(ZONES)) state.zones[z] = null; update(); };
 $('compare').onclick = () => { state.compare = !state.compare; $('compare').setAttribute('aria-pressed', state.compare); $('badge').hidden = !state.compare; applyGlass(); };
 $('spin').onclick = () => { controls.autoRotate = !controls.autoRotate; $('spin').setAttribute('aria-pressed', controls.autoRotate); };
 
 // 화면이 세로로 좁을수록 카메라를 뒤로 물려 차 전체가 들어오게 한다
-const fit = () => { const el = $('viewer'); return Math.min(1.9, Math.max(1, 1.3 / (el.clientWidth / el.clientHeight))); };
+const fit = () => { const el = $('viewer'); return Math.min(1.9, Math.max(el.clientWidth < 600 ? .8 : 1, 1.3 / (el.clientWidth / el.clientHeight))); }; // 좁은 화면(휴대폰)은 차 화면이 낮고 넓어서 더 가까이 당겨 차를 크게
 let lastView = '전측면';
 
 function setView(name) {
@@ -276,7 +277,7 @@ async function loadCar() {
   for (const [mesh, dir] of plates) addPlate(mesh, dir).catch(console.error);
   for (const [dir, ...spot] of CAR.plateAt ?? []) addPlate(spot, dir).catch(console.error);
   $('loading').hidden = true;
-  update();
+  update(true);
 }
 
 $('views').replaceChildren(...Object.keys(VIEWS).map(name => { const b = document.createElement('button'); b.textContent = name; b.onclick = () => setView(name); return b; }));

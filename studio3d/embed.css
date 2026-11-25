@@ -61,18 +61,25 @@
 .lx3d .note a{color:inherit}
 @media(max-width:900px){
 .lx3d{display:block}
-/* 휴대폰: 차 화면이 메뉴 아래에 붙고 패널만 흘러간다. 세로로 미는 손가락은 페이지 스크롤, 옆으로 밀면 차 회전 */
-.lx3d .stage{z-index:2;height:46vh;height:46svh;min-height:320px;border-bottom:1px solid var(--line)}
-.lx3d .head{left:20px;right:20px;top:14px}.lx3d .head .k{font-size:11px;margin-bottom:5px}.lx3d .head h2{font-size:20px;margin:0}
-.lx3d .cars{position:absolute;right:0;top:12px;gap:18px}
-#lx3d-viewer{touch-action:pan-y}
-.lx3d .tools{right:20px;top:64px;gap:16px}
-.lx3d .cars button,.lx3d .tools button{font-size:13px;padding:8px 0}
-.lx3d .badge{left:20px;top:74px}
-.lx3d .views{bottom:28px;gap:20px}.lx3d .views button{font-size:13px;padding:8px 0}
-.lx3d .hint{bottom:9px;font-size:11px}
-.lx3d .panel{padding:26px 20px 40px;border-left:0}
-.lx3d .blk{padding-bottom:26px;margin-bottom:26px}
-.lx3d .row{grid-template-columns:56px repeat(var(--n),minmax(0,1fr));gap:5px}
+/* 휴대폰: 차 화면이 메뉴 아래에 붙고 패널만 흘러간다. 차 화면 안은 위에서부터 제목 줄 → 보기 버튼 줄 → 차 → 각도 줄로 쌓아서 글자가 차를 덮지 않게 한다(2026-11-25 실기기 캡처: 글자가 차와 겹치고 답답함) */
+.lx3d .stage{z-index:2;display:flex;flex-direction:column;height:54vh;height:54svh;min-height:380px;border-bottom:1px solid var(--line)}
+.lx3d .head{position:static;order:1;padding:16px 20px 0;display:grid;grid-template-columns:1fr auto;align-items:end;column-gap:12px}
+.lx3d .head .k{grid-column:1/-1;font-size:11px;margin-bottom:6px}
+.lx3d .head h2{font-size:21px;margin:0}
+.lx3d .cars{gap:18px}
+.lx3d .cars button,.lx3d .tools button{font-size:13px;padding:6px 0}
+.lx3d .tools{position:static;order:2;justify-content:flex-end;gap:18px;padding:8px 20px 0}
+#lx3d-viewer{position:relative;inset:auto;order:3;flex:1;min-height:0;touch-action:pan-y}
+.lx3d .views{position:static;order:4;transform:none;justify-content:center;gap:22px;padding:2px 0 12px}
+.lx3d .views button{font-size:13px;padding:8px 0}
+.lx3d .hint{display:none}
+.lx3d .badge{left:20px;top:auto;bottom:64px}
+.lx3d .panel{padding:34px 20px 48px;border-left:0}
+.lx3d .blk{padding-bottom:32px;margin-bottom:32px}
+.lx3d h3{margin-bottom:18px}
+.lx3d .grid{gap:10px}
+.lx3d .row{grid-template-columns:56px repeat(var(--n),minmax(0,1fr));gap:6px}
+.lx3d .row .d{height:48px}
+.lx3d .row.whole{padding-bottom:16px;margin-bottom:8px}
 .lx3d .spec dd{font-size:34px}
 }

@@ -250,7 +250,8 @@ async function loadCar() {
   // 차 파일은 형상을 압축해 둔 것(.draco.glb, 44.9MB→4.6MB·8.9MB→1.9MB)이라 푸는 도구(vendor/draco)를 붙여 읽는다
   draco ??= new DRACOLoader().setDecoderPath(here('./vendor/draco/'));
   const gltf = await new GLTFLoader().setDRACOLoader(draco).loadAsync(here('./models/' + CAR.file), e => {
-    if (e.total && seq === loadSeq) $('loading').textContent = `차량을 불러오는 중 ${Math.round(e.loaded / e.total * 100)}%`;
+    // 서버가 파일을 줄여 보내면 받은 양이 '전체 크기'보다 커져 100%를 넘는다 → 99에서 멈추고, 다 받으면 문구가 사라진다
+    if (e.total && seq === loadSeq) $('loading').textContent = `차량을 불러오는 중 ${Math.min(99, Math.round(e.loaded / e.total * 100))}%`;
   });
   if (seq !== loadSeq) { dispose(gltf.scene); return; } // 불러오는 사이에 다른 차로 바꿨으면 버린다
   const car = carRoot = gltf.scene;
